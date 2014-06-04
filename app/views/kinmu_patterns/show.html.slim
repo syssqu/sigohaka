@@ -1,0 +1,17 @@
+p#notice = notice
+
+p
+  strong Start time:
+  = @kinmu_pattern.start_time
+p
+  strong End time:
+  = @kinmu_pattern.end_time
+p
+  strong Break time:
+  = @kinmu_pattern.break_time
+p
+  strong Work time:
+  = @kinmu_pattern.work_time
+= link_to 'Edit', edit_kinmu_pattern_path(@kinmu_pattern)
+'|
+= link_to 'Back', kinmu_patterns_path

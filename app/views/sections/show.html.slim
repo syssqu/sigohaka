@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Code:
+  = @section.code
+p
+  strong Name:
+  = @section.name
+
+= link_to 'Edit', edit_section_path(@section)
+'|
+= link_to 'Back', sections_path

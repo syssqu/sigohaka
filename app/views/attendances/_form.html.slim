@@ -1,0 +1,87 @@
+= form_for @attendance do |f|
+  - if @attendance.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@attendance.errors.count, "error")} prohibited this attendance from being saved:"
+      ul
+        - @attendance.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :attendance_date
+    = f.date_select :attendance_date, use_month_numbers: true
+  .field
+    = f.label :year
+    = f.text_field :year
+  .field
+    = f.label :month
+    = f.text_field :month
+  .field
+    = f.label :day
+    = f.text_field :day
+  .field
+    = f.label :wday
+    = f.text_field :wday
+  .field
+    = f.label :pattern
+    = f.text_field :pattern
+  .field
+    = f.label :start_time
+    = f.time_select :start_time
+  .field
+    = f.label :end_time
+    = f.time_select :end_time
+  .field
+    = f.label :byouketu
+    = f.check_box :byouketu
+  .field
+    = f.label :kekkin
+    = f.check_box :kekkin
+  .field
+    = f.label :hankekkin
+    = f.check_box :hankekkin
+  .field
+    = f.label :titoku
+    = f.check_box :titoku
+  .field
+    = f.label :soutai
+    = f.check_box :soutai
+  .field
+    = f.label :gaisyutu
+    = f.check_box :gaisyutu
+  .field
+    = f.label :tokkyuu
+    = f.check_box :tokkyuu
+  .field
+    = f.label :furikyuu
+    = f.check_box :furikyuu
+  .field
+    = f.label :yuukyuu
+    = f.check_box :yuukyuu
+  .field
+    = f.label :syuttyou
+    = f.check_box :syuttyou
+  .field
+    = f.label :over_time
+    = f.number_field :over_time
+  .field
+    = f.label :holiday_time
+    = f.number_field :holiday_time
+  .field
+    = f.label :midnight_time
+    = f.number_field :midnight_time
+  .field
+    = f.label :break_time
+    = f.number_field :break_time
+  .field
+    = f.label :kouzyo_time
+    = f.number_field :kouzyo_time
+  .field
+    = f.label :work_time
+    = f.number_field :work_time
+  .field
+    = f.label :remarks
+    = f.text_area :remarks
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .actions = f.submit 'Save'

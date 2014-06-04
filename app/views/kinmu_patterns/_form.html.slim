@@ -1,0 +1,33 @@
+.row
+  .large-12.columns.clearfix
+    = form_for @kinmu_pattern do |f|
+      - if @kinmu_pattern.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@kinmu_pattern.errors.count, "error")} prohibited this kinmu_pattern from being saved:"
+          ul
+            - @kinmu_pattern.errors.full_messages.each do |message|
+              li = message
+
+      .row
+        .large-2.columns.show-for-large-up
+          label.left.inline 出勤
+        .large-5.large-pull-5.columns
+          = f.time_select :start_time
+      .row
+        .large-2.columns.show-for-large-up
+          label.left.inline 退勤
+        .large-5.large-pull-5.columns
+          = f.time_select :end_time
+      .row
+        .large-2.columns.show-for-large-up
+          label.left.inline 休憩時間
+        .large-5.large-pull-5.columns
+          = f.number_field :break_time
+      .row
+        .large-2.columns.show-for-large-up
+          label.left.inline 実働時間
+        .large-5.large-pull-5.columns
+          = f.number_field :work_time
+      .row
+        .large-6.large-centered.columns
+          = f.submit "登録", class: "button radius"

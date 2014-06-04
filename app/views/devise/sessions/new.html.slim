@@ -1,0 +1,23 @@
+.row
+  .large-12.columns.clearfix
+    h2 ログイン画面
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .row
+        .large-2.columns
+          label.left.inline メールアドレス
+        .large-5.large-pull-5.columns
+          = f.email_field :email, autofocus: true
+      .row
+        .large-2.columns
+          label.left.inline パスワード
+        .large-5.large-pull-5.columns
+          = f.password_field :password, autocomplete: "off"
+      .row
+        .large-12.columns
+          - if devise_mapping.rememberable?
+            = f.check_box :remember_me
+            = f.label :remember_me
+      .row
+        .large-6.large-centered.columns
+          = f.submit "ログイン", class: "button radius"
+    = render "devise/shared/links"
