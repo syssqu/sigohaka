@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
+  
+  resources :kinmu_patterns
+  resources :sections
+  resources :attendances, only:[:index, :new, :create, :edit, :update]
+
   # get 'static_pages/home'
 
   match '/help', to:'static_pages#help', via: :get
   match 'about', to:'static_pages#about', via: :get
 
-  devise_for :users
+  devise_for :users, :controllers => {
+    :sessions      => "users/sessions",
+    :registrations => "users/registrations",
+    :passwords     => "users/passwords"
+  }
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

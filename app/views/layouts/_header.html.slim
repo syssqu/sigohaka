@@ -10,20 +10,26 @@
             span Menu
       section.top-bar-section
         ul.right
-          
           li.has-dropdown
             = link_to "勤怠管理", root_path
             ul.dropdown
               li
-                a href="#" 勤務状況報告書
+                = link_to '勤務状況報告書', attendances_path
               li
-                a href="#" 業務報告書
+                = link_to '業務報告書', attendances_path
               li
-                a href="#" 交通精算
+                = link_to '交通精算', attendances_path
               li
-                a href="#" 休暇届け
+                = link_to '休暇届け', attendances_path
               li
-                a href="#" 通勤届書
+                = link_to '通勤届書', attendances_path
+          li.has-dropdown
+            = link_to "管理", root_path
+            ul.dropdown
+              li
+                = link_to '課マスタ', sections_path
+              li
+                = link_to '勤務パターン', kinmu_patterns_path
           li
             = link_to "しごはかについて", root_path
           li

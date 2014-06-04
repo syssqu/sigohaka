@@ -1,0 +1,2 @@
+module KinmuPatternsHelper
+end

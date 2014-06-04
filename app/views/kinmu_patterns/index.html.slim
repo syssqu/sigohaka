@@ -1,0 +1,27 @@
+h1 勤務パターン一覧画面
+
+table
+  thead
+    tr
+      th 出勤
+      th 退勤
+      th 休憩時間
+      th 実働時間
+      th
+      th
+      th
+
+  tbody
+    - @kinmu_patterns.each do |kinmu_pattern|
+      tr
+        td = kinmu_pattern.start_time.strftime("%H:%M")
+        td = kinmu_pattern.end_time.strftime("%H:%M")
+        td = kinmu_pattern.break_time
+        td = kinmu_pattern.work_time
+        td = link_to 'Show', kinmu_pattern
+        td = link_to 'Edit', edit_kinmu_pattern_path(kinmu_pattern)
+        td = link_to 'Destroy', kinmu_pattern, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to '新規', new_kinmu_pattern_path
