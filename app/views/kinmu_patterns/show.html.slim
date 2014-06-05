@@ -1,16 +1,18 @@
 p#notice = notice
-
 p
-  strong Start time:
+  strong コード
+  = @kinmu_pattern.code
+p
+  strong 出勤:
   = @kinmu_pattern.start_time
 p
-  strong End time:
+  strong 退勤:
   = @kinmu_pattern.end_time
 p
-  strong Break time:
+  strong 休憩時間:
   = @kinmu_pattern.break_time
 p
-  strong Work time:
+  strong 実働時間:
   = @kinmu_pattern.work_time
 = link_to 'Edit', edit_kinmu_pattern_path(@kinmu_pattern)
 '|

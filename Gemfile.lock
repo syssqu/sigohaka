@@ -72,6 +72,7 @@ GEM
       sass (>= 3.2.0)
     foundation-will_paginate (0.0.1)
     hike (1.2.3)
+    holiday_japan (1.1.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.6.9)
@@ -228,6 +229,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   foundation-will_paginate
+  holiday_japan
   i18n_generators
   jbuilder (~> 2.0)
   jquery-rails
