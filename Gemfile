@@ -15,6 +15,7 @@ gem "slim-rails"
 gem 'devise'
 gem 'bcrypt'
 gem 'i18n_generators'
+gem 'holiday_japan'
 
 # PDF
 gem 'wkhtmltopdf-binary'

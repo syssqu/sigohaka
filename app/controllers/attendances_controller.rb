@@ -5,19 +5,28 @@ class AttendancesController < ApplicationController
   
   def index
 
-    @youbi = %w[日 月 火 水 木 金 土]
-
     year = Date.today.year
     month = Date.today.month
     day = Date.today.day
+    
+    @nendo = Date.today.year
+    @gatudo = Date.today.month
 
     if Date.today.day < 16
       month = Date.today.months_ago(1).month
     end
 
-    @attendances = Attendance.find_by(user_id: current_user.id, year: year, month: month)
+    if Date.today.day > 15
+      @gatudo = Date.today.months_since(1).month
+    end
 
-    if @attendances.nil?
+    if Date.today.month == 12 and Date.today.day > 15
+      @nendo = Date.today.years_since(1).year
+    end
+
+    @attendances = Attendance.where(["user_id = ? and year = ? and month = ?", current_user.id, year, month])
+
+    if @attendances.count < 1
         @attendances = []
         
         target_date = Date.new(year, month, 16)
@@ -28,11 +37,21 @@ class AttendancesController < ApplicationController
           @attendance = Attendance.new
           
           @attendance[:attendance_date] = target_date
-          @attendance[:start_time] = "09:00"
-          @attendance[:end_time] = "18:00"
-          @attendance[:work_time] = "8.0"
+          @attendance[:year] = @nendo
+          @attendance[:month] = @gatudo
+          
 
           @attendance[:wday] = target_date.wday
+
+          if holiday?(target_date)
+            @attendance[:holiday] = "1"
+          else
+            @attendance[:pattern] = current_user.kinmu_patterns.first.code
+            @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
+            @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+            @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
+            @attendance[:holiday] = "0"
+          end
           
           if @attendance.save
             @attendances << @attendance
@@ -42,6 +61,10 @@ class AttendancesController < ApplicationController
           end
         end
     end
+  end
+
+  def holiday?(target_date)
+    target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
   end
 
   def new
@@ -62,11 +85,14 @@ class AttendancesController < ApplicationController
   end
 
   def update
-    if @attendance.update(attendance_params)
-      redirect_to attendances_path, notice: '更新しました。'
-    else
-      render :edit
-    end
+    @attendance = Attendance.find(params[:id])
+    redirect_to attendances_path, notice: @attendance.id
+    
+    # if @attendance.update_attributes(attendance_params)
+    #   redirect_to attendances_path, notice: '更新しました。'
+    # else
+    #   render :edit
+    # end
   end
 
   private

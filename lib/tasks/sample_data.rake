@@ -26,5 +26,10 @@ namespace :db do
                    password_confirmation: password,
                    section_id: 1)
     end
+
+    users = User.all
+    users.each do |user|
+      user.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
+    end
   end
 end

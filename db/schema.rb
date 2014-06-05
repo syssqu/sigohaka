@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604052307) do
+ActiveRecord::Schema.define(version: 20140605073313) do
 
-  create_table "attendances", force: true do |t|
+  create_table "Attendances", force: true do |t|
     t.date     "attendance_date"
     t.string   "year",            limit: 4
     t.string   "month",           limit: 2
@@ -32,19 +32,20 @@ ActiveRecord::Schema.define(version: 20140604052307) do
     t.boolean  "furikyuu"
     t.boolean  "yuukyuu"
     t.boolean  "syuttyou"
-    t.integer  "over_time"
-    t.integer  "holiday_time"
-    t.integer  "midnight_time"
-    t.integer  "break_time"
-    t.integer  "kouzyo_time"
-    t.integer  "work_time"
+    t.decimal  "over_time",                 precision: 4, scale: 2
+    t.decimal  "holiday_time",              precision: 4, scale: 2
+    t.decimal  "midnight_time",             precision: 4, scale: 2
+    t.decimal  "break_time",                precision: 4, scale: 2
+    t.decimal  "kouzyo_time",               precision: 4, scale: 2
+    t.decimal  "work_time",                 precision: 4, scale: 2
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "holiday",         limit: 1
   end
 
-  add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
+  add_index "Attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
 
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
@@ -54,6 +55,7 @@ ActiveRecord::Schema.define(version: 20140604052307) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code",       limit: 2
   end
 
   create_table "sections", force: true do |t|
@@ -81,6 +83,19 @@ ActiveRecord::Schema.define(version: 20140604052307) do
     t.string   "kana_family_name",       limit: 40
     t.string   "kana_first_name",        limit: 40
     t.integer  "section_id"
+    t.string   "gender",                 limit: 1
+    t.date     "birth_date"
+    t.string   "employee_no",            limit: 6
+    t.integer  "age"
+    t.integer  "experience"
+    t.string   "postal_code",            limit: 8
+    t.string   "prefecture"
+    t.string   "city",                   limit: 80
+    t.string   "house_number",           limit: 80
+    t.string   "building",               limit: 80
+    t.string   "phone",                  limit: 13
+    t.string   "gakureki"
+    t.text     "remarks"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

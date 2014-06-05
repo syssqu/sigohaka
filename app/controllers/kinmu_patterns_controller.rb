@@ -37,7 +37,7 @@ class KinmuPatternsController < ApplicationController
 
   def destroy
     @kinmu_pattern.destroy
-    redirect_to kinmu_patterns_url, notice: 'Kinmu pattern was successfully destroyed.'
+    redirect_to kinmu_patterns_url, notice: '勤務パターンを削除しました'
   end
 
   private
@@ -46,6 +46,6 @@ class KinmuPatternsController < ApplicationController
     end
 
     def kinmu_pattern_params
-      params.require(:kinmu_pattern).permit(:start_time, :end_time, :break_time, :work_time, :user_id)
+      params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :work_time, :user_id)
     end
 end
