@@ -1,19 +1,34 @@
 Rails.application.routes.draw do
   
+  resources :licenses
+  resources :projects
+  
   resources :transportation_expresses do
      collection do
       post 'transportation_confirm'
     end
   end
 
+  resources :vacation_requests
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
+  
+  # resources :attendances, only:[:index, :new, :create, :edit, :update] do
+  #   patch :confirm, on: :member
+  # end
+  
+  # match '/attendances/print', to: 'attendances#print', via: :get
+
+  resource :attendances, only: [] do
+    get :print
+  end
+  
 
   # get 'static_pages/home'
 
   match '/help', to:'static_pages#help', via: :get
-  match 'about', to:'static_pages#about', via: :get
+  match '/about', to:'static_pages#about', via: :get
 
   devise_for :users, :controllers => {
     :sessions      => "users/sessions",

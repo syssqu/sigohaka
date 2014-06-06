@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605054113) do
+ActiveRecord::Schema.define(version: 20140606070609) do
 
   create_table "attendances", force: true do |t|
     t.date     "attendance_date"
@@ -25,23 +25,24 @@ ActiveRecord::Schema.define(version: 20140605054113) do
     t.boolean  "byouketu"
     t.boolean  "kekkin"
     t.boolean  "hankekkin"
-    t.boolean  "titoku"
+    t.boolean  "tikoku"
     t.boolean  "soutai"
     t.boolean  "gaisyutu"
     t.boolean  "tokkyuu"
     t.boolean  "furikyuu"
     t.boolean  "yuukyuu"
     t.boolean  "syuttyou"
-    t.integer  "over_time"
-    t.integer  "holiday_time"
-    t.integer  "midnight_time"
-    t.integer  "break_time"
-    t.integer  "kouzyo_time"
-    t.integer  "work_time"
+    t.decimal  "over_time",                 precision: 4, scale: 2
+    t.decimal  "holiday_time",              precision: 4, scale: 2
+    t.decimal  "midnight_time",             precision: 4, scale: 2
+    t.decimal  "break_time",                precision: 4, scale: 2
+    t.decimal  "kouzyo_time",               precision: 4, scale: 2
+    t.decimal  "work_time",                 precision: 4, scale: 2
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "holiday",         limit: 1
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
@@ -54,6 +55,36 @@ ActiveRecord::Schema.define(version: 20140605054113) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code",       limit: 2
+  end
+
+  create_table "licenses", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.string   "years"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "summary"
+    t.text     "description"
+    t.string   "os"
+    t.string   "language"
+    t.string   "database"
+    t.string   "dep_size"
+    t.string   "role"
+    t.string   "experience"
+    t.text     "remarks"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "active"
   end
 
   create_table "sections", force: true do |t|
@@ -96,9 +127,36 @@ ActiveRecord::Schema.define(version: 20140605054113) do
     t.string   "kana_family_name",       limit: 40
     t.string   "kana_first_name",        limit: 40
     t.integer  "section_id"
+    t.string   "gender",                 limit: 1
+    t.date     "birth_date"
+    t.string   "employee_no",            limit: 6
+    t.integer  "age"
+    t.integer  "experience"
+    t.string   "postal_code",            limit: 8
+    t.string   "prefecture"
+    t.string   "city",                   limit: 80
+    t.string   "house_number",           limit: 80
+    t.string   "building",               limit: 80
+    t.string   "phone",                  limit: 13
+    t.string   "gakureki"
+    t.text     "remarks"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vacation_requests", force: true do |t|
+    t.integer  "user_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "term"
+    t.string   "category"
+    t.string   "reason"
+    t.string   "note"
+    t.string   "year"
+    t.string   "month"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

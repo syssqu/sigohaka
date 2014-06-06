@@ -3,6 +3,7 @@ h1 勤務パターン一覧画面
 table
   thead
     tr
+      th コード
       th 出勤
       th 退勤
       th 休憩時間
@@ -14,6 +15,7 @@ table
   tbody
     - @kinmu_patterns.each do |kinmu_pattern|
       tr
+        td = kinmu_pattern.code
         td = kinmu_pattern.start_time.strftime("%H:%M")
         td = kinmu_pattern.end_time.strftime("%H:%M")
         td = kinmu_pattern.break_time

@@ -20,7 +20,7 @@
               li
                 = link_to '交通費精算書', transportation_expresses_path
               li
-                = link_to '休暇届', attendances_path
+                = link_to '休暇届', vacation_requests_path
               li
                 = link_to '通勤届', attendances_path
           li.has-dropdown
@@ -29,13 +29,20 @@
               li
                 = link_to '課マスタ', sections_path
               li
+                = link_to 'プロジェクト', projects_path
+              li
+                = link_to '資格', licenses_path
+              li
                 = link_to '勤務パターン', kinmu_patterns_path
           li
             = link_to "しごはかについて", root_path
           li
              = link_to "ヘルプ", help_path
           - if user_signed_in?
-            Logged in as <strong><%= current_user.email %></strong>.
+            / = current_user.email
+            li
+              gravatar_for current_user
+              = current_user.first_name
             li = link_to 'プロフィール更新', edit_user_registration_path
             | |
             li = link_to "ログアウト", destroy_user_session_path, method: :delete
