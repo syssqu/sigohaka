@@ -24,7 +24,7 @@ class AttendancesController < ApplicationController
       @nendo = Date.today.years_since(1).year
     end
 
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo, @gatudo)
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
     if ! @attendances.exists?
         
