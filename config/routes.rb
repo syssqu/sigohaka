@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :vacation_requests
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
