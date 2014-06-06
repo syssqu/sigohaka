@@ -4,6 +4,9 @@
 .gray {background:#3E4C59;}
 .button{margin-right:10px;}     /* ボタンとボタンの隙間 */
 
+a:link {color:#fff;} /*未訪問のリンクの色*/
+a:visited {color:#fff;} /*訪問済みのリンクの色*/
+
 /* =============================================================================
    課マスタ
    ========================================================================== */
@@ -13,7 +16,14 @@ article.section_list .button{margin-right:0px;}
    勤務状況報告書
    ========================================================================== */
 article.attendance_index span{color:red;}
+article.attendance_index table tr th {font-size:12px;}
+/* article.attendance_index table tr th{padding:2px 0px !important;} */
+article.attendance_index table tr td {font-size:12px;}
+article.attendance_index table tr td{padding:2px 0px !important;}
+article.attendance_index table tr td .button {padding:4px !important;margin:0px !important;}
+
 article.attendance_edit select {display: inline-block;width:45%;}
+
 
 /* =============================================================================
    勤務状況報告書(PDF)
@@ -21,5 +31,5 @@ article.attendance_edit select {display: inline-block;width:45%;}
 article.attendance_print table{border-spacing: 0;}
 /* article.profile_company table tr td {} */
 /* article.attendance_print table tr{height:0px;margin:0px;padding:0px;} */
-article.attendance_print table tr td{background-color:#fff;font-size:12px;border:1px solid black;}
+article.attendance_print table tr td{background-color:#fff;font-size:10px;border:1px solid black;}
 

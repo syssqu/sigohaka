@@ -15,7 +15,8 @@
           tr
             td 氏名
             td #{current_user.family_name} #{current_user.first_name}
-      = link_to "PDF出力", print_attendances_path, class: "button radius"
+      = link_to "PDF出力", print_attendances_path, class: "button tiny radius"
+      = link_to "データ初期化", print_attendances_path, class: "button tiny radius"
       table
         thead
           tr
@@ -69,11 +70,11 @@
                 td.text-right = attendance.attendance_date.strftime("%_d")
 
               - if attendance.holiday == "0"
-                td = YOUBI[attendance.wday.to_i]
+                td.text-center = YOUBI[attendance.wday.to_i]
               - else
-                td
+                td.text-center
                   span = YOUBI[attendance.wday.to_i]
-              td = attendance.pattern
+              td.text-center = attendance.pattern
               td = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
               td = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
               td.text-center = "○" if attendance.byouketu
@@ -86,13 +87,13 @@
               td.text-center = "○" if attendance.furikyuu
               td.text-center = "○" if attendance.yuukyuu
               td.text-center = "○" if attendance.syuttyou
-              td = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
-              td = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
-              td = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
-              td = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
-              td = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
-              td = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
-              td width="140" = attendance.remarks
+              td.text-center = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
+              td width="15%" = attendance.remarks
               / td = link_to 'Show', attendance
-              td = link_to '修正', edit_attendance_path(attendance)
+              td = link_to '修正', edit_attendance_path(attendance), class: "button tiny success"
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
