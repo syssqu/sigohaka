@@ -1,0 +1,25 @@
+/* =============================================================================
+   ページ共通
+   ========================================================================== */
+.gray {background:#3E4C59;}
+.button{margin-right:10px;}     /* ボタンとボタンの隙間 */
+
+/* =============================================================================
+   課マスタ
+   ========================================================================== */
+article.section_list .button{margin-right:0px;}
+
+/* =============================================================================
+   勤務状況報告書
+   ========================================================================== */
+article.attendance_index span{color:red;}
+article.attendance_edit select {display: inline-block;width:45%;}
+
+/* =============================================================================
+   勤務状況報告書(PDF)
+   ========================================================================== */
+article.attendance_print table{border-spacing: 0;}
+/* article.profile_company table tr td {} */
+/* article.attendance_print table tr{height:0px;margin:0px;padding:0px;} */
+article.attendance_print table tr td{background-color:#fff;font-size:12px;border:1px solid black;}
+

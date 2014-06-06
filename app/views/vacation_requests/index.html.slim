@@ -1,0 +1,49 @@
+h1 休暇届
+
+table
+  tbody
+    tr
+      td プロジェクト名
+      td 
+    / tr
+    /   td 所属
+    /   td = current_user.section.name
+    tr
+      td 氏名
+      / td #{current_user.family_name} #{current_user.first_name}
+
+table
+  thead
+    tr
+      / th User
+      th いつから
+      th いつまで
+      th 期間
+      th カテゴリー
+      th 事由
+      th 備考
+      th Year
+      th Month
+      th
+      th
+      th
+
+  tbody
+    - @vacation_requests.each do |vacation_request|
+      tr
+        / td = vacation_request.user_id
+        td = vacation_request.start_date
+        td = vacation_request.end_date
+        td = vacation_request.term
+        td = vacation_request.category
+        td = vacation_request.reason
+        td = vacation_request.note
+        td = vacation_request.year
+        td = vacation_request.month
+        td = link_to 'Show', vacation_request
+        td = link_to 'Edit', edit_vacation_request_path(vacation_request)
+        td = link_to 'Destroy', vacation_request, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to '新規', new_vacation_request_path

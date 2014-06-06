@@ -1,0 +1,49 @@
+.row
+  .large-12.columns
+    h1 プロジェクト一覧画面
+
+    table
+      thead
+        tr
+          th コード
+          th 名称
+          th 開始月
+          th 終了月
+          th 業務概要
+          th 詳細内容
+          th OS
+          th 言語
+          th DB、その他
+          th 開発体制人数
+          th 役割
+          th 工程
+          th 備考
+          th アクティブ    
+          th
+          th
+          th
+
+      tbody
+        - @projects.each do |project|
+          tr
+            td = project.code
+            td = project.name
+            td = project.start_date
+            td = project.end_date
+            td = project.summary
+            td = project.description
+            td = project.os
+            td = project.language
+            td = project.database
+            td = project.dep_size
+            td = project.role
+            td = project.experience
+            td = project.remarks
+            td.text-center = "○" if project.active
+            td = link_to '照会', project
+            td = link_to '編集', edit_project_path(project)
+            td = link_to '削除', project, data: {:confirm => '削除しても宜しいでしょうか?'}, :method => :delete
+
+    br
+
+    = link_to '新規作成', new_project_path
