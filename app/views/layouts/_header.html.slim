@@ -35,7 +35,7 @@
           li
              = link_to "ヘルプ", help_path
           - if user_signed_in?
-            Logged in as <strong><%= current_user.email %></strong>.
+            / = current_user.email
             li = link_to 'プロフィール更新', edit_user_registration_path
             | |
             li = link_to "ログアウト", destroy_user_session_path, method: :delete
