@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  resources :transportation_expresses do
+     collection do
+      post 'transportation_confirm'
+    end
+  end
+
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
