@@ -1,0 +1,36 @@
+= form_for @vacation_request do |f|
+  - if @vacation_request.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@vacation_request.errors.count, "error")} prohibited this vacation_request from being saved:"
+      ul
+        - @vacation_request.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :start_date
+    = f.date_select :start_date
+  .field
+    = f.label :end_date
+    = f.date_select :end_date
+  .field
+    = f.label :term
+    = f.number_field :term
+  .field
+    = f.label :category
+    = f.text_field :category
+  .field
+    = f.label :reason
+    = f.text_field :reason
+  .field
+    = f.label :note
+    = f.text_field :note
+  .field
+    = f.label :year
+    = f.text_field :year
+  .field
+    = f.label :month
+    = f.text_field :month
+  .actions = f.submit 'Save'

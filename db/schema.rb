@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604052307) do
+ActiveRecord::Schema.define(version: 20140605061508) do
 
   create_table "attendances", force: true do |t|
     t.date     "attendance_date"
@@ -85,5 +85,19 @@ ActiveRecord::Schema.define(version: 20140604052307) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vacation_requests", force: true do |t|
+    t.integer  "user_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "term"
+    t.string   "category"
+    t.string   "reason"
+    t.string   "note"
+    t.string   "year"
+    t.string   "month"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
