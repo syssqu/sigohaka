@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class SectionsController < ApplicationController
   before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   def index
     @sections = Section.all
