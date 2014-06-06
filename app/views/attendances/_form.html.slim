@@ -15,107 +15,107 @@
       = f.hidden_field :attendance_date, use_month_numbers: true
 
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 日付
-        .large-5.large-pull-4.small-8.columns
+        .large-4.large-pull-5.small-8.columns
           #{@attendance.attendance_date.year}年#{@attendance.attendance_date.month}月#{@attendance.attendance_date.day}日(#{YOUBI[@attendance.wday.to_i]})
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline  勤務パターン
         .large-9.small-8.columns
           = f.select :pattern, KinmuPattern.all.collect {|k| [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time} 実働: #{k.work_time} ", k.id ] }
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 出勤
         .large-3.large-pull-6.small-8.columns
           = f.time_select :start_time
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 退勤
         .large-3.large-pull-6.small-8.columns
          = f.time_select :end_time
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 傷病欠
         .large-5.large-pull-4.small-8.columns
           = f.check_box :byouketu
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 欠勤
         .large-5.large-pull-4.small-8.columns
           = f.check_box :kekkin
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 半欠勤
         .large-5.large-pull-4.small-8.columns
           = f.check_box :hankekkin
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 遅刻
         .large-5.large-pull-4.small-8.columns
           = f.check_box :tikoku
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 早退
         .large-5.large-pull-4.small-8.columns
           = f.check_box :soutai
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 私外出
         .large-5.large-pull-4.small-8.columns
           = f.check_box :gaisyutu
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 特休
         .large-5.large-pull-4.small-8.columns
           = f.check_box :tokkyuu
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 振休
         .large-5.large-pull-4.small-8.columns
           = f.check_box :furikyuu
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 有休
         .large-5.large-pull-4.small-8.columns
           = f.check_box :yuukyuu
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 出張
         .large-5.large-pull-4.small-8.columns
           = f.check_box :syuttyou
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 超過時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :over_time, :value => number_with_precision(f.object.over_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 休日時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :holiday_time, :value => number_with_precision(f.object.holiday_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 深夜時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :midnight_time, :value => number_with_precision(f.object.midnight_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 休憩時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 控除時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :kouzyo_time, :value => number_with_precision(f.object.kouzyo_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 実働時間
         .large-3.large-pull-6.small-8.columns
           = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
       .row
-        .large-3.small-4.columns
+        .large-2.large-offset-1.small-4.columns
           label.left.inline 備考
         .large-5.large-pull-4.small-8.columns
           = f.text_area :remarks
