@@ -24,17 +24,16 @@ class AttendancesController < ApplicationController
       @nendo = Date.today.years_since(1).year
     end
 
-    @attendances = Attendance.where(["user_id = ? and year = ? and month = ?", current_user.id, year, month])
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo, @gatudo)
 
-    if @attendances.count < 1
-        @attendances = []
+    if ! @attendances.exists?
         
         target_date = Date.new(year, month, 16)
         next_date = target_date.months_since(1)
     
         while target_date != next_date
 
-          @attendance = Attendance.new
+          @attendance = current_user.attendances.build
           
           @attendance[:attendance_date] = target_date
           @attendance[:year] = @nendo
@@ -84,15 +83,32 @@ class AttendancesController < ApplicationController
   def edit
   end
 
+  def confirm
+    @attendance = Attendance.new(params[:attendance])
+
+    if ! attendance.valid?
+      render :edit
+    end
+  end
+
   def update
-    @attendance = Attendance.find(params[:id])
-    redirect_to attendances_path, notice: @attendance.id
-    
-    # if @attendance.update_attributes(attendance_params)
-    #   redirect_to attendances_path, notice: '更新しました。'
-    # else
-    #   render :edit
-    # end
+    if @attendance.update_attributes(attendance_params)
+      redirect_to attendances_path, notice: '更新しました。'
+    else
+      render :edit
+    end
+  end
+
+  def print
+    respond_to do |format|
+      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
+      format.pdf do
+        render pdf: '勤務状況報告書',
+               encoding: 'UTF-8',
+               layout: 'pdf.html',
+               show_as_html: params[:debug].present?
+      end
+    end
   end
 
   private
@@ -102,7 +118,7 @@ class AttendancesController < ApplicationController
 
   def attendance_params
     params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
-      :kekkin, :hankekkin, :titoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
+      :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
       :break_time, :kouzyo_time, :work_time, :remarks, :user_id)
   end
 end

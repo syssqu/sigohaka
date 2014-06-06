@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
 
   belongs_to :section
   has_many :kinmu_patterns
+  has_many :attendances
 end
