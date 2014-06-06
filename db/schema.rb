@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605073313) do
+ActiveRecord::Schema.define(version: 20140606040035) do
 
-  create_table "Attendances", force: true do |t|
+  create_table "attendances", force: true do |t|
     t.date     "attendance_date"
     t.string   "year",            limit: 4
     t.string   "month",           limit: 2
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140605073313) do
     t.boolean  "byouketu"
     t.boolean  "kekkin"
     t.boolean  "hankekkin"
-    t.boolean  "titoku"
+    t.boolean  "tikoku"
     t.boolean  "soutai"
     t.boolean  "gaisyutu"
     t.boolean  "tokkyuu"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140605073313) do
     t.string   "holiday",         limit: 1
   end
 
-  add_index "Attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
+  add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
 
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
