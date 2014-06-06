@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Code:
+  = @license.code
+p
+  strong Name:
+  = @license.name
+p
+  strong Years:
+  = @license.years
+p
+  strong User:
+  = @license.user_id
+
+= link_to 'Edit', edit_license_path(@license)
+'|
+= link_to 'Back', licenses_path
