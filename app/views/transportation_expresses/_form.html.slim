@@ -1,0 +1,40 @@
+= form_for @transportation_express,url:{:action => 'transportation_confirm'} do |f|
+  - if @transportation_express.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@transportation_express.errors.count, "error")} prohibited this transportation_express from being saved:"
+      ul
+        - @transportation_express.errors.full_messages.each do |message|
+          li = message
+  .row
+    .large-12.columns
+      / .field
+      /   = f.label :user_id
+      /   = f.number_field :user_id
+      .field
+        label 月/日
+        = f.date_select :koutu_date
+      .field
+        label 行先
+        = f.text_field :destination
+      .field
+        label 乗物経路
+        = f.text_field :route
+      .field
+        label 交通機関
+        = f.text_field :transport
+      .field
+        label 金額
+        = f.number_field :money
+      .field
+        label 備考
+        = f.text_field :note
+      / .field
+      /   = f.label :sum
+      /   = f.number_field :sum
+      / .field
+      /   = f.label :year
+      /   = f.text_field :year
+      / .field
+      /   = f.label :month
+      /   = f.text_field :month
+      .actions = f.submit 'Save'
