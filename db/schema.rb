@@ -94,6 +94,21 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.datetime "updated_at"
   end
 
+  create_table "transportation_expresses", force: true do |t|
+    t.integer  "user_id"
+    t.date     "koutu_date"
+    t.string   "destination"
+    t.string   "route"
+    t.string   "transport"
+    t.integer  "money"
+    t.string   "note"
+    t.integer  "sum"
+    t.string   "year",        limit: 4
+    t.string   "month",       limit: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                             default: "", null: false
     t.string   "encrypted_password",                default: "", null: false

@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
   has_many :licenses
   has_many :kinmu_patterns
   has_many :attendances
+  has_many :transportation_expresses
 end

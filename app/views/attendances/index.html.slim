@@ -67,7 +67,6 @@
                 td.text-right = attendance.attendance_date.strftime("%_m/%_d")
               - else
                 td.text-right = attendance.attendance_date.strftime("%_d")
-              / td = attendance.attendance_date
 
               - if attendance.holiday == "0"
                 td = YOUBI[attendance.wday.to_i]
