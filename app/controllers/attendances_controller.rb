@@ -24,6 +24,8 @@ class AttendancesController < ApplicationController
       @nendo = Date.today.years_since(1).year
     end
 
+    @project = current_user.projects.find_by(active: true)
+
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
     if ! @attendances.exists?
@@ -100,7 +102,33 @@ class AttendancesController < ApplicationController
   end
 
   def print
+    year = Date.today.year
+    month = Date.today.month
+    day = Date.today.day
+    
+    @nendo = Date.today.year
+    @gatudo = Date.today.month
+
+    if Date.today.day < 16
+      month = Date.today.months_ago(1).month
+    end
+
+    if Date.today.day > 15
+      @gatudo = Date.today.months_since(1).month
+    end
+
+    if Date.today.month == 12 and Date.today.day > 15
+      @nendo = Date.today.years_since(1).year
+    end
+
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    
     respond_to do |format|
+      # format.html { redirect_to print_attendances_path(format: :pdf)}
+      # format.pdf do
+      #   render pdf: '勤務状況報告書',
+      #          encoding: 'UTF-8',
+      #          layout: 'pdf.html'
       format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
       format.pdf do
         render pdf: '勤務状況報告書',

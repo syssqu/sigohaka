@@ -1,23 +1,26 @@
-h1 Listing sections
+.row
+  .large-12.columns
+    article.section_list
+      h1 課マスタ一覧画面
 
-table
-  thead
-    tr
-      th Code
-      th Name
-      th
-      th
-      th
+      table
+        thead
+          tr
+            th.text-center コード
+            th.text-center 名称
+            th
+            th
+            th
 
-  tbody
-    - @sections.each do |section|
-      tr
-        td = section.code
-        td = section.name
-        td = link_to 'Show', section
-        td = link_to 'Edit', edit_section_path(section)
-        td = link_to 'Destroy', section, data: {:confirm => 'Are you sure?'}, :method => :delete
+        tbody
+          - @sections.each do |section|
+            tr
+              td = section.code
+              td = section.name
+              td = link_to '照会', section, class: "button tiny secondary"
+              td = link_to '編集', edit_section_path(section), class: "button tiny success"
+              td = link_to '削除', section, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
 
-br
+      br
 
-= link_to 'New Section', new_section_path
+      = link_to '新規作成', new_section_path, class: "button radius"

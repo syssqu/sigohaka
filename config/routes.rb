@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :licenses
+
+  resources :projects
+
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]

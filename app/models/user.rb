@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :section
+  
+  has_many :projects
+  has_many :licenses
   has_many :kinmu_patterns
   has_many :attendances
 end

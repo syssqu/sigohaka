@@ -29,6 +29,8 @@ namespace :db do
 
     users = User.all
     users.each do |user|
+      user.projects.create!(code: "1", start_date:"2014/01/01", end_date:"2014/06/01", summary: "財務会計システム アプリケーション開発・システム運用・保守", active: true)
+      user.licenses.create!(code: "1", name:"応用情報処理")
       user.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     end
   end
