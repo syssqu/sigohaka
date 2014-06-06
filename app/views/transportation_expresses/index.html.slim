@@ -1,0 +1,80 @@
+
+
+/ table
+/   thead
+/     tr
+/       th User
+/       th Koutu date
+/       th Destination
+/       th Route
+/       th Transport
+/       th Money
+/       th Note
+/       th Sum
+/       th Year
+/       th Month
+/       th
+/       th
+/       th
+- @transportation_express.each do |transportation_express|
+  - @sum = transportation_express.money.to_i + @sum.to_i
+.row
+  .large-12.columns style="background-color:#FF9999;"
+    .row
+      .large-6.columns
+        h1 &nbsp;&nbsp;&nbsp;交通費精算書 
+      .large-6.columns
+        h2 #{current_user.family_name} #{current_user.first_name}
+    table style="align:center;"
+      thead
+        tr
+          th 月/日
+          th 行先
+          th 乗り物経路
+          th 交通機関
+          th 金額
+          th 備考
+      tbody
+        - @transportation_express.each do |transportation_express|
+          tr
+            / td = transportation_express.user_id
+            td = transportation_express.koutu_date.strftime('%m月%d日')
+            td = transportation_express.destination
+            td = transportation_express.route
+            td = transportation_express.transport
+            td = transportation_express.money
+            td = transportation_express.note
+            / td = link_to 'Show', transportation_express
+            td = link_to 'Edit', edit_transportation_express_path(transportation_express)
+            td = link_to 'Destroy', transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+        tr
+          td 合計
+          td
+          td
+          td
+          td #{@sum}
+        tr
+        tr
+          td 部門長
+          td 担当者
+        tr
+          td
+          td
+          td 所属
+          td
+          td 社員Ｎｏ
+          td
+        tr
+          td
+          td
+          td Ｐｒｏｊ
+          td
+          td 氏名
+          td #{current_user.family_name} #{current_user.first_name}
+
+
+br
+
+= link_to 'New Transportation express', new_transportation_express_path
+= 

@@ -1,0 +1,33 @@
+p#notice = notice
+
+p
+  strong User:
+  = @vacation_request.user_id
+p
+  strong いつから:
+  = @vacation_request.start_date
+p
+  strong いつまで:
+  = @vacation_request.end_date
+p
+  strong 期間:
+  = @vacation_request.term
+p
+  strong 区別:
+  = @vacation_request.category
+p
+  strong 事由:
+  = @vacation_request.reason
+p
+  strong 備考:
+  = @vacation_request.note
+p
+  strong Year:
+  = @vacation_request.year
+p
+  strong Month:
+  = @vacation_request.month
+
+= link_to 'Edit', edit_vacation_request_path(@vacation_request)
+'|
+= link_to 'Back', vacation_requests_path
