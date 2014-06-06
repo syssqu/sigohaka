@@ -29,6 +29,10 @@
               li
                 = link_to '課マスタ', sections_path
               li
+                = link_to 'プロジェクト', projects_path
+              li
+                = link_to '資格', licenses_path
+              li
                 = link_to '勤務パターン', kinmu_patterns_path
           li
             = link_to "しごはかについて", root_path
@@ -36,6 +40,9 @@
              = link_to "ヘルプ", help_path
           - if user_signed_in?
             / = current_user.email
+            li
+              gravatar_for current_user
+              = current_user.first_name
             li = link_to 'プロフィール更新', edit_user_registration_path
             | |
             li = link_to "ログアウト", destroy_user_session_path, method: :delete

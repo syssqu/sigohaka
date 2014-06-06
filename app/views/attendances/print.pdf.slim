@@ -1,4 +1,95 @@
-h1 hoge
-h2 あいうえお
-h3 愛上尾
+article.attendance_print
+  h1 勤務状況報告書
+  #{seireki2wareki(2014, 6, 1)}年 #{@gatudo}月度
+  #{@holi_1} #{@holi_2} #{@holi_3} #{@holi_4}
+  table
+    tbody
+      tr
+        td プロジェクト名
+        td 
+      tr
+        td 所属
+        td = current_user.section.name
+      tr
+        td 氏名
+        td #{current_user.family_name} #{current_user.first_name}
+  table
+    thead
+      tr
+        th 日付
+        th 曜日
+        th 勤務
+        th 出勤
+        th 退勤
+        th 傷病欠
+        th 欠勤
+        th 半欠勤
+        th 遅刻
+        th 早退
+        th 私外出
+        th 特休
+        th 振休
+        th 有休
+        th 出張
+        th
+          |超過
+          br
+          |時間
+        th
+          |休日
+          br
+          |時間
+        th
+          |深夜
+          br
+          |時間
+        th
+          |休憩
+          br
+          |時間
+        th
+          |控除
+          br
+          |時間
+        th
+          |実働
+          br
+          |時間
+        th 備考
+
+    tbody
+      - @attendances.each do |attendance|
+        tr
+          - if attendance.attendance_date.day == 1 or attendance.attendance_date.day == 16
+            td.text-right = attendance.attendance_date.strftime("%_m/%_d")
+          - else
+            td.text-right = attendance.attendance_date.strftime("%_d")
+          / td = attendance.attendance_date
+
+          - if attendance.holiday == "0"
+            td = YOUBI[attendance.wday.to_i]
+          - else
+            td
+              span = YOUBI[attendance.wday.to_i]
+          td = attendance.pattern
+          td = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
+          td = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
+          td.text-center = "○" if attendance.byouketu
+          td.text-center = "○" if attendance.kekkin
+          td.text-center = "○" if attendance.hankekkin
+          td.text-center = "○" if attendance.tikoku
+          td.text-center = "○" if attendance.soutai
+          td.text-center = "○" if attendance.gaisyutu
+          td.text-center = "○" if attendance.tokkyuu
+          td.text-center = "○" if attendance.furikyuu
+          td.text-center = "○" if attendance.yuukyuu
+          td.text-center = "○" if attendance.syuttyou
+          td = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
+          td = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
+          td = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
+          td = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
+          td = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
+          td = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
+          td = attendance.remarks
+
 / = params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo')
