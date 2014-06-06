@@ -1,0 +1,47 @@
+h1 確認画面
+= form_for @transportation_express do |f|
+  - if @transportation_express.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@transportation_express.errors.count, "error")} prohibited this transportation_express from being saved:"
+      ul
+        - @transportation_express.errors.full_messages.each do |message|
+          li = message
+  .row
+    .large-12.columns
+      / .field
+      /   = f.label :user_id
+      /   = f.number_field :user_id
+      .field
+        label 月/日
+        label = @transportation_express.koutu_date
+        = f.hidden_field :koutu_date,value: @transportation_express.koutu_date
+      .field
+        label 行先
+        label = @transportation_express.destination
+        = f.hidden_field :destination
+      .field
+        label 乗物経路
+        label = @transportation_express.route
+        = f.hidden_field :route
+      .field
+        label 交通機関
+        label = @transportation_express.transport
+        = f.hidden_field :transport
+      .field
+        label 金額
+        label = @transportation_express.money
+        = f.hidden_field :money
+      .field
+        label 備考
+        label = @transportation_express.note
+        = f.hidden_field :note
+      / .field
+      /   = f.label :sum
+      /   = f.number_field :sum
+      / .field
+      /   = f.label :year
+      /   = f.text_field :year
+      / .field
+      /   = f.label :month
+      /   = f.text_field :month
+      .actions = f.submit 'Save'

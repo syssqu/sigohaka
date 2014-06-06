@@ -1,0 +1,36 @@
+p#notice = notice
+
+p
+  strong User:
+  = @transportation_express.user_id
+p
+  strong Koutu date:
+  = @transportation_express.koutu_date
+p
+  strong Destination:
+  = @transportation_express.destination
+p
+  strong Route:
+  = @transportation_express.route
+p
+  strong Transport:
+  = @transportation_express.transport
+p
+  strong Money:
+  = @transportation_express.money
+p
+  strong Note:
+  = @transportation_express.note
+p
+  strong Sum:
+  = @transportation_express.sum
+p
+  strong Year:
+  = @transportation_express.year
+p
+  strong Month:
+  = @transportation_express.month
+
+= link_to 'Edit', edit_transportation_express_path(@transportation_express)
+'|
+= link_to 'Back', transportation_expresses_path
