@@ -15,25 +15,43 @@
           tr
             td 氏名
             td #{current_user.family_name} #{current_user.first_name}
-      = link_to "PDF出力", print_attendances_path, class: "button radius"
-      table
+      = link_to "PDF出力", print_attendances_path, class: "button tiny radius"
+      = link_to "データ初期化", print_attendances_path, class: "button tiny radius"
+      table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
+        / table cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;border:dashed 1px;"
         thead
           tr
-            th.text-center 日付
-            th.text-center 曜日
-            th.text-center 勤務
+            th.text-center rowspan="2" width="45px" 日　　　　付
+            th.text-center rowspan="2" width="20px" 曜　日
+            th.text-center rowspan="2" width="20px" 勤　務
+            th.text-center colspan="2" width="100px" 勤務時間
+            th.text-center rowspan="2" width="20px" 傷病欠
+            th.text-center rowspan="2" width="20px" 欠　勤
+            th.text-center rowspan="2" width="20px" 半欠勤
+            th.text-center rowspan="2" width="20px" 遅　刻
+            th.text-center rowspan="2" width="20px" 早　退
+            th.text-center rowspan="2" width="20px" 私外出
+            th.text-center rowspan="2" width="20px" 特　休
+            th.text-center rowspan="2" width="20px" 振　休
+            th.text-center rowspan="2" width="20px" 有　休
+            th.text-center rowspan="2" width="20px" 出　張
+            th.text-center colspan="3" width="140px" 所定時間外勤務
+            th.text-center rowspan="2" width="50px" 
+              |休憩
+              br
+              |時間
+            th.text-center rowspan="2" width="50px" 
+              |控除
+              br
+              |時間
+            th.text-center rowspan="2" width="50px" 
+              |実働
+              br
+              |時間
+            th.text-center rowspan="2" 備考
+          tr
             th.text-center 出勤
             th.text-center 退勤
-            th.text-center 傷病欠
-            th.text-center 欠勤
-            th.text-center 半欠勤
-            th.text-center 遅刻
-            th.text-center 早退
-            th.text-center 私外出
-            th.text-center 特休
-            th.text-center 振休
-            th.text-center 有休
-            th.text-center 出張
             th.text-center
               |超過
               br
@@ -46,36 +64,25 @@
               |深夜
               br
               |時間
-            th.text-center
-              |休憩
-              br
-              |時間
-            th.text-center
-              |控除
-              br
-              |時間
-            th.text-center
-              |実働
-              br
-              |時間
-            th.text-center 備考
-
         tbody
           - @attendances.each do |attendance|
             tr
               - if attendance.attendance_date.day == 1 or attendance.attendance_date.day == 16
-                td.text-right = attendance.attendance_date.strftime("%_m/%_d")
+                td.text-right
+                  = attendance.attendance_date.strftime("%_m/%_d")
+                  |&nbsp;
               - else
-                td.text-right = attendance.attendance_date.strftime("%_d")
-
+                td.text-right
+                  = attendance.attendance_date.strftime("%_d")
+                  |&nbsp;
               - if attendance.holiday == "0"
-                td = YOUBI[attendance.wday.to_i]
+                td.text-center = YOUBI[attendance.wday.to_i]
               - else
-                td
+                td.text-center
                   span = YOUBI[attendance.wday.to_i]
-              td = attendance.pattern
-              td = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
-              td = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
+              td.text-center = attendance.pattern
+              td.text-center = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
+              td.text-center = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
               td.text-center = "○" if attendance.byouketu
               td.text-center = "○" if attendance.kekkin
               td.text-center = "○" if attendance.hankekkin
@@ -86,13 +93,13 @@
               td.text-center = "○" if attendance.furikyuu
               td.text-center = "○" if attendance.yuukyuu
               td.text-center = "○" if attendance.syuttyou
-              td = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
-              td = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
-              td = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
-              td = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
-              td = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
-              td = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
-              td width="140" = attendance.remarks
+              td.text-center = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
+              td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
+              td width="15%" = attendance.remarks
               / td = link_to 'Show', attendance
-              td = link_to '修正', edit_attendance_path(attendance)
+              td = link_to '修正', edit_attendance_path(attendance), class: "button tiny success"
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
