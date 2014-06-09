@@ -4,8 +4,8 @@
 .gray {background:#3E4C59;}
 .button{margin-right:10px;}     /* ボタンとボタンの隙間 */
 
-a:link {color:#fff;} /*未訪問のリンクの色*/
-a:visited {color:#fff;} /*訪問済みのリンクの色*/
+a:link .button{color:#fff;} /*未訪問のリンクの色*/
+a:visited .button{color:#fff;} /*訪問済みのリンクの色*/
 
 /* =============================================================================
    課マスタ
