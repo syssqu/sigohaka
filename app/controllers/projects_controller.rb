@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = current_user.project.build
+    @project = current_user.projects.build
   end
 
   # GET /projects/1/edit
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = current_user.project.build(project_params)
+    @project = current_user.projects.build(project_params)
 
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
@@ -62,6 +62,6 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:code, :name, :start_date, :end_date, :summary, :description,
-                                      :os, :language, :database, :dep_size, :role, :experience, :remarks)
+                                      :os, :language, :database, :dep_size, :role, :experience, :remarks, :active)
     end
 end
