@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = current_user.project.build
+    @project = current_user.projects.build
   end
 
   # GET /projects/1/edit
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = current_user.project.build(project_params)
+    @project = current_user.projects.build(project_params)
 
     if @project.save
       redirect_to @project, notice: 'Project was successfully created.'
