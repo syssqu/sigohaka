@@ -5,15 +5,16 @@ namespace :db do
     Section.create!(code: "1", name: "システム事業部1課")
     Section.create!(code: "2", name: "システム事業部2課")
     Section.create!(code: "3", name: "システム事業部3課")
-    
-    User.create!(family_name: "中村",
+
+    admin = User.create!(family_name: "中村",
                  first_name: "淳一郎",
                  kana_family_name: "ナカムラ",
                  kana_first_name: "ジュンイチロウ",
                  email: "njsekay@gmail.com",
                  password: "hydeouT4342",
                  password_confirmation: "hydeouT4342",
-                 section_id: 2
+                 section_id: 2,
+                 role: "admin"
       )
     
     9.times do |n|

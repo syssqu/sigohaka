@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606070609) do
+ActiveRecord::Schema.define(version: 20140609065006) do
 
   create_table "attendances", force: true do |t|
     t.date     "attendance_date"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.string   "phone",                  limit: 13
     t.string   "gakureki"
     t.text     "remarks"
+    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -158,7 +159,5 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
 
 end

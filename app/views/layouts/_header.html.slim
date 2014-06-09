@@ -1,10 +1,10 @@
 .row
   .large-12.columns
-    nav.top-bar data-topbar="" 
+    nav.top-bar data-topbar=""
       ul.title-area
         li.name
           h1
-            a href="#"  しごはか
+            = link_to "しごはか", root_path
         li.toggle-topbar.menu-icon
           a href="#" 
             span Menu
@@ -23,27 +23,26 @@
                 = link_to '休暇届', vacation_requests_path
               li
                 = link_to '通勤届', attendances_path
-          li.has-dropdown
-            = link_to "管理", root_path
-            ul.dropdown
-              li
-                = link_to '課マスタ', sections_path
-              li
-                = link_to 'プロジェクト', projects_path
-              li
-                = link_to '資格', licenses_path
-              li
-                = link_to '勤務パターン', kinmu_patterns_path
           li
-            = link_to "しごはかについて", root_path
-          li
-             = link_to "ヘルプ", help_path
+            = link_to "ヘルプ", help_path
+          - if can? :manage, current_user
+            li.has-dropdown
+              = link_to "管理者", root_path
+              ul.dropdown
+                li
+                  = link_to '課マスタ', sections_path
           - if user_signed_in?
-            / = current_user.email
             li
-              gravatar_for current_user
-              = current_user.first_name
-            li = link_to 'プロフィール更新', edit_user_registration_path
+              a href="#{edit_user_registration_path}"
+                = gravatar_for nil, size:20
+                = current_user.email
+            li.has-dropdown
+              = link_to "アカウント設定", root_path
+              ul.dropdown
+                li = link_to 'プロフィール更新', edit_user_registration_path
+                li = link_to 'プロジェクト', projects_path
+                li = link_to '資格', licenses_path
+                li = link_to '勤務パターン', kinmu_patterns_path
             | |
             li = link_to "ログアウト", destroy_user_session_path, method: :delete
           - else

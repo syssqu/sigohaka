@@ -13,6 +13,7 @@ gem 'faker'
 gem "slim"
 gem "slim-rails"
 gem 'devise'
+gem 'cancan'
 gem 'bcrypt'
 gem 'i18n_generators'
 gem 'holiday_japan'

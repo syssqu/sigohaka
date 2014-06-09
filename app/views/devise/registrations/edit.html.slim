@@ -1,33 +1,14 @@
 .row
   .large-12.columns.clearfix
-    h2
-      | Edit #{resource_name.to_s.humanize}
+    h3
+      | アカウント編集
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
       = devise_error_messages!
-      .row
-        .large-2.columns
-          label.left.inline メールアドレス
-        .large-5.large-pull-5.columns
-          = f.email_field :email, autofocus: true
-      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-        div
-          | Currently waiting confirmation for: #{resource.unconfirmed_email}
-      .row
-        .large-2.columns
-          label.left.inline 新パスワード
-          / i (leave blank if you don't want to change it)
-        .large-5.large-pull-5.columns
-          = f.password_field :password, autocomplete: "off"
-      .row
-        .large-2.columns
-          label.left.inline 新パスワード(確認用)
-        .large-5.large-pull-5.columns
-          = f.password_field :password_confirmation, autocomplete: "off"
+
       .row
         .large-12.columns
-          - if devise_mapping.rememberable?
-            = f.check_box :remember_me
-            = f.label :remember_me
+          h1
+            = gravatar_for f.object
       .row
         .large-2.columns.show-for-large-up
           label.left.inline
@@ -39,11 +20,11 @@
             span *
         .large-1.small-2.columns
           label.right.inline 姓
-        .large-4.small-4.columns
+        .large-2.small-4.columns
           = f.text_field :family_name
         .large-1.small-2.columns
           label.right.inline 名
-        .large-4.small-4.columns
+        .large-2.large-pull-4.small-4.columns
           = f.text_field :first_name
       .row
         .large-2.columns.show-for-large-up
@@ -56,29 +37,190 @@
             span *
         .large-1.small-2.columns
           label.right.inline セイ
-        .large-4.small-4.columns
+        .large-2.small-4.columns
           = f.text_field :kana_family_name
         .large-1.small-2.columns
           label.right.inline メイ
-        .large-4.small-4.columns
+        .large-2.large-pull-4.small-4.columns
           = f.text_field :kana_first_name
       .row
         .large-2.columns
-          label.left.inline 所属
-        .large-5.large-pull-5.columns
-          / = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }, { :include_blank => true }
-          = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
+          label.left.inline メールアドレス
+        .large-3.large-pull-7.columns
+          = f.email_field :email, autofocus: true
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        div
+          | Currently waiting confirmation for: #{resource.unconfirmed_email}
+      / .row
+      /   .large-2.columns
+      /     label.left.inline 新パスワード
+      /     / i (leave blank if you don't want to change it)
+      /   .large-5.large-pull-5.columns
+      /     = f.password_field :password, autocomplete: "off"
+      / .row
+      /   .large-2.columns
+      /     label.left.inline 新パスワード(確認用)
+      /   .large-5.large-pull-5.columns
+      /     = f.password_field :password_confirmation, autocomplete: "off"
+      / .row
+      /   .large-12.columns
+      /     - if devise_mapping.rememberable?
+      /       = f.check_box :remember_me
+      /       = f.label :remember_me
       .row
         .large-2.columns
-          label.left.inline パスワード
-          / i (we need your current password to confirm your changes)
-        .large-5.large-pull-5.columns
-          = f.password_field :current_password, autocomplete: "off"
+          label.left.inline 所属
+        .large-3.large-pull-7.columns
+          / = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }, { :include_blank => true }
+          = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
+      / .row
+      /   .large-2.columns
+      /     label.left.inline パスワード
+      /     / i (we need your current password to confirm your changes)
+      /   .large-5.large-pull-5.columns
+      /     = f.password_field :current_password, autocomplete: "off"
+      .row
+        .large-2.small-3.columns
+          label.left.inline 性別
+        .large-10.small-9.columns
+          label.left.inline style="width:20px;" = f.radio_button :gender, :man
+          label.left.inline style="width:40px;" for="man"  男
+          label.left.inline style="width:20px;" = f.radio_button :gender, :woman
+          label.left.inline style="width:40px;" for="woman"  女
+      .row
+        .large-2.columns.show-for-large-up
+          label.left.inline
+            | 生年月日
+            span *
+        .small-12.columns.show-for-medium-down
+          label
+            | 生年月日
+            span *
+        .large-2.large-pull-8.small-5.columns
+          = f.date_select :birth_date, use_month_numbers: true
+      / メールアドレス============================
+      .row
+        .large-8
+            label 
+              strong 連絡先
+      .row
+        .large-2.small-4.columns
+          label.left.inline.show-for-large-up
+          | メールアドレス
+          span *
+          label.left.inline.show-for-medium-down
+          | Email
+          span *
+        .large-3.large-pull-7.small-8.columns
+          = f.text_field :email
+      / 住所============================
+      section
+        .row
+          .large-8
+            label 
+              strong 住所
+        .row
+          .small-12.columns.show-for-medium-down
+            label
+              span 半角でご記入下さい 例) 123-4567
+        .row
+          .large-2.small-4.columns
+            label.left.inline
+            | 郵便番号
+            span *
+          .large-3.small-8.columns
+            = f.text_field :postal_code
+          .large-7.columns.show-for-large-up
+            label.left.inline
+              span 半角でご記入下さい 例) 123-4567
+        .row
+          .large-2.small-4.columns
+            label.left.inline
+              | 都道府県
+              span *
+          .large-3.large-pull-7.small-8.columns
+            = f.select :prefecture, @_prefecture, :include_blank => true
+        .row
+          .large-2.small-4.columns
+            label.left.inline
+            | 市区町村
+            span *
+          .large-3.large-pull-7.small-8.columns
+            = f.text_field :city
+        .row
+          .large-2.small-4.columns
+            label.left.inline
+            | 番地
+          .large-3.large-pull-7.small-8.columns
+            = f.text_field :house_number
+        .row
+          .large-2.small-4.columns
+            label.left.inline
+            | 建物
+          .large-3.large-pull-7.small-8.columns
+            = f.text_field :building
+      / 電話番号============================
+      section
+        .row
+          .large-8
+            label 
+              strong 電話番号
+          .large-12.small-12
+            .row
+              .small-12.columns.show-for-medium-down
+                label
+                  span 半角でご記入下さい 例) 012-3456-7890
+            .row
+              .large-2.small-4.columns
+                label.left.inline
+                  | 電話番号
+                  span *
+              .large-3.small-8.columns
+                = f.text_field :phone
+              .large-7.columns.show-for-large-up
+                label.left.inline
+                  span 半角でご記入下さい 例) 012-3456-7890
+
+      .row
+        .large-2.small-4.columns
+          label.left.inline.show-for-large-up
+          | 社員No.
+        .large-3.large-pull-7.small-8.columns
+          = f.text_field :employee_no
+      .row
+        .large-2.small-4.columns
+          label.left.inline.show-for-large-up
+          | 年齢
+        .large-3.large-pull-7.small-8.columns
+          = f.text_field :age
+      .row
+        .large-2.small-4.columns
+          label.left.inline.show-for-large-up
+          | 経験
+          span *
+        .large-3.large-pull-7.small-8.columns
+          = f.text_field :experience
+      / 最終学歴============================
+      section
+        .row
+          .large-8.small-8
+            label 
+              strong 学歴
+        .row
+          .large-12.small-12
+            .row
+              .large-2.small-4.columns
+                label.left.inline
+                  |最終学歴
+                  br
+                  |<font color="red">600字以内</color>
+              .large-10.small-8.columns
+                label 
+                  |大学名、専門学校名、学部、学科、主な専門分野
+                = f.text_area :gakureki, 'placeholder' => "ご記入下さい。 ",size: "x5"
       .row
         .large-6.large-centered.columns
           = f.submit "更新", class: "button radius"
-    h3 Cancel my account
-    p
-      | Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
-    = link_to "Back", :back
+    #{button_to "ユーザーを削除", registration_path(resource_name), data: { confirm: "宜しいですか?" }, method: :delete, class: "button radius"}
+    = link_to "Back", :back, class: "button radius"
 
