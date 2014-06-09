@@ -159,4 +159,6 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.datetime "updated_at"
   end
 
+  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
+
 end
