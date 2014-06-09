@@ -1,6 +1,6 @@
-.row
-  .large-12.columns
-    article.attendance_index
+article.attendance_index
+  .row
+    .large-12.columns
       h1 勤務状況報告書
       #{seireki2wareki(2014, 6, 1)}年 #{@gatudo}月度
       #{@holi_1} #{@holi_2} #{@holi_3} #{@holi_4}
@@ -8,10 +8,10 @@
         tbody
           tr
             td プロジェクト名
-            td = @project.summary
+            td = @project.summary if ! @project.nil?
           tr
             td 所属
-            td = current_user.section.name
+            td = current_user.section.name if ! current_user.section.nil?
           tr
             td 氏名
             td #{current_user.family_name} #{current_user.first_name}
@@ -21,7 +21,7 @@
         / table cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;border:dashed 1px;"
         thead
           tr
-            th.text-center rowspan="2" width="45px" 日　　　　付
+            th.text-center rowspan="2" width="38px" 日　　　　付
             th.text-center rowspan="2" width="20px" 曜　日
             th.text-center rowspan="2" width="20px" 勤　務
             th.text-center colspan="2" width="100px" 勤務時間
@@ -103,3 +103,66 @@
               / td = link_to 'Show', attendance
               td = link_to '修正', edit_attendance_path(attendance), class: "button tiny success"
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
+          tr
+            td.text-center colspan="3" 社員No. 
+            td.text-center = current_user.employee_no
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+          tr
+            td.text-center colspan="3" 勤務日数
+            td.text-center 20
+            td.text-center 合計
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+            td.text-center
+      table.kinmu_pattern border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
+        thead
+          tr
+            td
+            td
+            td.text-center width="80px;" 開始
+            td.text-center width="80px;" 終了
+            td.text-center width="80px;" 休憩
+            td.text-center width="80px;" 実働
+        tbody
+          - current_user.kinmu_patterns.each do |kinmu|
+            tr
+              td.text-center width="100px;" 勤務パターン
+              td.text-center width="20px;" = kinmu.code
+              td.text-center = kinmu.start_time.strftime("%_H:%M")
+              td.text-center = kinmu.end_time.strftime("%_H:%M")
+              td.text-center = sprintf( "%.2f", kinmu.break_time )
+              td.text-center = sprintf( "%.2f", kinmu.work_time )
+            

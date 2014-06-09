@@ -1,16 +1,17 @@
 .row
   .large-12.columns.clearfix
-    h2 ログイン画面
+    h3 ログイン画面
+    br
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .row
         .large-2.columns
           label.left.inline メールアドレス
-        .large-5.large-pull-5.columns
+        .large-3.large-pull-7.columns
           = f.email_field :email, autofocus: true
       .row
         .large-2.columns
           label.left.inline パスワード
-        .large-5.large-pull-5.columns
+        .large-3.large-pull-7.columns
           = f.password_field :password, autocomplete: "off"
       .row
         .large-12.columns
