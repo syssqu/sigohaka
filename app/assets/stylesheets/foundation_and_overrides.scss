@@ -42,9 +42,9 @@ $row-width: 100%;
 // Global
 
 // We use these to control various global styles
-// $body-bg: #fff;
-// $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-bg: #FAFAFA;
+$body-font-color: #333;
+$body-font-family: "Lucida Grande", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 // $body-font-weight: $font-weight-normal;
 // $body-font-style: normal;
 
@@ -353,7 +353,7 @@ $row-width: 100%;
 // $button-font-align: center;
 
 // We use these to control various hover effects.
-// $button-function-factor: -20%;
+$button-function-factor: -40%;
 
 // We use these to control button border styles.
 // $button-border-width: 0px;
