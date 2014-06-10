@@ -1,0 +1,64 @@
+.row
+  .large-12.columns
+    = form_for @attendance_other do |f|
+      - if @attendance_other.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@attendance_other.errors.count, "error")} prohibited this attendance_other from being saved:"
+          ul
+            - @attendance_other.errors.full_messages.each do |message|
+              li = message
+
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline 名称
+        .large-1.large-pull-10.columns
+          = f.text_field :summary
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline 出勤
+        .large-3.large-pull-8.columns
+          = f.time_select :start_time
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline 退勤
+        .large-3.large-pull-8.columns
+          = f.time_select :end_time
+      .row
+        .large-1.small-4.columns
+          label.left.inline 超過時間
+        .large-1.large-pull-10.small-8.columns
+          = f.text_field :over_time, :value => number_with_precision(f.object.over_time,:precision => 2)
+      .row
+        .large-1.small-4.columns
+          label.left.inline 休日時間
+        .large-1.large-pull-10.small-8.columns
+          = f.text_field :holiday_time, :value => number_with_precision(f.object.holiday_time,:precision => 2)
+      .row
+        .large-1.small-4.columns
+          label.left.inline 深夜時間
+        .large-1.large-pull-10.small-8.columns
+          = f.text_field :midnight_time, :value => number_with_precision(f.object.midnight_time,:precision => 2)
+      .row
+        .large-1.small-4.columns
+          label.left.inline 休憩時間
+        .large-1.large-pull-10.small-8.columns
+          = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
+      .row
+        .large-1.small-4.columns
+          label.left.inline 控除時間
+        .large-1.large-pull-10.small-8.columns
+          = f.text_field :kouzyo_time, :value => number_with_precision(f.object.kouzyo_time,:precision => 2)
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline 実働時間
+        .large-1.large-pull-10.columns
+          = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
+      .row
+        .large-1.small-4.columns
+          label.left.inline 備考
+        .large-4.large-pull-7.small-8.columns
+          = f.text_area :remarks
+      .row
+        .large-6.large-centered.columns
+          = f.submit "登録", class: "button radius"
+          = link_to '戻る', attendances_path, class: "button radius"

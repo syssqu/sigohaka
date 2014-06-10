@@ -23,6 +23,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
+    setting_adress_info
+    
     @user = User.find(current_user.id)
 
     successfully_updated = if needs_password?(@user, params)

@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140609065006) do
+ActiveRecord::Schema.define(version: 20140610040347) do
+
+  create_table "attendance_others", force: true do |t|
+    t.string   "summary"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.decimal  "over_time",     precision: 4, scale: 2
+    t.decimal  "holiday_time",  precision: 4, scale: 2
+    t.decimal  "decimal",       precision: 4, scale: 2
+    t.decimal  "midnight_time", precision: 4, scale: 2
+    t.decimal  "break_time",    precision: 4, scale: 2
+    t.decimal  "kouzyo_time",   precision: 4, scale: 2
+    t.decimal  "work_time",     precision: 4, scale: 2
+    t.text     "remarks"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "attendances", force: true do |t|
     t.date     "attendance_date"
@@ -50,8 +67,8 @@ ActiveRecord::Schema.define(version: 20140609065006) do
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
-    t.integer  "break_time"
-    t.integer  "work_time"
+    t.decimal  "break_time",           precision: 4, scale: 2
+    t.decimal  "work_time",            precision: 4, scale: 2
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -2,12 +2,13 @@
 class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  
+
   def index
 
-    month = get_month
-    @nendo = get_nendo
-    @gatudo = get_gatudo
+    # aiueo = Date.new(2014, 2, 20)
+
+    @nendo = get_nendo(Date.today)
+    @gatudo = get_gatudo(Date.today)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
@@ -19,7 +20,7 @@ class AttendancesController < ApplicationController
 
     if ! @attendances.exists?
         
-      target_date = Date.new(Date.today.year, month, 16)
+      target_date = Date.new(Date.today.year, get_month(Date.today), 16)
       next_date = target_date.months_since(1)
       
       while target_date != next_date
@@ -51,48 +52,31 @@ class AttendancesController < ApplicationController
         end
       end
     end
-  end
 
-  def get_gatudo
-    gatudo = Date.today.month
+    # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
+    @others = current_user.attendance_others
+    
+    if ! @others.exists?
+      @other = current_user.attendance_others.build(summary:"課会", work_time: 1.00, remarks: "XXX実施")
+      if @other.save
+        @others << @other
+      end
 
-    if Date.today.day > 15
-      gatudo = Date.today.months_since(1).month
+      @other = current_user.attendance_others.build(summary:"全体会")
+      if @other.save
+        @others << @other
+      end
+
+      @other = current_user.attendance_others.build()
+      if @other.save
+        @others << @other
+      end
     end
-
-    gatudo
+    
   end
 
-  def get_nendo
-    nendo = Date.today.year
-
-    if Date.today.month == 12 and Date.today.day > 15
-      nendo = Date.today.years_since(1).year
-    end
-
-    nendo
-  end
-
-  def get_month
-    month = Date.today.month
-
-    if Date.today.day < 16
-      month = Date.today.months_ago(1).month
-    end
-
-    month
-  end
-
-  def get_project
-    if current_user.projects.nil?
-      Project.new
-    else
-      current_user.projects.find_by(active: true)
-    end
-  end
-
-  def holiday?(target_date)
-    target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
+  def init_attendances
+    redirect_to attendances_path, notice: 'データを初期化しました。'
   end
 
   def new
@@ -129,26 +113,13 @@ class AttendancesController < ApplicationController
   end
 
   def print
-    year = Date.today.year
-    month = Date.today.month
-    day = Date.today.day
+
+    @nendo = get_nendo(Date.today)
+    @gatudo = get_gatudo(Date.today)
+    @project = get_project
     
-    @nendo = Date.today.year
-    @gatudo = Date.today.month
-
-    if Date.today.day < 16
-      month = Date.today.months_ago(1).month
-    end
-
-    if Date.today.day > 15
-      @gatudo = Date.today.months_since(1).month
-    end
-
-    if Date.today.month == 12 and Date.today.day > 15
-      @nendo = Date.today.years_since(1).year
-    end
-
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @others = current_user.attendance_others
     
     respond_to do |format|
       # format.html { redirect_to print_attendances_path(format: :pdf)}
@@ -175,5 +146,47 @@ class AttendancesController < ApplicationController
       params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
         :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
         :break_time, :kouzyo_time, :work_time, :remarks, :user_id)
+    end
+
+    def get_gatudo(target_date)
+      gatudo = target_date.month
+
+      if target_date.day > 15
+        gatudo = target_date.months_since(1).month
+      end
+
+      gatudo
+    end
+
+    def get_nendo(target_date)
+      nendo = target_date.year
+
+      if target_date.month == 12 and target_date.day > 15
+        nendo = target_date.years_since(1).year
+      end
+
+      nendo
+    end
+
+    def get_month(target_date)
+      month = target_date.month
+
+      if target_date.day < 16
+        month = target_date.months_ago(1).month
+      end
+
+      month
+    end
+
+    def get_project
+      if current_user.projects.nil?
+        Project.new
+      else
+        current_user.projects.find_by(active: true)
+      end
+    end
+
+    def holiday?(target_date)
+      target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
     end
 end
