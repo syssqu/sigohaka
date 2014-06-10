@@ -1,4 +1,4 @@
-/* =============================================================================
+ /*=============================================================================
    ページ共通
    ========================================================================== */
 .gray {background:#3E4C59;}
@@ -34,7 +34,6 @@ article.attendance_index select {display: inline-block;width:15%;}
    勤務状況報告書(編集)
    ========================================================================== */
 article.attendance_edit select {display: inline-block;width:45%;}
-
 
 /* =============================================================================
    勤務状況報告書(PDF)
@@ -86,3 +85,5 @@ article.kinmu_patterns_edit select {display: inline-block;width:30%;}
    ========================================================================== */
 article.attendance_others.edit select {display: inline-block;width:30%;}
 
+/*article.vacation_request_print table{border-spacing: 0;}*/
+/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
