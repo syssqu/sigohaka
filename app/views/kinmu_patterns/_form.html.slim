@@ -8,30 +8,31 @@
             - @kinmu_pattern.errors.full_messages.each do |message|
               li = message
       .row
-        .large-2.columns.show-for-large-up
+        .large-1.columns.show-for-large-up
           label.left.inline コード
-        .large-2.large-pull-8.columns
-          = f.text_field :code
+        .large-1.large-pull-10.columns
+          = f.text_field :code, disabled: true
       .row
-        .large-2.columns.show-for-large-up
+        .large-1.columns.show-for-large-up
           label.left.inline 出勤
-        .large-3.large-pull-7.columns
+        .large-3.large-pull-8.columns
           = f.time_select :start_time
       .row
-        .large-2.columns.show-for-large-up
+        .large-1.columns.show-for-large-up
           label.left.inline 退勤
-        .large-3.large-pull-7.columns
+        .large-3.large-pull-8.columns
           = f.time_select :end_time
       .row
-        .large-2.columns.show-for-large-up
+        .large-1.columns.show-for-large-up
           label.left.inline 休憩時間
-        .large-3.large-pull-7.columns
-          = f.number_field :break_time
+        .large-1.large-pull-10.columns
+          = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
       .row
-        .large-2.columns.show-for-large-up
+        .large-1.columns.show-for-large-up
           label.left.inline 実働時間
-        .large-3.large-pull-7.columns
-          = f.number_field :work_time
+        .large-1.large-pull-10.columns
+          = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
       .row
         .large-6.large-centered.columns
           = f.submit "登録", class: "button radius"
+          = link_to '戻る', kinmu_patterns_path, class: "button radius"

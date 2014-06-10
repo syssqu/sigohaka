@@ -1,4 +1,4 @@
-/* =============================================================================
+ /*=============================================================================
    ページ共通
    ========================================================================== */
 .gray {background:#3E4C59;}
@@ -7,35 +7,86 @@
 a:link .button{color:#fff;} /*未訪問のリンクの色*/
 a:visited .button{color:#fff;} /*訪問済みのリンクの色*/
 
+.container{background:#fff;padding:1% 3%; border-color:#fff !important;}
+.container p{font-size:14px;margin-bottom:15px;}
+span{margin-left:10px;color:red;}
+
 /* =============================================================================
    課マスタ
    ========================================================================== */
 article.section_list .button{margin-right:0px;}
 
 /* =============================================================================
-   勤務状況報告書
+   勤務状況報告書(一覧)
    ========================================================================== */
-article.attendance_index span{color:red;}
+article.attendance_index span{margin:0px;color:red;}
 
 article.attendance_index table{border-spacing: 0;}
 article.attendance_index table tr th {font-size:12px;}
 article.attendance_index table tr th{padding:5px 5px !important;}
 article.attendance_index table tr td {font-size:12px;}
 article.attendance_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
-
 article.attendance_index table tr td .button {padding:4px !important;margin:0px !important;}
-.dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;}
+article.attendance_ table tr td.bg_gray{background-color:#9F9687 !important;}
+article.attendance_index select {display: inline-block;width:15%;}
 
+/* =============================================================================
+   勤務状況報告書(編集)
+   ========================================================================== */
 article.attendance_edit select {display: inline-block;width:45%;}
-
 
 /* =============================================================================
    勤務状況報告書(PDF)
    ========================================================================== */
+article.attendance_print{margin-top:70px;}
+article.attendance_print span{margin:0px;color:red;}
+
 article.attendance_print table{border-spacing: 0;}
-/* article.profile_company table tr td {} */
-/* article.attendance_print table tr{height:0px;margin:0px;padding:0px;} */
-article.attendance_print table tr td{background-color:#fff;font-size:10px;border:1px solid black;}
+article.attendance_print table#attendance_main{width:755px;margin-bottom:25px;}
+article.attendance_print table tr th {font-size:10px;padding:1px 1px !important;}
+article.attendance_print table tr td {font-size:10px;padding:0px 0px !important;height:20px !important;background-color:#fff;}
+article.attendance_print table tr td .button {padding:4px !important;margin:0px !important;}
+article.attendance_print .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;}
+#attendance_header{width:755px;}
+article.attendance_print table tr td.bg_gray{background-color:#9F9687 !important;}
+
+#attendance_header table#attendance_project {border:0; width:230px;margin-right:60px;margin-top:10px;}
+#attendance_header table#attendance_project td {background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+#attendance_header table#attendance_project td strong{color:#6E6E6E;}
+#attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+#attendance_nengetu{width:240px;text-align:center;}
+
+a:visited.button{color:white;}
+
+
+
+/* =============================================================================
+   アカウント登録
+   ========================================================================== */
+article.registrations.new #error_explanation{border:none !important;background:#fff;}
+article.registrations.new .alert-box.error{background:#D01E29;border-color:#D01E29;}
+article.registrations.new ul.pricing-table{list-style-type: none !important;}
+article.registrations.new ul li.bullet-item {color:#D91A1A;}
+
+/* =============================================================================
+   アカウント編集
+   ========================================================================== */
+.welcome_image{background-color:#3F8EBF;width:480px;height:440px;display:table-cell;vertical-align:middle;}
+.welcome_board{color:#fff;}
+article.registrations.edit .birth_date_format select {display: inline-block;width:20%;}
+
+/* =============================================================================
+   勤務パターン
+   ========================================================================== */
+article.kinmu_patterns_edit select {display: inline-block;width:30%;}
+
+/* =============================================================================
+   勤務状況報告書(その他)
+   ========================================================================== */
+article.attendance_others.edit select {display: inline-block;width:30%;}
+
+/*article.vacation_request_print table{border-spacing: 0;}*/
+/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
 
 /* =============================================================================
    交通費精算書(PDF)
