@@ -9,11 +9,6 @@ a:visited .button{color:#fff;} /*訪問済みのリンクの色*/
 
 .container{background:#fff;padding:1% 3%; border-color:#fff !important;}
 .container p{font-size:14px;margin-bottom:15px;}
-
-article.registrations.new #error_explanation{border:none !important;background:#fff;}
-article.registrations.new .alert-box.error{background:#D01E29;border-color:#D01E29;}
-article.registrations.new ul.pricing-table{list-style-type: none !important;}
-article.registrations.new ul li.bullet-item {color:#D91A1A;}
 span{margin-left:10px;color:red;}
 
 /* =============================================================================
@@ -22,7 +17,7 @@ span{margin-left:10px;color:red;}
 article.section_list .button{margin-right:0px;}
 
 /* =============================================================================
-   勤務状況報告書
+   勤務状況報告書(一覧)
    ========================================================================== */
 article.attendance_index span{margin:0px;color:red;}
 
@@ -31,10 +26,11 @@ article.attendance_index table tr th {font-size:12px;}
 article.attendance_index table tr th{padding:5px 5px !important;}
 article.attendance_index table tr td {font-size:12px;}
 article.attendance_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
-
 article.attendance_index table tr td .button {padding:4px !important;margin:0px !important;}
 
-
+/* =============================================================================
+   勤務状況報告書(編集)
+   ========================================================================== */
 article.attendance_edit select {display: inline-block;width:45%;}
 
 
@@ -44,6 +40,7 @@ article.attendance_edit select {display: inline-block;width:45%;}
 article.attendance_print span{margin:0px;color:red;}
 
 article.attendance_print table{border-spacing: 0;}
+article.attendance_print table#attendance_main{width:755px;}
 article.attendance_print table tr th {font-size:9px;}
 article.attendance_print table tr th{padding:1px 1px !important;}
 article.attendance_print table tr td {font-size:9px;}
@@ -52,15 +49,35 @@ article.attendance_print table tr td .button {padding:4px !important;margin:0px 
 article.attendance_print .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;}
 #attendance_header{width:755px;}
 
-#attendance_header table.project {border:0; width:200px;margin-right:100px;margin-top:10px;}
-#attendance_header table.project td {background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
-/* #attendance_header table.project .large_width{width: ;} */
-#attendance_header table.project td strong{color:#6E6E6E;}
+#attendance_header table#attendance_project {border:0; width:230px;margin-right:60px;margin-top:10px;}
+#attendance_header table#attendance_project td {background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+#attendance_header table#attendance_project td strong{color:#6E6E6E;}
 #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
 #attendance_nengetu{width:240px;text-align:center;}
+
 
 /* =============================================================================
    アカウント登録
    ========================================================================== */
+article.registrations.new #error_explanation{border:none !important;background:#fff;}
+article.registrations.new .alert-box.error{background:#D01E29;border-color:#D01E29;}
+article.registrations.new ul.pricing-table{list-style-type: none !important;}
+article.registrations.new ul li.bullet-item {color:#D91A1A;}
+
+/* =============================================================================
+   アカウント編集
+   ========================================================================== */
 .welcome_image{background-color:#3F8EBF;width:480px;height:440px;display:table-cell;vertical-align:middle;}
 .welcome_board{color:#fff;}
+article.registrations.edit .birth_date_format select {display: inline-block;width:20%;}
+
+/* =============================================================================
+   勤務パターン
+   ========================================================================== */
+article.kinmu_patterns_edit select {display: inline-block;width:30%;}
+
+/* =============================================================================
+   勤務状況報告書(その他)
+   ========================================================================== */
+article.attendance_others.edit select {display: inline-block;width:30%;}
+

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :attendance_others
+
   resources :licenses
   resources :projects
   
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
+  match 'init_attendances', to:'attendances#init_attendances', via: :post
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
