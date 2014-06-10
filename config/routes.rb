@@ -8,8 +8,12 @@ Rails.application.routes.draw do
   resources :transportation_expresses do
      collection do
       post 'transportation_confirm'
+      get 'print'
     end
   end
+  #  resource :transportation_expresses, only: [] do
+  #   get :print
+  # end
 
 
   resource :vacation_requests, only:[] do

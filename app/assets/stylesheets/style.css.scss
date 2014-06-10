@@ -87,3 +87,21 @@ article.attendance_others.edit select {display: inline-block;width:30%;}
 
 /*article.vacation_request_print table{border-spacing: 0;}*/
 /*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
+
+/* =============================================================================
+   交通費精算書(PDF)
+   ========================================================================== */
+article.transport_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.transport_print .hyou{table-layout: fixed !important;border:3px solid;}
+article.transport_print .hyou tr td{background-color:#fff;border:1px solid black;font-size:10px;height: 40px;padding:0px;padding-left:2px;padding-right: 2px;}
+article.transport_print .hyou tr.title td{font-size: 14px;padding-bottom: 0px !important;padding-top: 8px !important;font-weight:bold;height: 10px;font-family: ＭＳ Ｐ明朝;text-align:center;}
+
+article.transport_print table tr .hanko{text-align: center;border:1px solid;padding-bottom: 0px;padding-top: 5px;}
+article.transport_print table tr .head{text-align: left;border-bottom:1px solid;padding-bottom: 0px;}
+article.transport_print table tr .info{text-align: center;border-bottom:1px solid;padding-bottom: 0px;}
+article.transport_print table tr td.syasen{
+   background: linear-gradient(150deg, white, white 50%, black 51%, white 52%, white);
+   letter-spacing: 0.2em;
+}
+
+article.transport_print h1{}
