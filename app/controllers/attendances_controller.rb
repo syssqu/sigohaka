@@ -5,20 +5,23 @@ class AttendancesController < ApplicationController
 
   def index
 
-    processing_date = Date.today
+    @nen_gatudo = params[:attendance][:nen_gatudo]
+    @aiuto = @nen_gatudo
+
+    if @nen_gatudo.nil?
+      processing_date = Date.today
+    else
+      processing_date = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+    end
+    
+    # processing_date = Date.new(2014, 1, 20)
 
     @nendo = get_nendo(processing_date)
     @gatudo = get_gatudo(processing_date)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    year_month_set = current_user.attendances.group('year, month')
-    @nengatudo_set = []
-    year_month_set.each do |year_month|
-      # nengatudo = { key: year_month[:year] + "/" + year_month[:month], value: year_month[:year] + "年" + year_month[:month] + "月度"}
-      # @nengatudo_set << nengatudo
-      @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
-    end
+    @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
 
     if current_user.kinmu_patterns.first.nil?
       flash.now[:alert] = '勤務パターンを登録して下さい。'
