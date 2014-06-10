@@ -1,4 +1,4 @@
-= form_for @transportation_express,url:{:action => 'transportation_confirm'} do |f|
+= form_for @transportation_express do |f|
   - if @transportation_express.errors.any?
     #error_explanation
       h2 = "#{pluralize(@transportation_express.errors.count, "error")} prohibited this transportation_express from being saved:"
