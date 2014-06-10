@@ -57,7 +57,7 @@ class AttendancesController < ApplicationController
     @others = current_user.attendance_others
     
     if ! @others.exists?
-      @other = current_user.attendance_others.build(summary:"課会", work_time: 1.00, remarks: "XXX実施")
+      @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
       if @other.save
         @others << @other
       end
