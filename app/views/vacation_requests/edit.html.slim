@@ -1,8 +1,18 @@
-h1 編集
+h1 休暇届　編集
+table
+  tbody
+    tr
+      td プロジェクト名
+      td 
+    tr
+      td 所属
+      td = current_user.section.name
+    tr
+      td 氏名
+      td #{current_user.family_name} #{current_user.first_name}
 
 == render 'form'
 
-= link_to 'Show', @vacation_request
+= link_to '照会する', @vacation_request
 '|
-= link_to 'Back', vacation_requests_path
-
+= link_to '前へ戻る', vacation_requests_path
