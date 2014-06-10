@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606070609) do
+ActiveRecord::Schema.define(version: 20140610040347) do
+
+  create_table "attendance_others", force: true do |t|
+    t.string   "summary"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.decimal  "over_time",     precision: 4, scale: 2
+    t.decimal  "holiday_time",  precision: 4, scale: 2
+    t.decimal  "decimal",       precision: 4, scale: 2
+    t.decimal  "midnight_time", precision: 4, scale: 2
+    t.decimal  "break_time",    precision: 4, scale: 2
+    t.decimal  "kouzyo_time",   precision: 4, scale: 2
+    t.decimal  "work_time",     precision: 4, scale: 2
+    t.text     "remarks"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "attendances", force: true do |t|
     t.date     "attendance_date"
@@ -50,8 +67,8 @@ ActiveRecord::Schema.define(version: 20140606070609) do
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
-    t.integer  "break_time"
-    t.integer  "work_time"
+    t.decimal  "break_time",           precision: 4, scale: 2
+    t.decimal  "work_time",            precision: 4, scale: 2
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -140,6 +157,7 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.string   "phone",                  limit: 13
     t.string   "gakureki"
     t.text     "remarks"
+    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -153,12 +171,10 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.string   "category"
     t.string   "reason"
     t.string   "note"
-    t.string   "year"
-    t.string   "month"
+    t.string   "year",       limit: 4
+    t.string   "month",      limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
 
 end

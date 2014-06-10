@@ -1,16 +1,13 @@
 h1 休暇届
-
 table
   tbody
     tr
-      td プロジェクト名
-      td 
-    / tr
-    /   td 所属
-    /   td = current_user.section.name
+      td 所属
+      td = current_user.section.name
     tr
       td 氏名
-      / td #{current_user.family_name} #{current_user.first_name}
+      td #{current_user.family_name} #{current_user.first_name}
+= link_to "PDF出力", print_vacation_requests_path, class: "button tiny radius"
 
 table
   thead
@@ -22,8 +19,8 @@ table
       th カテゴリー
       th 事由
       th 備考
-      th Year
-      th Month
+      / th Year
+      / th Month
       th
       th
       th
@@ -38,12 +35,12 @@ table
         td = vacation_request.category
         td = vacation_request.reason
         td = vacation_request.note
-        td = vacation_request.year
-        td = vacation_request.month
-        td = link_to 'Show', vacation_request
-        td = link_to 'Edit', edit_vacation_request_path(vacation_request)
-        td = link_to 'Destroy', vacation_request, data: {:confirm => 'Are you sure?'}, :method => :delete
+        / td = vacation_request.year
+        / td = vacation_request.month
+        td = link_to '照会', vacation_request
+        td = link_to '編集 ', edit_vacation_request_path(vacation_request)
+        td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete
 
 br
 
-= link_to '新規', new_vacation_request_path
+= link_to '新規作成', new_vacation_request_path

@@ -4,7 +4,26 @@ class KinmuPatternsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @kinmu_patterns = KinmuPattern.all
+    @kinmu_patterns = current_user.kinmu_patterns.all
+
+    if ! @kinmu_patterns.exists?
+      (1..3).each do |num|
+        @kinmu_pattern = current_user.kinmu_patterns.build
+
+        # デフォルトの勤務パターン
+        @kinmu_pattern[:code] = num.to_s
+        if num == 1
+          @kinmu_pattern[:start_time] = "9:00"
+          @kinmu_pattern[:end_time] = "18:00"
+          @kinmu_pattern[:break_time] = 1.00
+          @kinmu_pattern[:work_time] = 8.00
+        end
+        
+        if @kinmu_pattern.save
+          @kinmu_patterns << @kinmu_pattern
+        end
+      end
+    end
   end
 
   def show
@@ -29,7 +48,7 @@ class KinmuPatternsController < ApplicationController
 
   def update
     if @kinmu_pattern.update(kinmu_pattern_params)
-      redirect_to @kinmu_pattern, notic: '勤務パターンを更新しました' 
+      redirect_to kinmu_patterns_path, notic: '勤務パターンを更新しました' 
     else
       render :edit
     end
