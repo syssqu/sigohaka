@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :role
   module Roles
     ADMIN = "admin"
     MANAGER = "register"
