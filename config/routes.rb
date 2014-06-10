@@ -9,7 +9,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :vacation_requests
+
+  resource :vacation_requests, only:[] do
+    get :print
+  end
+
+  resources :vacation_requests, only:[:index, :new, :create, :edit, :update, :show]
+
+  # map.resources :vacation_requests, :except=> ['print']
+
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
@@ -25,10 +33,12 @@ Rails.application.routes.draw do
   end
   
 
+
   # get 'static_pages/home'
 
   match '/help', to:'static_pages#help', via: :get
   match '/about', to:'static_pages#about', via: :get
+  # match '/vacation_requests/print', to:'vacation_requests#print', via: :get
 
   devise_for :users, :controllers => {
     :sessions      => "users/sessions",
