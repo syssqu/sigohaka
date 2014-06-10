@@ -153,8 +153,8 @@ ActiveRecord::Schema.define(version: 20140606070609) do
     t.string   "category"
     t.string   "reason"
     t.string   "note"
-    t.string   "year"
-    t.string   "month"
+    t.string   "year",       limit: 4
+    t.string   "month",      limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
