@@ -5,13 +5,20 @@ class AttendancesController < ApplicationController
 
   def index
 
-    # aiueo = Date.new(2014, 2, 20)
+    processing_date = Date.today
 
-    @nendo = get_nendo(Date.today)
-    @gatudo = get_gatudo(Date.today)
+    @nendo = get_nendo(processing_date)
+    @gatudo = get_gatudo(processing_date)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    year_month_set = current_user.attendances.group('year, month')
+    @nengatudo_set = []
+    year_month_set.each do |year_month|
+      # nengatudo = { key: year_month[:year] + "/" + year_month[:month], value: year_month[:year] + "年" + year_month[:month] + "月度"}
+      # @nengatudo_set << nengatudo
+      @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
+    end
 
     if current_user.kinmu_patterns.first.nil?
       flash.now[:alert] = '勤務パターンを登録して下さい。'
@@ -20,7 +27,7 @@ class AttendancesController < ApplicationController
 
     if ! @attendances.exists?
         
-      target_date = Date.new(Date.today.year, get_month(Date.today), 16)
+      target_date = Date.new(processing_date.year, get_month(processing_date), 16)
       next_date = target_date.months_since(1)
       
       while target_date != next_date
@@ -114,8 +121,10 @@ class AttendancesController < ApplicationController
 
   def print
 
-    @nendo = get_nendo(Date.today)
-    @gatudo = get_gatudo(Date.today)
+    processing_date = Date.today
+
+    @nendo = get_nendo(processing_date)
+    @gatudo = get_gatudo(processing_date)
     @project = get_project
     
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)

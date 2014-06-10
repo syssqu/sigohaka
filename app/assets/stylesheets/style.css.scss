@@ -27,7 +27,8 @@ article.attendance_index table tr th{padding:5px 5px !important;}
 article.attendance_index table tr td {font-size:12px;}
 article.attendance_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
 article.attendance_index table tr td .button {padding:4px !important;margin:0px !important;}
-article.attendance_index table tr td.bg_gray{background-color:#9F9687 !important;}
+article.attendance_ table tr td.bg_gray{background-color:#9F9687 !important;}
+article.attendance_index select {display: inline-block;width:15%;}
 
 /* =============================================================================
    勤務状況報告書(編集)
@@ -55,6 +56,9 @@ article.attendance_print table tr td.bg_gray{background-color:#9F9687 !important
 #attendance_header table#attendance_project td strong{color:#6E6E6E;}
 #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
 #attendance_nengetu{width:240px;text-align:center;}
+
+a:visited.button{color:white;}
+
 
 
 /* =============================================================================
