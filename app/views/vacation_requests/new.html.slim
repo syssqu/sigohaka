@@ -1,7 +1,17 @@
-.row
-  .large-12.columns.clearfix
-  	h2 休暇届作成画面
+h1 休暇届　作成画面
+table
+  tbody
+    tr
+      td プロジェクト名
+      td 
+    tr
+      td 所属
+      td = current_user.section.name
+    tr
+      td 氏名
+      td #{current_user.family_name} #{current_user.first_name}
+
 
 == render 'form'
 
-= link_to 'Back', vacation_requests_path
+= link_to '前へ戻る', vacation_requests_path

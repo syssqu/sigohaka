@@ -1,21 +1,23 @@
 class VacationRequestsController < ApplicationController
   before_action :set_vacation_request, only: [:show, :edit, :update, :destroy]
-  before_action :signed_in_user, only: [:edit, :update, :destroy]
-  # before_action :correct_user,   only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
   # GET /vacation_requests
   # GET /vacation_requests.json
   def index
-    @vacation_requests = VacationRequest.all
+    @vacation_requests = current_user.vacation_requests.all
+    # VacationRequest.all
+    # @vacation_request  = current_user.vacation_requests.all
   end
 
   # GET /vacation_requests/1
   # GET /vacation_requests/1.json
   def show
+    @vacation_requests = current_user.vacation_requests.find(params[:id])
   end
 
   # GET /vacation_requests/new
   def new
-    @vacation_request = VacationRequest.new
+    @vacation_request = current_user.vacation_requests.build
   end
 
   # GET /vacation_requests/1/edit
@@ -25,11 +27,11 @@ class VacationRequestsController < ApplicationController
   # POST /vacation_requests
   # POST /vacation_requests.json
   def create
-    @vacation_request = VacationRequest.new(vacation_request_params)
+    @vacation_request = current_user.vacation_requests.build(vacation_request_params)
 
     respond_to do |format|
       if @vacation_request.save
-        format.html { redirect_to @vacation_request, notice: 'Vacation request was successfully created.' }
+        format.html { redirect_to @vacation_request, notice: '休暇届を作成しました' }
         format.json { render :show, status: :created, location: @vacation_request }
       else
         format.html { render :new }
@@ -43,7 +45,7 @@ class VacationRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @vacation_request.update(vacation_request_params)
-        format.html { redirect_to @vacation_request, notice: 'Vacation request was successfully updated.' }
+        format.html { redirect_to @vacation_request, notice: '休暇届を更新しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
         format.html { render :edit }
@@ -57,8 +59,24 @@ class VacationRequestsController < ApplicationController
   def destroy
     @vacation_request.destroy
     respond_to do |format|
-      format.html { redirect_to vacation_requests_url, notice: 'Vacation request was successfully destroyed.' }
+      format.html { redirect_to vacation_requests_url, notice: '休暇届を削除しました' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+
+    @vacation_request = current_user.vacation_requests.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    respond_to do |format|
+
+      format.html { redirect_to print_vacation_requests_path(format: :pdf, debug: 1)}
+      format.pdf do
+        render pdf: '休暇届',
+               encoding: 'UTF-8',
+               layout: 'pdf.html',
+               show_as_html: params[:debug].present?
+      end
     end
   end
 
@@ -73,12 +91,4 @@ class VacationRequestsController < ApplicationController
       params.require(:vacation_request).permit(:user_id, :start_date, :end_date, :term, :category, :reason, :note, :year, :month)
     end
 
-    def signed_in_user
-      redirect_to root_url, notice: "Please sign in." unless signed_in?
-    end
-    
-    # def correct_user
-    #   @user = User.find(params[:id])
-    #   redirect_to(root_path) unless current_user?(@user)
-    # end
 end
