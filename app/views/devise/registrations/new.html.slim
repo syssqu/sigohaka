@@ -1,69 +1,81 @@
-.row
-  .large-12.columns.clearfix
-    h2 サインアップ画面
-    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-      = devise_error_messages!
-      .row
-        .large-2.large-offset-1.columns.show-for-large-up
-          label.left.inline
-            | 氏名 (漢字)
-            span *
-        .small-12.columns.show-for-medium-down
-          label
-            | 氏名 (漢字)
-            span *
-        .large-1.small-2.columns
-          label.right.inline 姓
-        .large-2.small-4.columns
-          = f.text_field :family_name, autofocus: true
-        .large-1.small-2.columns
-          label.right.inline 名
-        .large-2.large-pull-3.small-4.columns
-          = f.text_field :first_name
-      .row
-        .large-2.large-offset-1.columns.show-for-large-up
-          label.left.inline
-            | 氏名 (フリガナ)
-            span *
-        .small-12.columns.show-for-medium-down
-          label
-            | 氏名 (フリガナ)
-            span *
-        .large-1.small-2.columns
-          label.right.inline セイ
-        .large-2.small-4.columns
-          = f.text_field :kana_family_name
-        .large-1.small-2.columns
-          label.right.inline メイ
-        .large-2.large-pull-3.small-4.columns
-          = f.text_field :kana_first_name
-      .row
-        .large-2.large-offset-1.columns
-          label.left.inline 所属
-        .large-3.large-pull-6.columns
-          / = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }, { :include_blank => true }
-          = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
-      .row
-        .large-2.large-offset-1.columns
-          label.left.inline メールアドレス
-        .large-3.large-pull-6.columns
-          = f.email_field :email
-      .row
-        .large-2.large-offset-1.columns
-          label.left.inline パスワード
-        .large-3.large-pull-6.columns
-          = f.password_field :password, autocomplete: "off"
-      .row
-        .large-2.large-offset-1.columns
-          label.left.inline パスワード(確認用)
-        .large-3.large-pull-6.columns
-          = f.password_field :password_confirmation, autocomplete: "off"
+article.registrations.new
+  .row
+    .large-5.columns.clearfix
       .row
         .large-12.columns
-          - if devise_mapping.rememberable?
-            = f.check_box :remember_me
-            = f.label :remember_me
-      .row
-        .large-3.large-centered.columns
-          = f.submit "サインアップ", class: "button radius"
-    = render "devise/shared/links"
+          .welcome_image
+            .row
+              .large-11.large-offset-1.columns
+                h3.welcome_board ようこそ SIGOHAKAへ!
+                h6.welcome_board ほげほげ
+    .large-7.columns.clearfix
+      h3 アカウント登録
+      br
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        .row
+          .large-12.columns
+            / = devise_error_messages!
+            = render 'shared/error_messages', object: f.object
+        .row
+          .large-3.columns.show-for-large-up
+            label.left.inline 氏名 (漢字)
+          .small-12.columns.show-for-medium-down
+            label 氏名 (漢字)
+          .large-1.small-2.columns
+            label.right.inline 姓
+          .large-3.small-4.columns
+            = f.text_field :family_name, autofocus: true
+          .large-1.small-2.columns
+            label.right.inline 名
+          .large-3.large-pull-1.small-4.columns
+            = f.text_field :first_name
+        .row
+          .large-3.columns.show-for-large-up
+            label.left.inline 氏名 (フリガナ)
+          .small-12.columns.show-for-medium-down
+            label 氏名 (フリガナ)
+          .large-1.small-2.columns
+            label.right.inline セイ
+          .large-3.small-4.columns
+            = f.text_field :kana_family_name
+          .large-1.small-2.columns
+            label.right.inline メイ
+          .large-3.large-pull-1.small-4.columns
+            = f.text_field :kana_first_name
+        .row
+          .large-3.columns
+            label.left.inline 所属
+          .large-4.large-pull-5.columns
+            = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }, { :include_blank => true }
+        .row
+          .large-3.columns
+            label.left.inline メールアドレス
+          .large-4.large-pull-5.columns
+            = f.email_field :email
+        .row
+          .large-3.columns
+            label.left.inline パスワード
+          .large-4.large-pull-5.columns
+            = f.password_field :password, autocomplete: "off"
+        / .row
+        /   .large-3.columns
+        /     label.left.inline パスワード(確認用)
+        /   .large-4.large-pull-5.columns
+        /     = f.password_field :password_confirmation, autocomplete: "off"
+        .row
+          .large-3.small-3.columns
+            label.left.inline 性別
+          .large-9.small-9.columns
+            label.left.inline style="width:20px;" = f.radio_button :gender, :man
+            label.left.inline style="width:40px;" for="man"  男
+            label.left.inline style="width:20px;" = f.radio_button :gender, :woman
+            label.left.inline style="width:40px;" for="woman"  女
+        .row
+          .large-11.columns
+            - if devise_mapping.rememberable?
+              = f.check_box :remember_me
+              = f.label :remember_me
+        .row
+          .large-3.columns
+            = f.submit "アカウント登録", class: "button radius"
+      = render "devise/shared/links"

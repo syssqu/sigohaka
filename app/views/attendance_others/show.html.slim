@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Summary:
+  = @attendance_other.summary
+p
+  strong Over time:
+  = @attendance_other.over_time
+
+= link_to 'Edit', edit_attendance_other_path(@attendance_other)
+'|
+= link_to 'Back', attendance_others_path

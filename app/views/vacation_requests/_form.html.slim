@@ -7,30 +7,30 @@
           li = message
 
   .field
-    = f.label :user_id
-    = f.number_field :user_id
+    / = f.label :user_id
+    / = f.number_field :user_id
   .field
-    = f.label :start_date
+    = f.label :いつから
     = f.date_select :start_date
   .field
-    = f.label :end_date
+    = f.label :いつまで
     = f.date_select :end_date
   .field
-    = f.label :term
+    = f.label :期間
     = f.number_field :term
   .field
-    = f.label :category
+    = f.label :カテゴリー
     = f.text_field :category
   .field
-    = f.label :reason
+    = f.label :事由
     = f.text_field :reason
   .field
-    = f.label :note
+    = f.label :備考
     = f.text_field :note
-  .field
-    = f.label :year
-    = f.text_field :year
-  .field
-    = f.label :month
-    = f.text_field :month
-  .actions = f.submit 'Save'
+  / .field
+  /   = f.label :year
+  /   = f.text_field :year
+  / .field
+  /   = f.label :month
+  /   = f.text_field :month
+  .actions = f.submit '登録する'
