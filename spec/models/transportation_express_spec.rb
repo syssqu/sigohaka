@@ -1,4 +1,4 @@
-require 'rails_helper'
+
 require 'factory_girl'
 require 'spec_helper'
 
