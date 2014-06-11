@@ -171,10 +171,12 @@ ActiveRecord::Schema.define(version: 20140610040347) do
     t.string   "category"
     t.string   "reason"
     t.string   "note"
-    t.string   "year",       limit: 4
-    t.string   "month",      limit: 2
+    t.string   "year"
+    t.string   "month"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
 
 end
