@@ -41,4 +41,5 @@ class User < ActiveRecord::Base
                     length: { maximum: 90 },
                     format:   { with: VALID_EMAIL_REGEX },
                     uniqueness: false
+
 end
