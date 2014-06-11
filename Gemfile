@@ -17,7 +17,7 @@ gem 'cancan'
 gem 'bcrypt'
 gem 'i18n_generators'
 gem 'holiday_japan'
-
+gem 'minitest'
 # PDF
 gem 'wicked_pdf'
 gem 'minitest'
@@ -36,6 +36,7 @@ end
 group :development do
   gem 'sqlite3'
   gem 'rspec-rails', '2.13.1'
+  
 end
 
 group :test do
