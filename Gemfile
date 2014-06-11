@@ -20,6 +20,7 @@ gem 'holiday_japan'
 
 # PDF
 gem 'wicked_pdf'
+gem 'minitest'
 
 group :assets do
   # Use SCSS for stylesheets
