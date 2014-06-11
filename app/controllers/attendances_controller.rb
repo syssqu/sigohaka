@@ -5,16 +5,16 @@ class AttendancesController < ApplicationController
 
   def index
 
-    @nen_gatudo = params[:attendance][:nen_gatudo]
-    @aiuto = @nen_gatudo
+    @nen_gatudo = params[:attendance]
 
     if @nen_gatudo.nil?
       processing_date = Date.today
     else
-      processing_date = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+      processing_date = Date.new(@nen_gatudo[:nen_gatudo][0..3].to_i, @nen_gatudo[:nen_gatudo][4..-1].to_i, 1)
+      @selected_nen_gatudo = @nen_gatudo[:nen_gatudo]
     end
     
-    # processing_date = Date.new(2014, 1, 20)
+    # processing_date = Date.new(2014, 2, 20)
 
     @nendo = get_nendo(processing_date)
     @gatudo = get_gatudo(processing_date)
@@ -124,7 +124,13 @@ class AttendancesController < ApplicationController
 
   def print
 
-    processing_date = Date.today
+    @nen_gatudo = params[:nen_gatudo]
+
+    if @nen_gatudo.nil?
+      processing_date = Date.today
+    else
+      processing_date = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+    end
 
     @nendo = get_nendo(processing_date)
     @gatudo = get_gatudo(processing_date)
@@ -132,14 +138,14 @@ class AttendancesController < ApplicationController
     
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @others = current_user.attendance_others
-    
+
     respond_to do |format|
       # format.html { redirect_to print_attendances_path(format: :pdf)}
       # format.pdf do
       #   render pdf: '勤務状況報告書',
       #          encoding: 'UTF-8',
       #          layout: 'pdf.html'
-      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
+      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1, nen_gatudo: @nen_gatudo)}
       format.pdf do
         render pdf: '勤務状況報告書',
                encoding: 'UTF-8',

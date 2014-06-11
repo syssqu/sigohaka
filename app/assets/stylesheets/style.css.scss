@@ -41,6 +41,11 @@ article.attendance_edit select {display: inline-block;width:45%;}
 article.attendance_print{margin-top:70px;}
 article.attendance_print span{margin:0px;color:red;}
 
+/* article.transport_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;} */
+/* article.transport_print .hyou{table-layout: fixed !important;border:3px solid;} */
+/* article.transport_print .hyou tr td{background-color:#fff;border:1px solid black;font-size:10px;height: 40px;padding:0px;padding-left:2px;padding-right: 2px;} */
+/* article.transport_print .hyou tr.title td{font-size: 14px;padding-bottom: 0px !important;padding-top: 8px !important;font-weight:bold;height: 10px;font-family: ＭＳ Ｐ明朝;text-align:center;} */
+
 article.attendance_print table{border-spacing: 0;}
 article.attendance_print table#attendance_main{width:755px;margin-bottom:25px;}
 article.attendance_print table tr th {font-size:10px;padding:1px 1px !important;}
