@@ -31,25 +31,28 @@ RSpec.describe TransportationExpressesController, :type => :controller do
       #   get :show
    #    assigns[:user].should eq(subject.current_user)
       # end
-    before (:each) do
-      @user = FactoryGirl.create(:user)
-      sign_in @user
-    end
-     describe "GET 'index'" do
+    
+    describe "GET 'index'" do
+      before (:each) do
+        @user = FactoryGirl.create(:user)
+        # sign_in @user
+        login_user
+      end
       it "should be successful" do
         get 'index'
         response.should be_success
+        # assigns[:user].should eq(subject.current_user)
         assigns[:signin].should == "ok"
         # pp response
       end
       
-      it "all items finded" do
-        FactoryGirl.create(:item)
-        get 'index'
-        response.should be_success
-        assigns[:items].count.should == 1
-        assigns[:items].first.name.should == "Test Item"
-      end
+      # it "all items finded" do
+      #   FactoryGirl.create(:transportation_express)
+      #   get 'index'
+      #   response.should be_success
+      #   assigns[:transportation_express].count.should == 1
+      #   assigns[:transportation_express].first.name.should == "Test Item"
+      # end
     end
   end
 
