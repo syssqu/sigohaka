@@ -1,11 +1,13 @@
  /*=============================================================================
    ページ共通
    ========================================================================== */
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
 .gray {background:#3E4C59;}
 .button{margin-right:10px;}     /* ボタンとボタンの隙間 */
 
 a:link .button{color:#fff;} /*未訪問のリンクの色*/
-a:visited .button{color:#fff;} /*訪問済みのリンクの色*/
+a:visited.button{color:white;}/*訪問済みのリンクの色*/
 
 .container{background:#fff;padding:1% 3%; border-color:#fff !important;}
 .container p{font-size:14px;margin-bottom:15px;}
@@ -30,6 +32,13 @@ article.attendance_index table tr td .button {padding:4px !important;margin:0px 
 article.attendance_ table tr td.bg_gray{background-color:#9F9687 !important;}
 article.attendance_index select {display: inline-block;width:15%;}
 
+article.attendance_index #attendance_header table#attendance_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.attendance_index #attendance_header table#attendance_project table {border:none;}
+article.attendance_index #attendance_header table#attendance_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.attendance_index #attendance_header table#attendance_project td strong{color:#6E6E6E;}
+article.attendance_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+article.attendance_index #attendance_nengetu{width:240px;text-align:center;}
+
 /* =============================================================================
    勤務状況報告書(編集)
    ========================================================================== */
@@ -41,28 +50,34 @@ article.attendance_edit select {display: inline-block;width:45%;}
 article.attendance_print{margin-top:70px;}
 article.attendance_print span{margin:0px;color:red;}
 
-/* article.transport_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;} */
-/* article.transport_print .hyou{table-layout: fixed !important;border:3px solid;} */
-/* article.transport_print .hyou tr td{background-color:#fff;border:1px solid black;font-size:10px;height: 40px;padding:0px;padding-left:2px;padding-right: 2px;} */
-/* article.transport_print .hyou tr.title td{font-size: 14px;padding-bottom: 0px !important;padding-top: 8px !important;font-weight:bold;height: 10px;font-family: ＭＳ Ｐ明朝;text-align:center;} */
-
-article.attendance_print table{border-spacing: 0;}
-article.attendance_print table#attendance_main{width:755px;margin-bottom:25px;}
-article.attendance_print table tr th {font-size:10px;padding:1px 1px !important;}
-article.attendance_print table tr td {font-size:10px;padding:0px 0px !important;height:20px !important;background-color:#fff;}
+article.attendance_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.attendance_print table#attendance_main{width:755px;margin-bottom:10px;}
+article.attendance_print table tr th {font-size:10px;padding:1px 1px !important;background-color:#fff;font-weight:normal;border:1px solid black;}
+article.attendance_print table tr td {font-size:10px;padding:0px 0px !important;height:20px !important;background-color:#fff;border:1px solid black;}
 article.attendance_print table tr td .button {padding:4px !important;margin:0px !important;}
-article.attendance_print .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;}
+/* article.attendance_print .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;} */
+/* article.attendance_print .dash_line{position: absolute;border-right:1px dashed #000;width:25px;height:24px;;@include box_sizing;} */
+
+#dashed_line_over_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:336px;@include box_sizing;}
+#dashed_line_holiday_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:388px;@include box_sizing;}
+#dashed_line_midnight_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:440px;@include box_sizing;}
+#dashed_line_break_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:490px;@include box_sizing;}
+#dashed_line_kouzyo_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:542px;@include box_sizing;}
+#dashed_line_work_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:592px;@include box_sizing;}
+  
 #attendance_header{width:755px;}
-article.attendance_print table tr td.bg_gray{background-color:#9F9687 !important;}
+article.attendance_print table tr td.bg_gray{background-color:#E3E3E3 !important;}
 
-#attendance_header table#attendance_project {border:0; width:230px;margin-right:60px;margin-top:10px;}
-#attendance_header table#attendance_project td {background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
-#attendance_header table#attendance_project td strong{color:#6E6E6E;}
-#attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
-#attendance_nengetu{width:240px;text-align:center;}
+article.attendance_print #attendance_header table#attendance_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.attendance_print #attendance_header table#attendance_project table {border:none;}
+article.attendance_print #attendance_header table#attendance_project td {border:0px;background-color:#fff;border-bottom: 1px solid #000;height:60px;}
+article.attendance_print #attendance_header table#attendance_project td strong{color:#6E6E6E;}
+article.attendance_print #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+article.attendance_print #attendance_nengetu{width:240px;text-align:center;}
 
-a:visited.button{color:white;}
 
+article.attendance_print table.kinmu_pattern{margin-top:15px;}
+#company_name p{margin-left:510px;font-size:11px;}
 
 
 /* =============================================================================

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
-  match 'init_attendances', to:'attendances#init_attendances', via: :post
+  match '/init_attendances', to:'attendances#init_attendances', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
