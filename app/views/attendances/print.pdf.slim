@@ -14,7 +14,7 @@ article.attendance_print
           td #{current_user.family_name} #{current_user.first_name}
     div.left
       h5#attendance_title 勤務状況報告書
-      #attendance_nengetu #{seireki2wareki(2014, 6, 1)}年 #{@gatudo}月度
+      #attendance_nengetu #{seireki2wareki(@nendo, @gatudo, 1)}年 #{@gatudo}月度
     table#attendance_inkan.right border="1" cellspacing="0" cellpadding="5" bordercolor="#000" style="border-collapse: collapse;"
       tbody
         tr
