@@ -239,6 +239,7 @@ DEPENDENCIES
   i18n_generators
   jbuilder (~> 2.0)
   jquery-rails
+  minitest
   pg (= 0.15.1)
   rails (= 4.1.0)
   rails_12factor (= 0.0.2)

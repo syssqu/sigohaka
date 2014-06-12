@@ -3,15 +3,15 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  def init_attendance
+  def init
     if changed_attendance_years?
       @selected_nen_gatudo = params[:attendance][:nen_gatudo]
     end
 
-    attendance_years = get_attendance_years(params[:attendance])
-    # attendance_years = Date.new(2014, 2, 20)
-    @nendo = get_nendo(attendance_years)
-    @gatudo = get_gatudo(attendance_years)
+    @attendance_years = get_attendance_years(params[:attendance])
+    # @attendance_years = Date.new(2014, 2, 20)
+    @nendo = get_nendo(@attendance_years)
+    @gatudo = get_gatudo(@attendance_years)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
@@ -25,11 +25,11 @@ class AttendancesController < ApplicationController
 
   def index
 
-    init_attendance
+    init
 
     if ! @attendances.exists?
         
-      target_date = Date.new(attendance_years.year, get_month(attendance_years), 16)
+      target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
       end_attendance_date = target_date.months_since(1)
       
       while target_date != end_attendance_date
@@ -67,7 +67,7 @@ class AttendancesController < ApplicationController
   end
 
   def init_attendances
-    init_attendance
+    init
 
     sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
       "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
