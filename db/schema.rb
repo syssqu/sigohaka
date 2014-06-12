@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610040347) do
+ActiveRecord::Schema.define(version: 20140612005425) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20140610040347) do
     t.string   "kana_family_name",       limit: 40
     t.string   "kana_first_name",        limit: 40
     t.integer  "section_id"
-    t.string   "gender",                 limit: 1
+    t.string   "gender",                 limit: 10
     t.date     "birth_date"
     t.string   "employee_no",            limit: 6
     t.integer  "age"
