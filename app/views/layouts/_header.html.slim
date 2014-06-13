@@ -23,6 +23,8 @@
                 = link_to '休暇届', vacation_requests_path
               li
                 = link_to '通勤届', attendances_path
+              li
+                = link_to '技術経歴書', resumes_index_path
           li
             = link_to "ヘルプ", help_path
           - if can? :manage, current_user

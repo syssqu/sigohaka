@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
         :birth_date, :postal_code, :prefecture, :city, :house_number, :building, :phone, :gakureki, :employee_no, :age, :experience]
     end
 
+    def get_project
+      if current_user.projects.nil?
+        Project.new
+      else
+        current_user.projects.find_by(active: true)
+      end
+    end
+
   private
 
     # Overwriting the sign_out redirect path method

@@ -84,7 +84,7 @@ article.registrations.edit
               | 生年月日
           .large-4.large-pull-6.small-5.columns
             .birth_date_format
-              = raw sprintf( f.date_select(:birth_date, use_month_numbers: true, date_separator:'%s'), '年 ', '月 ') + '日'
+              = raw sprintf( f.date_select(:birth_date, use_month_numbers: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
         .row
           .large-2.small-4.columns
             label.left.inline.show-for-large-up
@@ -166,8 +166,9 @@ article.registrations.edit
         .row
           .large-2.small-4.columns
             label.left.inline.show-for-large-up
-            | 経験
-          .large-3.large-pull-7.small-8.columns
+            | 経験年数
+          .large-1.large-pull-9.small-8.columns
+            / = f.text_field :experience, :value => number_with_precision(f.object.experience,:precision => 1)
             = f.text_field :experience
         section
           .row
