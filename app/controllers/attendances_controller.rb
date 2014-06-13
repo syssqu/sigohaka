@@ -202,14 +202,6 @@ class AttendancesController < ApplicationController
       month
     end
 
-    def get_project
-      if current_user.projects.nil?
-        Project.new
-      else
-        current_user.projects.find_by(active: true)
-      end
-    end
-
     def holiday?(target_date)
       target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
     end
