@@ -4,6 +4,7 @@ article.resumes.index
       h3 技術経歴書
   .row
     .large-12.columns
+      = link_to "PDF出力", resumes_print_path, class: "button tiny radius"
       table#user_info
         tbody
           tr
@@ -16,10 +17,13 @@ article.resumes.index
           tr
             td.solid3.solid_top_none.gray.text-center 氏名
             td.solid #{current_user.family_name} #{current_user.first_name}
-            td.solid3 colspan=2 #{current_user.gender}
-            td.solid3 #{current_user.birth_date}
-            td.solid3 #{current_user.age}
-            td.solid3 #{current_user.experience}
+            td.solid3.text-center colspan=2 #{GENDER[current_user.gender.to_sym]}
+            - if current_user.birth_date.blank?    
+              td.solid3.text-center
+            - else
+              td.solid3.text-center #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
+            td.solid3.text-center #{current_user.age}歳
+            td.solid3.text-center #{number_with_precision(current_user.experience, {precision:1, :strip_insignidicant_zeros => 1})}年
           tr
             td.solid3.gray.text-center 現住所
             td.solid3 #{current_user.prefecture}
@@ -74,49 +78,48 @@ article.resumes.index
       table#projects_info
         thead
           tr
-            td No.
-            td 期間
-            td 業務内容
-            td OS
-            td 言語
-            td
+            th.text-center No.
+            th.text-center 期間
+            th.text-center 業務内容
+            th.text-center OS
+            th.text-center 言語
+            th.text-center
               |DB
               br
               |ツール他
-            td 開発体制人数
-            td 役割
-            td 工程
+            th.text-center 開発体制人数
+            th.text-center 役割
+            th.text-center 工程
         tbody
           - i = 0
           - current_user.projects.each do |p|
             - i += 1
             tr
               td rowspan=2 = i.to_s
-              td = p.start_date.strftime("%y.%m") + "〜" + p.end_date.strftime("%y.%m")
+              td.solid_bottom1 = p.start_date.strftime("%y.%m") + "〜" + p.end_date.strftime("%y.%m")
               td rowspan=2 = p.summary
               td rowspan=2 = p.os
               td rowspan=2 = p.language
               td rowspan=2 = p.database
-              td rowspan=2 = p.dep_size
-              td rowspan=2 = p.role
-              td rowspan=2 = p.experience
+              td.text-center rowspan=2 = p.dep_size
+              td.text-center rowspan=2 = p.role
+              td.text-center rowspan=2 = p.experience
             tr
-              td
-                / = p.end_date - p.start_date
-                = Date.new(2014, 6, 13) -  Date.new(2014, 4, 2)
-          / - (16 - i.modulo(16)).times do |n|
-          /   tr
-          /     td rowspan=2 = n + i + 1
-          /     td &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /     td rowspan=2 &nbsp;
-          /   tr
-          /     td &nbsp;
+              td.solid_top1.text-center
+                #{get_month_term(p.start_date, p.end_date)}
+          - (16-i).times do |n|
+            tr
+              td rowspan=2
+              td.solid_bottom1
+              td rowspan=2
+              td rowspan=2
+              td rowspan=2
+              td rowspan=2
+              td.text-center rowspan=2
+              td.text-center rowspan=2
+              td.text-center rowspan=2
+            tr
+              td.solid_top1.text-center
   .row
     .large-12.columns
       table

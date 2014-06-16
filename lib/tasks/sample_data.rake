@@ -17,8 +17,8 @@ namespace :db do
                  role: "admin"
       )
 
-    admin.projects.create!(code: "1", start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
-    admin.projects.create!(code: "2", start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
+    admin.projects.create!(start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
+    admin.projects.create!(start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
 
     admin.licenses.create!(code: "1", name:"基本情報処理")
     admin.licenses.create!(code: "2", name:"応用情報処理")

@@ -3,5 +3,4 @@ class Project < ActiveRecord::Base
 
   validates :summary, presence: true, length: { maximum: 40}
   validates :start_date, presence: true
-  validates :end_date, presence: true
 end
