@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   get 'resumes/index'
-
   get 'resumes/print'
 
   resources :attendance_others
