@@ -1,15 +1,64 @@
-p#notice = notice
-
-p
-  strong Code:
-  = @project.code
-p
-  strong Name:
-  = @project.name
-p
-  strong Remarks:
-  = @project.remarks
-
-= link_to 'Edit', edit_project_path(@project)
-'|
-= link_to 'Back', projects_path
+article.projects.show
+  .row
+    .large-12.columns
+      h3 プロジェクト詳細
+      
+      .row
+        .large-1.small-4.columns
+          label.left.inline 業務概要
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.summary
+      .row
+        .large-1.small-4.columns
+          label.left.inline 開始月
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.start_date.strftime("%Y/%m")
+      .row
+        .large-1.small-4.columns
+          label.left.inline 終了月
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.end_date.strftime("%Y/%m")
+      .row
+        .large-1.small-4.columns
+          label.left.inline 詳細内容
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.description
+      .row
+        .large-1.small-4.columns
+          label.left.inline OS
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.os
+      .row
+        .large-1.small-4.columns
+          label.left.inline 言語
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.language
+      .row
+        .large-1.small-4.columns
+          label.left.inline DB、その他
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.database
+      .row
+        .large-1.small-4.columns
+          label.left.inline 開発体制人数
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.dep_size
+      .row
+        .large-1.small-4.columns
+          label.left.inline 役割
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.role
+      .row
+        .large-1.small-4.columns
+          label.left.inline 工程
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.experience
+      .row
+        .large-1.small-4.columns
+          label.left.inline 備考
+        .large-2.large-pull-9.small-8.columns
+          strong = @project.remarks
+      .row
+        .large-6.large-centered.columns
+          = link_to '編集', edit_project_path(@project), class: "button radius"
+          = link_to '戻る', projects_path, class: "button radius"

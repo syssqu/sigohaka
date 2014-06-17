@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617014653) do
+
+ActiveRecord::Schema.define(version: 20140613015918) do
+
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -99,8 +101,6 @@ ActiveRecord::Schema.define(version: 20140617014653) do
   end
 
   create_table "projects", force: true do |t|
-    t.string   "code"
-    t.string   "name"
     t.date     "start_date"
     t.date     "end_date"
     t.string   "summary"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20140617014653) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
+    t.integer  "term"
   end
 
   create_table "sections", force: true do |t|
@@ -141,12 +142,12 @@ ActiveRecord::Schema.define(version: 20140617014653) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                             default: "", null: false
-    t.string   "encrypted_password",                default: "", null: false
+    t.string   "email",                                                     default: "", null: false
+    t.string   "encrypted_password",                                        default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                     default: 0,  null: false
+    t.integer  "sign_in_count",                                             default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -158,11 +159,11 @@ ActiveRecord::Schema.define(version: 20140617014653) do
     t.string   "kana_family_name",       limit: 40
     t.string   "kana_first_name",        limit: 40
     t.integer  "section_id"
-    t.string   "gender",                 limit: 1
+    t.string   "gender",                 limit: 10
     t.date     "birth_date"
     t.string   "employee_no",            limit: 6
     t.integer  "age"
-    t.integer  "experience"
+    t.decimal  "experience",                        precision: 5, scale: 1
     t.string   "postal_code",            limit: 8
     t.string   "prefecture"
     t.string   "city",                   limit: 80
@@ -172,6 +173,7 @@ ActiveRecord::Schema.define(version: 20140617014653) do
     t.string   "gakureki"
     t.text     "remarks"
     t.string   "role"
+    t.string   "station"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
