@@ -1,0 +1,36 @@
+= form_for @commute do |f|
+  - if @commute.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@commute.errors.count, "error")} prohibited this commute from being saved:"
+      ul
+        - @commute.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :year
+    = f.text_field :year
+  .field
+    = f.label :month
+    = f.text_field :month
+  .field
+    = f.label :reason
+    = f.text_field :reason
+  .field
+    = f.label :reason_text
+    = f.text_field :reason_text
+  .field
+    = f.label :transport
+    = f.text_field :transport
+  .field
+    = f.label :segment1
+    = f.text_field :segment1
+  .field
+    = f.label :segment2
+    = f.text_field :segment2
+  .field
+    = f.label :money
+    = f.number_field :money
+  .actions = f.submit 'Save'
