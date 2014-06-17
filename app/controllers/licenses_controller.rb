@@ -27,28 +27,20 @@ class LicensesController < ApplicationController
   def create
     @license = License.new(license_params)
 
-    respond_to do |format|
-      if @license.save
-        format.html { redirect_to @license, notice: 'License was successfully created.' }
-        format.json { render :show, status: :created, location: @license }
-      else
-        format.html { render :new }
-        format.json { render json: @license.errors, status: :unprocessable_entity }
-      end
+    if @license.save
+      redirect_to @license, notice: 'License was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /licenses/1
   # PATCH/PUT /licenses/1.json
   def update
-    respond_to do |format|
-      if @license.update(license_params)
-        format.html { redirect_to @license, notice: 'License was successfully updated.' }
-        format.json { render :show, status: :ok, location: @license }
-      else
-        format.html { render :edit }
-        format.json { render json: @license.errors, status: :unprocessable_entity }
-      end
+    if @license.update(license_params)
+      redirect_to @license, notice: 'License was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -56,10 +48,7 @@ class LicensesController < ApplicationController
   # DELETE /licenses/1.json
   def destroy
     @license.destroy
-    respond_to do |format|
-      format.html { redirect_to licenses_url, notice: 'License was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to licenses_url, notice: 'License was successfully destroyed.'
   end
 
   private
