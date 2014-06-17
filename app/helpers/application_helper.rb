@@ -2,7 +2,7 @@
 module ApplicationHelper
 
   def get_month_term(start_date, end_date)
-    "" if end_date.blank?
+    return "" if end_date.blank?
     ((end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1).to_s + "ヶ月"
   end
 

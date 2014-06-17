@@ -18,7 +18,7 @@ article.resumes.index
             td.solid3.solid_top_none.gray.text-center 氏名
             td.solid #{current_user.family_name} #{current_user.first_name}
             td.solid3.text-center colspan=2 #{GENDER[current_user.gender.to_sym]}
-            - if current_user.birth_date.blank?    
+            - if current_user.birth_date.blank?
               td.solid3.text-center
             - else
               td.solid3.text-center #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
@@ -96,7 +96,9 @@ article.resumes.index
             - i += 1
             tr
               td rowspan=2 = i.to_s
-              td.solid_bottom1 = p.start_date.strftime("%y.%m") + "〜" + p.end_date.strftime("%y.%m")
+              - start_date = p.start_date.blank? ? "" : p.start_date.strftime("%y.%m")
+              - end_date = p.end_date.blank? ? "" : p.end_date.strftime("%y.%m")
+              td.solid_bottom1 = start_date + "〜" + end_date
               td rowspan=2 = p.summary
               td rowspan=2 = p.os
               td rowspan=2 = p.language
@@ -106,7 +108,9 @@ article.resumes.index
               td.text-center rowspan=2 = p.experience
             tr
               td.solid_top1.text-center
-                #{get_month_term(p.start_date, p.end_date)}
+                - start_date_term = p.start_date.blank? ? "" : p.start_date
+                - end_date_term = p.end_date.blank? ? "" : p.end_date
+                #{get_month_term(start_date_term, end_date_term)}
           - (16-i).times do |n|
             tr
               td rowspan=2

@@ -14,6 +14,15 @@ namespace :db do
                  password: "hydeouT4342",
                  gender: :man,
                  section_id: 2,
+                 birth_date: "1979/6/28",
+                 age:34,
+                 postal_code:"587-0003",
+                 prefecture: "大阪府",
+                 city: "堺市美原区阿弥364-20",
+                 phone: "080-4396-2818",
+                 employee_no: "020401",
+                 experience: 13,
+                 gakureki: "H14.03 京都産業大学 理学部",
                  role: "admin"
       )
 
