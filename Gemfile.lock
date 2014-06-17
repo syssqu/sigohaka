@@ -54,7 +54,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    domain_name (0.5.18)
+    domain_name (0.5.19)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.2.0)
@@ -239,6 +239,7 @@ DEPENDENCIES
   i18n_generators
   jbuilder (~> 2.0)
   jquery-rails
+  minitest
   pg (= 0.15.1)
   rails (= 4.1.0)
   rails_12factor (= 0.0.2)

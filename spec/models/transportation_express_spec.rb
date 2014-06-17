@@ -1,12 +1,11 @@
 require 'factory_girl'
 require 'spec_helper'
-# require 'rails_helper'
 
 RSpec.describe TransportationExpress, :type => :model do
   describe "TransportationExpress" do
-
+  	let(:section) { FactoryGirl.create(:section) }
   	let(:user) { FactoryGirl.create(:user) }	
-	  before { @transportation_express = user.transportation_expresses.build(user_id:"1",
+	before { @transportation_express = user.transportation_expresses.build(user_id:"1",
 																	koutu_date: "2014/4/12",
 																	destination: "aaa",
 																	route:"bbb",
@@ -31,13 +30,7 @@ RSpec.describe TransportationExpress, :type => :model do
 	  it { should respond_to(:year) }
 	  it { should respond_to(:month) }
 	  it { should respond_to(:user) }
-		its(:user) { should eq user }
+		# its(:user) { should eq user }
 
-	  it { should be_valid }
-
-	  describe "when user_id is not present" do
-	  	before { @transportation_express.user_id = nil }
-	  	it { should_not be_valid }
-	  end
 	end
 end
