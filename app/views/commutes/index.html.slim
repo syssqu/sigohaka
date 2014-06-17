@@ -1,31 +1,65 @@
-h1 Listing commutes
+article.transport_index
+  .row
+    .large-12.columns
 
-table
-  thead
-    tr
-      th Reason
-      th Reason text
-      th Transport
-      th Segment1
-      th Segment2
-      th Money
-      th
-      th
-      th
+      h2 通勤届書
 
-  tbody
-    - @commutes.each do |commute|
-      tr
-        td = commute.reason
-        td = commute.reason_text
-        td = commute.transport
-        td = commute.segment1
-        td = commute.segment2
-        td = commute.money
-        td = link_to 'Show', commute
-        td = link_to 'Edit', edit_commute_path(commute)
-        td = link_to 'Destroy', commute, data: {:confirm => 'Are you sure?'}, :method => :delete
+      #transport_header
+        table#transport_project
+          tbody
+            tr
+              td プロジェクト名:
+              td = truncate(@project.summary, length:20) if ! @project.nil?
+            tr
+              td 所属:
+              td = current_user.section.name if ! current_user.section.nil?
+            tr
+              td 氏名:
+              td #{current_user.family_name} #{current_user.first_name}
 
-br
+      
+      .row
+        table
+          tr
+            td 現住所
+            td 
+            td 電話番号
+            td
+          tr
+            td 届出理由
+            td colspan="2"
+          tr
+            td 届出理由（その他の場合）
+            td colspan="2" 
+      .row
+        .small-4.columns
+          |&nbsp;&nbsp;&nbsp;
+          = link_to '新規追加', new_commute_path, class: "button tiny radius"
+          |&nbsp;&nbsp;&nbsp;
+          = link_to "PDF出力", print_commutes_path, class: "button tiny radius"
+      .row
+        table
+          thead
+            tr
+              th 交通機関名称
+              th 利用区間１
+              th 利用区間２
+              th １ヶ月の定期金額
+              th
+              th
+              th
 
-= link_to 'New Commute', new_commute_path
+          tbody
+            - @commutes.each do |commute|
+              tr
+                td = commute.transport
+                td = commute.segment1
+                td = commute.segment2
+                td = commute.money
+                td = link_to 'Show', commute
+                td = link_to 'Edit', edit_commute_path(commute)
+                td = link_to 'Destroy', commute, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+        br
+
+        = link_to 'New Commute', new_commute_path

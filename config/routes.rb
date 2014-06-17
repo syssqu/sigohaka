@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   
 
   resources :commutes
+    collection do
+      get 'print'
+    end
+  end
 
   get 'resumes/index'
   get 'resumes/print'
