@@ -2,63 +2,60 @@
   - @sum = transportation_express.money.to_i + @sum.to_i
 / = hidden_field :sum, @sum
 - session[:sum] = @sum
-.row
-  .large-12.columns
-    .row
-      .large-6.columns
-        h1 &nbsp;&nbsp;&nbsp;交通費精算書 
-      .large-6.columns
-        h2 #{current_user.family_name} #{current_user.first_name}
-    = @date.strftime("%Y年%_m月%_d日")
-    table
-      thead style="text-align:center;"
-        tr
-          th 月/日
-          th 行先
-          th 乗り物経路
-          th 交通機関
-          th 金額
-          th 備考
-      tbody
-        - @transportation_express.each do |transportation_express|
+article.transport_index
+  .row
+    .large-12.columns
+
+      h2 交通費精算書
+
+      #transport_header
+        table#transport_project
+          tbody
+            tr
+              td プロジェクト名:
+              td = truncate(@project.summary, length:20) if ! @project.nil?
+            tr
+              td 所属:
+              td = current_user.section.name if ! current_user.section.nil?
+            tr
+              td 氏名:
+              td #{current_user.family_name} #{current_user.first_name}
+
+      .row
+        .small-4.columns
+          |&nbsp;&nbsp;&nbsp;
+          = link_to '新規追加', new_transportation_express_path, class: "button tiny radius"
+          |&nbsp;&nbsp;&nbsp;
+          = link_to "PDF出力", print_transportation_expresses_path, class: "button tiny radius"
+      .row
+        .small-2.columns.push-6.columns
+          = @date.strftime("%Y年%_m月%_d日")
+      table
+        thead style="text-align:center;"
           tr
-            / td = transportation_express.user_id
-            td = transportation_express.koutu_date.strftime('%m/%d')
-            td = transportation_express.destination
-            td = transportation_express.route
-            td = transportation_express.transport
-            td = transportation_express.money.to_s+"円"
-            td = transportation_express.note
-            / td = link_to 'Show', transportation_express
-            td = link_to 'Edit', edit_transportation_express_path(transportation_express)
-            td = link_to 'Destroy', transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete
+            th 月/日
+            th 行先
+            th 乗り物経路
+            th 交通機関
+            th 金額
+            th 備考
+            th
+            th
+        tbody
+          - @transportation_express.each do |transportation_express|
+            tr
+              / td = transportation_express.user_id
+              td = transportation_express.koutu_date.strftime('%m/%d')
+              td = transportation_express.destination
+              td = transportation_express.route
+              td = transportation_express.transport
+              td = '¥'+transportation_express.money.to_s
+              td = transportation_express.note
+              / td = link_to 'Show', transportation_express
+              td = link_to '修正', edit_transportation_express_path(transportation_express),class: "button tiny success"
+              td = link_to '削除', transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete ,class: "button tiny alert"
 
-        tr
-          td 合計
-          td
-          td
-          td
-          td #{@sum.to_s+"円"}
-        tr
-          td 部門長
-          td 担当者
-          td style="border-top:none"
-        tr
-          td
-          td
-          td 所属
-          td
-          td 社員Ｎｏ
-          td #{current_user.section.name}
-        tr
-          td
-          td
-          td Ｐｒｏｊ
-          td = @project.summary if ! @project.nil?
-          td 氏名
-          td #{current_user.family_name} #{current_user.first_name}
-br
+         
+  br
 
-    = link_to '新規追加', new_transportation_express_path
-    |&nbsp;&nbsp;&nbsp;
-    = link_to "PDF出力", print_transportation_expresses_path, class: "button tiny radius"
+      

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   
+
   resources :commutes
+
+  get 'resumes/index'
+  get 'resumes/print'
+
 
   resources :attendance_others
 

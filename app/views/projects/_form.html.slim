@@ -1,79 +1,86 @@
-= form_for @project do |f|
-  - if @project.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      ul
-        - @project.errors.full_messages.each do |message|
-          li = message
+article.projects.form
+  = form_for @project do |f|
+    - if @project.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+        ul
+          - @project.errors.full_messages.each do |message|
+            li = message
+    .row
+      .large-2.small-4.columns
+        label.left.inline 業務概要
+      .large-2.large-pull-8.small-8.columns
+        = f.text_field :summary
+    .row
+      .large-2.small-4.columns
+        label.left.inline 開始月
+      .large-3.large-pull-7.small-8.columns
+        = raw sprintf( f.date_select(:start_date, use_month_numbers: true, discard_day: true, start_year: 1965, date_separator:'%s'), '年 ') + '月'
+    .row
+      .large-2.small-4.columns
+        label.left.inline 終了月
+      .large-3.large-pull-7.small-8.columns
+        = raw sprintf( f.date_select(:end_date, use_month_numbers: true, discard_day: true, start_year: 1965, date_separator:'%s'), '年 ') +  '月'
+    .row
+      .large-2.small-4.columns
+        label.left.inline 詳細内容
+      .large-4.large-pull-6.small-8.columns
+        = f.text_area :description
+    .row
+      .large-2.small-4.columns
+        label.left.inline OS
+      .large-2.large-pull-8.small-8.columns
+        = f.text_field :os
+    .row
+      .large-2.small-4.columns
+        label.left.inline 言語
+      .large-3.large-pull-7.small-8.columns
+        = f.text_field :language
+    .row
+      .large-2.small-4.columns
+        label.left.inline DB、その他
+      .large-3.large-pull-7.small-8.columns
+        = f.text_field :database
+    .row
+      .large-2.small-4.columns
+        label.left.inline 開発体制人数
+      .large-1.large-pull-9.small-8.columns
+        = f.text_field :dep_size
+    .row
+      .large-2.small-4.columns
+        label.left.inline 役割
+      .large-2.large-pull-8.small-8.columns
+        = f.text_field :role
+    .row
+      .large-2.small-4.columns
+        label.left.inline 工程
+      .large-2.large-pull-8.small-8.columns
+        = f.text_field :experience
+    .row
+      .large-2.small-4.columns
+        label.left.inline 備考
+      .large-2.large-pull-8.small-8.columns
+        = f.text_field :remarks
+    .row
+      .large-2.small-4.columns
+        label.left.inline アクティブ
+      .large-2.large-pull-8.small-8.columns
+        = f.check_box :active
+    .row
+      .large-12.columns
+        table
+          tbody
+            tr
+              td 役割
+              td PM:プロジェクト、PL:プロジェクトリーダー、SE:システム・エンジニア、ML:製造リーダー、PG:プログラマー、OP:オペレーター、AN:その他
+            tr
+              td 工程
+              td
+                |1：企画･分析・コンサルタント、2：基本設計概要設計、3：詳細設計（機能設計･論理設計）、4：プログラム設計、5：プログラミング、
+                br
+                |6：プログラムテスト、7：システムテスト、8：運用テスト、9：運用、10：システム運用･保守･維持管理、11：システムエンジニアサポート、12：プロジェクト管理
 
-  .row
-    .large-3.small-4.columns
-      label.left.inline コード
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :code
-  .row
-    .large-3.small-4.columns
-      label.left.inline 名称
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :name
-  .row
-    .large-3.small-4.columns
-      label.left.inline 開始月
-    .large-5.large-pull-4.small-8.columns
-      = f.date_select :start_date
-  .row
-    .large-3.small-4.columns
-      label.left.inline 終了月
-    .large-5.large-pull-4.small-8.columns
-      = f.date_select :end_date
-  .row
-    .large-3.small-4.columns
-      label.left.inline 業務概要
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :summary
-  .row
-    .large-3.small-4.columns
-      label.left.inline 詳細内容
-    .large-5.large-pull-4.small-8.columns
-      = f.text_area :description
-  .row
-    .large-3.small-4.columns
-      label.left.inline OS
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :os
-  .row
-    .large-3.small-4.columns
-      label.left.inline 言語
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :language
-  .row
-    .large-3.small-4.columns
-      label.left.inline DB、その他
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :database
-  .row
-    .large-3.small-4.columns
-      label.left.inline 開発体制人数
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :dep_size
-  .row
-    .large-3.small-4.columns
-      label.left.inline 役割
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :role
-  .row
-    .large-3.small-4.columns
-      label.left.inline 工程
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :experience
-  .row
-    .large-3.small-4.columns
-      label.left.inline 備考
-    .large-5.large-pull-4.small-8.columns
-      = f.text_field :remarks
-  .row
-    .large-3.small-4.columns
-      label.left.inline アクティブ
-    .large-5.large-pull-4.small-8.columns
-      = f.check_box :active
-  .actions = f.submit 'Save'
+    .row
+      .large-6.large-centered.columns
+        = f.submit "登録", class: "button radius"
+        = link_to '戻る', projects_path, class: "button radius"
