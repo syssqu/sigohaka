@@ -1,0 +1,62 @@
+/* =============================================================================
+   技術経歴書(一覧)
+   ========================================================================== */
+article.resumes.index span{margin:0px;color:red;}
+
+article.resumes.index table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+
+article.resumes.index table#user_info tr th {font-size:10px;padding:1px 1px !important;background-color:#fff;font-weight:normal;border:1px solid black;}
+article.resumes.index table#user_info tr td.solid {font-size:10px;padding:0px 10px !important;height:20px !important;background-color:#fff;border:1px solid black;}
+article.resumes.index table#user_info tr td.solid3 {font-size:10px;padding:0px 10px !important;height:20px !important;background-color:#fff;border:3px solid black;}
+article.resumes.index table#user_info tr td.solid_top{border-top:3px solid black;}
+article.resumes.index table#user_info tr td.solid_right{border-right:3px solid black;}
+article.resumes.index table#user_info tr td.solid_top_none{border-top:0px;}
+article.resumes.index table#user_info tr td.solid_bottom_none{border-bottom:0px;}
+article.resumes.index table#user_info tr td.gray{background-color:#9F9687;}
+article.resumes.index table#user_info tr td.solid_bottom{border-bottom:3px solid black;}
+article.resumes.index table#user_info tr td .button {padding:4px !important;margin:0px !important;}
+
+/* article.resumes.index .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;} */
+/* article.resumes.index .dash_line{position: absolute;border-right:1px dashed #000;width:25px;height:24px;;@include box_sizing;} */
+
+
+article.resumes.index table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+
+article.resumes.index table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:3px solid black;background-color:#9F9687;}
+article.resumes.index table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:20px !important;background-color:#fff;border:3px solid black;}
+article.resumes.index table#projects_info tr td.solid_top1{border-top:1px solid black;}
+article.resumes.index table#projects_info tr td.solid_bottom1{border-bottom:1px solid black;}
+
+/* =============================================================================
+   技術経歴書(PDF)
+   ========================================================================== */
+
+
+article.resumes.print span{margin:0px;color:red;}
+article.resumes.print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+
+article.resumes.print table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
+article.resumes.print table#user_info tr td.header {height:16px !important;}
+
+article.resumes.print table#user_info tr td.solid_top_none{border-top:0px;}
+article.resumes.print table#user_info tr td.solid_bottom_none{border-bottom:0px;}
+
+article.resumes.print table#user_info tr td.solid_top_dotted{border-top:1px dotted black;}
+article.resumes.print table#user_info tr td.solid_bottom_dotted{border-bottom:1px dotted black;}
+
+article.resumes.print table#user_info tr td.gray{background-color:#9F9687;}
+article.resumes.print table#user_info tr td.solid_bottom{border-bottom:1px solid black;}
+
+article.resumes.print table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+
+article.resumes.print table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;}
+article.resumes.print table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
+article.resumes.print table#projects_info tr td.solid_top1{border-top:1px dotted black;}
+article.resumes.print table#projects_info tr td.solid_bottom1{border-bottom:1px dotted black;}
+
+article.resumes.print h3{font-family: 'IPAex明朝'; src: url('<%= asset_path "ipaexm.ttf" %>') format('truetype');font-size:30px;}
+
+@font-face {
+   font-family: 'IPAex明朝';
+   src: url('<%= asset_path "ipaexm.ttf" %>') format('truetype');
+}
