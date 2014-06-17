@@ -2,12 +2,13 @@
   .large-12.columns
     article.transport_print
       .row
-        .large-4.columns
+        .large-4.columns.push-1.columns
           h1 style="font-family: ＭＳ Ｐ明朝;font-weight:bold;"
-            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交通費精算書
-        .large-8.columns style="padding-top:50px"
+            |交通費精算書
+        .large-3.columns style="padding-top:50px"
           |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           u #{ @date.strftime("%Y年%_m月%_d日")} #{@holi_1} #{@holi_2} #{@holi_3} #{@holi_4}
+        .large-4.columns
       / table
       /   tbody
       /     tr
