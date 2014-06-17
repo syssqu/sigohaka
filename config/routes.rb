@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :commutes
+
   resources :attendance_others
 
   resources :licenses
