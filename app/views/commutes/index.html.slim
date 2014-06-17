@@ -1,0 +1,31 @@
+h1 Listing commutes
+
+table
+  thead
+    tr
+      th Reason
+      th Reason text
+      th Transport
+      th Segment1
+      th Segment2
+      th Money
+      th
+      th
+      th
+
+  tbody
+    - @commutes.each do |commute|
+      tr
+        td = commute.reason
+        td = commute.reason_text
+        td = commute.transport
+        td = commute.segment1
+        td = commute.segment2
+        td = commute.money
+        td = link_to 'Show', commute
+        td = link_to 'Edit', edit_commute_path(commute)
+        td = link_to 'Destroy', commute, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Commute', new_commute_path
