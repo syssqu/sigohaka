@@ -6,6 +6,7 @@ class CommutesController < ApplicationController
   def index
     @commutes = Commute.all
     @commute=current_user.commutes.all
+    @reason_in=
     @project = current_user.projects.find_by(active: true)
   end
 
@@ -26,7 +27,8 @@ class CommutesController < ApplicationController
   # POST /commutes
   # POST /commutes.json
   def create
-    @commute = Commute.new(commute_params)
+    # @commute = Commute.new(commute_params)
+    @commute = current_user.commutes.build(commute_params)
 
     respond_to do |format|
       if @commute.save
