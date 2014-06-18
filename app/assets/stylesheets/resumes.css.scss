@@ -27,11 +27,23 @@ article.resumes.index table#projects_info tr td.solid_bottom1{border-bottom:1px 
 /* =============================================================================
    技術経歴書(PDF)
    ========================================================================== */
-article.resumes.print span{margin:0px;color:red;font-family: "ＭＳ 明朝","MS Mincho";}
-article.resumes.print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;font-family: "ＭＳ 明朝","MS Mincho";}
+@mixin pdf_minchou{font-family:
+   "ヒラギノ明朝 ProN W6",
+   "HiraMinProN-W6",
+   "HG明朝E",
+   "ＭＳ Ｐ明朝",
+   "MS PMincho",
+   "MS 明朝",
+   "ＭＳ Ｐ明朝",
+   "MS PMincho",
+   "ＭＳ 明朝","MS Mincho",
+   serif;
+}
+article.resumes.print span{margin:0px;color:red;@include pdf_minchou;}
+article.resumes.print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;@include pdf_minchou;}
 
-article.resumes.print table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;font-family: "ＭＳ 明朝","MS Mincho";}
-article.resumes.print table#user_info tr td.header {height:16px !important;font-family: "ＭＳ 明朝","MS Mincho";}
+article.resumes.print table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;@include pdf_minchou;}
+article.resumes.print table#user_info tr td.header {height:16px !important;@include pdf_minchou;}
 
 article.resumes.print table#user_info tr td.solid_top_none{border-top:0px;}
 article.resumes.print table#user_info tr td.solid_bottom_none{border-bottom:0px;}
@@ -44,13 +56,13 @@ article.resumes.print table#user_info tr td.solid_bottom{border-bottom:1px solid
 
 article.resumes.print table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
 
-article.resumes.print table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;font-family: "ＭＳ 明朝","MS Mincho";}
-article.resumes.print table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;font-family: "ＭＳ 明朝","MS Mincho";}
+article.resumes.print table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;@include pdf_minchou;}
+article.resumes.print table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;@include pdf_minchou;}
 article.resumes.print table#projects_info tr td.solid_top1{border-top:1px dotted black;}
 article.resumes.print table#projects_info tr td.solid_bottom1{border-bottom:1px dotted black;}
 
-article.resumes.print h3{font-family: "ＭＳ 明朝","MS Mincho"; font-size:30px;font-weight:bold;}
-article.resumes.print{font-family: "ＭＳ 明朝","MS Mincho";}
+article.resumes.print h3{@include pdf_minchou; font-size:30px;font-weight:bold;}
+article.resumes.print{@include pdf_minchou;}
 
 
-article.resumes.print table#remarks tr td {font-size:10px;padding:0px 10px !important;background-color:#fff;font-family: "ＭＳ 明朝","MS Mincho";}
+article.resumes.print table#remarks tr td {font-size:10px;padding:0px 10px !important;background-color:#fff;@include pdf_minchou;}
