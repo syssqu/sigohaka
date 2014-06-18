@@ -4,6 +4,7 @@ article.resumes.print
       h3 技術経歴書
   .row
     .large-12.columns
+      = current_user.projects.last.updated_at.strftime("%Y年%m月%d日現在")
       table#user_info
         tbody
           tr
@@ -103,9 +104,10 @@ article.resumes.print
               td.text-center rowspan=2 = p.role
               td.text-center rowspan=2 = p.experience
             tr
-              - start_date_term = p.start_date.blank? ? "" : p.start_date
-              - end_date_term = p.end_date.blank? ? "" : p.end_date
-              #{get_month_term(start_date_term, end_date_term)}
+              td.solid_top1.text-center
+                - start_date_term = p.start_date.blank? ? "" : p.start_date
+                - end_date_term = p.end_date.blank? ? "" : p.end_date
+                #{get_month_term(start_date_term, end_date_term)}
           - (16-i).times do |n|
             tr
               td rowspan=2
