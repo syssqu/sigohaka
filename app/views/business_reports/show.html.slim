@@ -1,0 +1,47 @@
+h3 業務報告書　照会
+
+p#notice = notice
+
+/ p
+/   strong User:
+/   = @business_report.user_id
+p
+  strong 作業内容:
+  = @business_report.naiyou
+p
+  strong 作業実績:
+  = @business_report.jisseki
+p
+  strong 開発ツールや言語等:
+  = @business_report.tool
+p
+  strong 作業内容に対する目的、目標:
+  = @business_report.self_purpose
+p
+  strong 自己評価:
+  = @business_report.self_value
+p
+  strong 評価理由:
+  = @business_report.self_reason
+p
+  strong ユーザー状況:
+  = @business_report.user_situation
+p
+  strong 会社への提案・要望事項:
+  = @business_report.request
+p
+  strong 今月度の反省および所感等:
+  = @business_report.reflection
+p
+  strong 目標:
+  = @business_report.develop_purpose
+p
+  strong 今月の実績:
+  = @business_report.develop_jisseki
+p
+  strong 通信欄:
+  = @business_report.note
+
+= link_to '編集する', edit_business_report_path(@business_report)
+'|
+= link_to '前へ戻る', business_reports_path

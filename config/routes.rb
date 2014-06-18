@@ -18,12 +18,17 @@ Rails.application.routes.draw do
   #   get :print
   # end
 
-
   resource :vacation_requests, only:[] do
     get :print
   end
+  resources :vacation_requests
 
-  resources :vacation_requests, only:[:index, :new, :create, :edit, :update, :show]
+
+
+  resource :business_reports, only:[] do
+    get :print
+  end
+  resources :business_reports
 
   # map.resources :vacation_requests, :except=> ['print']
 
