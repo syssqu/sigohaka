@@ -2,6 +2,7 @@
 class SectionsController < ApplicationController
   before_action :set_section, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  # before_filter :authenticate_admin_user!
 
   def index
     @sections = Section.all

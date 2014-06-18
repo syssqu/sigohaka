@@ -1,4 +1,4 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+/* =============================================================================
+   勤務状況報告書(その他)
+   ========================================================================== */
+article.attendance_others.edit select {display: inline-block;width:30%;}
