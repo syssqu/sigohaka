@@ -66,6 +66,29 @@ class VacationRequestsController < ApplicationController
 
   def print
 
+    year = Date.today.year
+    month = Date.today.month
+    day = Date.today.day
+    
+    @nendo = Date.today.year
+    @gatudo = Date.today.month
+
+    if Date.today.day < 16
+      month = Date.today.months_ago(1).month
+    end
+
+    if Date.today.day > 15
+      @gatudo = Date.today.months_since(1).month
+    end
+
+    if Date.today.month == 12 and Date.today.day > 15
+      @nendo = Date.today.years_since(1).year
+    end
+    @vacation_requests = VacationRequest.all
+    @vacation_requests = current_user.vacation_requests.all
+    @project = current_user.projects.find_by(active: true)
+    @date=@vacation_requests.maximum(:updated_at ,:include)
+
     @vacation_request = current_user.vacation_requests.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
     respond_to do |format|

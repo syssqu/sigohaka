@@ -92,7 +92,9 @@ article.resumes.print
             - i += 1
             tr
               td rowspan=2 = i.to_s
-              td.solid_bottom1 = p.start_date.strftime("%y.%m") + "〜" + p.end_date.strftime("%y.%m")
+              - start_date = p.start_date.blank? ? "" : p.start_date.strftime("%y.%m")
+              - end_date = p.end_date.blank? ? "" : p.end_date.strftime("%y.%m")
+              td.solid_bottom1 = start_date + "〜" + end_date
               td rowspan=2 = p.summary
               td rowspan=2 = p.os
               td rowspan=2 = p.language
@@ -101,8 +103,9 @@ article.resumes.print
               td.text-center rowspan=2 = p.role
               td.text-center rowspan=2 = p.experience
             tr
-              td.solid_top1.text-center
-                #{get_month_term(p.start_date, p.end_date)}
+              - start_date_term = p.start_date.blank? ? "" : p.start_date
+              - end_date_term = p.end_date.blank? ? "" : p.end_date
+              #{get_month_term(start_date_term, end_date_term)}
           - (16-i).times do |n|
             tr
               td rowspan=2
