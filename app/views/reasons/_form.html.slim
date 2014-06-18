@@ -5,13 +5,34 @@
       ul
         - @reason.errors.full_messages.each do |message|
           li = message
+  .row
+    .large-12.columns
+      .field
+        label ・届出理由 <該当項目を選択してください>
+        / = f.text_field :reason
+        label.left.inline = f.radio_button :reason, :new
+        label.left.inline style="width:40px;" for="new" 新規
 
-  .field
-    label 届出理由
-    / = f.text_field :reason
-    = f.radio_button :reason, :new
-    label.left.inline style="width:40px;" for="new" 新規
-  .field
-    label 届出理由（その他）
-    = f.text_field :reason_text
-  .actions = f.submit 'Save'
+        label.left.inline = f.radio_button :reason, :now
+        label.left.inline style="width:100px;" for="now" 現住所変更
+
+        label.left.inline = f.radio_button :reason, :proj
+        label.left.inline style="width:120px;" for="proj" プロジェクト変更
+
+        label.left.inline = f.radio_button :reason, :tran
+        label.left.inline style="width:120px;" for="tran" 通勤経路変更
+
+        label.left.inline = f.radio_button :reason, :sai
+        label.left.inline style="width:60px;" for="sai" 再提出
+
+        label.left.inline = f.radio_button :reason, :up
+        label.left.inline style="width:80px;" for="up" 運賃値上げ
+
+        label.left.inline = f.radio_button :reason, :ta
+        label.left.inline style="width:80px;" for="ta" その他
+  .row
+    .large-12.columns
+      .field
+        label.left.inline ・届出理由（その他）
+        = f.text_field :reason_text
+      .actions = f.submit 'Save'

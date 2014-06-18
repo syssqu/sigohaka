@@ -30,8 +30,24 @@ article.transport_index
             td
           tr
             td 届出理由
-            td colspan="2"
-            / td rowspan="2" = link_to "編集", edit_reason_path(@reason) if ! @reason.nil? link_to "新規", edit_reason_path(@reason) if @reason.nil?
+            - if @reason.reason == "new" && !@reason.nil?
+              td colspan="2" 新規
+            - elsif @reason.reason == "now" && !@reason.nil?
+              td colspan="2" 現住所変更
+            - elsif @reason.reason == "proj" && !@reason.nil?
+              td colspan="2" プロジェクト変更
+            - elsif @reason.reason == "tran" && !@reason.nil?
+              td colspan="2" 通勤経路変更
+            - elsif @reason.reason == "sai" && !@reason.nil?
+              td colspan="2" 再提出
+            - elsif @reason.reason == "up" && !@reason.nil?
+              td colspan="2" 運賃値上げ
+
+            - elsif @reason.reason == "ta" && !@reason.nil?
+              td colspan="2" その他
+            -else
+              td colspan="2"
+
             - if ! @reason.nil?
               td rowspan="2" = link_to "編集", edit_reason_path(@reason)
             - elsif @reason.nil?
