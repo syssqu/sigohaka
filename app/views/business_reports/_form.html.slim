@@ -1,0 +1,89 @@
+= form_for @business_report do |f|
+  - if @business_report.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@business_report.errors.count, "error")} prohibited this business_report from being saved:"
+      ul
+        - @business_report.errors.full_messages.each do |message|
+          li = message
+  tbody
+    h7#business_report_headline
+     | 1. 業務状況
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate.text-left 作業内容
+      tr
+        td = f.text_area :naiyou
+      tr
+        td.cate.text-left 作業実績
+      tr
+        td = f.text_area :jisseki
+      tr
+        td.cate.text-left 開発ツールや言語等
+      tr
+        td = f.text_field :tool
+  tbody
+    h7#business_report_headline
+     | 2. 個人状況
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate 作業内容に対する目標または目的
+        td.cate2.text-center 自己評価
+        td.cate 評価理由
+      tr 
+        td = f.text_area :self_purpose
+        td.text-center = f.text_field :self_value
+        td = f.text_area :self_reason
+    tr
+      h7.center
+       | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
+  tbody
+    h7#business_report_headline
+     | 3. ユーザー状況
+  table#business_report_text
+    tbody
+      tr
+        td = f.text_area :user_situation
+  tbody
+    h7#business_report_headline 
+     | 4. 会社への提案・要望事項
+  table#business_report_text
+    tbody
+      tr
+        td = f.text_area :request
+  tbody
+    h7#business_report_headline 
+     | 5. 今月度の反省および所感等
+  table#business_report_text
+    tbody
+      tr 
+        td = f.text_area :reflection
+  tbody
+    h7#business_report_headline 
+     | 6. 自己啓発等
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate.text-left 目標
+      tr
+        td = f.text_field :develop_purpose
+    tbody
+      tr
+        td.cate.text-left 今月の実績
+      tr 
+        td = f.text_area :develop_jisseki
+    tbody
+      tr
+  tbody
+    h7#business_report_headline 
+     | 通信欄
+  table#business_report_text
+    tbody
+      tr
+        td = f.text_area :note
+
+  .row
+    .large-7.large-centered.columns
+      = f.submit '登録', class: "button radius"
+      = link_to '戻る', business_reports_path, class: "button radius gray"

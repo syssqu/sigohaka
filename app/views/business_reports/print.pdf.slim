@@ -1,0 +1,107 @@
+article.business_report_print
+  #business_report_header.clearfix
+    table#business_report_project.left
+      tbody
+        tr
+          td width="80px;" プロジェクト名:
+          td = truncate(@project.summary, length:20) if ! @project.nil?
+        tr
+          td 所属:
+          td = current_user.section.name if ! current_user.section.nil?
+        tr
+          td 氏名:
+          td #{current_user.family_name} #{current_user.first_name}
+    div.left
+      h5#business_report_title 業務報告書
+      #business_report_nengetu #{seireki2wareki(2014, 6, 1)} #{@gatudo}月度
+    table#business_report_inkan.right border="1"
+      tbody
+        tr
+          td.in.text-center 担当者
+          td.in.text-center 担当者
+          td.in.text-center 本人
+        tr height="60px;"
+          td 
+          td
+          td
+- @business_reports.each do |business_report|
+  tbody
+    h7#business_report_headline 
+     | 1. 業務状況
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate.text-left 作業内容
+      tr
+        td #{business_report.naiyou}
+      tr
+        td.cate.text-left 作業実績
+      tr
+        td #{business_report.jisseki}
+      tr
+        td.cate.text-left 開発ツールや言語等
+      tr
+        td #{business_report.tool}
+  tbody
+    h7#business_report_headline
+     | 2. 個人状況
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate 作業内容に対する目標または目的
+        td.cate2.text-center 自己評価
+        td.cate 評価理由
+      tr 
+        td #{business_report.self_purpose}
+        td.text-center #{business_report.self_value}
+        td #{business_report.self_reason}
+	  tr
+	    h7.center
+	     | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
+  tbody
+    h7#business_report_headline
+     | 3. ユーザー状況
+  table#business_report_text
+    tbody
+      tr
+        td #{business_report.user_situation}
+  tbody
+    h7#business_report_headline 
+     | 4. 会社への提案・要望事項
+  table#business_report_text
+    tbody
+      tr
+        td #{business_report.request}
+  tbody
+    h7#business_report_headline 
+     | 5. 今月度の反省および所感等
+  table#business_report_text
+    tbody
+      tr 
+        td #{business_report.reflection}
+  tbody
+    h7#business_report_headline 
+     | 6. 自己啓発等
+  table#business_report_text2 border="1"
+    tbody
+      tr
+        td.cate.text-left 目標
+      tr
+        td #{business_report.develop_purpose}
+    tbody
+      tr
+        td.cate.text-left 今月の実績
+      tr 
+        td #{business_report.develop_jisseki}
+    tbody
+      tr
+  tbody
+    h7#business_report_headline 
+     | 通信欄
+  table#business_report_text
+    tbody
+      tr
+        td #{business_report.note}
+  tbody
+    h7#business_report_footer 
+     | 株式会社　システム・スクゥェアー
