@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :transportation_expresses
   has_many :vacation_requests
   has_many :commutes
+  has_many :reasons
 
   validates :family_name, presence: true, length: { maximum: 20}
   validates :first_name, presence: true, length: { maximum: 20}
