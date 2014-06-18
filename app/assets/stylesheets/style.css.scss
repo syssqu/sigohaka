@@ -1,4 +1,4 @@
- /*=============================================================================
+/* =============================================================================
    ページ共通
    ========================================================================== */
 .gray {background:#3E4C59;}
@@ -85,9 +85,6 @@ article.kinmu_patterns_edit select {display: inline-block;width:30%;}
    ========================================================================== */
 article.attendance_others.edit select {display: inline-block;width:30%;}
 
-/*article.vacation_request_print table{border-spacing: 0;}*/
-/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
-
 /* =============================================================================
    交通費精算書(PDF)
    ========================================================================== */
@@ -105,3 +102,61 @@ article.transport_print table tr td.syasen{
 }
 
 article.transport_print h1{}
+
+
+/* =============================================================================
+   休暇届(PDF)
+   ========================================================================== */
+article.vacation_request_print {margin-top:130px;table-layout: fixed ;word-wrap: break-word;}
+article.vacation_request_print table {border-spacing: 0;border:1px solid !important;}
+
+h1#vacation_request_title {padding-left:280px;width:600px;text-decoration: underline;margin-top:-55px;margin-bottom:10px;letter-spacing: 30px;}
+h4#vacation_request_for {padding-left:30px;width:535px;text-decoration: underline;float:left;font-family: ＭＳ Ｐゴシック;}
+h6#vacation_request_request {text-decoration: underline;padding-left: 560px;font-family: ＭＳ Ｐゴシック;font-weight:bold;}
+h7#vacation_request_fotter {padding-left: 600px;font-family: ＭＳ Ｐゴシック;font-weight:bold;}
+
+article.vacation_request_print .info {border:1px solid; margin-top:-55px;}
+article.vacation_request_print .cate {border:1px solid;}
+
+/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
+/*article.vacation_request_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}*/
+/*article.vacation_request_print table tr .hanko{border:1px solid;padding-top: 5px;}*/
+/*article.vacation_request_print td .permit{float: right;}*/
+
+
+/* =============================================================================
+   業務報告書(PDF)
+   ========================================================================== */
+article.business_report_print {margin-top: 10px;}
+
+article.business_report_print table tr th {font-size: 10px; padding: 1px 1px !important;}
+article.business_report_print table tr td {font-size: 10px; padding: 0px 0px !important; height: 20px !important; background-color: #fff;}
+
+#business_report_header table#business_report_project {border: 0; width: 230px; margin-right: 60px; margin-top: 10px; padding-left: 15px;}
+#business_report_header table#business_report_project td {font-size: 12px; background-color: #fff; border-bottom: 1px solid #ECECEC; height: 60px;}
+#business_report_header table#business_report_project td strong {color: #6E6E6E;}
+
+#business_report_title {font-size: 25px; width:190px; border-bottom:dashed 3px #000; text-align:center; margin-bottom:8px; margin-top:20px;background: #00FFFF;}
+#business_report_nengetu {width:188px; text-align:center;}
+
+#business_report_header {width: 755px;}
+h7#business_report_headline {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight:bold; background: #cccccc;}
+h7#business_report_footer {font-size: 12px; padding-left: 560px; font-family: ＭＳ Ｐゴシック; font-weight:bold;}
+#business_report_text {margin: 8px; border:1px solid; margin-left: 45px; width: 700px;table-layout: fixed;word-wrap: break-word;}
+#business_report_text td {padding: 5px; font-size: 13px;}
+#business_report_text2 td {padding: 6px; font-size: 13px;}
+#business_report_text2 {margin: 7px; border:1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;}
+#business_report_inkan {border: 1px solid; margin-right: 10px; border-collapse: collapse;}
+
+table#business_report_inkan td.in {width: 60px;}
+table#business_report_text2 td.cate {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
+table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
+table#business_report_text2 td {background-color: #fff;}
+
+/*a:visited.button{color: white;}*/
+
+/*article.business_report_print span {margin:0px;color:red;}*/
+/*article.business_report_print table {border-spacing: 0;}*/
+/*article.business_report_print table#business_report_main {width:755px;margin-bottom:25px;}*/
+/*article.business_report_print table tr td .button {padding:4px !important;margin:0px !important;}*/
+/*article.business_report_print table tr td.bg_gray {background-color:#9F9687 !important;}*/

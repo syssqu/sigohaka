@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610040347) do
+ActiveRecord::Schema.define(version: 20140613012118) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -63,6 +63,24 @@ ActiveRecord::Schema.define(version: 20140610040347) do
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
+
+  create_table "business_reports", force: true do |t|
+    t.integer  "user_id"
+    t.text     "naiyou"
+    t.text     "jisseki"
+    t.string   "tool"
+    t.string   "self_purpose"
+    t.string   "self_value"        limit: 1
+    t.string   "self_reason"
+    t.text     "user_situation"
+    t.text     "request"
+    t.string   "develop_purpose"
+    t.text     "develop_jisseki"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "reflection"
+  end
 
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
@@ -176,5 +194,7 @@ ActiveRecord::Schema.define(version: 20140610040347) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
 
 end
