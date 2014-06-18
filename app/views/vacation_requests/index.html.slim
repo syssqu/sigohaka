@@ -21,9 +21,6 @@ table
       th 備考
       / th Year
       / th Month
-      th
-      th
-      th
 
   tbody
     - @vacation_requests.each do |vacation_request|
@@ -37,10 +34,13 @@ table
         td = vacation_request.note
         / td = vacation_request.year
         / td = vacation_request.month
-        td = link_to '照会', vacation_request
-        td = link_to '編集 ', edit_vacation_request_path(vacation_request)
-        td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete
-
-br
-
-= link_to '新規作成', new_vacation_request_path
+tbody
+  - @vacation_requests.each do |vacation_request|
+    tr
+      td = link_to '新規作成', new_vacation_request_path
+      br
+      td = link_to '照会', vacation_request
+      br
+      td = link_to '編集 ', edit_vacation_request_path(vacation_request)
+      br
+      td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete
