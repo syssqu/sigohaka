@@ -3,14 +3,14 @@
    ========================================================================== */
 @mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
 
-@font-face{
-  font: {
-    family: 'IPAex明朝';
-    weight: 'normal,bold';
-    style:  'normal';
-  }
-  src: asset-url('ipaexm.ttf', font) format('truetype');
-}
+/* @font-face{ */
+/*   font: { */
+/*     family: 'IPAex明朝'; */
+/*     weight: 'normal,bold'; */
+/*     style:  'normal'; */
+/*   } */
+/*   src: asset-url('ipaexm.ttf', font) format('truetype'); */
+/* } */
 
 .gray {background:#3E4C59;}
 .button{margin-right:10px;}     /* ボタンとボタンの隙間 */
