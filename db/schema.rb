@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.text     "jisseki"
     t.string   "tool"
     t.string   "self_purpose"
-    t.string   "self_value"        limit: 1
+    t.string   "self_value"
     t.string   "self_reason"
     t.text     "user_situation"
     t.text     "request"
