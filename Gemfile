@@ -20,21 +20,20 @@ gem 'holiday_japan'
 
 # PDF
 gem 'wicked_pdf'
+gem 'minitest'
 
-group :assets do
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 4.0.3'
-  # Use Uglifier as compressor for JavaScript assets
-  gem 'uglifier', '>= 1.3.0'
-  # Use CoffeeScript for .js.coffee assets and views
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'foundation-icons-sass-rails'
-end
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.3'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+gem 'foundation-icons-sass-rails'
 
 # Use sqlite3 as the database for Active Record
 group :development do
   gem 'sqlite3'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.13.1'
 end
 
 group :test do

@@ -3,34 +3,36 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  def index
+  def init
+    if changed_attendance_years?
+      @selected_nen_gatudo = params[:attendance][:nen_gatudo]
+    end
 
-    processing_date = Date.today
-
-    @nendo = get_nendo(processing_date)
-    @gatudo = get_gatudo(processing_date)
+    @attendance_years = get_attendance_years(params[:attendance])
+    # @attendance_years = Date.new(2014, 2, 20)
+    @nendo = get_nendo(@attendance_years)
+    @gatudo = get_gatudo(@attendance_years)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    year_month_set = current_user.attendances.group('year, month')
-    @nengatudo_set = []
-    year_month_set.each do |year_month|
-      # nengatudo = { key: year_month[:year] + "/" + year_month[:month], value: year_month[:year] + "年" + year_month[:month] + "月度"}
-      # @nengatudo_set << nengatudo
-      @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
-    end
+    @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
 
     if current_user.kinmu_patterns.first.nil?
       flash.now[:alert] = '勤務パターンを登録して下さい。'
       return
     end
+  end
+
+  def index
+
+    init
 
     if ! @attendances.exists?
         
-      target_date = Date.new(processing_date.year, get_month(processing_date), 16)
-      next_date = target_date.months_since(1)
+      target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
+      end_attendance_date = target_date.months_since(1)
       
-      while target_date != next_date
+      while target_date != end_attendance_date
 
         @attendance = current_user.attendances.build
         
@@ -61,28 +63,35 @@ class AttendancesController < ApplicationController
     end
 
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
-    @others = current_user.attendance_others
-    
-    if ! @others.exists?
-      @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
-      if @other.save
-        @others << @other
-      end
-
-      @other = current_user.attendance_others.build(summary:"全体会")
-      if @other.save
-        @others << @other
-      end
-
-      @other = current_user.attendance_others.build()
-      if @other.save
-        @others << @other
-      end
-    end
-    
+    @others = get_attendance_others_info
   end
 
   def init_attendances
+    init
+
+    sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
+      "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
+      "holiday_time=?,midnight_time=?,break_time=?,kouzyo_time=?,work_time=?,remarks=?"
+    
+    @attendances.update_all([sql,
+        current_user.kinmu_patterns.first.code,
+        current_user.kinmu_patterns.first.start_time,
+        current_user.kinmu_patterns.first.end_time,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        nil,nil,nil,nil,nil,
+        current_user.kinmu_patterns.first.work_time,
+        nil
+      ])
+    
     redirect_to attendances_path, notice: 'データを初期化しました。'
   end
 
@@ -121,22 +130,28 @@ class AttendancesController < ApplicationController
 
   def print
 
-    processing_date = Date.today
+    @nen_gatudo = params[:nen_gatudo]
 
-    @nendo = get_nendo(processing_date)
-    @gatudo = get_gatudo(processing_date)
+    if @nen_gatudo.nil?
+      attendance_years = Date.today
+    else
+      attendance_years = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+    end
+
+    @nendo = get_nendo(attendance_years)
+    @gatudo = get_gatudo(attendance_years)
     @project = get_project
     
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @others = current_user.attendance_others
-    
+
     respond_to do |format|
       # format.html { redirect_to print_attendances_path(format: :pdf)}
       # format.pdf do
       #   render pdf: '勤務状況報告書',
       #          encoding: 'UTF-8',
       #          layout: 'pdf.html'
-      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
+      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1, nen_gatudo: @nen_gatudo)}
       format.pdf do
         render pdf: '勤務状況報告書',
                encoding: 'UTF-8',
@@ -187,15 +202,46 @@ class AttendancesController < ApplicationController
       month
     end
 
-    def get_project
-      if current_user.projects.nil?
-        Project.new
+    def holiday?(target_date)
+      target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
+    end
+
+    def changed_attendance_years?
+      nen_gatudo = params[:attendance]
+      return ! nen_gatudo.nil?
+    end
+
+    def get_attendance_years(nen_gatudo)
+    
+      if ! changed_attendance_years?
+        return Date.today
       else
-        current_user.projects.find_by(active: true)
+        temp = nen_gatudo[:nen_gatudo]
+        return Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
       end
     end
 
-    def holiday?(target_date)
-      target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
+    def get_attendance_others_info
+      others = current_user.attendance_others
+      
+      if ! others.exists?
+        @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
+        
+        if @other.save
+          others << @other
+        end
+
+        @other = current_user.attendance_others.build(summary:"全体会")
+        if @other.save
+          others << @other
+        end
+
+        @other = current_user.attendance_others.build()
+        if @other.save
+          others << @other
+        end
+      end
+
+      others
     end
 end

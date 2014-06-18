@@ -1,0 +1,139 @@
+article.resumes.index
+  .row
+    .large-12.columns
+      h3 技術経歴書
+  .row
+    .large-12.columns
+      = link_to "PDF出力", resumes_print_path, class: "button tiny radius"
+      table#user_info
+        tbody
+          tr
+            td.solid3.solid_bottom_none.gray.text-center width="100px;" フリガナ
+            td.solid.solid_top width="200px;" #{current_user.kana_family_name} #{current_user.kana_first_name}
+            td.solid3.gray.text-center width="50px;" colspan=2 性別
+            td.solid3.gray.text-center width="100px;" 生年月日
+            td.solid3.gray.text-center width="80px;" 年齢
+            td.solid3.gray.text-center width="80px;" 経験年数
+          tr
+            td.solid3.solid_top_none.gray.text-center 氏名
+            td.solid #{current_user.family_name} #{current_user.first_name}
+            td.solid3.text-center colspan=2 #{GENDER[current_user.gender.to_sym]}
+            - if current_user.birth_date.blank?
+              td.solid3.text-center
+            - else
+              td.solid3.text-center #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
+            td.solid3.text-center #{current_user.age}歳
+            td.solid3.text-center #{number_with_precision(current_user.experience, {precision:1, :strip_insignidicant_zeros => 1})}年
+          tr
+            td.solid3.gray.text-center 現住所
+            td.solid3 #{current_user.prefecture}
+            td.solid3.gray.text-center colspan=2 最寄駅
+            td.solid3 colspan=3 #{current_user.station}
+          tr
+            td.solid3.gray.text-center 最終学歴
+            td.solid3 colspan=6 #{current_user.gakureki}
+          - if current_user.licenses.count < 5
+            tr
+              td.solid3.gray.text-center rowspan=2 資格
+              - lf = current_user.licenses.first
+              td.solid.solid_right colspan=2 #{lf.years unless lf.blank?} #{lf.name unless lf.blank?}
+              - lt = current_user.licenses.third
+              td.solid.solid_right colspan=4 #{lt.years unless lt.blank?} #{lt.name unless lt.blank?}
+            tr
+              - ls = current_user.licenses.second
+              td.solid.solid_right colspan=2 #{ls.years unless ls.blank?} #{ls.name unless ls.blank?}
+              - lfo = current_user.licenses.fourth
+              td.solid.solid_right colspan=4 #{lfo.years unless lfo.nil?} #{lfo.name unless lfo.nil?}
+            tr
+              td.solid3.gray.text-center rowspan=3 備考
+              td.solid.solid_right.solid_top colspan=6 #{current_user.remarks}
+            tr
+              td.solid.solid_right colspan=6
+            tr
+              td.solid.solid_right.solid_bottom colspan=6
+          - else
+            tr
+              td.solid3.gray.text-center rowspan=3 資格
+              - lf = current_user.licenses.first
+              td.solid.solid_right colspan=2 #{lf.years unless lf.blank?} #{lf.name unless lf.blank?}
+              - lfo = current_user.licenses.fourth
+              td.solid.solid_right colspan=4 #{lfo.years unless lfo.nil?} #{lfo.name unless lfo.nil?}
+            tr
+              - ls = current_user.licenses.second
+              td.solid.solid_right colspan=2 #{ls.years unless ls.blank?} #{ls.name unless ls.blank?}
+              - lfi = current_user.licenses.fifth
+              td.solid.solid_right colspan=4 #{lfi.years unless lfi.nil?} #{lfi.name unless lfi.nil?}
+            tr
+              - lt = current_user.licenses.third
+              td.solid.solid_right colspan=4 #{lt.years unless lt.blank?} #{lt.name unless lt.blank?}
+              - lfs = current_user.licenses[5]
+              td.solid.solid_right colspan=4 #{lsi.years unless lsi.nil?} #{lsi.name unless lsi.nil?}
+            tr
+              td.solid3.gray.text-center rowspan=2 備考
+              td.solid.solid_right.solid_top colspan=6 #{current_user.remarks}
+            tr
+              td.solid.solid_right.solid_bottom colspan=6
+  .row
+    .large-12.columns
+      table#projects_info
+        thead
+          tr
+            th.text-center No.
+            th.text-center 期間
+            th.text-center 業務内容
+            th.text-center OS
+            th.text-center 言語
+            th.text-center
+              |DB
+              br
+              |ツール他
+            th.text-center 開発体制人数
+            th.text-center 役割
+            th.text-center 工程
+        tbody
+          - i = 0
+          - current_user.projects.each do |p|
+            - i += 1
+            tr
+              td rowspan=2 = i.to_s
+              - start_date = p.start_date.blank? ? "" : p.start_date.strftime("%y.%m")
+              - end_date = p.end_date.blank? ? "" : p.end_date.strftime("%y.%m")
+              td.solid_bottom1 = start_date + "〜" + end_date
+              td rowspan=2 = p.summary
+              td rowspan=2 = p.os
+              td rowspan=2 = p.language
+              td rowspan=2 = p.database
+              td.text-center rowspan=2 = p.dep_size
+              td.text-center rowspan=2 = p.role
+              td.text-center rowspan=2 = p.experience
+            tr
+              td.solid_top1.text-center
+                - start_date_term = p.start_date.blank? ? "" : p.start_date
+                - end_date_term = p.end_date.blank? ? "" : p.end_date
+                #{get_month_term(start_date_term, end_date_term)}
+          - (16-i).times do |n|
+            tr
+              td rowspan=2
+              td.solid_bottom1
+              td rowspan=2
+              td rowspan=2
+              td rowspan=2
+              td rowspan=2
+              td.text-center rowspan=2
+              td.text-center rowspan=2
+              td.text-center rowspan=2
+            tr
+              td.solid_top1.text-center
+  .row
+    .large-12.columns
+      table
+        tbody
+          tr
+            td 役割
+            td PM:プロジェクト、PL:プロジェクトリーダー、SE:システム・エンジニア、ML:製造リーダー、PG:プログラマー、OP:オペレーター、AN:その他
+          tr
+            td 工程
+            td
+              |1：企画･分析・コンサルタント、2：基本設計概要設計、3：詳細設計（機能設計･論理設計）、4：プログラム設計、5：プログラミング、
+              br
+              |6：プログラムテスト、7：システムテスト、8：運用テスト、9：運用、10：システム運用･保守･維持管理、11：システムエンジニアサポート、12：プロジェクト管理

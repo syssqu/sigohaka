@@ -2,26 +2,24 @@ article.attendance_index
   .row
     .large-12.columns
       h3 勤務状況報告書
-      
-      / #{@nendo}年#{@gatudo}月度
-      / = f.select :pattern, KinmuPattern.where("start_time is not null and end_time is not null").collect {|k| [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code ] }
-      / = collection_select :attendance, :attendance_date, @nengatudo_set, 1, @nengatudo_set[:value]
-      = select :attendance, 'attendance_target_date', @nengatudo_set
+
+      = form_tag :attendances, method: "get" do
+        = collection_select :attendance, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
 
       #attendance_header
         table#attendance_project
           tbody
             tr
               td プロジェクト名:
-              td = truncate(@project.summary, length:20) if ! @project.nil?
+              td = truncate(@project.summary, length:20) unless @project.blank?
             tr
               td 所属:
-              td = current_user.section.name if ! current_user.section.nil?
+              td = current_user.section.name unless current_user.section.blank?
             tr
               td 氏名:
               td #{current_user.family_name} #{current_user.first_name}
 
-      = link_to "PDF出力", print_attendances_path, class: "button tiny radius"
+      = link_to "PDF出力", print_attendances_path(nen_gatudo: @selected_nen_gatudo), class: "button tiny radius"
       = link_to "データ初期化", init_attendances_path, class: "button tiny radius"
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
@@ -74,7 +72,7 @@ article.attendance_index
           - record_number = 0
           - @attendances.each do |attendance|
             - record_number += 1
-            - if attendance.attendance_date.day == 1 and record_number != 17
+            - if (attendance.attendance_date.day == 1) and (record_number < 17)
               tr
                 td 
                 td
@@ -114,8 +112,8 @@ article.attendance_index
                 td.text-center
                   span = YOUBI[attendance.wday.to_i]
               td.text-center = attendance.pattern
-              td.text-center = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
-              td.text-center = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
+              td.text-center = attendance.start_time.strftime("%_H:%M") unless attendance.start_time.blank?
+              td.text-center = attendance.end_time.strftime("%_H:%M") unless attendance.end_time.blank?
               td.text-center = "○" if attendance.byouketu
               td.text-center = "○" if attendance.kekkin
               td.text-center = "○" if attendance.hankekkin
@@ -126,12 +124,12 @@ article.attendance_index
               td.text-center = "○" if attendance.furikyuu
               td.text-center = "○" if attendance.yuukyuu
               td.text-center = "○" if attendance.syuttyou
-              td.text-center = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
-              td.text-center = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
-              td.text-center = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
-              td.text-center = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
-              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
-              td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
+              td.text-center = sprintf( "%.2f", attendance.over_time) unless attendance.over_time.blank?
+              td.text-center = sprintf( "%.2f", attendance.holiday_time) unless attendance.holiday_time.blank?
+              td.text-center = sprintf( "%.2f", attendance.midnight_time) unless attendance.midnight_time.blank?
+              td.text-center = sprintf( "%.2f", attendance.break_time) unless attendance.break_time.blank?
+              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) unless attendance.kouzyo_time.blank?
+              td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) unless attendance.work_time.blank?
               td width="15%"
                 |&nbsp;
                 = attendance.remarks
@@ -142,8 +140,8 @@ article.attendance_index
           - @others.each do |other|
             tr
               td.text-center colspan=3 = other.summary
-              td.text-center = other.start_time.strftime("%_H:%M") if ! other.start_time.nil?
-              td.text-center = other.end_time.strftime("%_H:%M") if ! other.end_time.nil?
+              td.text-center = other.start_time.strftime("%_H:%M") unless other.start_time.blank?
+              td.text-center = other.end_time.strftime("%_H:%M") unless other.end_time.blank?
               td.text-center.bg_gray
               td.text-center.bg_gray
               td.text-center.bg_gray
@@ -154,12 +152,12 @@ article.attendance_index
               td.text-center.bg_gray
               td.text-center.bg_gray
               td.text-center.bg_gray
-              td.text-center = sprintf( "%.2f", other.over_time) if ! other.over_time.nil?
-              td.text-center = sprintf( "%.2f", other.holiday_time) if ! other.holiday_time.nil?
-              td.text-center = sprintf( "%.2f", other.midnight_time) if ! other.midnight_time.nil?
-              td.text-center = sprintf( "%.2f", other.break_time) if ! other.break_time.nil?
-              td.text-center = sprintf( "%.2f", other.kouzyo_time) if ! other.kouzyo_time.nil?
-              td.text-center = sprintf( "%.2f", other.work_time) if ! other.work_time.nil?
+              td.text-center = sprintf( "%.2f", other.over_time) unless other.over_time.blank?
+              td.text-center = sprintf( "%.2f", other.holiday_time) unless other.holiday_time.blank?
+              td.text-center = sprintf( "%.2f", other.midnight_time) unless other.midnight_time.blank?
+              td.text-center = sprintf( "%.2f", other.break_time) unless other.break_time.blank?
+              td.text-center = sprintf( "%.2f", other.kouzyo_time) unless other.kouzyo_time.blank?
+              td.text-center = sprintf( "%.2f", other.work_time) unless other.work_time.blank?
               td
                 |&nbsp;
                 = other.remarks
@@ -210,10 +208,10 @@ article.attendance_index
                   br
                   |パターン
               td.text-center width="20px;" = kinmu.code
-              td.text-center = kinmu.start_time.strftime("%_H:%M") if ! kinmu.start_time.nil?
-              td.text-center = kinmu.end_time.strftime("%_H:%M") if ! kinmu.end_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu.break_time ) if ! kinmu.break_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu.work_time ) if ! kinmu.work_time.nil?
+              td.text-center = kinmu.start_time.strftime("%_H:%M") unless kinmu.start_time.blank?
+              td.text-center = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
+              td.text-center = sprintf( "%.2f", kinmu.break_time ) unless kinmu.break_time.blank?
+              td.text-center = sprintf( "%.2f", kinmu.work_time ) unless kinmu.work_time.blank?
           tr
             td.text-center ※
             td colspan=4
