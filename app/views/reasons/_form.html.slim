@@ -1,0 +1,17 @@
+= form_for @reason do |f|
+  - if @reason.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@reason.errors.count, "error")} prohibited this reason from being saved:"
+      ul
+        - @reason.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    label 届出理由
+    / = f.text_field :reason
+    = f.radio_button :reason, :new
+    label.left.inline style="width:40px;" for="new" 新規
+  .field
+    label 届出理由（その他）
+    = f.text_field :reason_text
+  .actions = f.submit 'Save'

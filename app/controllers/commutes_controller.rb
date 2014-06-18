@@ -6,7 +6,9 @@ class CommutesController < ApplicationController
   def index
     @commutes = Commute.all
     @commute=current_user.commutes.all
-    @reason_in=
+    @reasons=Reason.all
+    @reason=current_user.reasons.first
+
     @project = current_user.projects.find_by(active: true)
   end
 
