@@ -59,8 +59,8 @@ namespace :db do
                  role: "admin"
       )
 
-    hatayama.projects.create!(code: "1", start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
-    hatayama.projects.create!(code: "2", start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
+    hatayama.projects.create!(start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
+    hatayama.projects.create!(start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
 
     hatayama.licenses.create!(code: "1", name:"基本情報処理")
     hatayama.licenses.create!(code: "2", name:"応用情報処理")
@@ -103,8 +103,8 @@ namespace :db do
                  role: "admin"
       )
 
-    isumi.projects.create!(code: "1", start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
-    isumi.projects.create!(code: "2", start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
+    isumi.projects.create!(start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
+    isumi.projects.create!(start_date:"2014/06/01", end_date:"", summary: "自社グループウェアの作成", active: false)
 
     isumi.licenses.create!(code: "1", name:"基本情報処理")
     isumi.licenses.create!(code: "2", name:"応用情報処理")
