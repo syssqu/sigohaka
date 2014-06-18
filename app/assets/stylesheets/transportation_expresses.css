@@ -1,4 +1,33 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+/* =============================================================================
+   交通費精算書(一覧)
+   ========================================================================== */
+article.transport_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
+article.transport_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
+article.transport_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
+article.transport_index table tr td .button {padding:4px !important;margin:0px !important;}
+
+// #transport_header{width:755px;font-size:10px;}
+#transport_header table#transport_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
+#transport_header table#transport_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
+#transport_header table#transport_project td strong{color:#6E6E6E;}
+/* =============================================================================
+   交通費精算書(編集)
+   ========================================================================== */
+article.transport_edit select {display: inline-block;width:45%;}
+/* =============================================================================
+   交通費精算書(PDF)
+   ========================================================================== */
+article.transport_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.transport_print .hyou{table-layout: fixed !important;border:3px solid;}
+article.transport_print .hyou tr td{background-color:#fff;border:1px solid black;font-size:10px;height: 40px;padding:0px;padding-left:2px;padding-right: 2px;}
+article.transport_print .hyou tr.title td{font-size: 14px;padding-bottom: 0px !important;padding-top: 8px !important;font-weight:bold;height: 10px;font-family: ＭＳ Ｐ明朝;text-align:center;}
+
+article.transport_print table tr .hanko{text-align: center;border:1px solid;padding-bottom: 0px;padding-top: 5px;}
+article.transport_print table tr .head{text-align: left;border-bottom:1px solid;padding-bottom: 0px;}
+article.transport_print table tr .info{text-align: center;border-bottom:1px solid;padding-bottom: 0px;}
+article.transport_print table tr td.syasen{
+   background: linear-gradient(150deg, white, white 50%, black 51%, white 52%, white);
+   letter-spacing: 0.2em;
+}
+
+article.transport_print h1{}
