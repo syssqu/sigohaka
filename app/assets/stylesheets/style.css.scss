@@ -11,7 +11,7 @@
   }
   /* src: font-url('ipaexm.ttf') format('truetype'); */
   /* src: asset-url('ipaexm.ttf', font) format('truetype'); */
-  src: local('ipaexm.ttf'), url('/public/assets/ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf') format('truetype');
+  src: local('ipaexm.ttf'), asset-url('ipaexm.ttf', font), url('public/assets/ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf') format('truetype');
 }
 
 .gray {background:#3E4C59;}
