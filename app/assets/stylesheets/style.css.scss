@@ -4,13 +4,11 @@
 @mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
 
 @font-face{
-  font: {
-    family: 'IPAex明朝';
-    weight: 'normal';
-    style:  'normal';
-  }
+  font-family: 'ipaexm';
   /* src: asset-url('ipaexm.ttf', font) format('truetype'); */
-  src: asset-url('ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf', font) format('truetype');
+  src: url('/assets/ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf') format('truetype');
+  font-weight: 'normal';
+  font-style:  'normal';
 }
 
 .gray {background:#3E4C59;}
