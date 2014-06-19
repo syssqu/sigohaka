@@ -31,7 +31,7 @@ article.resumes_index table#projects_info tr td.solid_bottom1{border-bottom:1px 
 article.resumes_print {width:755px;margin:0px;}
 
 @mixin pdf_minchou{font-family:
-                   "ipaexm",
+                   "IPAex明朝",
                    "ヒラギノ明朝 ProN W6",
                    "HiraMinProN-W6",
                    "HG明朝E",
@@ -40,11 +40,9 @@ article.resumes_print {width:755px;margin:0px;}
                    "MS 明朝",
                    "ＭＳ Ｐ明朝",
                    "MS PMincho",
-                   "ＭＳ 明朝",
-                   "MS Mincho",
+                   "ＭＳ 明朝","MS Mincho",
                    serif;
                   }
-
 article.resumes_print span{margin:0px;color:red;@include pdf_minchou;}
 article.resumes_print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;@include pdf_minchou;margin-bottom:10px !important;}
 
