@@ -30,9 +30,12 @@ article.resumes_index table#projects_info tr td.solid_bottom1{border-bottom:1px 
 
 article.resumes_print {width:755px;margin:0px;}
 
+@include font-face(CheckoutSans, 'ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf', $asset-pipeline: true);
+
 @mixin pdf_minchou{
   font-family:
-  "IPA明朝";
+  CheckoutSans;
+  /* "IPA明朝"; */
   /* "IPAex明朝"; */
   /* "ヒラギノ明朝 ProN W6", */
   /* "HiraMinProN-W6", */
