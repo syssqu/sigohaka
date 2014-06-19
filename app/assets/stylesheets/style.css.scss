@@ -9,7 +9,9 @@
     weight: 'normal';
     style:  'normal';
   }
-  src: asset-url('ipaexm.ttf', font) format('truetype');
+  src: font-url('ipaexm.ttf') format('truetype');
+  /* src: asset-url('ipaexm.ttf', font) format('truetype'); */
+  
   /* ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf */
 }
 
