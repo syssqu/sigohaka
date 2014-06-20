@@ -1,0 +1,33 @@
+p#notice = notice
+
+p
+  strong User:
+  = @commute.user_id
+p
+  strong Year:
+  = @commute.year
+p
+  strong Month:
+  = @commute.month
+/ p
+/   strong Reason:
+/   = @commute.reason
+/ p
+/   strong Reason text:
+/   = @commute.reason_text
+p
+  strong Transport:
+  = @commute.transport
+p
+  strong Segment1:
+  = @commute.segment1
+p
+  strong Segment2:
+  = @commute.segment2
+p
+  strong Money:
+  = @commute.money
+
+= link_to 'Edit', edit_commute_path(@commute)
+'|
+= link_to 'Back', commutes_path

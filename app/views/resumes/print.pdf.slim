@@ -1,19 +1,19 @@
-article.resumes.print
+article.resumes_print
   .row
     .large-12.columns
-      h3 技術経歴書
+      h3.text-center 技術経歴書
   .row
     .large-12.columns
-      = current_user.projects.last.updated_at.strftime("%Y年%m月%d日現在")
+      .text-right = current_user.projects.last.updated_at.strftime("%Y年%m月%d日現在")
       table#user_info
         tbody
           tr
-            td.solid_bottom_none.header.gray.text-center width="100px;" フリガナ
-            td.solid_bottom_none.header width="200px;" #{current_user.kana_family_name} #{current_user.kana_first_name}
-            td.header.gray.text-center width="50px;" colspan=2 性別
-            td.header.gray.text-center width="100px;" 生年月日
-            td.header.gray.text-center width="80px;" 年齢
-            td.header.gray.text-center width="80px;" 経験年数
+            td.solid_bottom_none.header.gray.text-center width="80px;" フリガナ
+            td.solid_bottom_none.header width="292px;" #{current_user.kana_family_name} #{current_user.kana_first_name}
+            td.header.gray.text-center width="115px;" colspan=2 性別
+            td.header.gray.text-center width="95px;" 生年月日
+            td.header.gray.text-center width="70px;" 年齢
+            td.header.gray.text-center width="70px;" 経験年数
           tr
             td.solid_top_none.gray.text-center 氏名
             td.solid_top_dotted #{current_user.family_name} #{current_user.first_name}
@@ -70,17 +70,16 @@ article.resumes.print
               td.solid_bottom_none colspan=6 #{current_user.remarks}
             tr
               td.solid_top_dotted colspan=6
-  .row
-    .large-12.columns
+                
       table#projects_info
         thead
           tr
-            th.text-center width="18px;" No.
-            th.text-center width="110px;" 期間
-            th.text-center width="400px;" 業務内容
-            th.text-center width="80px;" OS
-            th.text-center width="80px;" 言語
-            th.text-center
+            th.text-center width="18px;" No
+            th.text-center width="80px;" 期間
+            th.text-center width="255px;" 業務内容
+            th.text-center width="70px;" OS
+            th.text-center width="70px;" 言語
+            th.text-center width="70px;"
               |DB
               br
               |ツール他
@@ -92,7 +91,7 @@ article.resumes.print
           - current_user.projects.each do |p|
             - i += 1
             tr
-              td rowspan=2 = i.to_s
+              td.text-center rowspan=2 = i.to_s
               - start_date = p.start_date.blank? ? "" : p.start_date.strftime("%y.%m")
               - end_date = p.end_date.blank? ? "" : p.end_date.strftime("%y.%m")
               td.solid_bottom1 = start_date + "〜" + end_date
@@ -123,7 +122,7 @@ article.resumes.print
               td.solid_top1.text-center
   .row
     .large-12.columns
-      table
+      table#remarks
         tbody
           tr
             td 役割
