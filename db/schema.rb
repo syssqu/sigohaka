@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613015918) do
+ActiveRecord::Schema.define(version: 20140617045809) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -82,6 +82,20 @@ ActiveRecord::Schema.define(version: 20140613015918) do
     t.text     "reflection"
   end
 
+  create_table "commutes", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",        limit: 4
+    t.string   "month",       limit: 2
+    t.string   "reason"
+    t.string   "reason_text"
+    t.string   "transport"
+    t.string   "segment1"
+    t.string   "segment2"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
@@ -119,6 +133,16 @@ ActiveRecord::Schema.define(version: 20140613015918) do
     t.datetime "updated_at"
     t.boolean  "active"
     t.integer  "term"
+  end
+
+  create_table "reasons", force: true do |t|
+    t.integer  "user_id"
+    t.string   "reason"
+    t.string   "reason_text"
+    t.string   "year",        limit: 4
+    t.string   "month",       limit: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sections", force: true do |t|

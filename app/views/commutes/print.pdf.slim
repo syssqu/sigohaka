@@ -1,0 +1,116 @@
+.row
+	.large-12.columns
+    article.commute_print
+      br
+      br
+      table
+        tr
+        tr
+          td#ate colspan="2"総務人事部　　　　殿
+          td colspan="2" width="40"
+          td width="60"style="border:solid 2px;"人事
+          td width="60"style="border:solid 2px;"所属長
+          td colspan="2" width="60" style="border:solid 2px;"本人
+
+        tr
+          td colspan="4" height="30"
+          td rowspan="2"style="border:solid 2px;"
+          td rowspan="2"style="border:solid 2px;"
+          td rowspan="2" colspan="2" style="border:solid 2px;"
+
+        tr
+          td width="40"
+          td#title colspan="2" 現住所変更及び通勤届
+          td width="20px"
+
+        tr
+          td 
+          td 
+          td 
+          td 
+          td#day colspan="3" width="140"  提出日 平成#{@nendo-1988}#{ @date.strftime("年%_m月%_d日")}
+
+
+      table.user
+        tr
+          td rowspan="2" width="100"所属
+          td rowspan="2" width="200"#{current_user.section.name}
+          td#ten width="90"社員コード
+          td#ten width="110"#{current_user.employee_no}
+
+        tr
+          td 氏名
+          td #{current_user.family_name}#{current_user.first_name}
+
+        tr
+          td rowspan="2"現住所
+          td#zyusyo colspan="3" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
+
+        tr
+          td style="border:none;"
+          td#phone colspan="2"TEL #{current_user.phone}
+        tr
+          td 届出理由
+          td#reason colspan="3"
+            - if @reason.reason=='new'
+              span#ok 新規
+            - elsif @reason.reason!='new'
+              span 新規
+
+            - if @reason.reason=='now'
+              span#ok 現住所変更
+            - elsif @reason.reason!='now'
+              span 現住所変更
+
+            - if @reason.reason=='proj'
+              span#ok プロジェクト変更
+            - elsif @reason.reason!='proj'
+              span プロジェクト変更
+
+            - if @reason.reason=='tran'
+              span#ok 通勤経路変更
+            - elsif @reason.reason!='tran'
+              span 通勤経路変更
+
+            - if @reason.reason=='sai'
+              span#ok 再提出
+            - elsif @reason.reason!='sai'
+              span 再提出
+            |<br>
+            - if @reason.reason=='up'
+              span#ok 運賃値上げ
+            - elsif @reason.reason!='up'
+              span 運賃値上げ
+
+            - if @reason.reason=='ta'
+              span#ok その他
+            - elsif @reason.reason!='ta'
+              span その他
+            | (#{@reason.reason_text})
+
+      table.koutu
+        tr#coltitle
+          td width="100"交通機関名称
+          td colspan="3" width="300" style="letter-spacing: 2em; "利用区間
+          td width="100"１ヶ月の定期金額
+          - @commutes.each do |commute|
+            tr
+              td = truncate("#{commute.transport}",:length=>26,:omission=>"…")
+              td#kukan = truncate("#{commute.segment1}",:length=>26,:omission=>"…")
+              td#yazirusi　・・・・⇒
+              td#kukan = truncate("#{commute.segment2}",:length=>26,:omission=>"…")
+              td#money = truncate("#{commute.money.to_s+'円'}",:length=>14,:omission=>"…")
+
+          tr
+            td 
+            td#money colspan="3"計　　
+            td#money = truncate("#{@sum.to_s+'円'}",:length=>10,:omission=>"…")
+
+          tr.nonborder
+            td.nonborder colspan="5"　
+          tr.nonborder
+            td.nonborder colspan="5"株式会社　システム・スクゥェアー
+
+
+
+    

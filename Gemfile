@@ -17,10 +17,11 @@ gem 'cancan'
 gem 'bcrypt'
 gem 'i18n_generators'
 gem 'holiday_japan'
+gem 'minitest'
 
 # PDF
+gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
-gem 'minitest'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -70,12 +71,11 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'wkhtmltopdf-binary', group: [:development, :test]
+
 
 group :production do
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
-  gem "wkhtmltopdf-heroku"
 end
 
 gem 'tzinfo-data'

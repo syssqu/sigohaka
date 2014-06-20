@@ -12,7 +12,7 @@ article.attendance_index table tr td {font-size:12px;}
 article.attendance_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
 article.attendance_index table tr td .button {padding:4px !important;margin:0px !important;}
 article.attendance_ table tr td.bg_gray{background-color:#9F9687 !important;}
-article.attendance_index select {display: inline-block;width:15%;}
+article.attendance_index select {display: inline-block;width:50%;}
 
 article.attendance_index #attendance_header table#attendance_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
 article.attendance_index #attendance_header table#attendance_project table {border:none;}
@@ -21,10 +21,35 @@ article.attendance_index #attendance_header table#attendance_project td strong{c
 article.attendance_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
 article.attendance_index #attendance_nengetu{width:240px;text-align:center;}
 
+
+article {padding-left:5px;}
+
+
+article.attendance_index label{padding-right: 20px;}
+
+article.attendance_index .button.tiny.radius a{color:white;}
+article.attendance_index .button.tiny.radius a:hover{background:none;}
+
+i.fi-clipboard-pencil{padding-right: 5px;}
+i.fi-print{color:white;padding-right:10px;}
+i.fi-refresh{color:white;padding-right:10px;}
+i.fi-plus{padding: 0px 5px;}
+i.fi-check{padding-right:10px;}
+
 /* =============================================================================
    勤務状況報告書(編集)
    ========================================================================== */
-article.attendance_edit select {display: inline-block;width:45%;}
+article.attendance_edit select {display: inline-block;width:10%;}
+article.attendance_edit select#attendance_pattern {display: inline-block;width:35%;}
+article.attendance_edit .kubun{padding-right:10px;}
+article.attendance_edit table#hours{border:0px;}
+article.attendance_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
+article.attendance_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
+
+article.attendance_edit input{margin-bottom:0px !important;}
+article.attendance_edit .button{margin-bottom:0px;}
+
+
 
 /* =============================================================================
    勤務状況報告書(PDF)
