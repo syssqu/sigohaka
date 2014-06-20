@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe "business_reports/index", :type => :view do
   before(:each) do

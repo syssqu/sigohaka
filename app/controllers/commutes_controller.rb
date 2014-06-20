@@ -8,8 +8,15 @@ class CommutesController < ApplicationController
     @commute=current_user.commutes.all
     @reasons=Reason.all
     @reason=current_user.reasons.first
+    @sum=0
 
     @project = current_user.projects.find_by(active: true)
+
+    @date=@commute.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    if @date==nil                                                 #更新日時が空なら今日の日付を使用
+      @date=Date.today
+    end
+
   end
 
   # GET /commutes/1
@@ -30,6 +37,8 @@ class CommutesController < ApplicationController
     @nendo = Date.today.year
     @gatudo = Date.today.month
 
+    @today=Date.today
+
     if Date.today.day < 16
       month = Date.today.months_ago(1).month
     end
@@ -43,12 +52,14 @@ class CommutesController < ApplicationController
     end
     @commutes = TransportationExpress.all
     @commutes = current_user.commutes.all
+    @reasons=Reason.all
+    @reason=current_user.reasons.first
     @project = current_user.projects.find_by(active: true)
     @sum = session[:sum] #交通費の合計金額表示
-    # @date=@transportation_expresses.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
-    # if @date==nil                                                 #更新日時が空なら今日の日付を使用
-    #   @date=Date.today
-    # end
+    @date=@commutes.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    if @date==nil                                                 #更新日時が空なら今日の日付を使用
+      @date=Date.today
+    end
     respond_to do |format|
       # format.html { redirect_to print_attendances_path(format: :pdf)}
       # format.pdf do

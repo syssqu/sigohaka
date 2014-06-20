@@ -2,8 +2,42 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+//============================================================================
+//   通勤届　一覧
+//============================================================================
+article.commute_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
+article.commute_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
+article.commute_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
+article.commute_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.commute_index #kei {text-align: right;}
+article.commute_index #money {text-align: right;}
+
+// #transport_header{width:755px;font-size:10px;}
+#commute_header table#commute_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
+#commute_header table#commute_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
+#commute_header table#commute_project td strong{color:#6E6E6E;}
+
+//============================================================================
+//   通勤届　PDF
+//============================================================================
+article.commute_print table{width:500px;border-spacing: 0;border-collapse: collapse;padding: 0px;border:none;background-color: #FFF;}
+article.commute_print table td{margin:0px;padding: 1px; text-align: center;}
+article.commute_print table #title{background-color: #DDE;font-size: 20px;border-bottom: solid 2px;}
+article.commute_print table #ate{text-align: center;font-size: 14px;border-bottom: solid 1px;width:100px;}
+article.commute_print table #day{border-bottom: solid 1px;font-size: 13px;}
+
+article.commute_print .user td{border:solid 1px;}
+article.commute_print .user #ten{border-bottom:2px dashed ;}
+article.commute_print .user #zyusyo{border-bottom:none;font-size: 12px;text-align: left;}
+article.commute_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: left;}
+article.commute_print .user #reason{padding:5px;text-align: left;}
+article.commute_print .user span{color: #000;}
+article.commute_print .user span#ok{border: solid 2px;border-radius:70em 70em 70em 70em;}
 
 
-article.commute_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;border:none;background-color: FFF;}
-article.commute_print table td{padding: 0px; text-align: center;}
-article.commute_print table td#title{color: DDE;}
+article.commute_print .koutu td{font-size: 11px;border:solid 1px;}
+article.commute_print table #coltitle td{font-size: 13px;}
+article.commute_print .koutu tr #yazirusi{width: 40px;font-size: 6px;border:none;border-bottom: solid 1px;}
+article.commute_print .koutu #kukan{border:none;border-bottom: solid 1px;}
+article.commute_print .koutu tr #money{text-align: right;}
+article.commute_print .koutu .nonborder{border: none;text-align: right;color: #00F;}

@@ -64,20 +64,6 @@ ActiveRecord::Schema.define(version: 20140617045809) do
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
 
-
-  create_table "commutes", force: true do |t|
-    t.integer  "user_id"
-    t.string   "year",        limit: 4
-    t.string   "month",       limit: 2
-    t.string   "reason"
-    t.string   "reason_text"
-    t.string   "transport"
-    t.string   "segment1"
-    t.string   "segment2"
-    t.integer  "money"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-
   create_table "business_reports", force: true do |t|
     t.integer  "user_id"
     t.text     "naiyou"
@@ -94,7 +80,20 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "reflection"
+  end
 
+  create_table "commutes", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",        limit: 4
+    t.string   "month",       limit: 2
+    t.string   "reason"
+    t.string   "reason_text"
+    t.string   "transport"
+    t.string   "segment1"
+    t.string   "segment2"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "kinmu_patterns", force: true do |t|
