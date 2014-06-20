@@ -1,12 +1,19 @@
-h1 休暇届
-table
-  tbody
-    tr
-      td 所属
-      td = current_user.section.name
-    tr
-      td 氏名
-      td #{current_user.family_name} #{current_user.first_name}
+article.vacation_request_index
+  h3 style="padding-left: 15px;margin-top:10px;" 休暇届
+  / = select :business_report, 'business_report_target_date', @nengatudo_set
+  #vacation_request_header.clearfix
+    table#vacation_request_project
+      tbody
+        tr
+          td プロジェクト名:
+          td = truncate(@project.summary, length:20) if ! @project.nil?
+        tr
+          td 所属:
+          td = current_user.section.name if ! current_user.section.nil?
+        tr
+          td 氏名:
+          td #{current_user.family_name} #{current_user.first_name}
+
 = link_to "PDF出力", print_vacation_requests_path, class: "button tiny radius"
 
 table
