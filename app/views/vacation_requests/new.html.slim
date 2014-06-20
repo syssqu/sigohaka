@@ -3,7 +3,7 @@ table
   tbody
     tr
       td プロジェクト名
-      td 
+      td = truncate(@project.summary, length:20) if ! @project.nil?
     tr
       td 所属
       td = current_user.section.name

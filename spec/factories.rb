@@ -30,6 +30,22 @@ FactoryGirl.define do
     user
 	end
 
+	factory :business_report do
+		sequence(:naiyou) { |n| "naiyou #{n}" }
+		sequence(:jisseki) { |n| "jisseki #{n}" }
+		sequence(:tool) { |n| "tool #{n} "}
+		sequence(:self_purpose) { |n| "self_purpose #{n}" }
+		sequence(:self_value) { |n| "self_value #{n}" }
+		sequence(:self_reason) { |n| "self_reason #{n}" }
+		sequence(:user_situation) { |n| "user_situation #{n}" }
+		sequence(:request) { |n| "request #{n}" }
+		sequence(:develop_purpose) { |n| "develop_purpose #{n}" }
+		sequence(:develop_jisseki) { |n| "develop_jisseki #{n}" }
+		sequence(:note) { |n| "note #{n}" }
+		sequence(:reflection) { |n| "reflection #{n}" }
+		sequence(:user_id) { |n| "1"}
+	end
+
 	factory :section do
     sequence(code: "1", name: "システム事業部1課")
     sequence(code: "2", name: "システム事業部2課")
