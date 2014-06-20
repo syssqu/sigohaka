@@ -1,0 +1,17 @@
+$( "#attendance_byouketu" ).prop( "checked", <%= @attendance.byouketu %> );
+$( "#attendance_kekkin" ).prop( "checked", <%= @attendance.kekkin %> );
+$( "#attendance_hankekkin" ).prop( "checked", <%= @attendance.hankekkin %> );
+$( "#attendance_tikoku" ).prop( "checked", <%= @attendance.tikoku %> );
+$( "#attendance_soutai" ).prop( "checked", <%= @attendance.soutai %> );
+$( "#attendance_gaisyutu" ).prop( "checked", <%= @attendance.gaisyutu %> );
+$( "#attendance_tokkyuu" ).prop( "checked", <%= @attendance.tokkyuu %> );
+$( "#attendance_furikyuu" ).prop( "checked", <%= @attendance.furikyuu %> );
+$( "#attendance_yuukyuu" ).prop( "checked", <%= @attendance.yuukyuu %> );
+$( "#attendance_syuttyou" ).prop( "checked", <%= @attendance.syuttyou %> );
+
+$('#attendance_over_time').val(<%= @attendance.over_time %>);
+$('#attendance_holiday_time').val(<%= @attendance.holiday_time %>);
+$('#attendance_midnight_time').val(<%= @attendance.midnight_time %>);
+$('#attendance_break_time').val(<%= @attendance.break_time %>);
+$('#attendance_kouzyo_time').val(<%= @attendance.kouzyo_time %>);
+$('#attendance_work_time').val(<%= @attendance.work_time %>);

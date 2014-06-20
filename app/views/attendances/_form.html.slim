@@ -9,6 +9,7 @@
             - @attendance.errors.full_messages.each do |message|
               li = message
 
+      = f.hidden_field :id, id:"target_id"
       = f.hidden_field :year
       = f.hidden_field :month
       = f.hidden_field :wday
@@ -27,10 +28,15 @@
       .row
         .large-2.small-4.columns
           label.left.inline 出退勤
-        .large-4.large-pull-6.small-8.columns
-          = f.time_select :start_time
+        .large-6.large-pull-4.small-8.columns
+          = f.time_select :start_time, {minute_step: 15}
           |&nbsp;&nbsp;〜&nbsp;&nbsp;
-          = f.time_select :end_time
+          = f.time_select :end_time, {minute_step: 15}
+          |&nbsp;&nbsp;
+          
+          #calculate.button.radius.tiny.success
+            i.fi-check
+            |自動計算
       hr
       .row
         .large-2.small-4.columns
@@ -79,7 +85,7 @@
       .row
         .large-2.small-4.columns
           label.left.inline  各種時間
-        .large-8.large-pull-2.columns
+        .large-5.large-pull-5.columns
           table#hours
             thead
               tr
@@ -103,6 +109,6 @@
         .large-5.large-pull-5.small-8.columns
           = f.text_area :remarks
       .row
-        .large-6.large-centered.columns
+        .large-3.large-centered.columns
           = f.submit "更新", class: "button radius"
           = link_to "戻る", attendances_path,class: "button radius gray"

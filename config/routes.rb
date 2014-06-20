@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
   match '/init_attendances', to:'attendances#init_attendances', via: :get
+  match '/calculate_attendance', to:'attendances#calculate', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
