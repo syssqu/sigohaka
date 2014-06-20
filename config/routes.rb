@@ -1,7 +1,19 @@
 Rails.application.routes.draw do
   
+  # get 'reasons/edit'
+
+  # get 'reasons/new'
+
   get 'resumes/index'
   get 'resumes/print'
+  
+
+  resources :commutes do
+    collection do
+      get 'print'
+    end
+  end
+  resources :reasons
 
   resources :attendance_others
 

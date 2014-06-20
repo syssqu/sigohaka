@@ -7,7 +7,7 @@ FactoryGirl.define do
 		sequence(:email) { |n| "person_#{n}@example.com"}
 		sequence(:gender) {|n| "man"}
 		sequence(:section_id) {"1"}
-    sequence(:role) {"admin"}
+    	sequence(:role) {"admin"}
 		password	"foobarfoo"
 		password_confirmation	"foobarfoo"
 
@@ -34,5 +34,22 @@ FactoryGirl.define do
     sequence(code: "1", name: "システム事業部1課")
     sequence(code: "2", name: "システム事業部2課")
     sequence(code: "3", name: "システム事業部3課")
+	end
+
+	factory :commute do
+		# sequence(:user_id) {|n| "1"}
+		
+		sequence(:transport) {|n| "trans_#{n}"}
+		sequence(:segment1) {|n| "segment1_#{n}"}
+		sequence(:segment2) {|n| "segment2_#{n}"}
+		sequence(:money) {|n| "#{n}"}
+		user
+	end
+
+	factory :reason do
+		
+		sequence(:reason) {|n| "new"}
+		sequence(:reason_text) {|n| "text_#{n}"}
+		user
 	end
 end
