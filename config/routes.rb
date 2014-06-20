@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :housing_allowances
+
   get 'resumes/index'
   get 'resumes/print'
 

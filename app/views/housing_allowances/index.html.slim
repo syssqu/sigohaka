@@ -1,0 +1,51 @@
+h1 Listing housing_allowances
+
+table
+  thead
+    tr
+      th User
+      th Year
+      th Month
+      th Reason
+      th Reason text
+      th Housing style
+      th Housing style text
+      th Agree date s
+      th Agree date e
+      th Spouse
+      th Spouse name
+      th Spouse other
+      th Support
+      th Support name1
+      th Support name2
+      th Money
+      th
+      th
+      th
+
+  tbody
+    - @housing_allowances.each do |housing_allowance|
+      tr
+        td = housing_allowance.user_id
+        td = housing_allowance.year
+        td = housing_allowance.month
+        td = housing_allowance.reason
+        td = housing_allowance.reason_text
+        td = housing_allowance.housing_style
+        td = housing_allowance.housing_style_text
+        td = housing_allowance.agree_date_s
+        td = housing_allowance.agree_date_e
+        td = housing_allowance.spouse
+        td = housing_allowance.spouse_name
+        td = housing_allowance.spouse_other
+        td = housing_allowance.support
+        td = housing_allowance.support_name1
+        td = housing_allowance.support_name2
+        td = housing_allowance.money
+        td = link_to 'Show', housing_allowance
+        td = link_to 'Edit', edit_housing_allowance_path(housing_allowance)
+        td = link_to 'Destroy', housing_allowance, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Housing allowance', new_housing_allowance_path
