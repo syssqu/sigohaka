@@ -1,8 +1,12 @@
-article.transport_index
+- @commute.each do |commute|
+  - @sum = commute.money.to_i + @sum.to_i
+/ = hidden_field :sum, @sum
+- session[:sum] = @sum
+article.commute_index
   .row
     .large-12.columns
 
-      h2 通勤届書
+      h2 現住所変更及び通勤届
 
       #transport_header
         table#transport_project
@@ -17,12 +21,14 @@ article.transport_index
               td 氏名:
               td #{current_user.family_name} #{current_user.first_name}
 
-      
+      .row
+        .small-2.columns.push-4.columns
+          = @date.strftime("%Y年%_m月%_d日")
       .row
         table
           tr
             td 現住所
-            td colspan="2" #{current_user.postal_code+" "+current_user.prefecture+current_user.city+current_user.house_number+" "+current_user.building}
+            td colspan="2" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
             td
           tr
             td 電話番号
@@ -30,28 +36,28 @@ article.transport_index
             td
           tr
             td 届出理由
-            - if @reason.reason == "new" && !@reason.nil?
-              td colspan="2" 新規
-            - elsif @reason.reason == "now" && !@reason.nil?
-              td colspan="2" 現住所変更
-            - elsif @reason.reason == "proj" && !@reason.nil?
-              td colspan="2" プロジェクト変更
-            - elsif @reason.reason == "tran" && !@reason.nil?
-              td colspan="2" 通勤経路変更
-            - elsif @reason.reason == "sai" && !@reason.nil?
-              td colspan="2" 再提出
-            - elsif @reason.reason == "up" && !@reason.nil?
-              td colspan="2" 運賃値上げ
-
-            - elsif @reason.reason == "ta" && !@reason.nil?
-              td colspan="2" その他
+            - if !@reason.nil?
+              - if @reason.reason == "new" && !@reason.nil?
+                td colspan="2" 新規
+              - elsif @reason.reason == "now" && !@reason.nil?
+                td colspan="2" 現住所変更
+              - elsif @reason.reason == "proj" && !@reason.nil?
+                td colspan="2" プロジェクト変更
+              - elsif @reason.reason == "tran" && !@reason.nil?
+                td colspan="2" 通勤経路変更
+              - elsif @reason.reason == "sai" && !@reason.nil?
+                td colspan="2" 再提出
+              - elsif @reason.reason == "up" && !@reason.nil?
+                td colspan="2" 運賃値上げ
+              - elsif @reason.reason == "ta" && !@reason.nil?
+                td colspan="2" その他
             -else
               td colspan="2"
 
             - if ! @reason.nil?
-              td rowspan="2" = link_to "編集", edit_reason_path(@reason)
+              td rowspan="2" = link_to "編集", edit_reason_path(@reason),class: "button tiny success"
             - elsif @reason.nil?
-              td rowspan="2" = link_to "新規", new_reason_path(@reason)
+              td rowspan="2" = link_to "新規", new_reason_path(@reason) ,class: "button tiny success"
             
           tr
             td 届出理由（その他）
@@ -68,8 +74,8 @@ article.transport_index
           thead
             tr
               th 交通機関名称
-              th 利用区間１
-              th 利用区間２
+              th 利用区間１(出発)
+              th 利用区間２(到着)
               th １ヶ月の定期金額
               th
               th
@@ -80,8 +86,11 @@ article.transport_index
                 td = commute.transport
                 td = commute.segment1
                 td = commute.segment2
-                td = commute.money
-                td = link_to '修正', edit_commute_path(commute)
-                td = link_to '削除', commute, data: {:confirm => 'Are you sure?'}, :method => :delete
+                td#money = commute.money.to_s+'円'
+                td = link_to '修正', edit_commute_path(commute) ,class: "button tiny success"
+                td = link_to '削除', commute, data: {:confirm => 'Are you sure?'}, :method => :delete ,class: "button tiny alert"
+            tr
+              td#kei colspan="3" 計
+              td#money #{@sum.to_s+'円'}
 
         br

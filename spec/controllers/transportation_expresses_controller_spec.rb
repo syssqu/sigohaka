@@ -1,4 +1,4 @@
-# require 'rails_helper'
+# require 'spec_helper'
 # -*- coding: utf-8 -*-
 require 'factory_girl'
 require 'spec_helper'
@@ -27,6 +27,7 @@ RSpec.describe TransportationExpressesController, :type => :controller do
      
       login_user
       specify "認証" do
+        sign_in @user
         
         subject.current_user.should_not be_nil
       end
@@ -60,8 +61,9 @@ RSpec.describe TransportationExpressesController, :type => :controller do
       let(:transportation_express){FactoryGirl.create(:transportation_express,user: @user)}
     end
     describe "GET 'index'" do
-      
+
       it "returns http success" do
+
         get :index
         response.should be_success
       end

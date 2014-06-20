@@ -7,15 +7,15 @@
           li = message
 
   .field
-    = f.label :transport
+    label 交通機関名称
     = f.text_field :transport
   .field
-    = f.label :segment1
+    label 利用区間(出発)
     = f.text_field :segment1
   .field
-    = f.label :segment2
+    label 利用区間(到着)
     = f.text_field :segment2
   .field
-    = f.label :money
+    label １ヶ月の定期金額
     = f.number_field :money
   .actions = f.submit 'Save'
