@@ -1,53 +1,80 @@
 /* =============================================================================
    技術経歴書(一覧)
    ========================================================================== */
-article.resumes.index span{margin:0px;color:red;}
-article.resumes.index table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.resumes_index span{margin:0px;color:red;}
+article.resumes_index table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
 
-article.resumes.index table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
-article.resumes.index table#user_info tr td.header {height:16px !important;}
+article.resumes_index table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
+article.resumes_index table#user_info tr td.header {height:16px !important;}
 
-article.resumes.index table#user_info tr td.solid_top_none{border-top:0px;}
-article.resumes.index table#user_info tr td.solid_bottom_none{border-bottom:0px;}
+article.resumes_index table#user_info tr td.solid_top_none{border-top:0px;}
+article.resumes_index table#user_info tr td.solid_bottom_none{border-bottom:0px;}
 
-article.resumes.index table#user_info tr td.solid_top_dotted{border-top:1px dotted black;}
-article.resumes.index table#user_info tr td.solid_bottom_dotted{border-bottom:1px dotted black;}
+article.resumes_index table#user_info tr td.solid_top_dotted{border-top:1px dotted black;}
+article.resumes_index table#user_info tr td.solid_bottom_dotted{border-bottom:1px dotted black;}
 
-article.resumes.index table#user_info tr td.gray{background-color:#9F9687;}
-article.resumes.index table#user_info tr td.solid_bottom{border-bottom:1px solid black;}
+article.resumes_index table#user_info tr td.gray{background-color:#9F9687;}
+article.resumes_index table#user_info tr td.solid_bottom{border-bottom:1px solid black;}
 
-article.resumes.index table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.resumes_index table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
 
-article.resumes.index table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;}
-article.resumes.index table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
-article.resumes.index table#projects_info tr td.solid_top1{border-top:1px dotted black;}
-article.resumes.index table#projects_info tr td.solid_bottom1{border-bottom:1px dotted black;}
+article.resumes_index table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;}
+article.resumes_index table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;}
+article.resumes_index table#projects_info tr td.solid_top1{border-top:1px dotted black;}
+article.resumes_index table#projects_info tr td.solid_bottom1{border-bottom:1px dotted black;}
 
 
 /* =============================================================================
    技術経歴書(PDF)
    ========================================================================== */
-article.resumes.print span{margin:0px;color:red;font-family: 'IPAex明朝';}
-article.resumes.print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;font-family: 'IPAex明朝';}
 
-article.resumes.print table#user_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;font-family: 'IPAex明朝';}
-article.resumes.print table#user_info tr td.header {height:16px !important;font-family: 'IPAex明朝';}
+article.resumes_print {width:755px;margin:0px;}
 
-article.resumes.print table#user_info tr td.solid_top_none{border-top:0px;}
-article.resumes.print table#user_info tr td.solid_bottom_none{border-bottom:0px;}
+/* @include font-face(CheckoutSans, 'ipaexm-d38f6460061fad9045fa9d9b9daec331.ttf', $asset-pipeline: true); */
 
-article.resumes.print table#user_info tr td.solid_top_dotted{border-top:1px dotted black;}
-article.resumes.print table#user_info tr td.solid_bottom_dotted{border-bottom:1px dotted black;}
+@mixin pdf_minchou{
+  font-family:
+  /* pigmo, */
+  /* "ヒラギノ明朝 ProN W6", */
+  /* "HiraMinProN-W6", */
+  /* "HG明朝E", */
+  /* "ＭＳ Ｐ明朝", */
+  /* "MS PMincho", */
+  /* "MS 明朝", */
+  /* "ＭＳ 明朝", */
+  /* "MS Mincho", */
+  /* "さざなみ明朝","Sazanami Mincho", */
+  /* "IPA P明朝","IPA PMincho", */
+  /* "東風明朝","kochi Mincho", */
+  /* "KochiMincho-Regular", */
+  "IPA明朝",
+  /* "IPAex明朝", */
+  serif;
+}
+article.resumes_print span{margin:0px;color:red;@include pdf_minchou;}
+article.resumes_print table#user_info{border-spacing: 0;border-collapse: collapse;padding: 0px;@include pdf_minchou;margin-bottom:10px !important;}
 
-article.resumes.print table#user_info tr td.gray{background-color:#9F9687;}
-article.resumes.print table#user_info tr td.solid_bottom{border-bottom:1px solid black;}
+article.resumes_print table#user_info tr td {font-size:11px;padding:0px 10px !important;height:16px !important;background-color:#fff;border:1px solid black;@include pdf_minchou;}
+article.resumes_print table#user_info tr td.header {height:14px !important;@include pdf_minchou;padding:0px 0px;}
 
-article.resumes.print table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.resumes_print table#user_info tr td.solid_top_none{border-top:0px;}
+article.resumes_print table#user_info tr td.solid_bottom_none{border-bottom:0px;}
 
-article.resumes.print table#projects_info tr th {font-size:10px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#9F9687;font-family: 'IPAex明朝';}
-article.resumes.print table#projects_info tr td {font-size:10px;padding:0px 10px !important;height:18px !important;background-color:#fff;border:1px solid black;font-family: 'IPAex明朝';}
-article.resumes.print table#projects_info tr td.solid_top1{border-top:1px dotted black;}
-article.resumes.print table#projects_info tr td.solid_bottom1{border-bottom:1px dotted black;}
+article.resumes_print table#user_info tr td.solid_top_dotted{border-top:1px dashed black;}
+article.resumes_print table#user_info tr td.solid_bottom_dotted{border-bottom:1px dashed black;}
 
-article.resumes.print h3{font-family: 'IPAex明朝'; font-size:30px;font-weight:bold;}
+article.resumes_print table#user_info tr td.gray{background-color:#D9D6CF;}
+article.resumes_print table#user_info tr td.solid_bottom{border-bottom:1px solid black;}
 
+article.resumes_print table#projects_info{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+
+article.resumes_print table#projects_info tr th {font-size:11px;padding:1px 1px !important;font-weight:normal;border:1px solid black;background-color:#D9D6CF;@include pdf_minchou;}
+article.resumes_print table#projects_info tr td {font-size:11px;padding:0px 0px !important;height:16px !important;background-color:#fff;border:1px solid black;@include pdf_minchou;}
+article.resumes_print table#projects_info tr td.solid_top1{border-top:1px dashed black;}
+article.resumes_print table#projects_info tr td.solid_bottom1{border-bottom:1px dashed black;}
+
+article.resumes_print h3{@include pdf_minchou; font-size:30px;font-weight:bold;}
+article.resumes_print{@include pdf_minchou;}
+
+
+article.resumes_print table#remarks tr td {font-size:11px;padding:0px 10px !important;background-color:#fff;@include pdf_minchou;}

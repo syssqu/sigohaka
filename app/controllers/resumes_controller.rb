@@ -12,6 +12,7 @@ class ResumesController < ApplicationController
       #   render pdf: '勤務状況報告書',
       #          encoding: 'UTF-8',
       #          layout: 'pdf.html'
+
       format.html { redirect_to resumes_print_path(format: :pdf, debug: 1)}
       format.pdf do
         render pdf: '技術経歴書',
@@ -19,6 +20,14 @@ class ResumesController < ApplicationController
                layout: 'pdf.html',
                show_as_html: params[:debug].present?
       end
+
+
+      # format.html
+      # format.pdf do
+      #   render pdf: '技術経歴書',                  # file name
+      #   layout: 'pdf.html',  # layout used
+      #   show_as_html: params[:debug].present?    # allow debuging
+      # end
     end
   end
 end

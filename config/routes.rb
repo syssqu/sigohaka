@@ -1,7 +1,19 @@
 Rails.application.routes.draw do
   
+  # get 'reasons/edit'
+
+  # get 'reasons/new'
+
   get 'resumes/index'
   get 'resumes/print'
+  
+
+  resources :commutes do
+    collection do
+      get 'print'
+    end
+  end
+  resources :reasons
 
   resources :attendance_others
 
@@ -36,6 +48,7 @@ Rails.application.routes.draw do
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
   match '/init_attendances', to:'attendances#init_attendances', via: :get
+  match '/calculate_attendance', to:'attendances#calculate', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
