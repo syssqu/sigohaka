@@ -17,19 +17,17 @@ article.registrations.edit
         .row
           .large-2.columns.show-for-large-up
             label.left.inline
-              | 氏名 (漢字)
+              | 氏名 (漢字) 姓
               span *
           .small-12.columns.show-for-medium-down
             label
               | 氏名 (漢字)
               span *
-          .large-1.small-2.columns
-            label.right.inline 姓
           .large-2.small-4.columns
             = f.text_field :family_name
           .large-1.small-2.columns
             label.right.inline 名
-          .large-2.large-pull-4.small-4.columns
+          .large-2.large-pull-5.small-4.columns
             = f.text_field :first_name
         .row
           .large-2.columns.show-for-large-up
