@@ -2,6 +2,9 @@ h1 休暇届　照会
 table
   tbody
     tr
+      td プロジェクト名
+      td = truncate(@project.summary, length:20) if ! @project.nil?
+    tr
       td 所属
       td = current_user.section.name
     tr
