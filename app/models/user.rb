@@ -20,8 +20,13 @@ class User < ActiveRecord::Base
   has_many :attendance_others
   has_many :transportation_expresses
   has_many :vacation_requests
+
+  has_many :commutes
+  has_many :reasons
+
   has_many :business_reports
   has_many :housing_allowances
+
 
   validates :family_name, presence: true, length: { maximum: 20}
   validates :first_name, presence: true, length: { maximum: 20}

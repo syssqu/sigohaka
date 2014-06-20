@@ -1,8 +1,9 @@
-require 'rails_helper'
+require 'spec_helper'
 
-RSpec.describe "business_reports/edit", :type => :view do
+describe "business_report/edit" do
   before(:each) do
-    @business_report = assign(:business_report, BusinessReport.create!(
+    # sign_in :user
+    @business_report = assign(:business_report, stub_model(BusinessReport,
       :user_id => 1,
       :naiyou => "MyText",
       :jisseki => "MyText",

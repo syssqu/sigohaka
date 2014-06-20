@@ -1,6 +1,6 @@
-require 'rails_helper'
+require 'spec_helper'
 
-RSpec.describe "business_reports/new", :type => :view do
+describe "business_report new" do
   before(:each) do
     assign(:business_report, BusinessReport.new(
       :user_id => 1,
@@ -17,6 +17,7 @@ RSpec.describe "business_reports/new", :type => :view do
       :note => "MyText"
     ))
   end
+
 
   it "renders new business_report form" do
     render
