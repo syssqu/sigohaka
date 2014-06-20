@@ -24,24 +24,32 @@ article.attendance_index #attendance_nengetu{width:240px;text-align:center;}
 
 article {padding-left:5px;}
 
-article.attendance_index i.fi-clipboard-pencil{padding-right: 5px;}
+
 article.attendance_index label{padding-right: 20px;}
-article.attendance_index i.fi-print{color:white;padding-right:10px;}
-article.attendance_index i.fi-refresh{color:white;padding-right:10px;}
+
 article.attendance_index .button.tiny.radius a{color:white;}
 article.attendance_index .button.tiny.radius a:hover{background:none;}
-article.attendance_index i.fi-plus{padding: 0px 5px;}
 
-
+i.fi-clipboard-pencil{padding-right: 5px;}
+i.fi-print{color:white;padding-right:10px;}
+i.fi-refresh{color:white;padding-right:10px;}
+i.fi-plus{padding: 0px 5px;}
+i.fi-check{padding-right:10px;}
 
 /* =============================================================================
    勤務状況報告書(編集)
    ========================================================================== */
-article.attendance_edit select {display: inline-block;width:15%;}
+article.attendance_edit select {display: inline-block;width:10%;}
 article.attendance_edit select#attendance_pattern {display: inline-block;width:35%;}
 article.attendance_edit .kubun{padding-right:10px;}
-article.attendance_edit table#hours thead tr td {padding:0px;margin:0px;height:18px;}
-article.attendance_edit table#hours tbody tr td {padding:0px;margin:0px;height:18px;}
+article.attendance_edit table#hours{border:0px;}
+article.attendance_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
+article.attendance_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
+
+article.attendance_edit input{margin-bottom:0px !important;}
+article.attendance_edit .button{margin-bottom:0px;}
+
+
 
 /* =============================================================================
    勤務状況報告書(PDF)

@@ -128,6 +128,29 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def calculate
+    
+    Rails.logger.info("PARAMS: #{params.inspect}")
+    
+    @attendance = Attendance.find(params[:id])
+    @pattern = KinmuPattern.find(params[:pattern])
+
+    
+    params[:start_time_hour]
+    params[:start_time_minute]
+    params[:end_time_hour]
+    params[:end_time_minute]
+
+
+    Rails.logger.info("pattern_start_date: " + @pattern.start_time)
+    Rails.logger.info("input_start_date: " + @pattern.start_time)
+
+    
+    @attendance.over_time = 0
+    
+
+  end
+
   def print
 
     @nen_gatudo = params[:nen_gatudo]
