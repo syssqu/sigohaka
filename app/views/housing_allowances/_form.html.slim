@@ -1,0 +1,57 @@
+= form_for @housing_allowance do |f|
+  - if @housing_allowance.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@housing_allowance.errors.count, "error")} prohibited this housing_allowance from being saved:"
+      ul
+        - @housing_allowance.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :year
+    = f.text_field :year
+  .field
+    = f.label :month
+    = f.text_field :month
+  .field
+    = f.label :reason
+    = f.text_field :reason
+  .field
+    = f.label :reason_text
+    = f.text_field :reason_text
+  .field
+    = f.label :housing_style
+    = f.text_field :housing_style
+  .field
+    = f.label :housing_style_text
+    = f.text_field :housing_style_text
+  .field
+    = f.label :agree_date_s
+    = f.date_select :agree_date_s
+  .field
+    = f.label :agree_date_e
+    = f.date_select :agree_date_e
+  .field
+    = f.label :spouse
+    = f.text_field :spouse
+  .field
+    = f.label :spouse_name
+    = f.text_field :spouse_name
+  .field
+    = f.label :spouse_other
+    = f.text_field :spouse_other
+  .field
+    = f.label :support
+    = f.text_field :support
+  .field
+    = f.label :support_name1
+    = f.text_field :support_name1
+  .field
+    = f.label :support_name2
+    = f.text_field :support_name2
+  .field
+    = f.label :money
+    = f.number_field :money
+  .actions = f.submit 'Save'
