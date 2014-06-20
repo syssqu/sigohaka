@@ -142,8 +142,8 @@ class AttendancesController < ApplicationController
     params[:end_time_minute]
 
 
-    Rails.logger.info("pattern_start_date: " + @pattern.start_time)
-    Rails.logger.info("input_start_date: " + @pattern.start_time)
+    Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
+    Rails.logger.info("input_start_date: " + @pattern.start_time.to_s)
 
     
     @attendance.over_time = 0
