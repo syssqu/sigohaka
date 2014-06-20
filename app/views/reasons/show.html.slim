@@ -1,0 +1,13 @@
+p#notice = notice
+
+
+p
+  strong Reason:
+  = @reason.reason
+p
+  strong Reason text:
+  = @reason.reason_text
+
+= link_to 'Edit', edit_reason_path(@reason)
+'|
+= link_to 'Back', commutes_path

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-RSpec.describe BusinessReport, :type => :model do
+describe "reasons/new.html.slim" do
   pending "add some examples to (or delete) #{__FILE__}"
 end
