@@ -11,19 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617045809) do
+ActiveRecord::Schema.define(version: 20140623041335) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
     t.time     "start_time"
     t.time     "end_time"
-    t.decimal  "over_time",     precision: 4, scale: 2
-    t.decimal  "holiday_time",  precision: 4, scale: 2
-    t.decimal  "decimal",       precision: 4, scale: 2
-    t.decimal  "midnight_time", precision: 4, scale: 2
-    t.decimal  "break_time",    precision: 4, scale: 2
-    t.decimal  "kouzyo_time",   precision: 4, scale: 2
-    t.decimal  "work_time",     precision: 4, scale: 2
+    t.decimal  "over_time",     precision: 4, scale: 2, default: 0.0
+    t.decimal  "holiday_time",  precision: 4, scale: 2, default: 0.0
+    t.decimal  "midnight_time", precision: 4, scale: 2, default: 0.0
+    t.decimal  "break_time",    precision: 4, scale: 2, default: 0.0
+    t.decimal  "kouzyo_time",   precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",     precision: 4, scale: 2, default: 0.0
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -39,27 +38,27 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.string   "pattern",         limit: 1
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "byouketu"
-    t.boolean  "kekkin"
-    t.boolean  "hankekkin"
-    t.boolean  "tikoku"
-    t.boolean  "soutai"
-    t.boolean  "gaisyutu"
-    t.boolean  "tokkyuu"
-    t.boolean  "furikyuu"
-    t.boolean  "yuukyuu"
-    t.boolean  "syuttyou"
-    t.decimal  "over_time",                 precision: 4, scale: 2
-    t.decimal  "holiday_time",              precision: 4, scale: 2
-    t.decimal  "midnight_time",             precision: 4, scale: 2
-    t.decimal  "break_time",                precision: 4, scale: 2
-    t.decimal  "kouzyo_time",               precision: 4, scale: 2
-    t.decimal  "work_time",                 precision: 4, scale: 2
+    t.boolean  "byouketu",                                          default: false
+    t.boolean  "kekkin",                                            default: false
+    t.boolean  "hankekkin",                                         default: false
+    t.boolean  "tikoku",                                            default: false
+    t.boolean  "soutai",                                            default: false
+    t.boolean  "gaisyutu",                                          default: false
+    t.boolean  "tokkyuu",                                           default: false
+    t.boolean  "furikyuu",                                          default: false
+    t.boolean  "yuukyuu",                                           default: false
+    t.boolean  "syuttyou",                                          default: false
+    t.decimal  "over_time",                 precision: 4, scale: 2, default: 0.0
+    t.decimal  "holiday_time",              precision: 4, scale: 2, default: 0.0
+    t.decimal  "midnight_time",             precision: 4, scale: 2, default: 0.0
+    t.decimal  "break_time",                precision: 4, scale: 2, default: 0.0
+    t.decimal  "kouzyo_time",               precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",                 precision: 4, scale: 2, default: 0.0
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "holiday",         limit: 1
+    t.string   "holiday",         limit: 1,                         default: "0"
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
@@ -99,8 +98,8 @@ ActiveRecord::Schema.define(version: 20140617045809) do
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
-    t.decimal  "break_time",           precision: 4, scale: 2
-    t.decimal  "work_time",            precision: 4, scale: 2
+    t.decimal  "break_time",           precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",            precision: 4, scale: 2, default: 0.0
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
