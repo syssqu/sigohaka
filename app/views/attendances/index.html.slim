@@ -27,10 +27,9 @@ article.attendance_index
           = link_to print_attendances_path(nen_gatudo: @selected_nen_gatudo), class:"button tiny radius" do
             i.fi-print
             |印刷用画面
-          = link_to init_attendances_path, class:"button tiny radius" do
+          = link_to init_attendances_path, data: {:confirm => '今月度の勤怠データを初期化します。宜しいですか？'}, class:"button tiny radius" do
             i.fi-refresh
             |データ初期化
-            
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr
@@ -135,15 +134,15 @@ article.attendance_index
               td.text-center = "○" if attendance.furikyuu
               td.text-center = "○" if attendance.yuukyuu
               td.text-center = "○" if attendance.syuttyou
-              td.text-center = sprintf( "%.2f", attendance.over_time) unless attendance.over_time.blank?
-              td.text-center = sprintf( "%.2f", attendance.holiday_time) unless attendance.holiday_time.blank?
-              td.text-center = sprintf( "%.2f", attendance.midnight_time) unless attendance.midnight_time.blank?
-              td.text-center = sprintf( "%.2f", attendance.break_time) unless attendance.break_time.blank?
-              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) unless attendance.kouzyo_time.blank?
-              td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) unless attendance.work_time.blank?
+              td.text-center = sprintf( "%.2f", attendance.over_time) if attendance.over_time > 0
+              td.text-center = sprintf( "%.2f", attendance.holiday_time) if attendance.holiday_time > 0
+              td.text-center = sprintf( "%.2f", attendance.midnight_time) if attendance.midnight_time > 0
+              td.text-center = sprintf( "%.2f", attendance.break_time) if attendance.break_time > 0
+              td.text-center = sprintf( "%.2f", attendance.kouzyo_time) if attendance.kouzyo_time > 0
+              td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) if attendance.work_time > 0
               td width="15%"
                 |&nbsp;
-                = attendance.remarks
+                = attendance.remarks[0,10] unless attendance.remarks.blank?
               / td = link_to 'Show', attendance
               td.text-center
                 = link_to edit_attendance_path(attendance), class:"button tiny radius" do
@@ -165,15 +164,15 @@ article.attendance_index
               td.text-center.bg_gray
               td.text-center.bg_gray
               td.text-center.bg_gray
-              td.text-center = sprintf( "%.2f", other.over_time) unless other.over_time.blank?
-              td.text-center = sprintf( "%.2f", other.holiday_time) unless other.holiday_time.blank?
-              td.text-center = sprintf( "%.2f", other.midnight_time) unless other.midnight_time.blank?
-              td.text-center = sprintf( "%.2f", other.break_time) unless other.break_time.blank?
-              td.text-center = sprintf( "%.2f", other.kouzyo_time) unless other.kouzyo_time.blank?
-              td.text-center = sprintf( "%.2f", other.work_time) unless other.work_time.blank?
+              td.text-center = sprintf( "%.2f", other.over_time) if other.over_time > 0
+              td.text-center = sprintf( "%.2f", other.holiday_time) if other.holiday_time > 0
+              td.text-center = sprintf( "%.2f", other.midnight_time) if other.midnight_time > 0
+              td.text-center = sprintf( "%.2f", other.break_time) if other.break_time > 0
+              td.text-center = sprintf( "%.2f", other.kouzyo_time) if other.kouzyo_time > 0
+              td.text-center = sprintf( "%.2f", other.work_time) if other.work_time > 0
               td
                 |&nbsp;
-                = other.remarks
+                = other.remarks[0,10] unless other.remarks.blank?
               td.text-center
                 = link_to edit_attendance_other_path(other), class:"button tiny radius" do
                   i.fi-plus
@@ -215,7 +214,7 @@ article.attendance_index
             td.text-center width="55px;" 休憩
             td.text-center width="55px;" 実働
         tbody
-          - current_user.kinmu_patterns.each do |kinmu|
+          - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
             tr
               - if kinmu.code == "1"
                 td.text-center width="60px;" rowspan=4
@@ -225,8 +224,8 @@ article.attendance_index
               td.text-center width="20px;" = kinmu.code
               td.text-center = kinmu.start_time.strftime("%_H:%M") unless kinmu.start_time.blank?
               td.text-center = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
-              td.text-center = sprintf( "%.2f", kinmu.break_time ) unless kinmu.break_time.blank?
-              td.text-center = sprintf( "%.2f", kinmu.work_time ) unless kinmu.work_time.blank?
+              td.text-center = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+              td.text-center = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
           tr
             td.text-center ※
             td colspan=4

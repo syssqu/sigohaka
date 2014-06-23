@@ -38,6 +38,7 @@ namespace :db do
     admin.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     admin.kinmu_patterns.create!(code: "2")
     admin.kinmu_patterns.create!(code: "3")
+    admin.kinmu_patterns.create!(code: "*")
 
     admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
     admin.attendance_others.create!(summary: "全体会")

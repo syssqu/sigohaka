@@ -13,20 +13,18 @@
         .large-1.large-pull-10.columns
           = f.text_field :code, disabled: true
       .row
-        .large-1.columns.show-for-large-up
-          label.left.inline 出勤
-        .large-3.large-pull-8.columns
-          = f.time_select :start_time
-      .row
-        .large-1.columns.show-for-large-up
-          label.left.inline 退勤
-        .large-3.large-pull-8.columns
-          = f.time_select :end_time
+        .large-1.small-4.columns
+          label.left.inline 出退勤
+        .large-5.large-pull-6.small-8.columns
+          = f.time_select :start_time, {minute_step: 15}
+          |&nbsp;&nbsp;〜&nbsp;&nbsp;
+          = f.time_select :end_time, {minute_step: 15}
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 休憩時間
         .large-1.large-pull-10.columns
           = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
+      hr
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 実働時間

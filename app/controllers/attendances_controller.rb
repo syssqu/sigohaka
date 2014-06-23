@@ -1,27 +1,7 @@
 # -*- coding: utf-8 -*-
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: [:show, :edit, :update, :destroy]
+  before_action :set_attendance, only: [:show, :edit, :update, :destroy, :calculate]
   before_action :authenticate_user!
-
-  def init
-    if changed_attendance_years?
-      @selected_nen_gatudo = params[:attendance][:nen_gatudo]
-    end
-
-    @attendance_years = get_attendance_years(params[:attendance])
-    # @attendance_years = Date.new(2014, 2, 20)
-    @nendo = get_nendo(@attendance_years)
-    @gatudo = get_gatudo(@attendance_years)
-    @project = get_project
-
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
-
-    if current_user.kinmu_patterns.first.nil?
-      flash.now[:alert] = '勤務パターンを登録して下さい。'
-      return
-    end
-  end
 
   def index
 
@@ -72,27 +52,52 @@ class AttendancesController < ApplicationController
     sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
       "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
       "holiday_time=?,midnight_time=?,break_time=?,kouzyo_time=?,work_time=?,remarks=?"
-    
-    @attendances.update_all([sql,
-        current_user.kinmu_patterns.first.code,
-        current_user.kinmu_patterns.first.start_time,
-        current_user.kinmu_patterns.first.end_time,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        nil,nil,nil,nil,nil,
-        current_user.kinmu_patterns.first.work_time,
-        nil
-      ])
-    
-    redirect_to attendances_path, notice: 'データを初期化しました。'
+
+    ActiveRecord::Base.transaction do
+
+      @attendances.where("holiday = '0'").update_all([sql,
+          current_user.kinmu_patterns.first.code,
+          current_user.kinmu_patterns.first.start_time,
+          current_user.kinmu_patterns.first.end_time,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          0.00, 0.00, 0.00, 0.00, 0.00,
+          current_user.kinmu_patterns.first.work_time,
+          nil
+        ])
+      
+      @attendances.where("holiday = '1'").update_all([sql,
+          "",
+          "",
+          "",
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          0.00, 0.00, 0.00, 0.00, 0.00,
+          0.00,
+          nil
+        ])
+    end
+
+    redirect_to attendances_path, notice: '勤怠データを初期化しました。'
+ 
+  rescue => e
+    render :index, notice: '勤怠データの初期化に失敗しました。'
   end
 
   def new
@@ -132,24 +137,50 @@ class AttendancesController < ApplicationController
     
     Rails.logger.info("PARAMS: #{params.inspect}")
     
-    @attendance = Attendance.find(params[:id])
     @pattern = KinmuPattern.find(params[:pattern])
 
-    
-    params[:start_time_hour]
-    params[:start_time_minute]
-    params[:end_time_hour]
-    params[:end_time_minute]
-
-
     Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
-    Rails.logger.info("input_start_date: " + @pattern.start_time.to_s)
+    Rails.logger.info("pattern_end_date: " + @pattern.end_time.to_s)
+    Rails.logger.info("pattern_end_date - pattern_start_date: " + (@pattern.end_time - @pattern.start_time).to_s)
 
-    
-    @attendance.over_time = 0
-    
+    attendance_start_time = Time.local(@pattern.start_time.year, @pattern.start_time.month, @pattern.start_time.day, params[:start_time_hour], params[:start_time_minute], 0)
+    attendance_end_time = Time.local(@pattern.end_time.year, @pattern.end_time.month, @pattern.end_time.day, params[:end_time_hour], params[:end_time_minute], 0)
 
+    Rails.logger.info("input_start_date: " + attendance_start_time.to_s)
+    Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
+    Rails.logger.info("input_end_date - input_start_date: " + (attendance_end_time - attendance_start_time).to_s)
+    
+    @attendance.work_time = get_work_time(@attendance, @pattern, attendance_start_time, attendance_end_time)
+    @attendance.over_time = get_over_time(@attendance.work_time)
+    @attendance.midnight_time = get_midnight_time(attendance_start_time, attendance_end_time)
+    @attendance.kouzyo_time = get_kouzyo_time(@attendance.work_time)
+
+    @attendance.tikoku = tikoku?(@pattern, attendance_start_time)
+    @attendance.hankekkin = hankekkin?(@pattern, attendance_start_time)
   end
+
+  # def clear
+  #   @attendance.pattern = ""
+  #   @attendance.start_time = ""
+  #   @attendance.end_time = ""
+  #   @attendance.byouketu = false
+  #   @attendance.kekkin = false
+  #   @attendance.hankekkin = false
+  #   @attendance.tikoku = false
+  #   @attendance.soutai = false
+  #   @attendance.gaisyutu = false
+  #   @attendance.tokkyuu = false
+  #   @attendance.furikyuu = false
+  #   @attendance.yuukyuu = false
+  #   @attendance.syuttyou = false
+  #   @attendance.over_time = ""
+  #   @attendance.holiday_time = ""
+  #   @attendance.midnight_time = ""
+  #   @attendance.break_time = ""
+  #   @attendance.kouzyo_time = ""
+  #   @attendance.work_time = ""
+  #   @attendance.remarks = ""
+  # end
 
   def print
 
@@ -185,6 +216,27 @@ class AttendancesController < ApplicationController
   end
 
   private
+
+    def init
+      if changed_attendance_years?
+        @selected_nen_gatudo = params[:attendance][:nen_gatudo]
+      end
+
+      @attendance_years = get_attendance_years(params[:attendance])
+      # @attendance_years = Date.new(2014, 2, 20)
+      @nendo = get_nendo(@attendance_years)
+      @gatudo = get_gatudo(@attendance_years)
+      @project = get_project
+
+      @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+      @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
+
+      if current_user.kinmu_patterns.first.nil?
+        flash.now[:alert] = '勤務パターンを登録して下さい。'
+        return
+      end
+    end
+  
     def set_attendance
       @attendance = Attendance.find(params[:id])
     end
@@ -267,4 +319,54 @@ class AttendancesController < ApplicationController
 
       others
     end
+
+    # 実働時間算出
+    def get_work_time(attendance, pattern, attendance_start_time, attendance_end_time)
+
+      pattern_break_time = pattern.break_time.blank? ? 0 : pattern.break_time
+      attendance_break_time = attendance.break_time.blank? ? 0 : attendance.break_time
+
+      Rails.logger.info("pattern_break_time: " + (pattern_break_time * 3600).to_s)
+      Rails.logger.info("attendance_break_time: " + (attendance_break_time * 3600).to_s)
+
+      result = (attendance_end_time - attendance_start_time - (pattern_break_time * 3600)) / 3600
+    end
+  
+    # 超過時間算出
+    def get_over_time(work_time)
+      result = work_time - 8.00
+      result > 0 ? result : 0
+    end
+
+    # 深夜時間算出
+    def get_midnight_time(attendance_start_time, attendance_end_time)
+      start_midnight_time = Time.local(attendance_start_time.year, attendance_start_time.month, attendance_start_time.day, 22, 0, 0)
+      end_midnight_time = Time.local(attendance_end_time.year, attendance_end_time.month, attendance_end_time.day+1, 5, 0, 0)
+
+      result = (attendance_end_time - start_midnight_time) / 3600
+      result > 0 ? result : 0
+    end
+
+    # 控除時間算出
+    def get_kouzyo_time(work_time)
+      result = 8.00 - work_time
+      result > 0 ? result : 0
+    end
+
+    # 遅刻かどうを判定して結果を返す。
+    def tikoku?(pattern, attendance_start_time)
+      # Rails.logger.debug("tikoku-1" + pattern.start_time.to_s)
+      # Rails.logger.debug("tikoku-2" + attendance_start_time.to_s)
+      
+      result = (pattern.start_time - attendance_start_time) / 3600
+      ( 0 > result and result.abs  < 1) ? true : false
+    end
+
+    # 半欠勤かどうを判定して結果を返す。
+    def hankekkin?(pattern, attendance_start_time)
+      result = (pattern.start_time - attendance_start_time) / 3600
+      ( 0 > result and result.abs >= 1) ? true : false
+    end
+
+    
 end
