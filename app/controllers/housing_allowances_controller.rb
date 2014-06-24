@@ -5,7 +5,13 @@ class HousingAllowancesController < ApplicationController
   # GET /housing_allowances.json
   def index
     @housing_allowances = HousingAllowance.all
-    @housing_allowance = current_user.housing_allowances.all
+    @housing_allowance_date = current_user.housing_allowances.all
+    @date=@housing_allowance_date.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    if @date==nil                                                 #更新日時が空なら今日の日付を使用
+      @date=Date.today
+    end
+
+    @housing_allowance = current_user.housing_allowances.first
     @project=current_user.projects.find_by(active: true)
 
     @sum=0
@@ -29,10 +35,7 @@ class HousingAllowancesController < ApplicationController
     end
     
     # @date=Time.parse(session[:date])
-    @date=@transportation_express.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
-    if @date==nil                                                 #更新日時が空なら今日の日付を使用
-      @date=Date.today
-    end
+  
 
   end
 
@@ -46,11 +49,36 @@ class HousingAllowancesController < ApplicationController
     @housing_allowance = current_user.housing_allowances.build
   end
 
-  # def print
-  #   @housing_allowances = HousingAllowance.all
-  #   @housing_allowances = current_user.housing_allowances.all
-  #   @project = current_user.projects.find_by()
-  # end
+  def print
+     @nendo = Date.today.year
+    
+    if Date.today.month == 12 and Date.today.day > 15
+      @nendo = Date.today.years_since(1).year
+    end
+    @housing_allowances = HousingAllowance.all
+    @housing_allowances = current_user.housing_allowances.all
+    @project = current_user.projects.find_by(active: true)
+    @date=@housing_allowances.maximum(:updated_at,:include)
+    if @date==nil
+      @date=Date.today
+    end
+    @housing_allowances = current_user.housing_allowances.first
+
+    respond_to do |format|
+      # format.html { redirect_to print_attendances_path(format: :pdf)}
+      # format.pdf do
+      #   render pdf: '勤務状況報告書',
+      #          encoding: 'UTF-8',
+      #          layout: 'pdf.html'
+      format.html { redirect_to print_housing_allowances_path(format: :pdf, debug: 1)}
+      format.pdf do
+        render pdf: '交通費精算書',
+               encoding: 'UTF-8',
+               layout: 'pdf.html',
+               show_as_html: params[:debug].present?
+      end
+    end
+  end
   # GET /housing_allowances/1/edit
   def edit
   end
@@ -58,7 +86,8 @@ class HousingAllowancesController < ApplicationController
   # POST /housing_allowances
   # POST /housing_allowances.json
   def create
-    @housing_allowance = HousingAllowance.new(housing_allowance_params)
+    # @housing_allowance = HousingAllowance.new(housing_allowance_params)
+    @housing_allowance =current_user.housing_allowances.build(housing_allowance_params)
 
     respond_to do |format|
       if @housing_allowance.save

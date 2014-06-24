@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   
 
-  resources :housing_allowances
+  resources :housing_allowances do
+    collection do
+      get 'print'
+    end
+  end
 
   # get 'reasons/edit'
 
