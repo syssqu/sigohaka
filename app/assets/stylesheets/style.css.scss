@@ -41,22 +41,19 @@ p.pagebreak {page-break-before: always; }
 .container p{font-size:14px;margin-bottom:15px;}
 span{margin-left:10px;color:red;}
 
-/* =============================================================================
-   アカウント登録
-   ========================================================================== */
-article.registrations.new #error_explanation{border:none !important;background:#fff;}
-article.registrations.new .alert-box.error{background:#D01E29;border-color:#D01E29;}
-article.registrations.new ul.pricing-table{list-style-type: none !important;}
-article.registrations.new ul li.bullet-item {color:#D91A1A;}
+/* .top-bar-section .dropdown { */
+/*   z-index: 97; /\* the z-index of the modal background is 98) *\/ */
+/* } */
 
 /* =============================================================================
-   アカウント編集
+   エラーメッセージ
    ========================================================================== */
-.welcome_image{background-color:#3F8EBF;width:480px;height:440px;display:table-cell;vertical-align:middle;}
-.welcome_board{color:#fff;}
-article.registrations.edit .birth_date_format select {display: inline-block;width:20%;}
+#error_explanation{border:none !important;background:#fff;}
+#error_explanation .alert-box.error{background:#D01E29;border-color:#D01E29;}
+#error_explanation ul.pricing-table{border:none;}
+#error_explanation ul.pricing-table li.bullet-item.left{list-style-type: none !important;color:#D91A1A !important;margin:0px;}
+/* article.registrations.new ul li.bullet-item {color:#D91A1A;} */
 
-article.registrations.edit input.nenrei {background-color: #e0e0e0;width:50%;}
-
-/*article.vacation_request_print table{border-spacing: 0;}*/
-/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
+.field_with_errors {padding: 2px;background-color: white;display: table;}
+.field_with_errors input {border:solid 1px #D91A1A;}
+.field_with_errors input:focus {border:solid 1px #D91A1A;}

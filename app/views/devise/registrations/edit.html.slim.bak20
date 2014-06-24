@@ -9,55 +9,62 @@ article.registrations.edit
             
       .tabs-content
         #panel2-1.content.active
-          h5 プロフィールの編集
+          h3 アカウント編集
           = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-            = render 'shared/error_messages', object: f.object
+            = devise_error_messages!
             .row
               .large-6.columns
                 .row
-                  .large-3.columns
-                    h1.left
-                      = gravatar_for f.object, size:120
-                    .gravatar_link
-                      = link_to 'http://gravatar.com/emails', class: "button radius tiny" do
-                        i.fi-camera
-                        |画像の変更
-                  .large-5.large-pull-4.columns
-                    .gravatar_remarks 画像を表示するには、Gravatarにサインアップして画像を登録する必要があります。
-                hr
+                  .large-12.columns
+                    h1
+                      = gravatar_for f.object, size:100
                 .row
-                  .large-2.columns.show-for-large-up
+                  .large-12.columns
+                      label 
+                        strong 個人情報
+                .row
+                  .large-4.columns.show-for-large-up
                     label.left.inline
-                      | 氏名
+                      | 氏名 (漢字) 
                       span *
-                  .large-3.small-4.columns
+                  .small-12.columns.show-for-medium-down
+                    label
+                      | 氏名 (漢字)
+                      span *
+                  .large-4.small-4.columns
                     label
                       |性
-                      = f.text_field :family_name, autofocus: true
-                  .large-3.large-pull-4.small-2.columns
+                      = f.text_field :family_name
+                  .large-4.small-2.columns
                     label
                       |名
                       = f.text_field :first_name
+            .row
+              .large-6.columns
                 .row
-                  .large-2.columns.show-for-large-up
+                  .large-4.columns.show-for-large-up
                     label.left.inline
-                      | フリガナ
+                      | 氏名 (フリガナ)
                       span *
-                  .large-3.small-2.columns
+                  .small-12.columns.show-for-medium-down
+                    label
+                      | 氏名 (フリガナ)
+                      span *
+                  .large-4.small-2.columns
                     label
                       |セイ
                       = f.text_field :kana_family_name
-                  .large-3.large-pull-4.small-2.columns
+                  .large-4.small-2.columns
                     label
                       |メイ
                       = f.text_field :kana_first_name
                 .row
-                  .large-2.columns
+                  .large-4.columns
                     label.left.inline
-                      |Email
+                      |メールアドレス
                       span *
-                  .large-5.large-pull-5.columns
-                    = f.email_field :email
+                  .large-4.large-pull-4.columns
+                    = f.email_field :email, autofocus: true
                 - if devise_mapping.confirmable? && resource.pending_reconfirmation?
                   div
                     | Currently waiting confirmation for: #{resource.unconfirmed_email}
@@ -66,7 +73,7 @@ article.registrations.edit
                     label.left.inline
                       |所属
                       span *
-                  .large-5.large-pull-5.columns
+                  .large-3.large-pull-7.columns
                     = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
                 .row
                   .large-2.small-3.columns
@@ -81,55 +88,81 @@ article.registrations.edit
                 .row
                   .large-2.small-4.columns
                     label.left.inline
-                      | 住所
-                  .large-5.large-pull-5.small-8.columns
+                    | 市区町村
+                  .large-3.large-pull-7.small-8.columns
                     = f.text_field :city
                     
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      | 電話番号
-                  .large-4.large-pull-6.small-8.columns
-                    = f.text_field :phone
+                section
+                  .row
+                    .large-12.columns
+                      label 
+                        strong 電話番号
+                    .large-12.small-12.columns
+                      .row
+                        .small-12.columns.show-for-medium-down
+                          label
+                            span 半角でご記入下さい 例) 012-3456-7890
+                      .row
+                        .large-2.small-4.columns
+                          label.left.inline
+                            | 電話番号
 
-              .large-6.columns
+                        .large-2.small-8.columns
+                          = f.text_field :phone
+                        .large-8.columns.show-for-large-up
+                          label.left.inline
+                            span 半角でご記入下さい 例) 012-3456-7890
+
                 .row
                   .large-2.small-4.columns
                     label.left.inline.show-for-large-up
-                      | 社員No.
+                    | 社員No.
                   .large-2.large-pull-8.small-8.columns
                     = f.text_field :employee_no
                 .row
                   .large-2.small-4.columns
                     label.left.inline.show-for-large-up
-                      | 経験年数
+                    | 経験年数
                   .large-1.large-pull-9.small-8.columns
                     / = f.text_field :experience, :value => number_with_precision(f.object.experience,:precision => 1)
                     = f.text_field :experience
+                section
+                  .row
+                    .large-12.columns
+                      label 
+                        strong 学歴
+                  .row
+                    .large-12.small-12.columns
+                      .row
+                        .large-2.small-4.columns
+                          label.left.inline
+                            |最終学歴
+                            br
+                            |<font color="red">600字以内</color>
+                        .large-5.large-pull-5.small-8.columns
+                          label 
+                            |大学名、専門学校名、学部、学科、主な専門分野
+                            = f.text_area :gakureki, 'placeholder' => "ご記入下さい。 ",size: "x5"
+            .row
+              .large-6.columns
                 .row
-                  .large-2.columns.show-for-large-up
+                  .large-4.columns.show-for-large-up
                     label.left.inline
                       | 生年月日
-                  .large-8.large-pull-2.small-5.columns
+                  .small-12.columns.show-for-medium-down
+                    label
+                      | 生年月日
+                  .large-4.large-pull-4.small-5.columns
                     .birth_date_format
                       = raw sprintf( f.date_select(:birth_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
                 .row
-                  .large-2.small-4.columns
+                  .large-4.small-4.columns
                     label.left.inline.show-for-large-up
-                      | 年齢
-                  .large-2.large-pull-8.small-8.columns
+                    | 年齢
+                  .large-1.large-pull-7.small-8.columns
                     .left
                       = f.text_field :age, readonly: true, class: "nenrei"
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      |最終学歴
-                      br
-                      |<font color="red">600字以内</color>
-                  .large-8.large-pull-2.small-8.columns
-                    label 
-                      |大学名、専門学校名、学部、学科、主な専門分野
-                      = f.text_area :gakureki, 'placeholder' => "ご記入下さい。 ",size: "x5"
+                      
             .row
               .large-8.large-centered.columns
                 = f.submit "更新", class: "button radius"
@@ -137,23 +170,4 @@ article.registrations.edit
                 = link_to "ユーザーを削除", registration_path(resource_name), data: { confirm: "宜しいですか?" }, method: :delete, class: "button radius"
 
         #panel2-2.content
-          h5 パスワードの編集
-          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-            = devise_error_messages!
-            = f.hidden_field :reset_password_token
-            .row
-              .large-2.small-4.columns
-                label.left.inline
-                  | 新しいパスワード
-              .large-3.large-pull-7.small-8.columns
-                = f.password_field :password, autofocus: true, autocomplete: "off"
-            .row
-              .large-2.small-4.columns
-                label.left.inline
-                  | 新しいパスワード(確認用)
-              .large-3.large-pull-7.small-8.columns
-                = f.password_field :password_confirmation, autocomplete: "off"
-            br/
-            .row
-              .large-2.small-4.columns
-                div= f.submit "変更", class: "button radius"
+          p Second panel content goes here...
