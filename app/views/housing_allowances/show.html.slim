@@ -1,0 +1,54 @@
+p#notice = notice
+
+p
+  strong User:
+  = @housing_allowance.user_id
+p
+  strong Year:
+  = @housing_allowance.year
+p
+  strong Month:
+  = @housing_allowance.month
+p
+  strong Reason:
+  = @housing_allowance.reason
+p
+  strong Reason text:
+  = @housing_allowance.reason_text
+p
+  strong Housing style:
+  = @housing_allowance.housing_style
+p
+  strong Housing style text:
+  = @housing_allowance.housing_style_text
+p
+  strong Agree date s:
+  = @housing_allowance.agree_date_s
+p
+  strong Agree date e:
+  = @housing_allowance.agree_date_e
+p
+  strong Spouse:
+  = @housing_allowance.spouse
+p
+  strong Spouse name:
+  = @housing_allowance.spouse_name
+p
+  strong Spouse other:
+  = @housing_allowance.spouse_other
+p
+  strong Support:
+  = @housing_allowance.support
+p
+  strong Support name1:
+  = @housing_allowance.support_name1
+p
+  strong Support name2:
+  = @housing_allowance.support_name2
+p
+  strong Money:
+  = @housing_allowance.money
+
+= link_to 'Edit', edit_housing_allowance_path(@housing_allowance)
+'|
+= link_to 'Back', housing_allowances_path

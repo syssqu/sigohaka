@@ -1,0 +1,1 @@
+json.extract! @housing_allowance, :id, :user_id, :year, :month, :reason, :reason_text, :housing_style, :housing_style_text, :agree_date_s, :agree_date_e, :spouse, :spouse_name, :spouse_other, :support, :support_name1, :support_name2, :money, :created_at, :updated_at
