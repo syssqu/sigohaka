@@ -3,6 +3,7 @@ $("select#attendance_nen_gatudo").change ->
 
 $("#calculate").click ->
   if $("#attendance_pattern").val() == "" or $("#attendance_start_time_4i").val() == "" or $("#attendance_start_time_5i").val() == "" or $("#attendance_end_time_4i").val() == "" or $("#attendance_end_time_5i").val() == ""
+    alert "勤務パターンと出退勤時間を入力して下さい。"
     return
 
   $.ajax
@@ -49,9 +50,9 @@ $("#data_clear").click ->
   $( "#attendance_yuukyuu" ).prop( "checked", false );
   $( "#attendance_syuttyou" ).prop( "checked", false );
 
-  $('#attendance_over_time').val(0.00).toFixed(2);
-  $('#attendance_holiday_time').val(0.00).toFixed(2);
-  $('#attendance_midnight_time').val(0.00).toFixed(2);
-  $('#attendance_break_time').val(0.00).toFixed(2);
-  $('#attendance_kouzyo_time').val(0.00).toFixed(2);
-  $('#attendance_work_time').val(0.00).toFixed(2);
+  $( '#attendance_over_time' ).val("0.00");
+  $( '#attendance_holiday_time' ).val("0.00");
+  $( '#attendance_midnight_time' ).val("0.00");
+  $( '#attendance_break_time' ).val("0.00");
+  $( '#attendance_kouzyo_time' ).val("0.00");
+  $( '#attendance_work_time' ).val("0.00");

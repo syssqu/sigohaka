@@ -126,6 +126,17 @@ class AttendancesController < ApplicationController
   end
 
   def update
+    @attendance.is_blank_start_time = false
+    @attendance.is_blank_end_time = false
+
+    if params[:attendance]['start_time(4i)'.to_sym].blank? or params[:attendance]['start_time(5i)'.to_sym].blank?
+      @attendance.is_blank_start_time = true
+    end
+
+    if params[:attendance]['end_time(4i)'.to_sym].blank? or params[:attendance]['end_time(5i)'.to_sym].blank?
+      @attendance.is_blank_end_time = true
+    end
+    
     if @attendance.update_attributes(attendance_params)
       redirect_to attendances_path, notice: '更新しました。'
     else
@@ -150,37 +161,8 @@ class AttendancesController < ApplicationController
     Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
     Rails.logger.info("input_end_date - input_start_date: " + (attendance_end_time - attendance_start_time).to_s)
     
-    @attendance.work_time = get_work_time(@attendance, @pattern, attendance_start_time, attendance_end_time)
-    @attendance.over_time = get_over_time(@attendance.work_time)
-    @attendance.midnight_time = get_midnight_time(attendance_start_time, attendance_end_time)
-    @attendance.kouzyo_time = get_kouzyo_time(@attendance.work_time)
-
-    @attendance.tikoku = tikoku?(@pattern, attendance_start_time)
-    @attendance.hankekkin = hankekkin?(@pattern, attendance_start_time)
+    @attendance.calculate(@pattern, attendance_start_time, attendance_end_time)
   end
-
-  # def clear
-  #   @attendance.pattern = ""
-  #   @attendance.start_time = ""
-  #   @attendance.end_time = ""
-  #   @attendance.byouketu = false
-  #   @attendance.kekkin = false
-  #   @attendance.hankekkin = false
-  #   @attendance.tikoku = false
-  #   @attendance.soutai = false
-  #   @attendance.gaisyutu = false
-  #   @attendance.tokkyuu = false
-  #   @attendance.furikyuu = false
-  #   @attendance.yuukyuu = false
-  #   @attendance.syuttyou = false
-  #   @attendance.over_time = ""
-  #   @attendance.holiday_time = ""
-  #   @attendance.midnight_time = ""
-  #   @attendance.break_time = ""
-  #   @attendance.kouzyo_time = ""
-  #   @attendance.work_time = ""
-  #   @attendance.remarks = ""
-  # end
 
   def print
 
@@ -320,53 +302,4 @@ class AttendancesController < ApplicationController
       others
     end
 
-    # 実働時間算出
-    def get_work_time(attendance, pattern, attendance_start_time, attendance_end_time)
-
-      pattern_break_time = pattern.break_time.blank? ? 0 : pattern.break_time
-      attendance_break_time = attendance.break_time.blank? ? 0 : attendance.break_time
-
-      Rails.logger.info("pattern_break_time: " + (pattern_break_time * 3600).to_s)
-      Rails.logger.info("attendance_break_time: " + (attendance_break_time * 3600).to_s)
-
-      result = (attendance_end_time - attendance_start_time - (pattern_break_time * 3600)) / 3600
-    end
-  
-    # 超過時間算出
-    def get_over_time(work_time)
-      result = work_time - 8.00
-      result > 0 ? result : 0
-    end
-
-    # 深夜時間算出
-    def get_midnight_time(attendance_start_time, attendance_end_time)
-      start_midnight_time = Time.local(attendance_start_time.year, attendance_start_time.month, attendance_start_time.day, 22, 0, 0)
-      end_midnight_time = Time.local(attendance_end_time.year, attendance_end_time.month, attendance_end_time.day+1, 5, 0, 0)
-
-      result = (attendance_end_time - start_midnight_time) / 3600
-      result > 0 ? result : 0
-    end
-
-    # 控除時間算出
-    def get_kouzyo_time(work_time)
-      result = 8.00 - work_time
-      result > 0 ? result : 0
-    end
-
-    # 遅刻かどうを判定して結果を返す。
-    def tikoku?(pattern, attendance_start_time)
-      # Rails.logger.debug("tikoku-1" + pattern.start_time.to_s)
-      # Rails.logger.debug("tikoku-2" + attendance_start_time.to_s)
-      
-      result = (pattern.start_time - attendance_start_time) / 3600
-      ( 0 > result and result.abs  < 1) ? true : false
-    end
-
-    # 半欠勤かどうを判定して結果を返す。
-    def hankekkin?(pattern, attendance_start_time)
-      result = (pattern.start_time - attendance_start_time) / 3600
-      ( 0 > result and result.abs >= 1) ? true : false
-    end
-
-    
 end
