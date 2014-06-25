@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
   module Roles
     ADMIN = "admin"
-    MANAGER = "register"
-    GENERAL = "lyrics_viewer"
+    MANAGER = "manager"
+    REGULAR = "regular"
   end
 
   belongs_to :section
@@ -42,11 +42,25 @@ class User < ActiveRecord::Base
   # validates :birth_day, presence: true
 
   # メールアドレス
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true,
-                    confirmation: true,
-                    length: { maximum: 90 },
-                    format:   { with: VALID_EMAIL_REGEX },
-                    uniqueness: false
+  # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  # validates :email, presence: true,
+  #                   confirmation: false,
+  #                   length: { maximum: 90 },
+  #                   format:   { with: VALID_EMAIL_REGEX },
+  #                   uniqueness: true
+
+  # allow users to update their accounts without passwords
+  def update_without_current_password(params, *options)
+    params.delete(:current_password)
+ 
+    if params[:password].blank? && params[:password_confirmation].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+ 
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
+  end
 
 end

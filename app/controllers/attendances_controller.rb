@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: [:show, :edit, :update, :destroy, :calculate]
+  before_action :set_attendance, only: [:show, :edit, :update, :destroy, :input_attendance_time, :calculate]
   before_action :authenticate_user!
 
   def index
@@ -141,6 +141,20 @@ class AttendancesController < ApplicationController
       redirect_to attendances_path, notice: '更新しました。'
     else
       render :edit
+    end
+  end
+
+  def input_attendance_time
+
+    logger.debug("あいうえお")
+    @pattern = KinmuPattern.find_by(id: params[:pattern])
+    @time_blank = false
+
+    if @pattern.nil?
+      @time_blank = true
+    else
+      @attendance.start_time = @pattern.start_time
+      @attendance.end_time = @pattern.end_time
     end
   end
 
