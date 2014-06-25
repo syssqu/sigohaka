@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   resources :attendances, only:[:index, :new, :create, :edit, :update]
   match '/init_attendances', to:'attendances#init_attendances', via: :get
   match '/calculate_attendance', to:'attendances#calculate', via: :get
+  match '/input_attendance_time', to:'attendances#input_attendance_time', via: :get
   # match '/data_clear', to:'attendances#clear', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do

@@ -1,6 +1,33 @@
+# 一覧ページで年月度が変更された際に表示を切り替える
 $("select#attendance_nen_gatudo").change ->
   $("form").submit();
 
+# 勤務パターンが変更された際に出退勤時刻を変更する
+$("#attendance_pattern").change ->
+
+  $.ajax
+    url: "/input_attendance_time"
+    type: "GET"
+    data:
+      id: $("#target_id").val()
+      pattern: $("#attendance_pattern").val()
+    dataType: "script"
+    success: (data) ->
+      return data
+    error: (XMLHttpRequest, textStatus, errorThrown) ->
+      msg = "--- Error Status ---"
+      msg = msg + "<BR>" + "status:" + XMLHttpRequest.status
+      msg = msg + "<BR>" + "statusText:" + XMLHttpRequest.statusText
+      msg = msg + "<BR>" + "textStatus:" + textStatus
+      msg = msg + "<BR>" + "errorThrown:" + errorThrown
+      for i of errorThrown
+        msg = msg + "<BR>" + "error " + i + ":" + errorThrown[i]
+      document.open()
+      document.write msg
+      document.close()
+      return
+
+# 区分や各時間を勤務パターンと出退勤時刻によって自動計算する
 $("#calculate").click ->
   if $("#attendance_pattern").val() == "" or $("#attendance_start_time_4i").val() == "" or $("#attendance_start_time_5i").val() == "" or $("#attendance_end_time_4i").val() == "" or $("#attendance_end_time_5i").val() == ""
     alert "勤務パターンと出退勤時間を入力して下さい。"
@@ -32,6 +59,7 @@ $("#calculate").click ->
       document.close()
       return
 
+# データクリア処理
 $("#data_clear").click ->
   $('#attendance_pattern').val("");
   $('#attendance_start_time_4i').val("");

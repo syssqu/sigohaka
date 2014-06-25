@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  # 指定された開始月から終了月までの月数を返す
+  # @param [Date] start_date 開始月
+  # @param [Date] end_date 終了月
+  # @return [String] 月数
   def get_month_term(start_date, end_date)
     return "" if end_date.blank?
     ((end_date.year - start_date.year) * 12 + (end_date.month - start_date.month) + 1).to_s + "ヶ月"
   end
 
-  # 西暦から和暦を求めて年を返す
+  # 西暦から和暦年を求めて返す
+  # @param [Integer] year 年
+  # @param [Integer] month 月
+  # @param [Integer] day 日
+  # @return [String] 和暦年 
   def seireki2wareki(year, month, day)
     wareki = ""
     
@@ -74,7 +82,10 @@ module ApplicationHelper
     wareki
   end
 
-  # http://gravatar.com/からGravatarを取得して返す
+  # http://gravatar.com/からGravatar画像を取得して返す
+  # @param [User] user ユーザー
+  # @param [Integer] size オプション、画像のサイズに随時変更するためのもの
+  # @return [nil] 
   def gravatar_for(user, options = { size: 50 })
     if user.nil?
       user = current_user

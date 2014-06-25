@@ -12,6 +12,9 @@ article.registrations.edit
           h5 プロフィールの編集
           = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
             = render 'shared/error_messages', object: f.object
+            
+            = f.hidden_field :role
+            
             .row
               .large-6.columns
                 .row
@@ -23,7 +26,7 @@ article.registrations.edit
                         i.fi-camera
                         |画像の変更
                   .large-5.large-pull-4.columns
-                    .gravatar_remarks 画像を表示するには、Gravatarにサインアップして画像を登録する必要があります。
+                    .gravatar_remarks 画像を表示するには、Gravatarにサインアップして画像を登録した上で、サインアップ時に指定したメールアドレスとプロフィールのEmailを一致させる必要があります。
                 hr
                 .row
                   .large-2.columns.show-for-large-up
@@ -96,9 +99,23 @@ article.registrations.edit
                 .row
                   .large-2.small-4.columns
                     label.left.inline.show-for-large-up
+                      | 権限
+                  .large-4.large-pull-6.small-8.columns
+                    label.left.inline
+                      #{GENDER[f.object.role.to_sym]}
+                .row
+                  .large-2.small-4.columns
+                    label.left.inline.show-for-large-up
                       | 社員No.
                   .large-2.large-pull-8.small-8.columns
                     = f.text_field :employee_no
+                .row
+                  .large-2.small-4.columns
+                    label.left.inline.show-for-large-up
+                      | 入社日
+                  .large-8.large-pull-2.small-5.columns
+                    .employee_date_format
+                      = raw sprintf( f.date_select(:employee_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
                 .row
                   .large-2.small-4.columns
                     label.left.inline.show-for-large-up
@@ -106,6 +123,14 @@ article.registrations.edit
                   .large-1.large-pull-9.small-8.columns
                     / = f.text_field :experience, :value => number_with_precision(f.object.experience,:precision => 1)
                     = f.text_field :experience
+                .row
+                  .large-2.small-4.columns
+                    label.left.inline.show-for-large-up
+                      | 印鑑ID
+                  .large-3.small-8.columns
+                    = f.text_field :imprint_id
+                  .large-7.columns
+                    label.left.inline 自社Emailの@より左を入力して下さい
                 .row
                   .large-2.columns.show-for-large-up
                     label.left.inline
@@ -123,13 +148,19 @@ article.registrations.edit
                 .row
                   .large-2.small-4.columns
                     label.left.inline
+                      | 最寄駅
+                  .large-4.large-pull-6.small-8.columns
+                    = f.text_field :station
+                .row
+                  .large-2.small-4.columns
+                    label.left.inline
                       |最終学歴
                       br
                       |<font color="red">600字以内</color>
                   .large-8.large-pull-2.small-8.columns
                     label 
-                      |大学名、専門学校名、学部、学科、主な専門分野
-                      = f.text_area :gakureki, 'placeholder' => "ご記入下さい。 ",size: "x5"
+                      |大学名、専門学校名、学部、学科
+                      = f.text_area :gakureki, 'placeholder' => "HXX.XX XX大学 XX部",size: "x5"
             .row
               .large-8.large-centered.columns
                 = f.submit "更新", class: "button radius"
