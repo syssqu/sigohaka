@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617045809) do
+ActiveRecord::Schema.define(version: 20140624052409) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -96,6 +96,27 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.datetime "updated_at"
   end
 
+  create_table "housing_allowances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",               limit: 4
+    t.string   "month",              limit: 2
+    t.string   "reason"
+    t.string   "reason_text"
+    t.string   "housing_style"
+    t.string   "housing_style_text"
+    t.date     "agree_date_s"
+    t.date     "agree_date_e"
+    t.string   "spouse"
+    t.string   "spouse_name"
+    t.string   "spouse_other"
+    t.string   "support"
+    t.string   "support_name1"
+    t.string   "support_name2"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
@@ -148,6 +169,18 @@ ActiveRecord::Schema.define(version: 20140617045809) do
   create_table "sections", force: true do |t|
     t.string   "code"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "summary_attendances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",         limit: 4
+    t.string   "month",        limit: 2
+    t.integer  "previous_m"
+    t.integer  "present_m"
+    t.integer  "vacation"
+    t.integer  "half_holiday"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

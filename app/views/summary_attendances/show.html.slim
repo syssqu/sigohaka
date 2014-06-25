@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong User:
+  = @summary_attendance.user_id
+p
+  strong Year:
+  = @summary_attendance.year
+p
+  strong Month:
+  = @summary_attendance.month
+p
+  strong Previous m:
+  = @summary_attendance.previous_m
+p
+  strong Present m:
+  = @summary_attendance.present_m
+p
+  strong Vacation:
+  = @summary_attendance.vacation
+p
+  strong Half holiday:
+  = @summary_attendance.half_holiday
+
+= link_to 'Edit', edit_summary_attendance_path(@summary_attendance)
+'|
+= link_to 'Back', summary_attendances_path

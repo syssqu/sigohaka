@@ -25,6 +25,8 @@
                 = link_to '通勤届', commutes_path
               li
                 = link_to '技術経歴書', resumes_index_path
+              li
+                = link_to '勤務状況集計表', summary_attendances_path
           li
             = link_to "ヘルプ", help_path
           - if can? :manage, current_user
