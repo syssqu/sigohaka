@@ -31,6 +31,9 @@ class SummaryAttendancesController < ApplicationController
       @summary_attendance = current_user.summary_attendances.all
 
       @user = User.all
+      # @summary_attendance = user.attendances.order
+      @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+      @over_sum=0
     if ! @attendances.exists?
         
 
@@ -38,34 +41,34 @@ class SummaryAttendancesController < ApplicationController
       target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
       end_attendance_date = target_date.months_since(1)
       
-      while target_date != end_attendance_date
+      # while target_date != end_attendance_date
 
-        @attendance = current_user.attendances.build
+      #   @attendance = current_user.attendances.build
         
-        @attendance[:attendance_date] = target_date
-        @attendance[:year] = @nendo
-        @attendance[:month] = @gatudo
+      #   @attendance[:attendance_date] = target_date
+      #   @attendance[:year] = @nendo
+      #   @attendance[:month] = @gatudo
 
-        @attendance[:wday] = target_date.wday
+      #   @attendance[:wday] = target_date.wday
 
-        if holiday?(target_date)
-          @attendance[:holiday] = "1"
-        elsif ! current_user.kinmu_patterns.first.nil?
-          @attendance[:pattern] = current_user.kinmu_patterns.first.code
-          @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
-          @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
-          @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
-          @attendance[:holiday] = "0"
+      #   if holiday?(target_date)
+      #     @attendance[:holiday] = "1"
+      #   elsif ! current_user.kinmu_patterns.first.nil?
+      #     @attendance[:pattern] = current_user.kinmu_patterns.first.code
+      #     @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
+      #     @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+      #     @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
+      #     @attendance[:holiday] = "0"
 
-        end
+      #   end
 
-        if @attendance.save
-          @attendances << @attendance
-          target_date = target_date.tomorrow
-        else
-          break
-        end
-      end
+      #   if @attendance.save
+      #     @attendances << @attendance
+      #     target_date = target_date.tomorrow
+      #   else
+      #     break
+      #   end
+      # end
     end
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
-  resources :summary_attendances
+  resources :summary_attendances do
+    collection do
+      get 'print'
+    end
+  end
 
   resources :housing_allowances do
     collection do
