@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
   has_many :business_reports
 
+  has_many :qualification_allowances
 
   validates :family_name, presence: true, length: { maximum: 20}
   validates :first_name, presence: true, length: { maximum: 20}

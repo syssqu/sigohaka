@@ -42,7 +42,13 @@ Rails.application.routes.draw do
   end
   resources :business_reports
 
-  # map.resources :vacation_requests, :except=> ['print']
+
+
+  resource :qualification_allowances, only:[] do
+    get :print
+  end
+  resources :qualification_allowances
+
 
   resources :kinmu_patterns
   resources :sections

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe "business_reports/show", :type => :view do
+  
   before(:each) do
     @business_report = assign(:business_report, BusinessReport.create!(
       :user_id => 1,
