@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617045809) do
+ActiveRecord::Schema.define(version: 20140623082358) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.datetime "updated_at"
     t.boolean  "active"
     t.integer  "term"
+  end
+
+  create_table "qualification_allowances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "number"
+    t.string   "item"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "reasons", force: true do |t|
