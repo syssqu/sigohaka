@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
   
+
+  resources :housing_allowances do
+    collection do
+      get 'print'
+    end
+  end
+
   # get 'reasons/edit'
 
   # get 'reasons/new'
+
 
   get 'resumes/index'
   get 'resumes/print'
@@ -49,6 +57,7 @@ Rails.application.routes.draw do
   resources :attendances, only:[:index, :new, :create, :edit, :update]
   match '/init_attendances', to:'attendances#init_attendances', via: :get
   match '/calculate_attendance', to:'attendances#calculate', via: :get
+  # match '/data_clear', to:'attendances#clear', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member

@@ -1,0 +1,42 @@
+// Place all the styles related to the HousingAllowances controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+article.housing_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
+article.housing_index table#main{border: solid 3px;}
+article.housing_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
+article.housing_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
+article.housing_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.housing_index #kei {text-align: right;}
+article.housing_index #money {text-align: right;}
+article.housing_index #title{font-weight: bold;}
+
+// #transport_header{width:755px;font-size:10px;}
+#housing_header table#housing_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
+#housing_header table#housing_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
+#housing_header table#housing_project td strong{color:#6E6E6E;}
+
+
+//===========================================================
+//
+//===========================================================
+
+article.housing_print table{width:500px;border-spacing: 0;border-collapse: collapse;padding: 0px;border:none;background-color: #FFF;}
+article.housing_print table td{margin:0px;padding: 1px; text-align: center;font-size: 12px}
+article.housing_print table #title{background-color: #DDE;font-size: 20px;border-bottom: solid 2px;}
+article.housing_print table #ate{text-align: center;font-size: 14px;border-bottom: solid 1px;width:100px;}
+article.housing_print table #day{border-bottom: solid 1px;font-size: 13px;}
+
+
+article.housing_print .user td{border:solid 1px;}
+// article.housing_print .user #ten{border-bottom:2px dashed ;}
+article.housing_print .user #zyusyo{border-bottom:none;font-size: 12px;text-align: left;}
+article.housing_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: left;}
+article.housing_print .user #reason{padding:5px;text-align: left;}
+article.housing_print .user span{color: #000;}
+article.housing_print .user span#ok{border: solid 2px;border-radius:70em 70em 70em 70em;}
+
+article.housing_print .user span#allmoney{border-bottom: solid1px;}
+article.housing_print .user .nonborderB{border: none;text-align: right;color: #00F;}
+article.housing_print .user #zyouken{padding: 5px;font-size: 13px;}
+article.housing_print .user .nonborder{border: none;text-align: right;}

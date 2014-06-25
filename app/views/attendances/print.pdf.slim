@@ -130,17 +130,15 @@ article.attendance_print
           td.text-center = "○" if attendance.furikyuu
           td.text-center = "○" if attendance.yuukyuu
           td.text-center = "○" if attendance.syuttyou
-          td.text-center = sprintf( "%.2f", attendance.over_time) if ! attendance.over_time.nil?
-          td.text-center = sprintf( "%.2f", attendance.holiday_time) if ! attendance.holiday_time.nil?
-          td.text-center = sprintf( "%.2f", attendance.midnight_time) if ! attendance.midnight_time.nil?
-          td.text-center = sprintf( "%.2f", attendance.break_time) if ! attendance.break_time.nil?
-          td.text-center
-            = sprintf( "%.2f", attendance.kouzyo_time) if ! attendance.kouzyo_time.nil?
-          td.text-center
-            = sprintf( "%.2f", attendance.work_time ) if ! attendance.work_time.nil?
+          td.text-center = sprintf( "%.2f", attendance.over_time) if attendance.over_time > 0
+          td.text-center = sprintf( "%.2f", attendance.holiday_time) if attendance.holiday_time > 0
+          td.text-center = sprintf( "%.2f", attendance.midnight_time) if attendance.midnight_time > 0
+          td.text-center = sprintf( "%.2f", attendance.break_time) if attendance.break_time > 0
+          td.text-center = sprintf( "%.2f", attendance.kouzyo_time) if attendance.kouzyo_time > 0
+          td.text-center = sprintf( "%.2f", attendance.work_time ) if attendance.work_time > 0
           td width="15%"
             |&nbsp;
-            = attendance.remarks
+            = attendance.remarks[0,10] unless attendance.remarks.blank?
       - @others.each do |other|
         tr
           td.text-center colspan=3 = other.summary
@@ -156,17 +154,15 @@ article.attendance_print
           td.text-center.bg_gray
           td.text-center.bg_gray
           td.text-center.bg_gray
-          td.text-center = sprintf( "%.2f", other.over_time) if ! other.over_time.nil?
-          td.text-center = sprintf( "%.2f", other.holiday_time) if ! other.holiday_time.nil?
-          td.text-center = sprintf( "%.2f", other.midnight_time) if ! other.midnight_time.nil?
-          td.text-center = sprintf( "%.2f", other.break_time) if ! other.break_time.nil?
-          td.text-center
-            = sprintf( "%.2f", other.kouzyo_time) if ! other.kouzyo_time.nil?
-          td.text-center
-            = sprintf( "%.2f", other.work_time) if ! other.work_time.nil?
+          td.text-center = sprintf( "%.2f", other.over_time) if other.over_time > 0
+          td.text-center = sprintf( "%.2f", other.holiday_time) if other.holiday_time > 0
+          td.text-center = sprintf( "%.2f", other.midnight_time) if other.midnight_time > 0
+          td.text-center = sprintf( "%.2f", other.break_time) if other.break_time > 0
+          td.text-center = sprintf( "%.2f", other.kouzyo_time) if other.kouzyo_time > 0
+          td.text-center = sprintf( "%.2f", other.work_time) if other.work_time > 0
           td
             |&nbsp;
-            = other.remarks
+            = other.remarks[0,10] unless other.remarks.blank?
       tr
         td.text-center colspan="3" 社員No. 
         td.text-center = current_user.employee_no
@@ -205,7 +201,7 @@ article.attendance_print
         td.text-center width="55px;" 休憩
         td.text-center width="55px;" 実働
     tbody
-      - current_user.kinmu_patterns.each do |kinmu|
+      - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
         tr
           - if kinmu.code == "1"
             td.text-center width="60px;" rowspan=4
