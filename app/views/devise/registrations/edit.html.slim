@@ -1,190 +1,161 @@
 article.registrations.edit
   .row
     .large-12.columns.clearfix
-      ul.tabs data-tab="" 
-        li.tab-title.active
-          a href="#panel2-1"  プロフィール
-        li.tab-title
-          a href="#panel2-2"  パスワード
-            
-      .tabs-content
-        #panel2-1.content.active
-          h5 プロフィールの編集
-          = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-            = render 'shared/error_messages', object: f.object
-            
-            = f.hidden_field :role
-            
-            .row
-              .large-6.columns
-                .row
-                  .large-3.columns
-                    h1.left
-                      = gravatar_for f.object, size:120
-                    .gravatar_link
-                      = link_to 'http://gravatar.com/emails', class: "button radius tiny" do
-                        i.fi-camera
-                        |画像の変更
-                  .large-5.large-pull-4.columns
-                    .gravatar_remarks 画像を表示するには、Gravatarにサインアップして画像を登録した上で、サインアップ時に指定したメールアドレスとプロフィールのEmailを一致させる必要があります。
-                hr
-                .row
-                  .large-2.columns.show-for-large-up
-                    label.left.inline
-                      | 氏名
-                      span *
-                  .large-3.small-4.columns
-                    label
-                      |性
-                      = f.text_field :family_name, autofocus: true
-                  .large-3.large-pull-4.small-2.columns
-                    label
-                      |名
-                      = f.text_field :first_name
-                .row
-                  .large-2.columns.show-for-large-up
-                    label.left.inline
-                      | フリガナ
-                      span *
-                  .large-3.small-2.columns
-                    label
-                      |セイ
-                      = f.text_field :kana_family_name
-                  .large-3.large-pull-4.small-2.columns
-                    label
-                      |メイ
-                      = f.text_field :kana_first_name
-                .row
-                  .large-2.columns
-                    label.left.inline
-                      |Email
-                      span *
-                  .large-5.large-pull-5.columns
-                    = f.email_field :email
-                - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-                  div
-                    | Currently waiting confirmation for: #{resource.unconfirmed_email}
-                .row
-                  .large-2.columns
-                    label.left.inline
-                      |所属
-                      span *
-                  .large-5.large-pull-5.columns
-                    = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
-                .row
-                  .large-2.small-3.columns
-                    label.left.inline 
-                      |性別
-                      span *
-                  .large-10.small-9.columns
-                    label.left.inline style="width:20px;" = f.radio_button :gender, :man
-                    label.left.inline style="width:40px;" for="man"  男
-                    label.left.inline style="width:20px;" = f.radio_button :gender, :woman
-                    label.left.inline style="width:40px;" for="woman"  女
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      | 住所
-                  .large-5.large-pull-5.small-8.columns
-                    = f.text_field :city
-                    
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      | 電話番号
-                  .large-4.large-pull-6.small-8.columns
-                    = f.text_field :phone
+      h5 プロフィールの編集
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+        = render 'shared/error_messages', object: f.object
 
-              .large-6.columns
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 権限
-                  .large-4.large-pull-6.small-8.columns
-                    label.left.inline
-                      #{GENDER[f.object.role.to_sym]}
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 社員No.
-                  .large-2.large-pull-8.small-8.columns
-                    = f.text_field :employee_no
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 入社日
-                  .large-8.large-pull-2.small-5.columns
-                    .employee_date_format
-                      = raw sprintf( f.date_select(:employee_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 経験年数
-                  .large-1.large-pull-9.small-8.columns
-                    / = f.text_field :experience, :value => number_with_precision(f.object.experience,:precision => 1)
-                    = f.text_field :experience
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 印鑑ID
-                  .large-3.small-8.columns
-                    = f.text_field :imprint_id
-                  .large-7.columns
-                    label.left.inline 自社Emailの@より左を入力して下さい
-                .row
-                  .large-2.columns.show-for-large-up
-                    label.left.inline
-                      | 生年月日
-                  .large-8.large-pull-2.small-5.columns
-                    .birth_date_format
-                      = raw sprintf( f.date_select(:birth_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline.show-for-large-up
-                      | 年齢
-                  .large-2.large-pull-8.small-8.columns
-                    .left
-                      = f.text_field :age, readonly: true, class: "nenrei"
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      | 最寄駅
-                  .large-4.large-pull-6.small-8.columns
-                    = f.text_field :station
-                .row
-                  .large-2.small-4.columns
-                    label.left.inline
-                      |最終学歴
-                      br
-                      |<font color="red">600字以内</color>
-                  .large-8.large-pull-2.small-8.columns
-                    label 
-                      |大学名、専門学校名、学部、学科
-                      = f.text_area :gakureki, 'placeholder' => "HXX.XX XX大学 XX部",size: "x5"
-            .row
-              .large-8.large-centered.columns
-                = f.submit "更新", class: "button radius"
-                = link_to "戻る", :back, class: "button radius"
-                = link_to "ユーザーを削除", registration_path(resource_name), data: { confirm: "宜しいですか?" }, method: :delete, class: "button radius"
+        = f.hidden_field :role
 
-        #panel2-2.content
-          h5 パスワードの編集
-          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-            = devise_error_messages!
-            = f.hidden_field :reset_password_token
+        .row
+          .large-6.columns
+            .row
+              .large-3.columns
+                h1.left
+                  = gravatar_for f.object, size:120
+                .gravatar_link
+                  = link_to 'http://gravatar.com/emails', class: "button radius tiny" do
+                    i.fi-camera
+                    |画像の変更
+              .large-5.large-pull-4.columns
+                .gravatar_remarks 画像を表示するには、Gravatarにサインアップして画像を登録した上で、サインアップ時に指定したメールアドレスとプロフィールのEmailを一致させる必要があります。
+            hr
+            .row
+              .large-2.columns.show-for-large-up
+                label.left.inline
+                  | 氏名
+                  span *
+              .large-3.small-4.columns
+                label
+                  |性
+                  = f.text_field :family_name, autofocus: true
+              .large-3.large-pull-4.small-2.columns
+                label
+                  |名
+                  = f.text_field :first_name
+            .row
+              .large-2.columns.show-for-large-up
+                label.left.inline
+                  | フリガナ
+                  span *
+              .large-3.small-2.columns
+                label
+                  |セイ
+                  = f.text_field :kana_family_name
+              .large-3.large-pull-4.small-2.columns
+                label
+                  |メイ
+                  = f.text_field :kana_first_name
+            .row
+              .large-2.columns
+                label.left.inline
+                  |Email
+                  span *
+              .large-5.large-pull-5.columns
+                = f.email_field :email
+            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+              div
+                | Currently waiting confirmation for: #{resource.unconfirmed_email}
+            .row
+              .large-2.columns
+                label.left.inline
+                  |所属
+                  span *
+              .large-5.large-pull-5.columns
+                = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }
+            .row
+              .large-2.small-3.columns
+                label.left.inline 
+                  |性別
+                  span *
+              .large-10.small-9.columns
+                label.left.inline style="width:20px;" = f.radio_button :gender, :man
+                label.left.inline style="width:40px;" for="man"  男
+                label.left.inline style="width:20px;" = f.radio_button :gender, :woman
+                label.left.inline style="width:40px;" for="woman"  女
             .row
               .large-2.small-4.columns
                 label.left.inline
-                  | 新しいパスワード
-              .large-3.large-pull-7.small-8.columns
-                = f.password_field :password, autofocus: true, autocomplete: "off"
+                  | 住所
+              .large-5.large-pull-5.small-8.columns
+                = f.text_field :city
+
             .row
               .large-2.small-4.columns
                 label.left.inline
-                  | 新しいパスワード(確認用)
-              .large-3.large-pull-7.small-8.columns
-                = f.password_field :password_confirmation, autocomplete: "off"
-            br/
+                  | 電話番号
+              .large-4.large-pull-6.small-8.columns
+                = f.text_field :phone
+
+          .large-6.columns
             .row
               .large-2.small-4.columns
-                div= f.submit "変更", class: "button radius"
+                label.left.inline.show-for-large-up
+                  | 権限
+              .large-4.large-pull-6.small-8.columns
+                label.left.inline
+                  #{GENDER[f.object.role.to_sym]}
+            .row
+              .large-2.small-4.columns
+                label.left.inline.show-for-large-up
+                  | 社員No.
+              .large-2.large-pull-8.small-8.columns
+                = f.text_field :employee_no
+            .row
+              .large-2.small-4.columns
+                label.left.inline.show-for-large-up
+                  | 入社日
+              .large-8.large-pull-2.small-5.columns
+                .employee_date_format
+                  = raw sprintf( f.date_select(:employee_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
+            .row
+              .large-2.small-4.columns
+                label.left.inline.show-for-large-up
+                  | 経験年数
+              .large-1.large-pull-9.small-8.columns
+                / = f.text_field :experience, :value => number_with_precision(f.object.experience,:precision => 1)
+                = f.text_field :experience
+            .row
+              .large-2.small-4.columns
+                label.left.inline.show-for-large-up
+                  | 印鑑ID
+              .large-3.small-8.columns
+                = f.text_field :imprint_id
+              .large-7.columns
+                label.left.inline 自社Emailの@より左を入力して下さい
+            .row
+              .large-2.columns.show-for-large-up
+                label.left.inline
+                  | 生年月日
+              .large-8.large-pull-2.small-5.columns
+                .birth_date_format
+                  = raw sprintf( f.date_select(:birth_date, use_month_numbers: true, include_blank: true, start_year: 1940, date_separator:'%s'), '年 ', '月 ') + '日'
+            .row
+              .large-2.small-4.columns
+                label.left.inline.show-for-large-up
+                  | 年齢
+              .large-2.large-pull-8.small-8.columns
+                .left
+                  = f.text_field :age, readonly: true, class: "nenrei"
+            .row
+              .large-2.small-4.columns
+                label.left.inline
+                  | 最寄駅
+              .large-4.large-pull-6.small-8.columns
+                = f.text_field :station
+            .row
+              .large-2.small-4.columns
+                label.left.inline
+                  |最終学歴
+                  br
+                  |<font color="red">600字以内</font>
+              .large-8.large-pull-2.small-8.columns
+                label 
+                  |大学名、専門学校名、学部、学科
+                  = f.text_area :gakureki, 'placeholder' => "HXX.XX XX大学 XX部",size: "x5"
+        .row
+          .large-8.large-centered.columns
+            = f.submit "更新", class: "button radius"
+            = link_to "戻る", :back, class: "button radius"
+            = link_to "ユーザーを削除", registration_path(resource_name), data: { confirm: "宜しいですか?" }, method: :delete, class: "button radius"
+
