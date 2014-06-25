@@ -4,7 +4,7 @@ class KinmuPatternsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @kinmu_patterns = current_user.kinmu_patterns.all
+    @kinmu_patterns = current_user.kinmu_patterns.where("code <> '*'")
 
     if ! @kinmu_patterns.exists?
       (1..3).each do |num|

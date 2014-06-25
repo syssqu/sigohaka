@@ -18,7 +18,9 @@ article.resumes_index
             td.solid_top_none.gray.text-center 氏名
             td.solid_top_dotted #{current_user.family_name} #{current_user.first_name}
             td.text-center colspan=2 #{GENDER[current_user.gender.to_sym]}
-            td.text-center #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
+            td.text-center
+            - unless current_user.birth_date.blank?
+              #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
             td.text-center #{current_user.age}歳
             td.text-center #{number_with_precision(current_user.experience, {precision:1, :strip_insignidicant_zeros => 1})}年
           tr
