@@ -1,0 +1,33 @@
+= form_for @qualification_allowance do |f|
+  - if @qualification_allowance.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@qualification_allowance.errors.count, "error")} prohibited this qualification_allowance from being saved:"
+      ul
+        - @qualification_allowance.errors.full_messages.each do |message|
+          li = message
+
+  / .field
+  /   = f.label :user_id
+  /   = f.number_field :user_id
+  .field
+    label No.
+    / = f.text_field :number
+    = raw sprintf f.select :number, QualificationAllowance.number_choices
+  .field
+    label 資格取得項目
+    / = f.text_field :item
+    = raw sprintf f.select :item, QualificationAllowance.item_choices
+  .field
+    label 支給金額
+    / = f.number_field :money
+    = raw sprintf f.select :money, QualificationAllowance.money_choices
+
+  .actions = f.submit '登録'
+
+= select :record, :number,["A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12"]
+= select :record, :item,["番号をを選んでください"]
+= select :record, :money,["番号を選んでください"]
+= observe_field(:record_number,          \
+  update => :record_item,:record_money    |:
+  on => 'change',                         |:
+  url => { :action => :item_search })     |:
