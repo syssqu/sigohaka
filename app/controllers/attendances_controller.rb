@@ -40,6 +40,52 @@ class AttendancesController < ApplicationController
           break
         end
       end
+
+
+
+
+
+
+
+
+      target_date = Date.new(@attendance_years.year, get_month(@attendance_years)-1, 16)
+      end_attendance_date = target_date.months_since(1)
+      
+      while target_date != end_attendance_date
+
+        @attendance = current_user.attendances.build
+        
+        @attendance[:attendance_date] = target_date
+        @attendance[:year] = @nendo
+        @attendance[:month] = 6
+
+        @attendance[:wday] = target_date.wday
+
+        if holiday?(target_date)
+          @attendance[:holiday] = "1"
+        elsif ! current_user.kinmu_patterns.first.nil?
+          @attendance[:pattern] = current_user.kinmu_patterns.first.code
+          @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
+          @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+          @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
+          @attendance[:holiday] = "0"
+
+        end
+
+        if @attendance.save
+          @attendances << @attendance
+          target_date = target_date.tomorrow
+        else
+          break
+        end
+      end
+
+
+
+
+
+
+
     end
 
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する

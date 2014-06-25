@@ -23,11 +23,11 @@ article.attendance_index
       hr
       .row
         .large-3.columns
-          = form_tag :attendances, method: "get" do
+          = form_tag :summary_attendances, method: "get" do
             label.left.inline 対象年月
             = collection_select :attendance, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
         .large-9.columns
-          = link_to print_attendances_path(nen_gatudo: @selected_nen_gatudo), class:"button tiny radius" do
+          = link_to print_summary_attendances_path(nen_gatudo: @selected_nen_gatudo), class:"button tiny radius" do
             i.fi-print
             |印刷用画面
           = link_to init_attendances_path, class:"button tiny radius" do
@@ -75,6 +75,8 @@ article.attendance_index
             - record_number += 1
             / - if (attendance.attendance_date.day == 1) and (record_number < 17)
 
+            / - @attendances.each do |attendance|
+            /   = @over_sum += attendance.over_time(user_id: user.id,year:@nendo.to_s,month: @gatudo.to_s)
               tr
                 td 
                 td
@@ -116,42 +118,42 @@ article.attendance_index
               /     span = YOUBI[attendance.wday.to_i]
               td = user.employee_no
               td #{user.family_name} #{user.first_name}
-              td.text-center = user.attendances.where("trim(pattern) is not null ").count
+              td.text-center = user.attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
               / td.text-center = attendance.start_time.strftime("%_H:%M") unless attendance.start_time.blank?
               / td.text-center = attendance.end_time.strftime("%_H:%M") unless attendance.end_time.blank?
-              td.text-center = user.attendances.where(byouketu: true).count
-              td.text-center = user.attendances.where(kekkin: true).count
-              td.text-center = user.attendances.where(hankekkin: true).count
-              td.text-center = user.attendances.where(tikoku: true).count
-              td.text-center = user.attendances.where(soutai: true).count
-              td.text-center = user.attendances.where(gaisyutu: true).count
-              td.text-center = user.attendances.where(furikyuu: true).count
-              td.text-center = user.attendances.where(tokkyuu: true).count
+              td.text-center = user.attendances.where(byouketu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(kekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(hankekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(tikoku: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(soutai: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(gaisyutu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(furikyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td.text-center = user.attendances.where(tokkyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
               td
-              td.text-center = user.attendances.where(yuukyuu: true).count
+              td.text-center = user.attendances.where(yuukyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
               td
-              td.text-center = user.attendances.where(syuttyou: true).count
+              td.text-center = user.attendances.where(syuttyou: true, year:@nendo.to_s, month: @gatudo.to_s).count
               / td.text-center = sprintf( "%.2f", attendance.attendances.sum(:over_time) + @others.sum(:over_time)) unless attendance.attendances.over_time.blank?
               / td.text-center = sprintf( "%.2f", attendance.attendances.holiday_time) unless attendance.attendances.holiday_time.blank?
               / td.text-center = sprintf( "%.2f", attendance.attendances.midnight_time) unless attendance.attendances.midnight_time.blank?
               / / td.text-center = sprintf( "%.2f", attendance.break_time) unless attendance.break_time.blank?
               / td.text-center = sprintf( "%.2f", attendance.attendances.kouzyo_time) unless attendance.attendances.kouzyo_time.blank?
               / td.text-center.dash_line = sprintf( "%.2f", attendance.work_time ) unless attendance.work_time.blank?
-              td width="15%"
-                |&nbsp;
+              td.text-center = sprintf( "%.2f", user.attendances.sum(:over_time,:conditions => ['month = @gatudo.to_s and year = @nendo.to_s']) )
+
                 / = attendance.attendances.remarks
               / td = link_to 'Show', attendance
-              td
-              td
-              td
-              td
-              td
-              td
-              td
-              td
-              td
               td.text-center
-                = link_to edit_summary_attendance_path(@summary_attendances), class:"button tiny radius" do
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+              td.text-center
+                = link_to edit_summary_attendance_path(@summary_attendance), class:"button tiny radius" do
                   i.fi-plus
               td
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
