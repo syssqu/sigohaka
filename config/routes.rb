@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :summary_attendances
+
   # get 'reasons/edit'
 
   # get 'reasons/new'
