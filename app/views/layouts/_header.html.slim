@@ -10,8 +10,8 @@
             span Menu
       section.top-bar-section
         ul.right
-          li.has-dropdown
-            = link_to "勤怠管理", root_path
+          li.has-dropdown.not-click
+            = link_to "勤怠管理", "#"
             ul.dropdown
               li
                 = link_to '勤務状況報告書', attendances_path
@@ -26,30 +26,37 @@
               li
                 = link_to '技術経歴書', resumes_index_path
               li
+                = link_to '住宅手当申請書', housing_allowances_path
+              li
                 = link_to '勤務状況集計表', summary_attendances_path
           li
             = link_to "ヘルプ", help_path
+                
           - if can? :manage, current_user
             li.has-dropdown
-              = link_to "管理者", root_path
+              = link_to "管理者", "#"
               ul.dropdown
-                li
-                  = link_to '課マスタ', sections_path
+                li = link_to "ユーザ登録", new_user_registration_path
+                li = link_to '課マスタ', sections_path
           - if user_signed_in?
             li
               a href="#{edit_user_registration_path}"
                 = gravatar_for nil, size:20
                 = current_user.email
-            li.has-dropdown
-              = link_to "アカウント設定", root_path
+            li.has-dropdown.not-click
+              = link_to "#" do
+                i.fi-widget
               ul.dropdown
                 li = link_to 'プロフィール更新', edit_user_registration_path
                 li = link_to 'プロジェクト', projects_path
                 li = link_to '資格', licenses_path
                 li = link_to '勤務パターン', kinmu_patterns_path
+                li  = link_to "ヘルプ", help_path
             | |
-            li = link_to "ログアウト", destroy_user_session_path, method: :delete
+            li
+              = link_to destroy_user_session_path, method: :delete do
+                i.fi-power
           - else
-            li = link_to "サインアップ", new_user_registration_path
-            | |
-            li = link_to "ログイン", new_user_session_path
+            li
+              = link_to new_user_session_path do
+                i.fi-power

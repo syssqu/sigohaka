@@ -1,0 +1,197 @@
+article.housing_index
+  .row
+    .large-12.columns
+
+      h2 住宅手当申請書
+
+      #housing_header
+        table#housing_project
+          tbody
+            tr
+              td プロジェクト名:
+              td = truncate(@project.summary, length:20) if ! @project.nil?
+            tr
+              td 所属:
+              td = current_user.section.name if ! current_user.section.nil?
+            tr
+              td 氏名:
+              td #{current_user.family_name} #{current_user.first_name}
+
+      .row
+        .small-4.columns
+          |&nbsp;&nbsp;&nbsp;
+          - if @housing_allowance.nil?
+            = link_to '新規追加', new_housing_allowance_path, class: "button tiny radius"
+          - elsif !@housing_allowance.nil?
+            = link_to edit_housing_allowance_path(@housing_allowance),class:"button tiny radius" do
+                i.fi-plus
+          |&nbsp;&nbsp;&nbsp;
+          = link_to print_housing_allowances_path, class:"button tiny radius" do
+            i.fi-print
+            |印刷用画面
+      .row
+        .small-2.columns.push-3.columns
+          = @date.strftime("%Y年%_m月%_d日")
+
+      table#main
+        tr
+          td#title 届出理由
+          - if !@housing_allowance.nil?
+            - if @housing_allowance.reason == "new"
+              td 新規届出
+            - elsif @housing_allowance.reason == "chan"
+              td 住居変更
+            - elsif @housing_allowance.reason == "updw"
+              td 扶養親族の増減
+            - elsif @housing_allowance.reason == "ta"
+              td その他(#{@housing_allowance.reason_text})
+            - else
+              td
+          -else
+            td　
+
+        tr
+          td#title 現住所
+          td #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
+        tr
+          td#title 電話番号
+          td #{current_user.phone}
+        tr
+          td#title 住宅様式
+          - if !@housing_allowance.nil?
+            - if @housing_allowance.housing_style=="my"
+              td 自宅
+            - elsif @housing_allowance.housing_style=="kari"
+              td 借家
+            - elsif @housing_allowance.housing_style=="kou"
+              td 公団
+            - elsif @housing_allowance.housing_style=="si"
+              td 市営
+            - elsif @housing_allowance.housing_style=="min"
+              td 民間アパート
+            - elsif @housing_allowance.housing_style=="ta"
+              td その他(#{@housing_allowance.housing_style_text})
+            - else
+              td
+          -else
+            td　
+        tr
+          td#title 契約期間
+          - if !@housing_allowance.nil?
+            td #{@housing_allowance.agree_date_s} ～ #{@housing_allowance.agree_date_e}
+          -else
+            td
+
+        tr
+          td#title rowspan="2" 配偶者
+          - if !@housing_allowance.nil?
+            - if @housing_allowance.spouse=="u"
+              td 有
+            - if @housing_allowance.spouse=="mu"
+              td 無
+          - else
+            td
+        tr
+          - if !@housing_allowance.nil?
+            td #{@housing_allowance.spouse_name}
+          -else
+            td
+        tr
+          td#title 配偶者以外の扶養親族
+          - if !@housing_allowance.nil?
+            - if @housing_allowance.spouse_other=="u"
+              td 有
+            - if @housing_allowance.spouse_other=="mu"
+              td 無
+            - else
+              td
+          - else
+            td
+        tr
+          td#title 扶養者人数
+          - if !@housing_allowance.nil?
+            td #{@housing_allowance.support}
+          - else
+            td
+
+        tr
+          td#title rowspan="2" 扶養者名
+          - if !@housing_allowance.nil?
+            td #{@housing_allowance.support_name1}
+          -else
+            td
+
+        tr
+          - if !@housing_allowance.nil?
+            td #{@housing_allowance.support_name2}
+          -else
+            td
+      table
+        tr
+          td#title 支給条件
+          td#title 支給金額
+        tr
+          td 独身借家及び自家保有者<br>(独身者で当然の必然性により自宅または借家居住)
+          td 13,000 円
+        tr
+          td 妻帯者及び有扶養者<br>(妻以外の扶養者を有している者)
+          td 22,000 円
+        tr
+          td 上記条件で世帯数(3名本人も含めて)以上の者
+          td 23,000 円
+        tr
+          td 上記条件で世帯数(4名本人も含めて)以上の者
+          td 25,000 円
+        tr
+          td 上記条件で世帯数が５名以上の者
+          td 27,000 円
+
+  / table
+  /   thead
+  /     tr
+  /       th User
+  /       th Year
+  /       th Month
+  /       th Reason
+  /       th Reason text
+  /       th Housing style
+  /       th Housing style text
+  /       th Agree date s
+  /       th Agree date e
+  /       th Spouse
+  /       th Spouse name
+  /       th Spouse other
+  /       th Support
+  /       th Support name1
+  /       th Support name2
+  /       th Money
+  /       th
+  /       th
+  /       th
+
+  /   tbody
+  /     - @housing_allowances.each do |housing_allowance|
+  /       tr
+  /         td = housing_allowance.user_id
+  /         td = housing_allowance.year
+  /         td = housing_allowance.month
+  /         td = housing_allowance.reason
+  /         td = housing_allowance.reason_text
+  /         td = housing_allowance.housing_style
+  /         td = housing_allowance.housing_style_text
+  /         td = housing_allowance.agree_date_s
+  /         td = housing_allowance.agree_date_e
+  /         td = housing_allowance.spouse
+  /         td = housing_allowance.spouse_name
+  /         td = housing_allowance.spouse_other
+  /         td = housing_allowance.support
+  /         td = housing_allowance.support_name1
+  /         td = housing_allowance.support_name2
+  /         td = housing_allowance.money
+  /         td = link_to 'Show', housing_allowance
+  /         td = link_to 'Edit', edit_housing_allowance_path(housing_allowance)
+  /         td = link_to 'Destroy', housing_allowance, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+  / br
+
+  / = link_to 'New Housing allowance', new_housing_allowance_path

@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   has_many :reasons
 
   has_many :business_reports
+  has_many :housing_allowances
 
   has_many :summary_attendances
 

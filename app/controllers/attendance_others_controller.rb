@@ -27,14 +27,10 @@ class AttendanceOthersController < ApplicationController
   def create
     @attendance_other = AttendanceOther.new(attendance_other_params)
 
-    respond_to do |format|
-      if @attendance_other.save
-        format.html { redirect_to @attendance_other, notice: 'Attendance other was successfully created.' }
-        format.json { render :show, status: :created, location: @attendance_other }
-      else
-        format.html { render :new }
-        format.json { render json: @attendance_other.errors, status: :unprocessable_entity }
-      end
+    if @attendance_other.save
+      redirect_to @attendance_other, notice: '作成しました。'
+    else
+      render :new
     end
   end
 
@@ -52,10 +48,7 @@ class AttendanceOthersController < ApplicationController
   # DELETE /attendance_others/1.json
   def destroy
     @attendance_other.destroy
-    respond_to do |format|
-      format.html { redirect_to attendance_others_url, notice: 'Attendance other was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to attendance_others_url, notice: '削除しました。'
   end
 
   private

@@ -9,9 +9,9 @@ $( "#attendance_furikyuu" ).prop( "checked", <%= @attendance.furikyuu %> );
 $( "#attendance_yuukyuu" ).prop( "checked", <%= @attendance.yuukyuu %> );
 $( "#attendance_syuttyou" ).prop( "checked", <%= @attendance.syuttyou %> );
 
-$('#attendance_over_time').val(<%= @attendance.over_time %>);
-$('#attendance_holiday_time').val(<%= @attendance.holiday_time %>);
-$('#attendance_midnight_time').val(<%= @attendance.midnight_time %>);
-$('#attendance_break_time').val(<%= @attendance.break_time %>);
-$('#attendance_kouzyo_time').val(<%= @attendance.kouzyo_time %>);
-$('#attendance_work_time').val(<%= @attendance.work_time %>);
+$('#attendance_over_time').val(<%= @attendance.over_time %>.toFixed(2));
+$('#attendance_holiday_time').val(<%= @attendance.holiday_time %>.toFixed(2));
+$('#attendance_midnight_time').val(<%= @attendance.midnight_time %>.toFixed(2));
+$('#attendance_break_time').val(<%= @attendance.break_time %>.toFixed(2));
+$('#attendance_kouzyo_time').val(<%= @attendance.kouzyo_time %>.toFixed(2));
+$('#attendance_work_time').val(<%= @attendance.work_time %>.toFixed(2));
