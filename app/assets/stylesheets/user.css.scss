@@ -1,25 +1,25 @@
 /* =============================================================================
+   サインイン
+   ========================================================================== */
+/* article.sign_in{top:200px;} */
+/* article.sign_in label{margin-right:20px;width:46%;margin-bottom:0px;border: 1px solid black;} */
+/* article.sign_in input{margin-bottmo:0px;} */
+/* article.sign_in .sign_in_form{border: 1px solid black;} */
+article.sign_in{margin-top:45%;}
+/* =============================================================================
    アカウント登録
    ========================================================================== */
-
+.welcome_image{background-color:#3F8EBF;width:480px;height:440px;display:table-cell;vertical-align:middle;}
+.welcome_board{color:#fff;}
 
 /* =============================================================================
    アカウント編集
    ========================================================================== */
-.welcome_image{background-color:#3F8EBF;width:480px;height:440px;display:table-cell;vertical-align:middle;}
-.welcome_board{color:#fff;}
 article.registrations.edit .birth_date_format select {display: inline-block;width:20%;}
-
+article.registrations.edit .employee_date_format select {display: inline-block;width:20%;}
 article.registrations.edit input.nenrei {background-color: #e0e0e0;width:50%;}
-
 article.registrations.edit .gravatar_remarks{margin-top:20px;}
 article.registrations.edit .button{margin-bottom:0px;}
-
 article.registrations.edit i.fi-camera{padding-right:10px;}
 
-/*article.vacation_request_print table{border-spacing: 0;}*/
-/*article.vacation_request_print table tr th{background-color:#fff;font-size:10px;border:1px solid black;}*/
-
-
-/* article.registrations.edit #panel2-2.content{font-color:black;} */
-article.registrations.edit h5{color:black !important;}
+/* article.registrations.edit #panel2-2.content h5{color:black !important;} */

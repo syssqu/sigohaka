@@ -28,10 +28,9 @@
               li
                 = link_to '住宅手当申請書', housing_allowances_path
               li
+                = link_to '資格手当申請書', qualification_allowances_path
+              li
                 = link_to '勤務状況集計表', summary_attendances_path
-          li
-            = link_to "ヘルプ", help_path
-                
           - if can? :manage, current_user
             li.has-dropdown
               = link_to "管理者", "#"
@@ -40,14 +39,15 @@
                 li = link_to '課マスタ', sections_path
           - if user_signed_in?
             li
-              a href="#{edit_user_registration_path}"
+              a href="#{edit_user_registration_path(target: 'profile')}"
                 = gravatar_for nil, size:20
                 = current_user.email
             li.has-dropdown.not-click
               = link_to "#" do
                 i.fi-widget
               ul.dropdown
-                li = link_to 'プロフィール更新', edit_user_registration_path
+                li = link_to 'プロフィール更新', edit_user_registration_path(target: "profile")
+                li = link_to 'パスワード更新', edit_user_registration_path(target: "password")
                 li = link_to 'プロジェクト', projects_path
                 li = link_to '資格', licenses_path
                 li = link_to '勤務パターン', kinmu_patterns_path
@@ -60,3 +60,39 @@
             li
               = link_to new_user_session_path do
                 i.fi-power
+
+
+
+.row
+  .large-12.columns
+    .icon-bar.ten-up
+      = link_to root_path, class:"item" do
+        = image_tag "icons/3-5.png", size: '40x40'
+        label ホーム
+      = link_to attendances_path, class:"item" do
+        = image_tag "icons/2-4.png", size: '40x40'
+        label 勤怠
+      = link_to business_reports_path, class:"item" do
+        = image_tag "icons/2-1.png", size: '40x40'
+        label 業務報告
+      = link_to transportation_expresses_path, class:"item" do
+        = image_tag "icons/1-16.png", size: '40x40'
+        label 交通費
+      = link_to vacation_requests_path, class:"item" do
+        = image_tag "icons/1-2.png", size: '40x40'
+        label 休暇届
+      = link_to projects_path, class:"item" do
+        = image_tag "icons/1-3.png", size: '40x40'
+        label プロジェクト
+      = link_to kinmu_patterns_path, class:"item" do
+        = image_tag "icons/3-1.png", size: '40x40'
+        label 勤務パターン
+      = link_to edit_user_registration_path(target: "profile"), class:"item" do
+        = image_tag "icons/2-14.png", size: '40x40'
+        label プロフィール
+      = link_to licenses_path, class:"item" do
+        = image_tag "icons/3-6.png", size: '40x40'
+        label 資格
+      = link_to help_path, class:"item" do
+        = image_tag "icons/1-7.png", size: '40x40'
+        label ヘルプ

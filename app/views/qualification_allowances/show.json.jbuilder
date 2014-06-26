@@ -1,0 +1,1 @@
+json.extract! @qualification_allowance, :id, :user_id, :number, :item, :money, :created_at, :updated_at, :get_date, :registration_no_alphabet, :registration_no_year, :registration_no_month, :registration_no_individual
