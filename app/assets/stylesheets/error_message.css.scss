@@ -1,0 +1,12 @@
+/* =============================================================================
+   エラーメッセージ
+   ========================================================================== */
+#error_explanation{border:none !important;background:#fff;width: 520px;margin-bottom:40px;}
+#error_explanation .alert-box.error{background:#D01E29;border-color:#D01E29;}
+#error_explanation ul.pricing-table{border:none;}
+#error_explanation ul.pricing-table li.bullet-item.left{list-style-type: none !important;color:#D91A1A !important;margin:0px;}
+/* article.registrations.new ul li.bullet-item {color:#D91A1A;} */
+
+.field_with_errors {padding: 2px;background-color: white;display: table;}
+.field_with_errors input {border:solid 1px #D91A1A;}
+.field_with_errors input:focus {border:solid 1px #D91A1A;}
