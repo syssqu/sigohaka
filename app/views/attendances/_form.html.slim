@@ -21,17 +21,22 @@
           h4 #{@attendance.attendance_date.month}/#{@attendance.attendance_date.day}(#{YOUBI[@attendance.wday.to_i]}) 勤務情報修正
       br
       .row
+        .large-12.columns
+          #data_clear.button.radius.tiny.alert
+            i.fi-check
+            |データのクリア
+      .row
         .large-2.small-4.columns
           label.left.inline  勤務パターン
         .large-10.small-8.columns
-          = f.select :pattern, KinmuPattern.where("start_time is not null and end_time is not null").collect {|k| [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code ] }
+          = f.select :pattern, current_user.kinmu_patterns.where("start_time is not null and end_time is not null").collect {|k| [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code ] }, include_blank: true
       .row
         .large-2.small-4.columns
           label.left.inline 出退勤
         .large-6.large-pull-4.small-8.columns
-          = f.time_select :start_time, {minute_step: 15}
+          = f.time_select :start_time, {minute_step: 15, include_blank: true}
           |&nbsp;&nbsp;〜&nbsp;&nbsp;
-          = f.time_select :end_time, {minute_step: 15}
+          = f.time_select :end_time, {minute_step: 15, include_blank: true}
           |&nbsp;&nbsp;
           
           #calculate.button.radius.tiny.success
@@ -76,7 +81,11 @@
           label.left.inline.kubun
             = f.check_box :yuukyuu
             |有休
-            
+              
+          label.left.inline.kubun
+            = f.check_box :hankyuu
+            |半休
+              
           label.left.inline.kubun
             = f.check_box :syuttyou
             |出張

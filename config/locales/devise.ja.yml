@@ -73,24 +73,25 @@ ja:
         password: パスワード
         password_confirmation: パスワード（再入力）
         remember_me: 次回からパスワード入力を省く
-        family_name: 氏名 ( 漢字 )　姓
-        first_name: 氏名 ( 漢字 )　名
-        kana_family_name: 氏名 ( フリガナ )　セイ
-        kana_first_name: 氏名 ( フリガナ )　メイ
+        family_name: 氏名 ( 姓 )
+        first_name: 氏名 ( 名 )
+        kana_family_name: フリガナ ( セイ )
+        kana_first_name: フリガナ ( メイ )
         gender: 性別
         birth_year: 生年月日　年
         birth_month: 生年月日　月
         birth_day: 生年月日　日
         section_id: 所属
-        email: メールアドレス
+        email: Email
         email_confirmation: メールアドレス（確認）
         postal_code: 郵便番号
         prefecture: 都道府県
-        city: 市区町村
+        city: 住所
         house_number: 番地
         building: 建物
         phone: 電話番号
         gakureki: 最終学歴
+        current_password: 現在のパスワード
       task:
         name: 名称
         due_date: 期限

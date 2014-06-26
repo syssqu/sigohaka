@@ -34,7 +34,7 @@ gem 'foundation-icons-sass-rails'
 # Use sqlite3 as the database for Active Record
 group :development do
   gem 'sqlite3'
-  gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails', '2.14.0.rc1'
 end
 
 group :test do

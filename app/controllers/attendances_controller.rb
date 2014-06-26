@@ -1,27 +1,7 @@
 # -*- coding: utf-8 -*-
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: [:show, :edit, :update, :destroy]
+  before_action :set_attendance, only: [:show, :edit, :update, :destroy, :input_attendance_time, :calculate]
   before_action :authenticate_user!
-
-  def init
-    if changed_attendance_years?
-      @selected_nen_gatudo = params[:attendance][:nen_gatudo]
-    end
-
-    @attendance_years = get_attendance_years(params[:attendance])
-    # @attendance_years = Date.new(2014, 2, 20)
-    @nendo = get_nendo(@attendance_years)
-    @gatudo = get_gatudo(@attendance_years)
-    @project = get_project
-
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
-
-    if current_user.kinmu_patterns.first.nil?
-      flash.now[:alert] = '勤務パターンを登録して下さい。'
-      return
-    end
-  end
 
   def index
 
@@ -31,6 +11,12 @@ class AttendancesController < ApplicationController
         
       target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
       end_attendance_date = target_date.months_since(1)
+      
+      #仮で配置
+      @summary_attendance = current_user.summary_attendances.build
+      @summary_attendance.save
+
+
       
       while target_date != end_attendance_date
 
@@ -60,6 +46,52 @@ class AttendancesController < ApplicationController
           break
         end
       end
+
+
+
+
+
+
+
+
+      target_date = Date.new(@attendance_years.year, get_month(@attendance_years)-1, 16)
+      end_attendance_date = target_date.months_since(1)
+      
+      while target_date != end_attendance_date
+
+        @attendance = current_user.attendances.build
+        
+        @attendance[:attendance_date] = target_date
+        @attendance[:year] = @nendo
+        @attendance[:month] = 6
+
+        @attendance[:wday] = target_date.wday
+
+        if holiday?(target_date)
+          @attendance[:holiday] = "1"
+        elsif ! current_user.kinmu_patterns.first.nil?
+          @attendance[:pattern] = current_user.kinmu_patterns.first.code
+          @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
+          @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+          @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
+          @attendance[:holiday] = "0"
+
+        end
+
+        if @attendance.save
+          @attendances << @attendance
+          target_date = target_date.tomorrow
+        else
+          break
+        end
+      end
+
+
+
+
+
+
+
     end
 
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
@@ -72,27 +104,52 @@ class AttendancesController < ApplicationController
     sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
       "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
       "holiday_time=?,midnight_time=?,break_time=?,kouzyo_time=?,work_time=?,remarks=?"
-    
-    @attendances.update_all([sql,
-        current_user.kinmu_patterns.first.code,
-        current_user.kinmu_patterns.first.start_time,
-        current_user.kinmu_patterns.first.end_time,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        nil,nil,nil,nil,nil,
-        current_user.kinmu_patterns.first.work_time,
-        nil
-      ])
-    
-    redirect_to attendances_path, notice: 'データを初期化しました。'
+
+    ActiveRecord::Base.transaction do
+
+      @attendances.where("holiday = '0'").update_all([sql,
+          current_user.kinmu_patterns.first.code,
+          current_user.kinmu_patterns.first.start_time,
+          current_user.kinmu_patterns.first.end_time,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          0.00, 0.00, 0.00, 0.00, 0.00,
+          current_user.kinmu_patterns.first.work_time,
+          nil
+        ])
+      
+      @attendances.where("holiday = '1'").update_all([sql,
+          "",
+          "",
+          "",
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          0.00, 0.00, 0.00, 0.00, 0.00,
+          0.00,
+          nil
+        ])
+    end
+
+    redirect_to attendances_path, notice: '勤怠データを初期化しました。'
+ 
+  rescue => e
+    render :index, notice: '勤怠データの初期化に失敗しました。'
   end
 
   def new
@@ -121,6 +178,17 @@ class AttendancesController < ApplicationController
   end
 
   def update
+    @attendance.is_blank_start_time = false
+    @attendance.is_blank_end_time = false
+
+    if params[:attendance]['start_time(4i)'.to_sym].blank? or params[:attendance]['start_time(5i)'.to_sym].blank?
+      @attendance.is_blank_start_time = true
+    end
+
+    if params[:attendance]['end_time(4i)'.to_sym].blank? or params[:attendance]['end_time(5i)'.to_sym].blank?
+      @attendance.is_blank_end_time = true
+    end
+    
     if @attendance.update_attributes(attendance_params)
       redirect_to attendances_path, notice: '更新しました。'
     else
@@ -128,27 +196,38 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def input_attendance_time
+
+    logger.debug("あいうえお")
+    @pattern = KinmuPattern.find_by(id: params[:pattern])
+    @time_blank = false
+
+    if @pattern.nil?
+      @time_blank = true
+    else
+      @attendance.start_time = @pattern.start_time
+      @attendance.end_time = @pattern.end_time
+    end
+  end
+
   def calculate
     
     Rails.logger.info("PARAMS: #{params.inspect}")
     
-    @attendance = Attendance.find(params[:id])
     @pattern = KinmuPattern.find(params[:pattern])
 
-    
-    params[:start_time_hour]
-    params[:start_time_minute]
-    params[:end_time_hour]
-    params[:end_time_minute]
-
-
     Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
-    Rails.logger.info("input_start_date: " + @pattern.start_time.to_s)
+    Rails.logger.info("pattern_end_date: " + @pattern.end_time.to_s)
+    Rails.logger.info("pattern_end_date - pattern_start_date: " + (@pattern.end_time - @pattern.start_time).to_s)
 
-    
-    @attendance.over_time = 0
-    
+    attendance_start_time = Time.local(@pattern.start_time.year, @pattern.start_time.month, @pattern.start_time.day, params[:start_time_hour], params[:start_time_minute], 0)
+    attendance_end_time = Time.local(@pattern.end_time.year, @pattern.end_time.month, @pattern.end_time.day, params[:end_time_hour], params[:end_time_minute], 0)
 
+    Rails.logger.info("input_start_date: " + attendance_start_time.to_s)
+    Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
+    Rails.logger.info("input_end_date - input_start_date: " + (attendance_end_time - attendance_start_time).to_s)
+    
+    @attendance.calculate(@pattern, attendance_start_time, attendance_end_time)
   end
 
   def print
@@ -185,6 +264,27 @@ class AttendancesController < ApplicationController
   end
 
   private
+
+    def init
+      if changed_attendance_years?
+        @selected_nen_gatudo = params[:attendance][:nen_gatudo]
+      end
+
+      @attendance_years = get_attendance_years(params[:attendance])
+      # @attendance_years = Date.new(2014, 2, 20)
+      @nendo = get_nendo(@attendance_years)
+      @gatudo = get_gatudo(@attendance_years)
+      @project = get_project
+
+      @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+      @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
+
+      if current_user.kinmu_patterns.first.nil?
+        flash.now[:alert] = '勤務パターンを登録して下さい。'
+        return
+      end
+    end
+  
     def set_attendance
       @attendance = Attendance.find(params[:id])
     end
@@ -267,4 +367,5 @@ class AttendancesController < ApplicationController
 
       others
     end
+
 end

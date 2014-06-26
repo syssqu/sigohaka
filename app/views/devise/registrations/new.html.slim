@@ -17,55 +17,46 @@ article.registrations.new
             / = devise_error_messages!
             = render 'shared/error_messages', object: f.object
         .row
-          .large-3.columns.show-for-large-up
-            label.left.inline 氏名 (漢字)
+          .large-2.columns.show-for-large-up
+            label.left.inline 氏名
           .small-12.columns.show-for-medium-down
-            label 氏名 (漢字)
-          .large-1.small-2.columns
-            label.right.inline 姓
-          .large-3.small-4.columns
+            label 氏名
+          .large-3.small-2.columns
+            label 姓
             = f.text_field :family_name, autofocus: true
-          .large-1.small-2.columns
-            label.right.inline 名
-          .large-3.large-pull-1.small-4.columns
+          .large-3.large-pull-3.small-2.columns
+            label 名
             = f.text_field :first_name
         .row
-          .large-3.columns.show-for-large-up
-            label.left.inline 氏名 (フリガナ)
+          .large-2.columns.show-for-large-up
+            label.left.inline フリガナ
           .small-12.columns.show-for-medium-down
             label 氏名 (フリガナ)
-          .large-1.small-2.columns
-            label.right.inline セイ
-          .large-3.small-4.columns
+          .large-3.small-2.columns
+            label セイ
             = f.text_field :kana_family_name
-          .large-1.small-2.columns
-            label.right.inline メイ
-          .large-3.large-pull-1.small-4.columns
+          .large-3.large-pull-3.small-2.columns
+            label メイ
             = f.text_field :kana_first_name
         .row
-          .large-3.columns
+          .large-2.columns
             label.left.inline 所属
-          .large-4.large-pull-5.columns
+          .large-4.large-pull-6.columns
             = f.select :section_id, Section.all.collect {|p| [ p.name, p.id ] }, { :include_blank => true }
         .row
-          .large-3.columns
-            label.left.inline メールアドレス
-          .large-4.large-pull-5.columns
+          .large-2.columns
+            label.left.inline Email
+          .large-4.large-pull-6.columns
             = f.email_field :email
         .row
-          .large-3.columns
+          .large-2.columns
             label.left.inline パスワード
-          .large-4.large-pull-5.columns
+          .large-4.large-pull-6.columns
             = f.password_field :password, autocomplete: "off"
-        / .row
-        /   .large-3.columns
-        /     label.left.inline パスワード(確認用)
-        /   .large-4.large-pull-5.columns
-        /     = f.password_field :password_confirmation, autocomplete: "off"
         .row
-          .large-3.small-3.columns
+          .large-2.small-3.columns
             label.left.inline 性別
-          .large-9.small-9.columns
+          .large-10.small-9.columns
             label.left.inline style="width:20px;" = f.radio_button :gender, :man
             label.left.inline style="width:40px;" for="man"  男
             label.left.inline style="width:20px;" = f.radio_button :gender, :woman

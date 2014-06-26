@@ -1,8 +1,21 @@
 Rails.application.routes.draw do
   
+  resources :summary_attendances do
+    collection do
+      get 'print'
+    end
+  end
+
+  resources :housing_allowances do
+    collection do
+      get 'print'
+    end
+  end
+
   # get 'reasons/edit'
 
   # get 'reasons/new'
+
 
   get 'resumes/index'
   get 'resumes/print'
@@ -42,13 +55,21 @@ Rails.application.routes.draw do
   end
   resources :business_reports
 
-  # map.resources :vacation_requests, :except=> ['print']
+
+
+  resource :qualification_allowances, only:[] do
+    get :print
+  end
+  resources :qualification_allowances
+
 
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update]
   match '/init_attendances', to:'attendances#init_attendances', via: :get
   match '/calculate_attendance', to:'attendances#calculate', via: :get
+  match '/input_attendance_time', to:'attendances#input_attendance_time', via: :get
+  # match '/data_clear', to:'attendances#clear', via: :get
   
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
@@ -73,6 +94,8 @@ Rails.application.routes.draw do
     :registrations => "users/registrations",
     :passwords     => "users/passwords"
   }
+
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
