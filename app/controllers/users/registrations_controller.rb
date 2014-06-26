@@ -23,6 +23,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit
     # setting_address_info
+    current_user.update_target = params[:target]
+    
+    if current_user.update_target == "profile"
+      @title = "プロフィールの編集"
+    elsif current_user.update_target == "password"
+      @title = "パスワードの編集"
+    end
+    
     super
   end
 
@@ -51,8 +59,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   end
   # end
   def update
+    
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    current_user.update_target = params[:user][:update_target]
+    resource.update_target = params[:user][:update_target]
  
     #if update_resource(resource, account_update_params)
     if resource.update_without_current_password(account_update_params)
@@ -63,7 +75,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, flash_key
       end
       sign_in resource_name, resource, :bypass => true
-      redirect_to edit_user_registration_path @user
+      redirect_to edit_user_registration_path @user, target: params[:user][:update_target]
       # respond_with resource, :location => after_update_path_for(resource)
     else
       clean_up_passwords resource

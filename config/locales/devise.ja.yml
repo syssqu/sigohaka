@@ -91,6 +91,7 @@ ja:
         building: 建物
         phone: 電話番号
         gakureki: 最終学歴
+        current_password: 現在のパスワード
       task:
         name: 名称
         due_date: 期限

@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable
 
+  attr_accessor :update_target
+  attr_accessor :current_password
+
   module Roles
     ADMIN = "admin"
     MANAGER = "manager"
@@ -49,9 +52,25 @@ class User < ActiveRecord::Base
   #                   format:   { with: VALID_EMAIL_REGEX },
   #                   uniqueness: true
 
+
+  validates :current_password, presence: true, on: :update, if: "self.update_target == 'password'"
+  validate :authenticate, unless: "self.update_target.blank?"
+  
+  def authenticate
+    user = User.find_for_authentication(id: self.id)
+    unless user.valid_password?(self.current_password)
+      errors.add(:current_password, 'が不正です。')
+    end
+  end
+
+  validates :password, presence: true, on: :update, if: "self.update_target == 'password'"
+                                                      
   # allow users to update their accounts without passwords
   def update_without_current_password(params, *options)
-    params.delete(:current_password)
+
+    if params[:current_password].blank?
+      params.delete(:current_password)
+    end
  
     if params[:password].blank? && params[:password_confirmation].blank?
       params.delete(:password)
