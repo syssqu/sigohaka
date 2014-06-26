@@ -35,15 +35,15 @@
                 li = link_to '課マスタ', sections_path
           - if user_signed_in?
             li
-              a href="#{edit_user_registration_path}"
+              a href="#{edit_user_registration_path(target: 'profile')}"
                 = gravatar_for nil, size:20
                 = current_user.email
             li.has-dropdown.not-click
               = link_to "#" do
                 i.fi-widget
               ul.dropdown
-                li = link_to 'プロフィール更新', edit_user_registration_path
-                li = link_to 'パスワード更新', edit_user_password_path
+                li = link_to 'プロフィール更新', edit_user_registration_path(target: "profile")
+                li = link_to 'パスワード更新', edit_user_registration_path(target: "password")
                 li = link_to 'プロジェクト', projects_path
                 li = link_to '資格', licenses_path
                 li = link_to '勤務パターン', kinmu_patterns_path
@@ -56,3 +56,27 @@
             li
               = link_to new_user_session_path do
                 i.fi-power
+
+
+
+.row
+  .large-12.columns
+    .icon-bar.five-up
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label One
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label Two
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label Three
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label Four
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label Five
+      a.item
+        = image_tag "icons/1-1.png", size: '40x40'
+        label Six

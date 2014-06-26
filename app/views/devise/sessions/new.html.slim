@@ -1,24 +1,54 @@
-.row
-  .large-12.columns.clearfix
-    h3 ログイン画面
-    br
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+doctype html
+/![if IE 9] <html class="lt-ie10" lang="en" 
+/![if IE 10] <html class="ie10" lang="en"
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+    title しごはか
+
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tag
+    = render 'layouts/shim'
+
+  body style="overflow:hidden;"
+
+    article
+      - if notice
+        p.alert.alert-notice
+          = notice
+      - if alert
+        p.alert.alert-error
+          = alert
+    article.sign_in
       .row
-        .large-2.columns
-          label.left.inline メールアドレス
-        .large-3.large-pull-7.columns
-          = f.email_field :email, autofocus: true
-      .row
-        .large-2.columns
-          label.left.inline パスワード
-        .large-3.large-pull-7.columns
-          = f.password_field :password, autocomplete: "off"
-      / .row
-      /   .large-12.columns
-      /     - if devise_mapping.rememberable?
-      /       = f.check_box :remember_me
-      /       = f.label :remember_me
-      .row
-        .large-6.large-centered.columns
-          = f.submit "ログイン", class: "button radius"
-    = render "devise/shared/links"
+        .large-12.columns.clearfix
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+
+            .row
+              .large-2.large-centered.columns
+                h3 しごはか(仮)
+            br
+            br
+            .row
+              .large-3.large-offset-3.columns
+                label
+                  |メールアドレス
+                  = f.email_field :email, autofocus: true
+              .large-3.large-pull-3.columns
+                label
+                  |パスワード
+                  = f.password_field :password, autocomplete: "off"
+            .row
+              .large-3.large-offset-3.columns
+                = link_to "パスワードを忘れた?", new_password_path(resource_name)
+              .large-3.large-pull-3.columns
+                .right = f.submit "ログイン", class: "button radius tiny"
+
+    / = debug(params) if Rails.env.development?
+    / = debug(current_user) if Rails.env.development?
+    = javascript_include_tag "application"
+
+    
