@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140624093737) do
+ActiveRecord::Schema.define(version: 20140626010906) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -59,6 +59,10 @@ ActiveRecord::Schema.define(version: 20140624093737) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "holiday",         limit: 1,                         default: "0"
+    t.boolean  "hankyuu",                                           default: false
+    t.boolean  "self_approved",                                     default: false
+    t.boolean  "boss_approved",                                     default: false
+    t.boolean  "freezed",                                           default: false
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
@@ -155,6 +159,20 @@ ActiveRecord::Schema.define(version: 20140624093737) do
     t.integer  "term"
   end
 
+  create_table "qualification_allowances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "number"
+    t.string   "item"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "get_date"
+    t.string   "registration_no_alphabet"
+    t.integer  "registration_no_year"
+    t.integer  "registration_no_month"
+    t.integer  "registration_no_individual"
+  end
+
   create_table "reasons", force: true do |t|
     t.integer  "user_id"
     t.string   "reason"
@@ -200,12 +218,12 @@ ActiveRecord::Schema.define(version: 20140624093737) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                                                     default: "",    null: false
-    t.string   "encrypted_password",                                        default: "",    null: false
+    t.string   "email",                                                     default: "", null: false
+    t.string   "encrypted_password",                                        default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                             default: 0,     null: false
+    t.integer  "sign_in_count",                                             default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -232,10 +250,8 @@ ActiveRecord::Schema.define(version: 20140624093737) do
     t.text     "remarks"
     t.string   "role"
     t.string   "station"
-    t.boolean  "hankyuu",                                                   default: false
-    t.boolean  "self_approved",                                             default: false
-    t.boolean  "boss_approved",                                             default: false
-    t.boolean  "freezed",                                                   default: false
+    t.string   "imprint_id"
+    t.date     "employee_date"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

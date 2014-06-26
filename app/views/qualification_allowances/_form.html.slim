@@ -1,0 +1,106 @@
+= form_for @qualification_allowance do |f|
+  - if @qualification_allowance.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@qualification_allowance.errors.count, "error")} prohibited this qualification_allowance from being saved:"
+      ul
+        - @qualification_allowance.errors.full_messages.each do |message|
+          li = message
+
+  / .field
+  /   = f.label :user_id
+  /   = f.number_field :user_id
+  .field
+    label 資格取得年月日
+    = f.date_select :get_date
+  .field
+    label No.
+    / = f.text_field :number
+    = raw sprintf f.select :number, QualificationAllowance.number_choices
+  .field
+    label 資格取得項目
+    / = f.text_field :item
+    = raw sprintf f.select :item, QualificationAllowance.item_choices
+  table#qualification_allowance
+    tr
+      td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
+    tr
+      td.right style="margin-top:15px;" 第
+      td width="60" = f.text_field :registration_no_alphabet
+      td ―
+      td width="80" = f.text_field :registration_no_year
+      td ―
+      td width="60" = f.text_field :registration_no_month
+      td ―
+      td width="90" = f.text_field :registration_no_individual
+      td 号
+  .field
+    label 支給金額
+    / = f.number_field :money
+    = raw sprintf f.select :money, QualificationAllowance.money_choices
+
+  .row
+    .large-12.large-centered.columns
+      = f.submit '登録', class: "button tiny radius"
+      = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"
+
+/   .field
+/     label No.
+/     select#item_no onchange="sel(this);"
+/       option A1
+/       option A2
+/       option A3
+/       option A4
+/       option A5
+/       option A6
+/       option A7
+/       option A8
+/       option A9
+/       option A10
+/       option A11
+/       option A12
+  / .field
+  /   label 資格取得項目
+  /   select#item_it onchange="sel(this);"
+  /     option ITストラテジスト
+  /     option システム監査技術者
+  /     option システムアーキテクト
+  /     option 応用情報技術者
+  /     option プロジェクトマネージャー
+  /     option ネットワーク・スペシャリスト
+  /     option データベーススペシャリスト
+  /     option エンベンデッドシステムスペシャリスト
+  /     option 情報セキュリティースペシャリスト
+  /     option ITサービスマネーシャー
+  /     option 基本情報技術者
+  /     option ITパスポート
+/   .field
+/     label 支給金額
+/     / = f.number_field :money
+/     = raw sprintf f.select :money, QualificationAllowance.money_choices
+
+/   .row
+/     .large-12.large-centered.columns
+/       = f.submit '登録', class: "button tiny radius"
+/       = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"
+/ javascript:
+/   function sel(s) {
+/   var other = /no/.test(s.id) ? "it" : "no";
+/   document.getElementById("item_" + other).selectedIndex = s.selectedIndex;
+/   }
+
+
+/ label 支給金額
+/ select#item_mo onchange="sel(this);" 
+/   option -
+/   option 30,000
+/   option 30,000
+/   option 30,000
+/   option 20,000
+/   option 20,000
+/   option 20,000
+/   option 20,000
+/   option 20,000
+/   option 20,000
+/   option 20,000
+/   option 10,000
+/   option 3,000

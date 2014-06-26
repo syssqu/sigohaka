@@ -1,0 +1,21 @@
+p#notice = notice
+
+/ p
+/   strong User:
+/   = @qualification_allowance.user_id
+p
+	strong 資格取得年月日 : 
+	= @qualification_allowance.get_date
+p
+  strong No. : 
+  = @qualification_allowance.number
+p
+  strong 資格取得項目 : 
+  = @qualification_allowance.item
+p
+  strong 支給金額 : 
+  = @qualification_allowance.money
+
+= link_to '編集', edit_qualification_allowance_path(@qualification_allowance)
+'|
+= link_to '前に戻る', qualification_allowances_path
