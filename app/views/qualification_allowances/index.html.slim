@@ -20,19 +20,33 @@ table
   thead
     tr
       / th User
+      th 資格所得年月日
       th No.
       th 資格取得項目
       th 支給金額
-      th
-      th
       / th
   tbody
   - @qualification_allowances.each do |qualification_allowance|
     tr
       / td = qualification_allowance.user_id
+      td = qualification_allowance.get_date
       td = qualification_allowance.number
       td = qualification_allowance.item
       td = qualification_allowance.money
       / td = link_to '照会', qualification_allowance
-      td = link_to '編集', edit_qualification_allowance_path(qualification_allowance)
-      td = link_to '削除', qualification_allowance, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete
+    table#qualification_allowance style="margin-top:-22px;"
+      tr
+        td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;第
+        td #{qualification_allowance.registration_no_alphabet}
+        td ―
+        td #{qualification_allowance.registration_no_year}
+        td ―
+        td #{qualification_allowance.registration_no_month}
+        td ―
+        td #{qualification_allowance.registration_no_individual}
+        td 号
+    tbody
+      tr
+        td = link_to '編集', edit_qualification_allowance_path(qualification_allowance)
+        br
+        td = link_to '削除', qualification_allowance, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete
