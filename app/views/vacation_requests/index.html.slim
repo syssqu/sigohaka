@@ -15,6 +15,7 @@ article.vacation_request_index
           td #{current_user.family_name} #{current_user.first_name}
 
 = link_to "PDF出力", print_vacation_requests_path, class: "button tiny radius"
+= link_to '新規作成', new_vacation_request_path, class: "button tiny radius"
 
 table
   thead
@@ -41,13 +42,7 @@ table
         td = vacation_request.note
         / td = vacation_request.year
         / td = vacation_request.month
-tbody
-  - @vacation_requests.each do |vacation_request|
-    tr
-      td = link_to '新規作成', new_vacation_request_path
-      br
-      td = link_to '照会', vacation_request
-      br
-      td = link_to '編集 ', edit_vacation_request_path(vacation_request)
-      br
-      td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete
+
+        td = link_to '照会', vacation_request
+        td = link_to '編集 ', edit_vacation_request_path(vacation_request)
+        td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete

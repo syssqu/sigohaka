@@ -83,6 +83,7 @@ article.attendance_print #attendance_header table#attendance_project td strong{c
 article.attendance_print #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
 article.attendance_print #attendance_nengetu{width:240px;text-align:center;}
 
+article.attendance_print .imprint{margin:5px 10px;}
 
 article.attendance_print table.kinmu_pattern{margin-top:15px;}
 #company_name p{margin-left:510px;font-size:11px;}

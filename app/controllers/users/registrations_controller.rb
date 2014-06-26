@@ -23,31 +23,63 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def edit
     # setting_address_info
+    current_user.update_target = params[:target]
+    
+    if current_user.update_target == "profile"
+      @title = "プロフィールの編集"
+    elsif current_user.update_target == "password"
+      @title = "パスワードの編集"
+    end
+    
     super
   end
 
-  def update
-    # setting_address_info
+  # def update
+  #   # setting_address_info
     
-    @user = User.find(current_user.id)
+  #   @user = User.find(current_user.id)
 
-    successfully_updated = if needs_password?(@user, params)
-      @user.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
-    else
-      # remove the virtual current_password attribute
-      # update_without_password doesn't know how to ignore it
-      params[:user].delete(:current_password)
-      @user.update_without_password(devise_parameter_sanitizer.sanitize(:account_update))
-    end
+  #   successfully_updated = if needs_password?(@user, params)
+  #     @user.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
+  #   else
+  #     # remove the virtual current_password attribute
+  #     # update_without_password doesn't know how to ignore it
+  #     params[:user].delete(:current_password)
+  #     @user.update_without_password(devise_parameter_sanitizer.sanitize(:account_update))
+  #   end
 
-    if successfully_updated
-      set_flash_message :notice, :updated
-      # Sign in the user bypassing validation in case their password changed
-      sign_in @user, :bypass => true
-      # redirect_to after_update_path_for(@user)
-      redirect_to edit_user_registration_path @user
+  #   if successfully_updated
+  #     set_flash_message :notice, :updated
+  #     # Sign in the user bypassing validation in case their password changed
+  #     sign_in @user, :bypass => true
+  #     # redirect_to after_update_path_for(@user)
+  #     redirect_to edit_user_registration_path @user
+  #   else
+  #     render "edit"
+  #   end
+  # end
+  def update
+    
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+    current_user.update_target = params[:user][:update_target]
+    resource.update_target = params[:user][:update_target]
+ 
+    #if update_resource(resource, account_update_params)
+    if resource.update_without_current_password(account_update_params)
+      yield resource if block_given?
+      if is_flashing_format?
+        flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+          :update_needs_confirmation : :updated
+        set_flash_message :notice, flash_key
+      end
+      sign_in resource_name, resource, :bypass => true
+      redirect_to edit_user_registration_path @user, target: params[:user][:update_target]
+      # respond_with resource, :location => after_update_path_for(resource)
     else
-      render "edit"
+      clean_up_passwords resource
+      respond_with resource
     end
   end
 

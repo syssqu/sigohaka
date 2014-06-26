@@ -1,0 +1,30 @@
+= form_for @summary_attendance do |f|
+  - if @summary_attendance.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@summary_attendance.errors.count, "error")} prohibited this summary_attendance from being saved:"
+      ul
+        - @summary_attendance.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :user_id
+    = f.number_field :user_id
+  .field
+    = f.label :year
+    = f.text_field :year
+  .field
+    = f.label :month
+    = f.text_field :month
+  .field
+    = f.label :previous_m
+    = f.number_field :previous_m
+  .field
+    = f.label :present_m
+    = f.number_field :present_m
+  .field
+    = f.label :vacation
+    = f.number_field :vacation
+  .field
+    = f.label :half_holiday
+    = f.number_field :half_holiday
+  .actions = f.submit 'Save'
