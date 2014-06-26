@@ -190,6 +190,18 @@ ActiveRecord::Schema.define(version: 20140626010906) do
     t.datetime "updated_at"
   end
 
+  create_table "summary_attendances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",         limit: 4
+    t.string   "month",        limit: 2
+    t.integer  "previous_m"
+    t.integer  "present_m"
+    t.integer  "vacation"
+    t.integer  "half_holiday"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "transportation_expresses", force: true do |t|
     t.integer  "user_id"
     t.date     "koutu_date"

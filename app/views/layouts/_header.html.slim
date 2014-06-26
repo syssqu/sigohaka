@@ -29,6 +29,8 @@
                 = link_to '住宅手当申請書', housing_allowances_path
               li
                 = link_to '資格手当申請書', qualification_allowances_path
+              li
+                = link_to '勤務状況集計表', summary_attendances_path
           - if can? :manage, current_user
             li.has-dropdown
               = link_to "管理者", "#"
