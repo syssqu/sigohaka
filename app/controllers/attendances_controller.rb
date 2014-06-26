@@ -12,6 +12,12 @@ class AttendancesController < ApplicationController
       target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
       end_attendance_date = target_date.months_since(1)
       
+      #仮で配置
+      @summary_attendance = current_user.summary_attendances.build
+      @summary_attendance.save
+
+
+      
       while target_date != end_attendance_date
 
         @attendance = current_user.attendances.build

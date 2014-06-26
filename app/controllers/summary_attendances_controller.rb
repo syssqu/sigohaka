@@ -28,18 +28,19 @@ class SummaryAttendancesController < ApplicationController
     init
 
       @summary_attendances = SummaryAttendance.all
-      @summary_attendance = current_user.summary_attendances.all
-
+      
       @user = User.all
+      # @summary_attendances = @user.summary_attendances
       # @summary_attendance = user.attendances.order
       @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
       @over_sum=0
-    if ! @attendances.exists?
+      @kinmu_max=0
+    # if ! @attendances.exists?
         
 
 
-      target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
-      end_attendance_date = target_date.months_since(1)
+    #   target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
+    #   end_attendance_date = target_date.months_since(1)
       
       # while target_date != end_attendance_date
 
@@ -69,7 +70,7 @@ class SummaryAttendancesController < ApplicationController
       #     break
       #   end
       # end
-    end
+    # end
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
@@ -93,7 +94,7 @@ class SummaryAttendancesController < ApplicationController
   # POST /summary_attendances.json
   def create
     @summary_attendance = SummaryAttendance.new(summary_attendance_params)
-
+    # @summary_attendance.user = User.find_by id: session[:user_id]
     respond_to do |format|
       if @summary_attendance.save
         format.html { redirect_to @summary_attendance, notice: 'Summary attendance was successfully created.' }
