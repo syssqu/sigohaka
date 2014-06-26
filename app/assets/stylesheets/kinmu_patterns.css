@@ -1,4 +1,5 @@
 /* =============================================================================
    勤務パターン
    ========================================================================== */
-article.kinmu_patterns_edit select {display: inline-block;width:30%;}
+article.kinmu_patterns_edit select {display: inline-block;width:10%;}
+/* article.kinmu_patterns_edit input.nenrei {background-color: #e0e0e0;} */

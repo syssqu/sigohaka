@@ -1,0 +1,98 @@
+article.qualification_allowance_print
+	#qualification_allowance_header.clearfix
+		#qualification_allowance_for.left
+			tbody
+				tr
+					td 総務人事部　殿
+		div.left
+			h3#qualification_allowance_title.left 資格手当申請書
+		table#qualification_allowance_inkan.left border="1"
+			tbody
+				tr
+					td.in.text-center 人&nbsp;事
+					td.in.text-center 所属長
+					td.in.text-center 本&nbsp;人
+				tr height="65"
+					td
+					td
+					td
+    div.left
+      h6#qualification_allowance_request 
+       | 申 請 　平成#{@nendo-1988}#{ @date.strftime("年%_m月%_d日")}
+	table#qualification_allowance_user border="1"
+		tr width="640" height="45"
+			td.us width="139" 所&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属
+			td.us width="250" = current_user.section.name if ! current_user.section.nil?
+			td width="290" 
+		tr height="55"
+			td.us 氏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名
+			td.us #{current_user.family_name} #{current_user.first_name}
+			td.us 社員NO : #{current_user.employee_no}
+- @qualification_allowances.each do |qualification_allowance|
+	table#qualification_allowance_year border="1"
+		tr
+			td.ye width="136" 資格取得年月日
+			td.ye #{qualification_allowance.get_date}
+		tr
+			td.ye2 取得No. 【 #{qualification_allowance.number} 】
+			td.ye2 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;第#{qualification_allowance.registration_no_alphabet}―#{qualification_allowance.registration_no_year}―#{qualification_allowance.registration_no_month}―#{qualification_allowance.registration_no_individual}号 （コピー添付）
+	table#qualification_allowance_item border="1"
+		tr
+			td.it1 No.
+			td.it 資&nbsp;&nbsp;&nbsp;格&nbsp;&nbsp;&nbsp;取&nbsp;&nbsp;&nbsp;得&nbsp;&nbsp;&nbsp;項&nbsp;&nbsp;&nbsp;目
+			td.it width="160" 支給金額
+		tr
+			td.no A1
+			td ITストラテジスト
+			td.no 30,000
+		tr
+			td.no A2
+			td システム監査技術者
+			td.no 30,000
+		tr
+			td.no A3
+			td システムアーキテクト
+			td.no 30,000
+		tr
+			td.no A4
+			td 応用情報技術者
+			td.no 20,000
+		tr
+			td.no A5
+			td プロジェクトマネージャー
+			td.no 20,000
+		tr
+			td.no A6
+			td ネットワークスペシャリスト
+			td.no 20,000
+		tr
+			td.no A7
+			td データーベーススペシャリスト
+			td.no 20,000
+		tr
+			td.no A8
+			td エンベンデットシステムスペシャリスト
+			td.no 20,000
+		tr
+			td.no A9
+			td 情報セキュリティースペシャリスト
+			td.no 20,000
+		tr
+			td.no A10
+			td ITサービスマネージャー
+			td.no 20,000
+		tr
+			td.no A11
+			td 基本情報技術者
+			td.no 10,000
+		tr
+			td.no A12
+			td ITパスポート
+			td.no 3,000
+	table#qualification_allowance_money border="1"
+		tr
+			td.cal （人事記入欄）&nbsp;&nbsp;&nbsp;&nbsp;支&nbsp;&nbsp;給&nbsp;&nbsp;金&nbsp;&nbsp;額&nbsp;
+			td.mon #{qualification_allowance.money} 円
+    div.left
+      h6#qualification_allowance_fotter 
+       | 株式会社　システム・スクゥェアー

@@ -19,14 +19,17 @@ namespace :db do
                  section_id: 2,
                  birth_date: "1979/6/28",
                  age:34,
-                 postal_code:"587-0003",
-                 prefecture: "大阪府",
-                 city: "堺市美原区阿弥364-20",
-                 phone: "080-4396-2818",
+                 postal_code:"",
+                 prefecture: "",
+                 city: "大阪府堺市",
+                 phone: "",
                  employee_no: "020401",
                  experience: 13,
                  gakureki: "H14.03 京都産業大学 理学部",
-                 role: "admin"
+                 role: "admin",
+                 station: "南海 高野線 北野田駅",
+                 employee_date: "2002/4/1",
+                 imprint_id: "j-nakamura"
       )
 
     admin.projects.create!(start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)
@@ -38,8 +41,9 @@ namespace :db do
     admin.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     admin.kinmu_patterns.create!(code: "2")
     admin.kinmu_patterns.create!(code: "3")
+    admin.kinmu_patterns.create!(code: "*")
 
-    admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
+    admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")
     admin.attendance_others.create!(summary: "全体会")
     admin.attendance_others.create!(summary: "")
 

@@ -11,19 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617045809) do
+ActiveRecord::Schema.define(version: 20140626010906) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
     t.time     "start_time"
     t.time     "end_time"
-    t.decimal  "over_time",     precision: 4, scale: 2
-    t.decimal  "holiday_time",  precision: 4, scale: 2
-    t.decimal  "decimal",       precision: 4, scale: 2
-    t.decimal  "midnight_time", precision: 4, scale: 2
-    t.decimal  "break_time",    precision: 4, scale: 2
-    t.decimal  "kouzyo_time",   precision: 4, scale: 2
-    t.decimal  "work_time",     precision: 4, scale: 2
+    t.decimal  "over_time",     precision: 4, scale: 2, default: 0.0
+    t.decimal  "holiday_time",  precision: 4, scale: 2, default: 0.0
+    t.decimal  "midnight_time", precision: 4, scale: 2, default: 0.0
+    t.decimal  "break_time",    precision: 4, scale: 2, default: 0.0
+    t.decimal  "kouzyo_time",   precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",     precision: 4, scale: 2, default: 0.0
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -39,27 +38,31 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.string   "pattern",         limit: 1
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "byouketu"
-    t.boolean  "kekkin"
-    t.boolean  "hankekkin"
-    t.boolean  "tikoku"
-    t.boolean  "soutai"
-    t.boolean  "gaisyutu"
-    t.boolean  "tokkyuu"
-    t.boolean  "furikyuu"
-    t.boolean  "yuukyuu"
-    t.boolean  "syuttyou"
-    t.decimal  "over_time",                 precision: 4, scale: 2
-    t.decimal  "holiday_time",              precision: 4, scale: 2
-    t.decimal  "midnight_time",             precision: 4, scale: 2
-    t.decimal  "break_time",                precision: 4, scale: 2
-    t.decimal  "kouzyo_time",               precision: 4, scale: 2
-    t.decimal  "work_time",                 precision: 4, scale: 2
+    t.boolean  "byouketu",                                          default: false
+    t.boolean  "kekkin",                                            default: false
+    t.boolean  "hankekkin",                                         default: false
+    t.boolean  "tikoku",                                            default: false
+    t.boolean  "soutai",                                            default: false
+    t.boolean  "gaisyutu",                                          default: false
+    t.boolean  "tokkyuu",                                           default: false
+    t.boolean  "furikyuu",                                          default: false
+    t.boolean  "yuukyuu",                                           default: false
+    t.boolean  "syuttyou",                                          default: false
+    t.decimal  "over_time",                 precision: 4, scale: 2, default: 0.0
+    t.decimal  "holiday_time",              precision: 4, scale: 2, default: 0.0
+    t.decimal  "midnight_time",             precision: 4, scale: 2, default: 0.0
+    t.decimal  "break_time",                precision: 4, scale: 2, default: 0.0
+    t.decimal  "kouzyo_time",               precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",                 precision: 4, scale: 2, default: 0.0
     t.text     "remarks"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "holiday",         limit: 1
+    t.string   "holiday",         limit: 1,                         default: "0"
+    t.boolean  "hankyuu",                                           default: false
+    t.boolean  "self_approved",                                     default: false
+    t.boolean  "boss_approved",                                     default: false
+    t.boolean  "freezed",                                           default: false
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
@@ -96,11 +99,32 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.datetime "updated_at"
   end
 
+  create_table "housing_allowances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",               limit: 4
+    t.string   "month",              limit: 2
+    t.string   "reason"
+    t.string   "reason_text"
+    t.string   "housing_style"
+    t.string   "housing_style_text"
+    t.date     "agree_date_s"
+    t.date     "agree_date_e"
+    t.string   "spouse"
+    t.string   "spouse_name"
+    t.string   "spouse_other"
+    t.string   "support"
+    t.string   "support_name1"
+    t.string   "support_name2"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
-    t.decimal  "break_time",           precision: 4, scale: 2
-    t.decimal  "work_time",            precision: 4, scale: 2
+    t.decimal  "break_time",           precision: 4, scale: 2, default: 0.0
+    t.decimal  "work_time",            precision: 4, scale: 2, default: 0.0
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -135,6 +159,20 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.integer  "term"
   end
 
+  create_table "qualification_allowances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "number"
+    t.string   "item"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "get_date"
+    t.string   "registration_no_alphabet"
+    t.integer  "registration_no_year"
+    t.integer  "registration_no_month"
+    t.integer  "registration_no_individual"
+  end
+
   create_table "reasons", force: true do |t|
     t.integer  "user_id"
     t.string   "reason"
@@ -148,6 +186,18 @@ ActiveRecord::Schema.define(version: 20140617045809) do
   create_table "sections", force: true do |t|
     t.string   "code"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "summary_attendances", force: true do |t|
+    t.integer  "user_id"
+    t.string   "year",         limit: 4
+    t.string   "month",        limit: 2
+    t.integer  "previous_m"
+    t.integer  "present_m"
+    t.integer  "vacation"
+    t.integer  "half_holiday"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -200,6 +250,8 @@ ActiveRecord::Schema.define(version: 20140617045809) do
     t.text     "remarks"
     t.string   "role"
     t.string   "station"
+    t.string   "imprint_id"
+    t.date     "employee_date"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

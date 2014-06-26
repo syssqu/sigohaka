@@ -26,7 +26,9 @@ article.transport_index
           |&nbsp;&nbsp;&nbsp;
           = link_to '新規追加', new_transportation_express_path, class: "button tiny radius"
           |&nbsp;&nbsp;&nbsp;
-          = link_to "PDF出力", print_transportation_expresses_path, class: "button tiny radius"
+          = link_to print_transportation_expresses_path, class:"button tiny radius" do
+            i.fi-print
+            |印刷用画面
       .row
         .small-2.columns.push-6.columns
           = @date.strftime("%Y年%_m月%_d日")
@@ -52,8 +54,10 @@ article.transport_index
               td = '¥'+transportation_express.money.to_s
               td = transportation_express.note
               / td = link_to 'Show', transportation_express
-              td = link_to '修正', edit_transportation_express_path(transportation_express),class: "button tiny success"
-              td = link_to '削除', transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete ,class: "button tiny alert"
+              td = link_to edit_transportation_express_path(transportation_express), class:"button tiny radius" do
+                  i.fi-plus
+              td = link_to transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete , class:"button tiny alert" do
+                  i.fi-x
 
          
   br

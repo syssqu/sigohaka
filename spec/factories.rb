@@ -68,4 +68,21 @@ FactoryGirl.define do
 		sequence(:reason_text) {|n| "text_#{n}"}
 		user
 	end
+
+	factory :housing_allowance do
+
+    sequence(:reason) {|n| "new"}
+    sequence(:reason_text) {|n| "reason_#{n}"}
+    sequence(:housing_style) {|n| "ta"}
+    sequence(:housing_style_text) {|n| "ta_text_#{n}"}
+    sequence(:agree_date_s) {|n| "agrees_#{n}"}
+    sequence(:agree_date_e) {|n| "agreee_#{n}"}
+    sequence(:spouse) {|n| "spouse_#{n}"}
+    sequence(:spouse_name) {|n| "spouse_name_#{n}"}
+    sequence(:spouse_other) {|n| "spouse_other_#{n}"}
+    sequence(:support) {|n| "support_#{n}"}
+    sequence(:support_name1) {|n| "support_name1_#{n}"}
+    sequence(:support_name2) {|n| "support_name2_#{n}"}
+    user
+  end
 end
