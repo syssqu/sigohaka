@@ -1,6 +1,6 @@
-/* =============================================================================
-   業務報告書(PDF)
-   ========================================================================== */
+//============================================================================
+//   業務報告書(PDF)
+//============================================================================
 article.business_report_print {margin-top: 10px;}
 
 article.business_report_print table tr th {font-size: 10px; padding: 1px 1px !important;}
@@ -26,11 +26,3 @@ table#business_report_inkan td.in {width: 60px;}
 table#business_report_text2 td.cate {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
 table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
 table#business_report_text2 td {background-color: #fff;}
-
-/*a:visited.button{color: white;}*/
-
-/*article.business_report_print span {margin:0px;color:red;}*/
-/*article.business_report_print table {border-spacing: 0;}*/
-/*article.business_report_print table#business_report_main {width:755px;margin-bottom:25px;}*/
-/*article.business_report_print table tr td .button {padding:4px !important;margin:0px !important;}*/
-/*article.business_report_print table tr td.bg_gray {background-color:#9F9687 !important;}*/

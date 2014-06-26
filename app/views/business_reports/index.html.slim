@@ -1,5 +1,5 @@
 article.business_report_print
-  h3 style="padding-left: 15px;" 業務報告書
+  h3 style="padding-left: 10px;" 業務報告書
   / = select :business_report, 'business_report_target_date', @nengatudo_set
   #business_report_header.clearfix
     table#business_report_project
@@ -19,6 +19,7 @@ article.business_report_print
   tbody
     tr
       td = link_to '編 集', edit_business_report_path(business_report), class: "button tiny radius"
+      td = link_to '新規作成', new_business_report_path, class: "button tiny radius"
   br
   tbody
     h7#business_report_headline 
@@ -97,16 +98,3 @@ article.business_report_print
     tbody
       tr
         td #{business_report.note}
-
-  / tbody
-  /   tr
-  /     / td = link_to '照会', business_report
-  /     br
-  /     td = link_to '編集', edit_business_report_path(business_report)
-  /     br
-  /     / td = link_to '削除', business_report, data: {:confirm => 'Are you sure?'}, :method => :delete
-  /     / br
-  /     / br
-  /     / td = link_to '新規作成', new_business_report_path
-  /     / br
-  /     / br
