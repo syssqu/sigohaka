@@ -11,7 +11,7 @@ article.qualification_allowance_print table tr td {padding: 0px 0px !important;b
 
 #qualification_allowance_for {border-bottom-style: solid;font-size: 18px; font-weight:bold; width:140px; text-align:center; margin-bottom:8px;}
 #qualification_allowance_title {margin-left: 40px;width:220px; border-bottom:dashed 3px #000; text-align:center; margin-bottom:5px; margin-top:60px;}
-#qualification_allowance_inkan {border: 1px solid; margin-left: 52px; border-collapse: collapse;}
+#qualification_allowance_inkan {border: 2px solid; margin-left: 52px; border-collapse: collapse;}
 
 table#qualification_allowance_user {width: 663px;border-collapse: collapse;border:solid 1px;}
 table#qualification_allowance_year {width: 663px;border-collapse: collapse;border:solid 1px;margin-top: -21px;margin-left: 30px;}
@@ -21,11 +21,12 @@ table#qualification_allowance_money {width: 663px;border-collapse: collapse;bord
 table#qualification_allowance_inkan td.in {width: 70px;}
 table#qualification_allowance_user td.us {text-align: center;}
 table#qualification_allowance_item td.no {text-align: center;background-color: #fff;}
-table#qualification_allowance_money td.cal {text-align: center; width:320px; height: 60px;}
+table#qualification_allowance_money td.cal {text-align: center; width:280px; height: 60px;}
 table#qualification_allowance_money td.mon {text-align: center;}
 table#qualification_allowance_year td.ye {text-align: center;}
+table#qualification_allowance_year td.ye2 {text-align: center;height: 60px;}
 table#qualification_allowance_item td.it {text-align: center;}
 table#qualification_allowance_item td.it1 {text-align: center;width:65px; height:45px;}
 
 h6#qualification_allowance_request {font-size: 15px;text-decoration: underline;padding-left: 475px; margin-bottom:20px;margin-top:-5px;font-weight:bold;}
-h6#qualification_allowance_fotter {font-size: 13px;padding-left: 480px;margin-top:-5px;font-weight:bold;}
+h6#qualification_allowance_fotter {font-size: 13px;padding-left: 483px;margin-top:-5px;font-weight:bold;}

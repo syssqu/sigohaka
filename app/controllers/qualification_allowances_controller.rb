@@ -89,14 +89,6 @@ class QualificationAllowancesController < ApplicationController
     @nendo = Date.today.year
     @gatudo = Date.today.month
 
-    if Date.today.day < 16
-      month = Date.today.months_ago(1).month
-    end
-
-    if Date.today.day > 15
-      @gatudo = Date.today.months_since(1).month
-    end
-
     if Date.today.month == 12 and Date.today.day > 15
       @nendo = Date.today.years_since(1).year
     end
@@ -119,54 +111,6 @@ class QualificationAllowancesController < ApplicationController
     end
   end
 
-  def item_search
-    ichi=["ITストラテジスト"]
-    ni=["システム監査技術者"]
-    san=["システムアーキテクト"]
-    si=["応用情報技術者"]
-    go=["プロジェクトマネージャー"]
-    roku=["ネットワーク・スペシャリスト"]
-    nana=["データベーススペシャリスト"]
-    hiach=["エンベンデッドシステムスペシャリスト"]
-    ku=["情報セキュリティースペシャリスト"]
-    jyu=["ITサービスマネーシャー"]
-    jyuichi=["基本情報技術者"]
-    jyuni=["ITパスポート"]
-
-    query = request.raw_post
-
-    case query
-    when "A1" then
-      params[:item]=A1
-    when "A2" then
-      params[:item]=A2
-    when "A3" then
-      params[:item]=A3
-    when "A4" then
-      params[:item]=A4
-    when "A5" then
-      params[:item]=A5
-    when "A6" then
-      params[:item]=A6
-    when "A7" then
-      params[:item]=A7
-    when "A8" then
-      params[:item]=A8
-    when "A9" then
-      params[:item]=A9
-    when "A10" then
-      params[:item]=A10
-    when "A11" then
-      params[:item]=A11
-    when "A12" then
-      params[:item]=A12
-    else
-      params[:item]=["異常です"]
-    end
-
-    render :partial=>"item"
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_qualification_allowance
@@ -175,6 +119,8 @@ class QualificationAllowancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def qualification_allowance_params
-      params.require(:qualification_allowance).permit(:user_id, :number, :item, :money)
+      params.require(:qualification_allowance).permit(
+        :user_id, :number, :item, :money, :get_date, :registration_no_alphabet,
+        :registration_no_year, :registration_no_month, :registration_no_individual)
     end
 end
