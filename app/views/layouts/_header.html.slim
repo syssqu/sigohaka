@@ -27,6 +27,8 @@
                 = link_to '技術経歴書', resumes_index_path
               li
                 = link_to '住宅手当申請書', housing_allowances_path
+              li
+                = link_to '資格手当申請書', qualification_allowances_path
           - if can? :manage, current_user
             li.has-dropdown
               = link_to "管理者", "#"
