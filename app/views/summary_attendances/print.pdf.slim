@@ -1,0 +1,130 @@
+article.summary_attendance_print
+  / #attendance_header.clearfix
+    / div.left
+    /   p H#{@nendo - 1988}. #{@gatudo}月度
+    / table#attendance_project.left
+    /   tbody
+    /     tr
+    /       td width="78px" プロジェクト名:
+    /       td = truncate(@project.summary, length:20) if ! @project.nil?
+    /     tr
+    /       td 所属:
+    /       td = current_user.section.name if ! current_user.section.nil?
+    /     tr
+    /       td 氏名:
+    /       td #{current_user.family_name} #{current_user.first_name}
+    / div.left
+    /   h5#attendance_title 勤務状況集計表
+  .row
+    .large-12.columns
+      br
+      table.summary_header
+        tr
+          td width="160" height="20" 
+          td width="460"
+          td.border_on width="60"
+          td.border_on width="60"
+          td.border_on.text_center width="60" 人事担当
+          td.border_on.text_center width="60" 部門長
+        tr
+          td.text_center valign="bottom" height="70" H#{@nendo - 1988}. #{@gatudo}月度
+          td style="font-size:24px;"valign="bottom" 　勤務状況集計表
+          td.border_on 
+          td.border_on 
+          td.border_on 
+          td.border_on 
+      br
+      table.main
+        thead
+          tr
+            td width="65" 社員番号
+            td width="120" 氏名
+            td width="65" 勤務日数
+            td width="30" 病欠
+            td width="30" 欠勤
+            td width="30" 半欠勤
+            td width="30" 遅刻
+            td width="30" 早退
+            td width="30" 外出
+            td width="30" 振休
+            td width="30" 特休
+            td width="30" 生休
+            td width="30" 有休
+            td width="30" 半休
+            td width="40" 出張
+            td width="60" 通常超過
+            td width="60" 休日超過
+            td width="60" 深夜時間
+            td width="60" 控除時間
+            td width="60" 実働時間
+            td#zengetu width="60" 前月繰越
+            td#tougetu width="60" 当月繰越
+            td#yukyuzan width="40" 有休残
+            td#hankyusiyou width="35" 半休使用回数
+            td 備考
+            
+        tbody
+          - @user.each do |user|
+            tr
+              td.text-center rowspan="2" = user.employee_no
+              td#name rowspan="2" = user.family_name + user.first_name
+              td rowspan="2"valign="bottom" = user.attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(byouketu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(kekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(hankekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(tikoku: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(soutai: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(gaisyutu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(furikyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2"valign="bottom" = user.attendances.where(tokkyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2" 
+              td rowspan="2"valign="bottom" = user.attendances.where(yuukyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td rowspan="2" 
+              td rowspan="2"valign="bottom" = user.attendances.where(syuttyou: true, year:@nendo.to_s, month: @gatudo.to_s).count
+              td#total ☆TOTAL
+              td#total_no = sprintf( "%.2f", user.attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:holiday_time) + user.attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time))
+              td#total_no = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
+              td#koujo_ue
+              td 
+              td rowspan="2"valign="bottom" = sprintf( "%.2f", user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.previous_m.to_f) if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td rowspan="2"valign="bottom" = sprintf( "%.2f", user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.present_m.to_f) if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td rowspan="2" = user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.vacation if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td rowspan="2" = user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.half_holiday if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td rowspan="2"
+            tr
+              td = sprintf( "%.2f", user.attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time) )
+              td = sprintf( "%.2f", user.attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:holiday_time))
+              td = sprintf( "%.2f", user.attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
+              td#koujo_sita = sprintf( "%.2f", user.attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:kouzyo_time) )
+              td = sprintf( "%.2f", user.attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:work_time) )
+          tr.goukei
+            td#soukei colspan="2" rowspan="2"総合計
+            td rowspan="2" = @attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(byouketu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(kekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(hankekkin: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(tikoku: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(soutai: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(gaisyutu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(furikyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" = @attendances.where(tokkyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" 
+            td rowspan="2" = @attendances.where(yuukyuu: true, year:@nendo.to_s, month: @gatudo.to_s).count
+            td rowspan="2" 
+            td rowspan="2" = @attendances.where(syuttyou: true, year:@nendo.to_s, month: @gatudo.to_s).count  
+            td#total ☆TOTAL
+            td = sprintf( "%.2f", @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:holiday_time) + @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time))
+            td = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
+            td#koujo_ue 
+            td#koujo_ue
+            td rowspan="2"valign="bottom" = sprintf( "%.2f", @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:previous_m) ) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td rowspan="2"valign="bottom" = sprintf( "%.2f", @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:present_m) ) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td rowspan="2"= @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:vacation) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td rowspan="2"= @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:half_holiday) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td rowspan="2"
+          tr.goukei
+            td = sprintf( "%.2f", @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time) )
+            td = sprintf( "%.2f", @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:holiday_time))
+            td = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
+            td#koujo_sita = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:kouzyo_time) )
+            td#koujo_sita = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:work_time) )
