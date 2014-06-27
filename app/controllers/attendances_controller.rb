@@ -46,6 +46,12 @@ class AttendancesController < ApplicationController
   # 編集画面
   #
   def edit
+    temp = current_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+    @pattern = temp.collect do |k|
+      [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
+    end
+
+    @pattern << [" * 定例外勤務(休出 or シフト)", 4]
   end
 
   #
@@ -110,7 +116,8 @@ class AttendancesController < ApplicationController
   #
   def input_attendance_time
 
-    @pattern = KinmuPattern.find_by(id: params[:pattern])
+    # @pattern = KinmuPattern.find_by(id: params[:pattern])
+    @pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
     @time_blank = false
 
     if @pattern.nil?
@@ -130,7 +137,7 @@ class AttendancesController < ApplicationController
     
     Rails.logger.info("PARAMS: #{params.inspect}")
     
-    @pattern = KinmuPattern.find(params[:pattern])
+    @pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
 
     Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
     Rails.logger.info("pattern_end_date: " + @pattern.end_time.to_s)
