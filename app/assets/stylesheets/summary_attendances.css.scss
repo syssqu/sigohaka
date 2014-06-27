@@ -1,3 +1,23 @@
 // Place all the styles related to the SummaryAttendances controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+article.summary_attendance_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;padding: 0px;margin: 0px;}
+article.summary_attendance_print table td{padding: 0px;}
+article.summary_attendance_print table thead tr td{padding: 2px; font-size: 12px;}
+article.summary_attendance_print .main td{border: solid 1px;text-align: right;}
+article.summary_attendance_print .main thead td{text-align: center;padding:none;}
+article.summary_attendance_print .summary_header{border: none;padding: 0px;}
+article.summary_attendance_print .border_on{border: solid 1px;}
+article.summary_attendance_print .text_center{text-align: center;}
+article.summary_attendance_print .main #total{color: #00F;border-color: #000;font-size: 11px;text-align: left;}
+article.summary_attendance_print .main #zengetu{color: #00A;border-color: #000;}
+article.summary_attendance_print .main #tougetu{color: #0A0;border-color: #000;}
+article.summary_attendance_print .main #yukyuzan{color: #F00;border-color: #000;}
+article.summary_attendance_print .main #hankyusiyou{color: #F00;font-size: 10px;border-color: #000;}
+article.summary_attendance_print .main #koujo_ue{border-bottom: none;}
+article.summary_attendance_print .main #koujo_sita{border-top: none;}
+article.summary_attendance_print .main #total_no{color: #00F;border: solid 2px;border-color: #000;}
+article.summary_attendance_print .main .goukei td{border: solid 2px;border-color: #000;}
+article.summary_attendance_print .main #soukei{text-align: left;}
+article.summary_attendance_print .main #name{text-align: left;}

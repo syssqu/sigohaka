@@ -9,7 +9,7 @@ $("#attendance_pattern").change ->
     url: "/input_attendance_time"
     type: "GET"
     data:
-      id: $("#target_id").val()
+      id: $("#target_id").val() # Attendance.find(params[:id])のため
       pattern: $("#attendance_pattern").val()
     dataType: "script"
     success: (data) ->
@@ -37,7 +37,7 @@ $("#calculate").click ->
     url: "/calculate_attendance"
     type: "GET"
     data:
-      id: $("#target_id").val()
+      id: $("#target_id").val() # Attendance.find(params[:id])のため
       pattern: $("#attendance_pattern").val()
       start_time_hour: $("#attendance_start_time_4i").val()
       start_time_minute: $("#attendance_start_time_5i").val()
