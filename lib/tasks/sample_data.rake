@@ -60,7 +60,7 @@ namespace :db do
                  password: "sigohaka",
                  gender: :man,
                  section_id: 2,
-                 role: "admin"
+                 role: "manager"
       )
 
     hatayama.projects.create!(start_date:"2014/01/01", end_date:"2014/05/30", summary: "社内研修・HP作成", active: true)

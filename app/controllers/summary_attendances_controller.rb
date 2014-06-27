@@ -1,3 +1,4 @@
+
 class SummaryAttendancesController < ApplicationController
   before_action :set_summary_attendance, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
@@ -27,50 +28,18 @@ class SummaryAttendancesController < ApplicationController
 
     init
 
-      @summary_attendances = SummaryAttendance.all
-      
+    @summary_attendances = SummaryAttendance.all
+    if current_user.role == "admin"
       @user = User.all
-      # @summary_attendances = @user.summary_attendances
-      # @summary_attendance = user.attendances.order
-      @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-      @over_sum=0
-      @kinmu_max=0
-    # if ! @attendances.exists?
-        
-
-
-    #   target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
-    #   end_attendance_date = target_date.months_since(1)
-      
-      # while target_date != end_attendance_date
-
-      #   @attendance = current_user.attendances.build
-        
-      #   @attendance[:attendance_date] = target_date
-      #   @attendance[:year] = @nendo
-      #   @attendance[:month] = @gatudo
-
-      #   @attendance[:wday] = target_date.wday
-
-      #   if holiday?(target_date)
-      #     @attendance[:holiday] = "1"
-      #   elsif ! current_user.kinmu_patterns.first.nil?
-      #     @attendance[:pattern] = current_user.kinmu_patterns.first.code
-      #     @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
-      #     @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
-      #     @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
-      #     @attendance[:holiday] = "0"
-
-      #   end
-
-      #   if @attendance.save
-      #     @attendances << @attendance
-      #     target_date = target_date.tomorrow
-      #   else
-      #     break
-      #   end
-      # end
-    # end
+    elsif current_user.role == "manager"
+      @user = User.where( section_id:current_user.section_id)
+    end
+    # @summary_attendances = @user.summary_attendances
+    # @summary_attendance = user.attendances.order
+    @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @over_sum=0
+    @kinmu_max=0
+    
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
@@ -143,6 +112,40 @@ class SummaryAttendancesController < ApplicationController
 
   end
 
+  def print
+
+    @nen_gatudo = params[:nen_gatudo]
+
+    if @nen_gatudo.nil?
+      attendance_years = Date.today
+    else
+      attendance_years = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+    end
+
+    @nendo = get_nendo(attendance_years)
+    @gatudo = get_gatudo(attendance_years)
+    @project = get_project
+    @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @others = current_user.attendance_others
+    @user = User.all
+    respond_to do |format|
+      # format.html { redirect_to print_attendances_path(format: :pdf)}
+      # format.pdf do
+      #   render pdf: '勤務状況報告書',
+      #          encoding: 'UTF-8',
+      #          layout: 'pdf.html'
+      format.html { redirect_to print_summary_attendances_path(format: :pdf, debug: 1, nen_gatudo: @nen_gatudo)}
+      format.pdf do
+        render pdf: '勤務状況報告書',
+               encoding: 'UTF-8',
+               layout: 'pdf.html',
+               show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+
   # DELETE /summary_attendances/1
   # DELETE /summary_attendances/1.json
   def destroy
@@ -151,6 +154,14 @@ class SummaryAttendancesController < ApplicationController
       format.html { redirect_to summary_attendances_url, notice: 'Summary attendance was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def summary_attendance_data_make
+    # 勤務状況集計表用データ を作成
+    @summary_attendance = current_user.summary_attendances.build
+    @summary_attendance[:year] = @nendo
+    @summary_attendance[:month] = @gatudo
+    @summary_attendance.save
   end
 
   private
@@ -238,6 +249,7 @@ class SummaryAttendancesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_summary_attendance
+      logger.debug("DEBUNG_INFO" + params[:id].to_s)
       @summary_attendance = SummaryAttendance.find(params[:id])
     end
 
@@ -245,4 +257,6 @@ class SummaryAttendancesController < ApplicationController
     def summary_attendance_params
       params.require(:summary_attendance).permit(:user_id, :year, :month, :previous_m, :present_m, :vacation, :half_holiday)
     end
+
+
 end
