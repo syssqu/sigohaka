@@ -7,24 +7,15 @@
           li = message
 
   .field
-    = f.label :user_id
-    = f.number_field :user_id
-  .field
-    = f.label :year
-    = f.text_field :year
-  .field
-    = f.label :month
-    = f.text_field :month
-  .field
-    = f.label :previous_m
+    label 前月繰越
     = f.number_field :previous_m
   .field
-    = f.label :present_m
+    label 当月繰越
     = f.number_field :present_m
   .field
-    = f.label :vacation
+    label 有休残
     = f.number_field :vacation
   .field
-    = f.label :half_holiday
+    label 半休使用回数
     = f.number_field :half_holiday
   .actions = f.submit 'Save'
