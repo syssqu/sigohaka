@@ -21,6 +21,8 @@ article.attendance_index #attendance_header table#attendance_project td strong{c
 article.attendance_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
 article.attendance_index #attendance_nengetu{width:240px;text-align:center;}
 
+.button.important{background-color:#4F7D06 !important;}
+
 
 article {padding-left:5px;}
 
