@@ -3,85 +3,34 @@ class AttendancesController < ApplicationController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy, :input_attendance_time, :calculate]
   before_action :authenticate_user!
 
-  # 
   #
+  # 一覧画面
   #
   def index
 
     init
+
+    # 勤務パターンは3個固定で作成するので存在しない場合は考慮しない。
+    # if current_user.kinmu_patterns.first.nil?
+    #   flash.now[:alert] = '勤務パターンを登録して下さい。'
+    #   return false
+    # end
+    
     create_attendances
 
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
-
   end
 
-  # 
   #
+  # 新規作成画面
   #
   def new
     @attendance = Attendance.new
   end
 
-  # データ初期化
-  # 
   #
-  def init_attendances
-    init
-
-    sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
-      "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
-      "holiday_time=?,midnight_time=?,break_time=?,kouzyo_time=?,work_time=?,remarks=?"
-
-    ActiveRecord::Base.transaction do
-
-      @attendances.where("holiday = '0'").update_all([sql,
-          current_user.kinmu_patterns.first.code,
-          current_user.kinmu_patterns.first.start_time,
-          current_user.kinmu_patterns.first.end_time,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          0.00, 0.00, 0.00, 0.00, 0.00,
-          current_user.kinmu_patterns.first.work_time,
-          nil
-        ])
-      
-      @attendances.where("holiday = '1'").update_all([sql,
-          "",
-          "",
-          "",
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          0.00, 0.00, 0.00, 0.00, 0.00,
-          0.00,
-          nil
-        ])
-    end
-
-    redirect_to attendances_path, notice: '勤怠データを初期化しました。'
- 
-  rescue => e
-    render :index, notice: '勤怠データの初期化に失敗しました。'
-  end
-
-  # 
-  #
+  # 新規登録処理
   #
   def create
     @attendance = Attendance.new(attendance_params)
@@ -93,19 +42,14 @@ class AttendancesController < ApplicationController
     end
   end
 
+  #
+  # 編集画面
+  #
   def edit
   end
 
-  # def confirm
-  #   @attendance = Attendance.new(params[:attendance])
-
-  #   if ! attendance.valid?
-  #     render :edit
-  #   end
-  # end
-
-  # 
   #
+  # 更新処理
   #
   def update
     @attendance.is_blank_start_time = false
@@ -126,8 +70,43 @@ class AttendancesController < ApplicationController
     end
   end
 
+  #
+  # データ初期化処理
+  # 対象年月の勤怠情報を勤務パターンをベースに再作成する
+  #
+  def init_attendances
+    init
+
+    sql = "pattern=?,start_time=?,end_time=?,byouketu=?,kekkin=?,hankekkin=?," +
+      "tikoku=?,soutai=?,gaisyutu=?,tokkyuu=?,furikyuu=?,yuukyuu=?,syuttyou=?,over_time=?," +
+      "holiday_time=?,midnight_time=?,break_time=?,kouzyo_time=?,work_time=?,remarks=?"
+
+    ActiveRecord::Base.transaction do
+
+      # 休日でない場合は勤務パターンをベースに値を設定
+      @attendances.where("holiday = '0'").update_all([sql,
+          current_user.kinmu_patterns.first.code,
+          current_user.kinmu_patterns.first.start_time,
+          current_user.kinmu_patterns.first.end_time,
+          false,false,false,false,false,false,false,
+          false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
+          current_user.kinmu_patterns.first.work_time,nil])
+
+      # 休日は全て空白に設定
+      @attendances.where("holiday = '1'").update_all([sql,
+          "","","",false,false,false,false,false,false,
+          false,false,false,false,0.00, 0.00, 0.00, 0.00, 0.00, 0.00,nil])
+    end
+
+    redirect_to attendances_path, notice: '勤怠データを初期化しました。'
+ 
+  rescue => e
+    render :index, notice: '勤怠データの初期化に失敗しました。'
+  end
+
+  #
   # 勤務パターンが変更された際に出退勤時刻を変更する
-  # 勤怠情報編集画面にて呼び出される
+  # 編集画面にて呼び出される
   #
   def input_attendance_time
 
@@ -142,8 +121,10 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # 
   #
+  # 自動計算処理
+  # 勤怠パターンと出退勤時刻から遅刻や実働時間を自動計算する
+  # 編集画面にて呼び出される
   #
   def calculate
     
@@ -165,8 +146,8 @@ class AttendancesController < ApplicationController
     @attendance.calculate(@pattern, attendance_start_time, attendance_end_time)
   end
 
-  # 
   #
+  # 印刷画面
   #
   def print
 
@@ -186,11 +167,6 @@ class AttendancesController < ApplicationController
     @others = current_user.attendance_others
 
     respond_to do |format|
-      # format.html { redirect_to print_attendances_path(format: :pdf)}
-      # format.pdf do
-      #   render pdf: '勤務状況報告書',
-      #          encoding: 'UTF-8',
-      #          layout: 'pdf.html'
       format.html { redirect_to print_attendances_path(format: :pdf, debug: 1, nen_gatudo: @nen_gatudo)}
       format.pdf do
         render pdf: '勤務状況報告書',
@@ -201,18 +177,17 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # 勤怠締め処理
   #
+  # 勤怠締め処理
+  # 今月分の締めと来月月分の勤怠情報作成を実施
   #
   def freeze
 
     ActiveRecord::Base.transaction do
 
-      # 今月分の締めを実施
       init
       @attendances.update_all(["freezed = ?",true])
 
-      # 来月月分の勤怠情報を作成
       init true
       create_attendances true
     end
@@ -223,8 +198,8 @@ class AttendancesController < ApplicationController
     render :index, notice: '勤怠締め処理に失敗しました。'
   end
 
-  # 勤怠締め取消
   #
+  # 勤怠締め取消
   #
   def unfreeze
 
@@ -241,8 +216,8 @@ class AttendancesController < ApplicationController
   # ------------------------------------------------------------------------------------------------------------------------
   private
 
-  # 勤怠日付の初期化
   #
+  # 勤怠日付の初期化
   #
   def init(freezed=false)
 
@@ -255,25 +230,18 @@ class AttendancesController < ApplicationController
       session[:years] = params[:attendance][:nen_gatudo]
     end
 
-    
-
     @attendance_years = get_attendance_years(params[:attendance], freezed)
-    # @attendance_years = Date.new(2014, 2, 20)
     
     @nendo = get_nendo(@attendance_years)
     @gatudo = get_gatudo(@attendance_years)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    
-    # if current_user.kinmu_patterns.first.nil?
-    #   flash.now[:alert] = '勤務パターンを登録して下さい。'
-    #   return false
-    # end
   end
 
+  #
   # 勤怠情報の作成
-  # 事前にinitにより対象年月を確定しておく必要あり
+  # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
   #
   def create_attendances(freezed=false)
     
@@ -286,7 +254,6 @@ class AttendancesController < ApplicationController
     target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
     end_attendance_date = target_date.months_since(1)
 
-    
     while target_date != end_attendance_date
 
       @attendance = current_user.attendances.build
@@ -321,14 +288,14 @@ class AttendancesController < ApplicationController
     create_attendance_years freezed
   end
 
-  # 
   #
+  # 対象年月のセレクトボックス内に含めるデータを作成する
+  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   #
   def create_attendance_years(freezed=false)
     @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
 
     if freezed
-      logger.debug("FREEZED:" + session[:years].to_s)
       temp = session[:years]
       
       years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
@@ -339,20 +306,21 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # 
   #
+  # Attendanceインスタンスを取得
+  # :show, :edit, :update, :destroy, :input_attendance_time, :calculateにて呼び出す
   #
   def set_attendance
     @attendance = Attendance.find(params[:id])
   end
 
   # 
-  #
+  # Strong Parameters
   #
   def attendance_params
     params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
       :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
-      :break_time, :kouzyo_time, :work_time, :remarks, :user_id)
+      :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
   end
 
   # 対象日付の月度を返す
@@ -396,6 +364,7 @@ class AttendancesController < ApplicationController
   end
 
   # 休日かどうかを判定する
+  # @param [Date] target_date 対象日付
   # @return [Boolean] 対象日が休日の場合はtrueを返す。そうでない場合はfalseを返す
   def holiday?(target_date)
     target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
@@ -409,53 +378,31 @@ class AttendancesController < ApplicationController
 
   # 画面に出力する勤怠日付を確定する
   # 締め処理の場合
-  #   日が16日以降の場合は翌月日付を返し、そうでない場合は本日日付を返す
-  # 対象年月が変更されていない場合
-  #   本日日付を返す
-  # 対象年月が変更された場合
-  #   対象年月初日の日付を返す
-  # 締め取り消し処理の場合
+  #   対象年月の翌月を返す
+  # それ以外の場合
+  #   対象年月を返す
+  # @param [Date] attendance
+  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def get_attendance_years(attendance, freezed=false)
     
     unless session[:years].blank?
-      logger.debug("aiueo" + session[:years].to_s)
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
     else
       temp = current_user.attendances.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
       if temp.exists?
-        logger.debug("★★★★★★2")
         years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
       else
-        logger.debug("★★★★★★3")
         years = Date.today
       end
     end
 
     if freezed
-      logger.debug("★★★★★★4")
       years.months_since(1)
     else
-      logger.debug("★★★★★★5")
       years
     end
-      
-    # elsif ! changed_attendance_years?
-      
-    #   temp = current_user.attendances.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
-    #   if temp.exists?
-    #     temp.each do |t|
-    #       logger.debug("SELCT_YEARS:" + temp.first.year + temp.first.month)
-    #     end
-        
-    #     return Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
-    #   else
-    #     return Date.today
-    #   end
-      
-    
-    # end
   end
 
   # 勤怠その他を作成します
