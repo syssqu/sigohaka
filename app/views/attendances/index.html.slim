@@ -33,6 +33,22 @@ article.attendance_index
           - if @freezed    
             = link_to unfreeze_attendances_path, data: {:confirm => '勤怠締め処理を取り消します。宜しいですか？'}, class:"button tiny radius alert" do
               i.fi-refresh
+              |本人確認済み取消し
+          - else
+            = link_to freeze_attendances_path, data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class:"button tiny radius important" do
+              i.fi-refresh
+              |本人確認
+          - if @freezed    
+            = link_to unfreeze_attendances_path, data: {:confirm => '勤怠締め処理を取り消します。宜しいですか？'}, class:"button tiny radius alert" do
+              i.fi-refresh
+              |上長承認取消し
+          - else
+            = link_to freeze_attendances_path, data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class:"button tiny radius important" do
+              i.fi-refresh
+              |上長承認
+          - if @freezed    
+            = link_to unfreeze_attendances_path, data: {:confirm => '勤怠締め処理を取り消します。宜しいですか？'}, class:"button tiny radius alert" do
+              i.fi-refresh
               |勤怠締め取消し
           - else
             = link_to freeze_attendances_path, data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class:"button tiny radius important" do
