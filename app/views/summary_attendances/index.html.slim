@@ -2,9 +2,14 @@
 article.attendance_index
   .row
     .large-12.columns
-      h3
-        i.fi-clipboard-pencil
-        |勤務状況集計表
+      - if current_user.role=="maneger"
+        h3
+          i.fi-clipboard-pencil
+          |勤務状況集計表　#{current_user.section.name}
+      - else
+        h3
+          i.fi-clipboard-pencil
+          |勤務状況集計表　#{current_user.section.name}
 
       #attendance_header
         table#attendance_project
@@ -75,31 +80,31 @@ article.attendance_index
 
             / - @attendances.each do |attendance|
             /   = @over_sum += attendance.over_time(user_id: user.id,year:@nendo.to_s,month: @gatudo.to_s)
-              tr
-                td 
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-                td
-              - redo
+              / tr
+              /   td 
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              /   td
+              / - redo
             tr
               / - if attendance.attendance_date.day == 1 or attendance.attendance_date.day == 16
               /   td.text-right
@@ -114,10 +119,10 @@ article.attendance_index
               / - else
               /   td.text-center
               /     span = YOUBI[attendance.wday.to_i]
-              td rowspan="2" = user.employee_no
-              td rowspan="2" #{user.family_name} #{user.first_name}
+              td.text-center rowspan="2" = user.employee_no
+              td.text-center rowspan="2" #{user.family_name} #{user.first_name}
               td.text-center rowspan="2" = user.attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
-              = @kinmu_max += user.attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
+                / = @kinmu_max += user.attendances.where("trim(pattern) is not null and year = ? and month = ?", @nendo.to_s, @gatudo.to_s).count
               / td.text-center = attendance.start_time.strftime("%_H:%M") unless attendance.start_time.blank?
               / td.text-center = attendance.end_time.strftime("%_H:%M") unless attendance.end_time.blank?
               td.text-center rowspan="2" = user.attendances.where(byouketu: true, year:@nendo.to_s, month: @gatudo.to_s).count
@@ -148,18 +153,19 @@ article.attendance_index
               td.text-center = sprintf( "%.2f", user.attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
               td.text-center
               td.text-center
-              td.text-center rowspan="2"
-              td.text-center rowspan="2"
-              td.text-center rowspan="2"
-              td.text-center rowspan="2"
+              td.text-center rowspan="2" = sprintf( "%.2f", user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.previous_m.to_f) if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td.text-center rowspan="2" = sprintf( "%.2f", user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.present_m.to_f) if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td.text-center rowspan="2" = user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.vacation if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+              td.text-center rowspan="2"= user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.half_holiday if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
               td.text-center rowspan="2"
               td.text-center rowspan="2"
                 / - session[:user_id] = user.id
-                - if ! user.summary_attendances.blank?
-                  = link_to edit_summary_attendance_path(@summary_attendances), class:"button tiny radius" do
+                - if ! user.summary_attendances.where(month:@gatudo.to_s,year:@nendo.to_s).blank?
+                  - summary_id = user.summary_attendances.where(month:@gatudo.to_s,year:@nendo.to_s).first
+                  = link_to edit_summary_attendance_path(id:summary_id), class:"button tiny radius" do
                     i.fi-plus
                 - elsif user.summary_attendances.blank?
-                  = link_to "新規",new_summary_attendance_path(@summary_attendances), class:"button tiny radius"
+                  = "未記入"
             tr
               /通常超過
               td.text-center = sprintf( "%.2f", user.attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time) )
@@ -213,10 +219,10 @@ article.attendance_index
             td.text-center = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:midnight_time) )
             td.text-center = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:kouzyo_time) )
             td.text-center = sprintf( "%.2f", @attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:work_time) )
-            td
-            td
-            td
-            td
+            td.text-center = sprintf( "%.2f", @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:previous_m) ) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td.text-center = sprintf( "%.2f", @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:present_m) ) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td.text-center = @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:vacation) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
+            td.text-center = @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:half_holiday) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
             td
             td
               
