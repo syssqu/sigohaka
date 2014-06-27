@@ -3,7 +3,7 @@ article.attendance_index
     .large-12.columns
       h3
         i.fi-clipboard-pencil
-        |勤務状況報告書
+        |勤務状況報告書 #{session[:years]}
 
       #attendance_header
         table#attendance_project
@@ -30,6 +30,14 @@ article.attendance_index
           = link_to init_attendances_path, data: {:confirm => '今月度の勤怠データを初期化します。宜しいですか？'}, class:"button tiny radius" do
             i.fi-refresh
             |データ初期化
+          - if @freezed    
+            = link_to unfreeze_attendances_path, data: {:confirm => '勤怠締め処理を取り消します。宜しいですか？'}, class:"button tiny radius alert" do
+              i.fi-refresh
+              |勤怠締め取消し
+          - else
+            = link_to freeze_attendances_path, data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class:"button tiny radius important" do
+              i.fi-refresh
+              |勤怠締め
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr
@@ -145,8 +153,9 @@ article.attendance_index
                 = attendance.remarks[0,10] unless attendance.remarks.blank?
               / td = link_to 'Show', attendance
               td.text-center
-                = link_to edit_attendance_path(attendance), class:"button tiny radius" do
-                  i.fi-plus
+                - unless @freezed
+                  = link_to edit_attendance_path(attendance), class:"button tiny radius" do
+                    i.fi-plus
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
 
           - @others.each do |other|
@@ -174,8 +183,9 @@ article.attendance_index
                 |&nbsp;
                 = other.remarks[0,10] unless other.remarks.blank?
               td.text-center
-                = link_to edit_attendance_other_path(other), class:"button tiny radius" do
-                  i.fi-plus
+                - unless @freezed
+                  = link_to edit_attendance_other_path(other), class:"button tiny radius" do
+                    i.fi-plus
           tr
             td.text-center colspan="3" 社員No. 
             td.text-center = current_user.employee_no
