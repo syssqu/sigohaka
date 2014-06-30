@@ -1,86 +1,10 @@
 /* icon-barは最新リリースされた新しい機能!？現行のものには含まれていないためオリジナルの最新版から当該箇所のみ抽出 */
 
-/* $icon-bar-background-color: #0776A7; */
-$icon-bar-background-color: red;
+$icon-bar-background-color: #0776A7;
 
 div.icon-bar {
-  width: 100%;
-  font-size: 0;
-  display: inline-block;
-  background: $icon-bar-background-color; }
-  div.icon-bar > * {
-    text-align: center;
-    font-size: 1rem;
-    width: 25%;
-    margin: 0 auto;
-    display: block;
-    padding: 1.25rem;
-    float: left; }
-    div.icon-bar > * i, div.icon-bar > * img {
-      display: block;
-      margin: 0 auto; }
-      div.icon-bar > * i + label, div.icon-bar > * img + label {
-        margin-top: .0625rem; }
-    div.icon-bar > * i {
-      font-size: 1.875rem;
-      vertical-align: middle; }
-    div.icon-bar > * img {
-      width: 1.875rem;
-      height: 1.875rem; }
-  div.icon-bar.label-right > * i, div.icon-bar.label-right > * img {
-    margin: 0 0.0625rem 0 0;
-    display: inline-block; }
-    div.icon-bar.label-right > * i + label, div.icon-bar.label-right > * img + label {
-      margin-top: 0; }
-  div.icon-bar.label-right > * label {
-    display: inline-block; }
-  div.icon-bar.vertical.label-right > * {
-    text-align: left; }
-  div.icon-bar.vertical {
-    height: 100%;
-    width: auto; }
-    div.icon-bar.vertical .item {
-      width: auto;
-      margin: auto;
-      float: none; }
-  div.icon-bar > * {
-    font-size: 1rem;
-    padding: 1.25rem; }
-    div.icon-bar > * i + label, div.icon-bar > * img + label {
-      margin-top: .0625rem; }
-    div.icon-bar > * i {
-      font-size: 1.875rem; }
-    div.icon-bar > * img {
-      width: 1.875rem;
-      height: 1.875rem; }
-  div.icon-bar > *:hover {
-    background: #008cba; }
-  div.icon-bar > * label {
-    color: white; }
-  div.icon-bar > * i {
-    color: white; }
+  background: $icon-bar-background-color !important; }
 
-/* toolbar styles */
-.icon-bar.two-up .item {
-  width: 50%; }
-.icon-bar.two-up.vertical .item {
-  width: auto; }
-.icon-bar.three-up .item {
-  width: 33.3333%; }
-.icon-bar.three-up.vertical .item {
-  width: auto; }
-.icon-bar.four-up .item {
-  width: 25%; }
-.icon-bar.four-up.vertical .item {
-  width: auto; }
-.icon-bar.five-up .item {
-  width: 20%; }
-.icon-bar.five-up.vertical .item {
-  width: auto; }
-.icon-bar.six-up .item {
-  width: 16.66667%; }
-.icon-bar.six-up.vertical .item {
-  width: auto; }
 .icon-bar.ten-up .item {
   width: 10%; }
 .icon-bar.ten-up.vertical .item {

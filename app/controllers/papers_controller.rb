@@ -2,13 +2,20 @@
 class PapersController < ApplicationController
   attr_accessor :title, :years
 
+  def index_freeze
+  end
+
   #
   # 締め処理
   #
   def freeze_paper
     
     ActiveRecord::Base.transaction do
-      freeze_proc
+      # init
+      # @attendances.update_all(["freezed = ?",true])
+
+      # init true
+      # create_attendances true
     end
 
     redirect_to ({action: :index}), :notice => '締め処理を完了しました。'
@@ -17,15 +24,13 @@ class PapersController < ApplicationController
     render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
   end
 
-  def freeze_proc
-  end
-
   #
   # 締め取消し処理
   #
   def unfreeze
     ActiveRecord::Base.transaction do
-      unfreeze_proc
+      # init
+      # @attendances.update_all(["freezed = ?",false])
     end
 
     redirect_to ({action: :index}), :notice => '締め処理を取り消しました。'
@@ -34,13 +39,12 @@ class PapersController < ApplicationController
     render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
   end
 
-  def unfreeze_proc
-  end
-
   #
   # 印刷処理
   #
   def print
+    print_proc
+    
     respond_to do |format|
       format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
       format.pdf do
@@ -56,21 +60,67 @@ class PapersController < ApplicationController
   # 上長承認処理
   #
   def approve
+    approve_proc
   end
 
   #
   # 上長破棄処理
   #
   def discard
+    discard_proc
   end
 
   #
   # 本人確認処理
   #
   def check
+    ActiveRecord::Base.transaction do
+      check_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '本人確認を行いました。'
+    
+  rescue => e
+    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
+  end
+
+  #
+  # 本人未確認処理
+  #
+  def miss_check
+    ActiveRecord::Base.transaction do
+      miss_check_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '本人確認を取り消しました。'
+
+  rescue => e
+    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
+    
   end
 
   protected
+
+  def freeze_proc
+  end
+
+  def unfreeze_proc
+  end
+
+  def print_proc
+  end
+  
+  def approve_proc
+  end
+  
+  def discard_proc
+  end
+  
+  def check_proc
+  end
+
+  def miss_check_proc
+  end
   
   #
   # 対象年月のセレクトボックス内に含めるデータを作成する
@@ -104,7 +154,7 @@ class PapersController < ApplicationController
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
     else
-      temp = objects.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
+      temp = objects.select('year, month').where("freezed = ? and self_approved = ? and boss_approved = ?", false, false, false).group('year, month').order('year, month')
       if temp.exists?
         years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
       else

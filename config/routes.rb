@@ -1,17 +1,5 @@
 Rails.application.routes.draw do
   
-  # get 'papers/freeze'
-
-  # get 'papers/unfreeze'
-
-  # get 'papers/print'
-
-  # get 'papers/approve'
-
-  # get 'papers/discard'
-
-  # get 'papers/check'
-
   resources :summary_attendances do
     collection do
       get 'print'
@@ -74,6 +62,7 @@ Rails.application.routes.draw do
   end
   resources :qualification_allowances
 
+  match '/index_freeze', to:'papers#index_freeze', via: :get
 
   resources :kinmu_patterns
   resources :sections
@@ -81,8 +70,12 @@ Rails.application.routes.draw do
   match '/init_attendances', to:'attendances#init_attendances', via: :get
   match '/calculate_attendance', to:'attendances#calculate', via: :get
   match '/input_attendance_time', to:'attendances#input_attendance_time', via: :get
-  match '/freeze_attendances', to:'attendances#freeze_paper', via: :get
-  match '/unfreeze_attendances', to:'attendances#unfreeze', via: :get
+  match '/freeze_paper', to:'attendances#freeze_paper', via: :get
+  match '/unfreeze', to:'attendances#unfreeze', via: :get
+  match '/approve', to:'attendances#approve', via: :get
+  match '/discard', to:'attendances#discard', via: :get
+  match '/check', to:'attendances#check', via: :get
+  match '/miss_check', to:'attendances#miss_check', via: :get
 
   # match '/data_clear', to:'attendances#clear', via: :get
   
