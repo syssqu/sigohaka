@@ -18,6 +18,8 @@ class AttendancesController < ApplicationController
     
     create_attendances
 
+    session[:years] ||= "#{@nendo}#{@gatudo}"
+
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
   end
