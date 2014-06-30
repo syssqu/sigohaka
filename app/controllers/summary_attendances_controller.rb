@@ -156,12 +156,18 @@ class SummaryAttendancesController < ApplicationController
     end
   end
 
-  def summary_attendance_data_make
+  def data_make
     # 勤務状況集計表用データ を作成
+    # @nendo = get_nendo(@attendance_years)
+    # @gatudo = get_gatudo(@attendance_years)
+    init
     @summary_attendance = current_user.summary_attendances.build
     @summary_attendance[:year] = @nendo
     @summary_attendance[:month] = @gatudo
-    @summary_attendance.save
+    if @summary_attendance.save
+
+      redirect_to attendances_path, notice: '勤務状況を登録しました'
+    end
   end
 
   private
@@ -255,7 +261,7 @@ class SummaryAttendancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def summary_attendance_params
-      params.require(:summary_attendance).permit(:user_id, :year, :month, :previous_m, :present_m, :vacation, :half_holiday)
+      params.require(:summary_attendance).permit(:user_id, :year, :month, :previous_m, :present_m, :vacation, :half_holiday, :note)
     end
 
 

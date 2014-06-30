@@ -157,7 +157,7 @@ article.attendance_index
               td.text-center rowspan="2" = sprintf( "%.2f", user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.present_m.to_f) if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
               td.text-center rowspan="2" = user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.vacation if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
               td.text-center rowspan="2"= user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.half_holiday if !user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
-              td.text-center rowspan="2"
+              td.text-center rowspan="2" = user.summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.note if !user.summary_attendances.where(month: @gatudo.to_s,year:@nendo.to_s).first.nil?
               td.text-center rowspan="2"
                 / - session[:user_id] = user.id
                 - if ! user.summary_attendances.where(month:@gatudo.to_s,year:@nendo.to_s).blank?
@@ -323,7 +323,7 @@ table
       th Present m
       th Vacation
       th Half holiday
-      th
+      th note
       th
       th
 
@@ -337,6 +337,7 @@ table
         td = summary_attendance.present_m
         td = summary_attendance.vacation
         td = summary_attendance.half_holiday
+        td = summary_attendance.note
         td = link_to 'Show', summary_attendance
         td = link_to 'Edit', edit_summary_attendance_path(summary_attendance)
         td = link_to 'Destroy', summary_attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
