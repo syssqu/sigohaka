@@ -20,6 +20,12 @@ article.transport_index
             tr
               td 氏名:
               td #{current_user.family_name} #{current_user.first_name}
+      / hr
+      / .row
+      /   .large-3.columns
+      /     = form_tag :transportation_expresses, method: "get" do
+      /       label.left.inline 対象年月
+      /       = collection_select :transportation_express, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
 
       .row
         .small-4.columns

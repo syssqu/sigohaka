@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :summary_attendances do
     collection do
       get 'print'
+      get 'data_make'
     end
   end
 
