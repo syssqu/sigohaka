@@ -22,9 +22,9 @@ article.attendance_index
         .large-3.columns
           = form_tag :attendances, method: "get" do
             label.left.inline 対象年月
-            = collection_select :attendance, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
+            = collection_select :attendance, :years, @years, :id, :value, {selected: session[:years]}
         .large-9.columns
-          = link_to print_attendances_path(nen_gatudo: @selected_nen_gatudo), class:"button tiny radius" do
+          = link_to print_attendances_path, class:"button tiny radius" do
             i.fi-print
             |印刷用画面
           = link_to init_attendances_path, data: {:confirm => '今月度の勤怠データを初期化します。宜しいですか？'}, class:"button tiny radius" do
