@@ -22,6 +22,17 @@ class AttendancesController < PapersController
 
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
+
+    @freezed = @attendances.first.freezed
+
+    @status = "本人未確認"
+    if @attendances.first.freezed
+      @status = "凍結中"
+    elsif @attendances.first.boss_approved
+      @status = "上長承認済み"
+    elsif @attendances.first.self_approved
+      @status = "本人確認済み"
+    end
   end
 
   #
@@ -158,7 +169,7 @@ class AttendancesController < PapersController
   #
   # 印刷画面
   #
-  def print
+  def print_proc
 
     years = session[:years]
 
@@ -176,16 +187,15 @@ class AttendancesController < PapersController
     @others = current_user.attendance_others
 
     @title = '勤務状況報告書'
-    super
   end
 
   #
   # 勤怠締め処理
   # 今月分の締めと来月月分の勤怠情報作成を実施
   #
-  def freeze_proc
+  def check_proc
     init
-    @attendances.update_all(["freezed = ?",true])
+    @attendances.update_all(["self_approved = ?",true])
 
     init true
     create_attendances true
@@ -194,9 +204,9 @@ class AttendancesController < PapersController
   #
   # 勤怠締め取消
   #
-  def unfreeze_proc
+  def miss_check_proc
     init
-    @attendances.update_all(["freezed = ?",false])
+    @attendances.update_all(["self_approved = ?",false])
   end
 
   # ------------------------------------------------------------------------------------------------------------------------
@@ -268,8 +278,6 @@ class AttendancesController < PapersController
         break
       end
     end
-
-    @freezed = @attendances.first.freezed
 
     create_years_collection current_user.attendances, freezed
   end
