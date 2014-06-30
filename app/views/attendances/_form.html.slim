@@ -29,7 +29,7 @@
         .large-2.small-4.columns
           label.left.inline  勤務パターン
         .large-10.small-8.columns
-          = f.select :pattern, current_user.kinmu_patterns.where("start_time is not null and end_time is not null").collect {|k| [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code ] }, include_blank: true
+          = f.select :pattern, @pattern, include_blank: true
       .row
         .large-2.small-4.columns
           label.left.inline 出退勤

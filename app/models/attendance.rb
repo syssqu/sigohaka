@@ -6,7 +6,7 @@ class Attendance < ActiveRecord::Base
   attr_accessor :is_blank_start_time
   attr_accessor :is_blank_end_time
 
-  default_scope -> { order('attendance_date') }
+  # default_scope -> { order('attendance_date') }
 
   # チェック
   validates :remarks, length: { maximum: 20 }

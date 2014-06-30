@@ -15,13 +15,15 @@ html lang="en"
 
   body style="overflow:hidden;"
 
-    article
-      - if notice
-        p.alert.alert-notice
-          = notice
-      - if alert
-        p.alert.alert-error
-          = alert
+    article.sign_in_error_message
+      .row
+        .large-3.large-centered.columns
+          / - if notice
+          /   p.alert.alert-notice
+          /     = notice
+          - if alert
+            p.alert.alert-error
+              = alert
     article.sign_in
       .row
         .large-12.columns.clearfix
