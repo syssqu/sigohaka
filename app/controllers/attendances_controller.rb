@@ -197,6 +197,8 @@ class AttendancesController < ApplicationController
 
       init true
       create_attendances true
+
+      @others = get_attendance_others_info
     end
 
     redirect_to attendances_path, notice: '勤怠の締め処理を完了しました。'
@@ -213,6 +215,11 @@ class AttendancesController < ApplicationController
     ActiveRecord::Base.transaction do
       init
       @attendances.update_all(["freezed = ?",false])
+
+      init
+      create_attendances
+
+      @others = get_attendance_others_info
     end
     redirect_to attendances_path, notice: '勤怠の締め処理を取り消しました。'
 
