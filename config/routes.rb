@@ -35,11 +35,17 @@ Rails.application.routes.draw do
   resources :projects
   
   resources :transportation_expresses do
-     collection do
+    collection do
       post 'transportation_confirm'
       get 'print'
     end
   end
+  match '/freeze_up', to:'transportation_expresses#freeze_up', via: :get
+  match '/cancel_freeze', to:'transportation_expresses#cancel_freeze', via: :get
+  match '/approve', to:'transportation_expresses#approve', via: :get
+  match '/cancel_approval', to:'transportation_expresses#cancel_approval', via: :get
+  match '/check', to:'transportation_expresses#check', via: :get
+  match '/cancel_check', to:'transportation_expresses#cancel_check', via: :get
   #  resource :transportation_expresses, only: [] do
   #   get :print
   # end

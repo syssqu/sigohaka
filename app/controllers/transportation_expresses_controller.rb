@@ -1,4 +1,4 @@
-class TransportationExpressesController < ApplicationController
+class TransportationExpressesController < PapersController
   before_action :set_transportation_express, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -8,35 +8,50 @@ class TransportationExpressesController < ApplicationController
 
     init
 
+
+    create_transportation_expresses
     # @transportation_expresses = TransportationExpress.all
     # @transportation_express=current_user.transportation_expresses.all
     # @project = current_user.projects.find_by(active: true)
-
+    session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
-    year = Date.today.year
-    month = Date.today.month
-    day = Date.today.day
+    @freezed = @transportation_expresses.first.freezed
+    create_years_collection current_user.transportation_expresses, @freezed
+    # year = Date.today.year
+    # month = Date.today.month
+    # day = Date.today.day
     
-    @nendo = Date.today.year
-    @gatudo = Date.today.month
+    # @nendo = Date.today.year
+    # @gatudo = Date.today.month
 
-    if Date.today.day < 16
-      month = Date.today.months_ago(1).month
-    end
+    # if Date.today.day < 16
+    #   month = Date.today.months_ago(1).month
+    # end
 
-    if Date.today.day > 15
-      @gatudo = Date.today.months_since(1).month
-    end
+    # if Date.today.day > 15
+    #   @gatudo = Date.today.months_since(1).month
+    # end
 
-    if Date.today.month == 12 and Date.today.day > 15
-      @nendo = Date.today.years_since(1).year
-    end
+    # if Date.today.month == 12 and Date.today.day > 15
+    #   @nendo = Date.today.years_since(1).year
+    # end
     
     # @date=Time.parse(session[:date])
-    @date=@transportation_express.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    @date=@transportation_expresses.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
       @date=Date.today
     end
+
+    # =============
+    @status = "本人未確認"
+    if @transportation_expresses.first.freezed
+      @status = "凍結中"
+    elsif @transportation_expresses.first.boss_approved
+      @status = "上長承認済み"
+    elsif @transportation_expresses.first.self_approved
+      @status = "本人確認済み"
+    end
+    # =============
   end
 
   # GET /transportation_expresses/1
@@ -54,47 +69,26 @@ class TransportationExpressesController < ApplicationController
     @transportation_express = current_user.transportation_expresses.build(transportation_express_params)
   end
 
-  def print
-    year = Date.today.year
-    month = Date.today.month
-    day = Date.today.day
+  def print_proc
+     years = session[:years]
+
+    if years.nil?
+      transportation_express_years = Date.today
+    else
+      transportation_express_years = Date.new(years[0..3].to_i, years[4..-1].to_i, 1)
+    end
+
+    @nendo = get_nendo(transportation_express_years)
+    @gatudo = get_gatudo(transportation_express_years)
+    @project = get_project
     
-    @nendo = Date.today.year
-    @gatudo = Date.today.month
+    @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
-    if Date.today.day < 16
-      month = Date.today.months_ago(1).month
-    end
-
-    if Date.today.day > 15
-      @gatudo = Date.today.months_since(1).month
-    end
-
-    if Date.today.month == 12 and Date.today.day > 15
-      @nendo = Date.today.years_since(1).year
-    end
-    @transportation_expresses = TransportationExpress.all
-    @transportation_expresses = current_user.transportation_expresses.all
-    @project = current_user.projects.find_by(active: true)
-    @sum = session[:sum] #交通費の合計金額表示
     @date=@transportation_expresses.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
       @date=Date.today
     end
-    respond_to do |format|
-      # format.html { redirect_to print_tranportation_expresses_path(format: :pdf)}
-      # format.pdf do
-      #   render pdf: '勤務状況報告書',
-      #          encoding: 'UTF-8',
-      #          layout: 'pdf.html'
-      format.html { redirect_to print_transportation_expresses_path(format: :pdf, debug: 1)}
-      format.pdf do
-        render pdf: '交通費精算書',
-               encoding: 'UTF-8',
-               layout: 'pdf.html',
-               show_as_html: params[:debug].present?
-      end
-    end
+    @title = '交通費精算書'
   end
 
   # GET /transportation_expresses/1/edit
@@ -115,6 +109,41 @@ class TransportationExpressesController < ApplicationController
         format.json { render json: @transportation_express.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  #
+  # 本人確認処理
+  #
+  def check_proc
+    init
+    @transportation_expresses.update_all(["self_approved = ?",true])
+
+    init true
+    create_transportation_expresses true
+  end
+
+  #
+  # 本人確認取消
+  #
+  def cancel_check_proc
+    init
+    @transportation_expresses.update_all(["self_approved = ?",false])
+  end
+
+  #
+  # 上長承認処理
+  #
+  def approve_proc
+    init
+    @transportation_expresses.update_all(["boss_approved = ?",true])
+  end
+
+  #
+  # 上長承認取消
+  #
+  def cancel_approval_proc
+    init
+    @transportation_expresses.update_all(["boss_approved = ?",false])
   end
 
   # PATCH/PUT /transportation_expresses/1
@@ -153,26 +182,73 @@ class TransportationExpressesController < ApplicationController
       params.require(:transportation_express).permit(:user_id, :koutu_date, :destination, :route, :transport, :money, :note, :sum, :year,:day, :month)
     end
 
+
+
     # =================================================================================================-
-    def init(freezed=false)
+    #
+  # 勤怠日付の初期化
+  #
+  def init(freezed=false)
 
-    unless session[:years].blank?
-      @selected_nen_gatudo = session[:years]
-    end
-    
     if changed_transportation_express_years?
-      @selected_nen_gatudo = params[:transportation_express][:nen_gatudo]
-      session[:years] = params[:transportation_express][:nen_gatudo]
+      session[:years] = params[:transportation_express][:years]
     end
 
-    @transportation_express_years = get_transportation_express_years(params[:transportation_express], freezed)
+    @transportation_express_years = get_years(current_user.transportation_expresses, freezed)
     
     @nendo = get_nendo(@transportation_express_years)
     @gatudo = get_gatudo(@transportation_express_years)
     @project = get_project
 
-    @transportation_express = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    
   end
+
+
+
+  def create_transportation_expresses(freezed=false)
+
+    if @transportation_expresses.exists?
+      @freezed = @transportation_expresses.first.freezed
+      create_years_collection current_user.transportation_expresses, freezed
+      return
+    end
+
+    if !@transportation_expresses.exists?
+      target_date = Date.new(@transportation_express_years.year, get_month(@transportation_express_years), 16)
+      
+
+      @transportation_express = current_user.transportation_expresses.build
+      @transportation_express[:year] = @nendo
+      @transportation_express[:month] = @gatudo
+      if @transportation_express.save
+        @transportation_expresses << @transportation_express
+        target_date = target_date.tomorrow
+      end
+    end
+
+  end
+
+  #   def init(freezed=false)
+
+  #   unless session[:years].blank?
+  #     @selected_nen_gatudo = session[:years]
+  #   end
+    
+  #   if changed_transportation_express_years?
+  #     @selected_nen_gatudo = params[:transportation_express][:nen_gatudo]
+  #     session[:years] = params[:transportation_express][:nen_gatudo]
+  #   end
+
+  #   @transportation_express_years = get_transportation_express_years(params[:transportation_express], freezed)
+    
+  #   @nendo = get_nendo(@transportation_express_years)
+  #   @gatudo = get_gatudo(@transportation_express_years)
+  #   @project = get_project
+
+  #   @transportation_express = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+  # end
 
   
   #

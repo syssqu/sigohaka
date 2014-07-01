@@ -23,6 +23,9 @@ hr
       = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
 
   .large-9.columns
+    / 新規作成
+    - if target!="attendances" and target!="summary_attendances"
+      = link_to raw("<i class='fi-print'></i>新規追加"),{controller: target, action: "new"},{class: "button tiny radius"}
     / 印刷処理
     = link_to raw("<i class='fi-print'></i>印刷用画面"), {controller: target, action: "print"}, {class: "button tiny radius"}
 
