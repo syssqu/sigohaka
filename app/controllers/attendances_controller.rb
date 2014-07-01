@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class AttendancesController < ApplicationController
+class AttendancesController < PapersController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy, :input_attendance_time, :calculate]
   before_action :authenticate_user!
 
@@ -18,8 +18,21 @@ class AttendancesController < ApplicationController
     
     create_attendances
 
+    session[:years] = "#{@nendo}#{@gatudo}"
+
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
+
+    @freezed = @attendances.first.freezed
+
+    @status = "本人未確認"
+    if @attendances.first.freezed
+      @status = "凍結中"
+    elsif @attendances.first.boss_approved
+      @status = "上長承認済み"
+    elsif @attendances.first.self_approved
+      @status = "本人確認済み"
+    end
   end
 
   #
@@ -156,14 +169,14 @@ class AttendancesController < ApplicationController
   #
   # 印刷画面
   #
-  def print
+  def print_proc
 
-    @nen_gatudo = params[:nen_gatudo]
+    years = session[:years]
 
-    if @nen_gatudo.nil?
+    if years.nil?
       attendance_years = Date.today
     else
-      attendance_years = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+      attendance_years = Date.new(years[0..3].to_i, years[4..-1].to_i, 1)
     end
 
     @nendo = get_nendo(attendance_years)
@@ -173,58 +186,42 @@ class AttendancesController < ApplicationController
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @others = current_user.attendance_others
 
-    respond_to do |format|
-      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1, nen_gatudo: @nen_gatudo)}
-      format.pdf do
-        render pdf: '勤務状況報告書',
-               encoding: 'UTF-8',
-               layout: 'pdf.html',
-               show_as_html: params[:debug].present?
-      end
-    end
+    @title = '勤務状況報告書'
   end
 
   #
-  # 勤怠締め処理
-  # 今月分の締めと来月月分の勤怠情報作成を実施
+  # 本人確認処理
   #
-  def freeze
+  def check_proc
+    init
+    @attendances.update_all(["self_approved = ?",true])
 
-    ActiveRecord::Base.transaction do
-
-      init
-      @attendances.update_all(["freezed = ?",true])
-
-      init true
-      create_attendances true
-
-      @others = get_attendance_others_info
-    end
-
-    redirect_to attendances_path, notice: '勤怠の締め処理を完了しました。'
-
-  rescue => e
-    render :index, notice: '勤怠締め処理に失敗しました。'
+    init true
+    create_attendances true
   end
 
   #
-  # 勤怠締め取消
+  # 本人確認取消
   #
-  def unfreeze
+  def cancel_check_proc
+    init
+    @attendances.update_all(["self_approved = ?",false])
+  end
 
-    ActiveRecord::Base.transaction do
-      init
-      @attendances.update_all(["freezed = ?",false])
+  #
+  # 上長承認処理
+  #
+  def approve_proc
+    init
+    @attendances.update_all(["boss_approved = ?",true])
+  end
 
-      init
-      create_attendances
-
-      @others = get_attendance_others_info
-    end
-    redirect_to attendances_path, notice: '勤怠の締め処理を取り消しました。'
-
-  rescue => e
-    render :index, notice: '勤怠締めの取り消し処理に失敗しました。'
+  #
+  # 上長承認取消
+  #
+  def cancel_approval_proc
+    init
+    @attendances.update_all(["boss_approved = ?",false])
   end
 
   # ------------------------------------------------------------------------------------------------------------------------
@@ -235,16 +232,11 @@ class AttendancesController < ApplicationController
   #
   def init(freezed=false)
 
-    unless session[:years].blank?
-      @selected_nen_gatudo = session[:years]
-    end
-    
     if changed_attendance_years?
-      @selected_nen_gatudo = params[:attendance][:nen_gatudo]
-      session[:years] = params[:attendance][:nen_gatudo]
+      session[:years] = params[:attendance][:years]
     end
 
-    @attendance_years = get_attendance_years(params[:attendance], freezed)
+    @attendance_years = get_years(current_user.attendances, freezed)
     
     @nendo = get_nendo(@attendance_years)
     @gatudo = get_gatudo(@attendance_years)
@@ -261,7 +253,7 @@ class AttendancesController < ApplicationController
     
     if @attendances.exists?
       @freezed = @attendances.first.freezed
-      create_attendance_years freezed
+      create_years_collection current_user.attendances, freezed
       return
     end
       
@@ -297,27 +289,7 @@ class AttendancesController < ApplicationController
       end
     end
 
-    @freezed = @attendances.first.freezed
-
-    create_attendance_years freezed
-  end
-
-  #
-  # 対象年月のセレクトボックス内に含めるデータを作成する
-  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
-  #
-  def create_attendance_years(freezed=false)
-    @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
-
-    if freezed
-      temp = session[:years]
-      
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
-      next_years = years.months_since(1)
-      
-      @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
-      session[:years] = @selected_nen_gatudo
-    end
+    create_years_collection current_user.attendances, freezed
   end
 
   #
@@ -388,35 +360,6 @@ class AttendancesController < ApplicationController
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
   def changed_attendance_years?
     return ! params[:attendance].nil?
-  end
-
-  # 画面に出力する勤怠日付を確定する
-  # 締め処理の場合
-  #   対象年月の翌月を返す
-  # それ以外の場合
-  #   対象年月を返す
-  # @param [Date] attendance
-  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
-  # @return [Date] 対象勤怠日付
-  def get_attendance_years(attendance, freezed=false)
-    
-    unless session[:years].blank?
-      temp = session[:years]
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
-    else
-      temp = current_user.attendances.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
-      if temp.exists?
-        years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
-      else
-        years = Date.today
-      end
-    end
-
-    if freezed
-      years.months_since(1)
-    else
-      years
-    end
   end
 
   # 勤怠その他を作成します
