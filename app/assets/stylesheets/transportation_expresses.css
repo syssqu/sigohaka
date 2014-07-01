@@ -1,12 +1,16 @@
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
 /* =============================================================================
    交通費精算書(一覧)
    ========================================================================== */
 article.transport_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
-article.transport_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
-article.transport_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
+article.transport_index table th{padding:5px 5px;text-align: center;font-size:12px;}
+article.transport_index table td{padding:2px 0px !important;min-width: 40px;font-size:12px;}
 article.transport_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.transport_index select {display: inline-block;width:50%;}
 
-// #transport_header{width:755px;font-size:10px;}
+
+#transport_header{width:755px;}
 #transport_header table#transport_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
 #transport_header table#transport_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
 #transport_header table#transport_project td strong{color:#6E6E6E;}

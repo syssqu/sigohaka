@@ -121,7 +121,7 @@ article.summary_attendance_print
             td rowspan="2"valign="bottom" = sprintf( "%.2f", @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:present_m) ) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
             td rowspan="2"= @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:vacation) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
             td rowspan="2"= @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).sum(:half_holiday) if !@summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.nil?
-            td rowspan="2"
+            td rowspan="2"= @summary_attendances.where(month: @gatudo.to_s,year: @nendo.to_s).first.note if !@summary_attendances.where(month: @gatudo.to_s,year:@nendo.to_s).first.nil?
           tr.goukei
             td = sprintf( "%.2f", @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:over_time) )
             td = sprintf( "%.2f", @attendances.where(month:@gatudo.to_s,year:@nendo.to_s).sum(:holiday_time))
