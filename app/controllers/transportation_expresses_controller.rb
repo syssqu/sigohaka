@@ -191,7 +191,7 @@ class TransportationExpressesController < PapersController
   def init(freezed=false)
 
     if changed_transportation_express_years?
-      session[:years] = params[:transportation_express][:years]
+      session[:years] = params[:paper][:years]
     end
 
     @transportation_express_years = get_years(current_user.transportation_expresses, freezed)
@@ -314,7 +314,7 @@ class TransportationExpressesController < PapersController
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
   def changed_transportation_express_years?
-    return ! params[:transportation_express].nil?
+    return ! params[:paper].nil?
   end
 
   # 画面に出力する勤怠日付を確定する
