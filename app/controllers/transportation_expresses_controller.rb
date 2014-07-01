@@ -5,9 +5,12 @@ class TransportationExpressesController < ApplicationController
   # GET /transportation_expresses
   # GET /transportation_expresses.json
   def index
-    @transportation_expresses = TransportationExpress.all
-    @transportation_express=current_user.transportation_expresses.all
-    @project = current_user.projects.find_by(active: true)
+
+    init
+
+    # @transportation_expresses = TransportationExpress.all
+    # @transportation_express=current_user.transportation_expresses.all
+    # @project = current_user.projects.find_by(active: true)
 
     @sum=0
     year = Date.today.year
@@ -43,6 +46,7 @@ class TransportationExpressesController < ApplicationController
 
   # GET /transportation_expresses/new
   def new
+    init
     @transportation_express = current_user.transportation_expresses.build
   end
 
@@ -78,7 +82,7 @@ class TransportationExpressesController < ApplicationController
       @date=Date.today
     end
     respond_to do |format|
-      # format.html { redirect_to print_attendances_path(format: :pdf)}
+      # format.html { redirect_to print_tranportation_expresses_path(format: :pdf)}
       # format.pdf do
       #   render pdf: '勤務状況報告書',
       #          encoding: 'UTF-8',
@@ -146,6 +150,128 @@ class TransportationExpressesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transportation_express_params
-      params.require(:transportation_express).permit(:user_id, :koutu_date, :destination, :route, :transport, :money, :note, :sum, :year, :month)
+      params.require(:transportation_express).permit(:user_id, :koutu_date, :destination, :route, :transport, :money, :note, :sum, :year,:day, :month)
     end
+
+    # =================================================================================================-
+    def init(freezed=false)
+
+    unless session[:years].blank?
+      @selected_nen_gatudo = session[:years]
+    end
+    
+    if changed_transportation_express_years?
+      @selected_nen_gatudo = params[:transportation_express][:nen_gatudo]
+      session[:years] = params[:transportation_express][:nen_gatudo]
+    end
+
+    @transportation_express_years = get_transportation_express_years(params[:transportation_express], freezed)
+    
+    @nendo = get_nendo(@transportation_express_years)
+    @gatudo = get_gatudo(@transportation_express_years)
+    @project = get_project
+
+    @transportation_express = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+  end
+
+  
+  #
+  # 対象年月のセレクトボックス内に含めるデータを作成する
+  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
+  #
+  def create_transportation_express_years(freezed=false)
+    @nen_gatudo = current_user.transportation_expresses.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+
+    if freezed
+      temp = session[:years]
+      
+      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      next_years = years.months_since(1)
+      
+      @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
+      session[:years] = @selected_nen_gatudo
+    end
+  end
+
+  # 対象日付の月度を返す
+  # @param [Date] target_date 対象日付
+  # @return [Integer] 対象日付の月度
+  def get_gatudo(target_date)
+    gatudo = target_date.month
+
+    if target_date.day > 15
+      gatudo = target_date.months_since(1).month
+    end
+
+    gatudo
+  end
+
+  # 対象日付の年度を返す
+  # @param [Date] target_date 対象日付
+  # @return [Integer] 対象日付の年度
+  def get_nendo(target_date)
+    nendo = target_date.year
+
+    if target_date.month == 12 and target_date.day > 15
+      nendo = target_date.years_since(1).year
+    end
+
+    nendo
+  end
+
+  # 対象日付の月を返す
+  # 対象日付の日が15日以前の場合に先月の月を返す。そうでない場合は当月の月を返す
+  # @param [Date] target_date 対象日付
+  # @return [Integer] 対象日付の月
+  def get_month(target_date)
+    month = target_date.month
+
+    if target_date.day < 16
+      month = target_date.months_ago(1).month
+    end
+
+    month
+  end
+
+ 
+
+  # 画面の対象年月が変更されたどうかを判定する
+  # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
+  def changed_transportation_express_years?
+    return ! params[:transportation_express].nil?
+  end
+
+  # 画面に出力する勤怠日付を確定する
+  # 締め処理の場合
+  #   対象年月の翌月を返す
+  # それ以外の場合
+  #   対象年月を返す
+  # @param [Date] tranportation_express
+  # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
+  # @return [Date] 対象勤怠日付
+  def get_transportation_express_years(transportation_express, freezed=false)
+    
+    unless session[:years].blank?
+      temp = session[:years]
+      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+    else
+      temp = current_user.transportation_expresses.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
+      if temp.exists?
+        years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
+      else
+        years = Date.today
+      end
+    end
+
+    if freezed
+      years.months_since(1)
+    else
+      years
+    end
+  end
+
+
+# ===========================================================================================================---
+
+
 end

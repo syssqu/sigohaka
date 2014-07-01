@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630013737) do
+ActiveRecord::Schema.define(version: 20140630064553) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -216,6 +216,8 @@ ActiveRecord::Schema.define(version: 20140630013737) do
     t.string   "month",       limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "freezed"
+    t.string   "day"
   end
 
   create_table "users", force: true do |t|
