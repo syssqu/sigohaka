@@ -6,10 +6,10 @@ class SummaryAttendancesController < ApplicationController
   # GET /summary_attendances.json
   def init
     if changed_attendance_years?
-      @selected_nen_gatudo = params[:attendance][:nen_gatudo]
+      @selected_nen_gatudo = params[:paper][:nen_gatudo]
     end
 
-    @attendance_years = get_attendance_years(params[:attendance])
+    @attendance_years = get_attendance_years(params[:paper])
     # @attendance_years = Date.new(2014, 2, 20)
     @nendo = get_nendo(@attendance_years)
     @gatudo = get_gatudo(@attendance_years)
@@ -216,7 +216,7 @@ class SummaryAttendancesController < ApplicationController
     end
 
     def changed_attendance_years?
-      nen_gatudo = params[:attendance]
+      nen_gatudo = params[:paper]
       return ! nen_gatudo.nil?
     end
 
