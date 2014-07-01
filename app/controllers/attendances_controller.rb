@@ -190,8 +190,7 @@ class AttendancesController < PapersController
   end
 
   #
-  # 勤怠締め処理
-  # 今月分の締めと来月月分の勤怠情報作成を実施
+  # 本人確認処理
   #
   def check_proc
     init
@@ -202,11 +201,27 @@ class AttendancesController < PapersController
   end
 
   #
-  # 勤怠締め取消
+  # 本人確認取消
   #
-  def miss_check_proc
+  def cancel_check_proc
     init
     @attendances.update_all(["self_approved = ?",false])
+  end
+
+  #
+  # 上長承認処理
+  #
+  def approve_proc
+    init
+    @attendances.update_all(["boss_approved = ?",true])
+  end
+
+  #
+  # 上長承認取消
+  #
+  def cancel_approval_proc
+    init
+    @attendances.update_all(["boss_approved = ?",false])
   end
 
   # ------------------------------------------------------------------------------------------------------------------------
@@ -217,12 +232,7 @@ class AttendancesController < PapersController
   #
   def init(freezed=false)
 
-    # unless session[:years].blank?
-    #   @selected_years = session[:years]
-    # end
-    
     if changed_attendance_years?
-      # @selected_years = params[:attendance][:years]
       session[:years] = params[:attendance][:years]
     end
 
