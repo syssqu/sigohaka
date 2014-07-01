@@ -31,7 +31,7 @@
 
           - @transportation_expresses.each do |transportation_express|
             tr
-              td class="syasen" style="text-align:center" = transportation_express.koutu_date.strftime('%m　　%d')
+              td class="syasen" style="text-align:center" = transportation_express.koutu_date.strftime('%m　　%d') unless transportation_express.koutu_date.nil?
               td =truncate("#{transportation_express.destination}",:length=>26,:omission=>"…")
               td = truncate("#{transportation_express.route}",:length=>38,:omission=>"…")
               td = truncate("#{transportation_express.transport}",:length=>8,:omission=>"…")
