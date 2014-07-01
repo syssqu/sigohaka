@@ -18,13 +18,13 @@
 hr
 .row
   .large-3.columns
-    = form_tag :attendances, method: "get" do
+    = form_tag target, method: "get" do
       label.left.inline 対象年月
-      = collection_select :attendance, :years, years, :id, :value, {selected: session[:years]}
+      = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
 
   .large-9.columns
     / 印刷処理
-    = link_to raw("<i class='fi-print'></i>印刷用画面"), {controller: "attendances", action: "print"}, {class: "button tiny radius"}
+    = link_to raw("<i class='fi-print'></i>印刷用画面"), {controller: target, action: "print"}, {class: "button tiny radius"}
 
     / データ初期化
     - if target == "attendances"
