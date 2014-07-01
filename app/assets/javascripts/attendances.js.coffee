@@ -1,5 +1,5 @@
 # 一覧ページで年月度が変更された際に表示を切り替える
-$("select#attendance_years").change ->
+$("select#paper_years").change ->
   $("form").submit();
 
 # 勤務パターンが変更された際に出退勤時刻を変更する
