@@ -20,12 +20,13 @@ article.transport_index
             tr
               td 氏名:
               td #{current_user.family_name} #{current_user.first_name}
-      / hr
-      / .row
-      /   .large-3.columns
-      /     = form_tag :transportation_expresses, method: "get" do
-      /       label.left.inline 対象年月
-      /       = collection_select :transportation_express, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
+      hr
+      .row
+        .large-3.columns
+          = form_tag :transportation_expresses, method: "get" do
+            label.left.inline 対象年月
+            = collection_select :transportation_express, :nen_gatudo, @nen_gatudo, :id, :value, {selected: @selected_nen_gatudo}
+        .large-9.columns
 
       .row
         .small-4.columns
@@ -53,7 +54,8 @@ article.transport_index
           - @transportation_express.each do |transportation_express|
             tr
               / td = transportation_express.user_id
-              td = transportation_express.koutu_date.strftime('%m/%d')
+              / td = transportation_express.koutu_date.strftime('%m/%d')
+              td = transportation_express.koutu_date
               td = transportation_express.destination
               td = transportation_express.route
               td = transportation_express.transport
@@ -64,7 +66,6 @@ article.transport_index
                   i.fi-plus
               td = link_to transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete , class:"button tiny alert" do
                   i.fi-x
-
          
   br
 
