@@ -6,40 +6,6 @@ class PapersController < ApplicationController
   end
 
   #
-  # 締め処理
-  #
-  def freeze_paper
-    
-    ActiveRecord::Base.transaction do
-      # init
-      # @attendances.update_all(["freezed = ?",true])
-
-      # init true
-      # create_attendances true
-    end
-
-    redirect_to ({action: :index}), :notice => '締め処理を完了しました。'
-    
-  rescue => e
-    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
-  end
-
-  #
-  # 締め取消し処理
-  #
-  def unfreeze
-    ActiveRecord::Base.transaction do
-      # init
-      # @attendances.update_all(["freezed = ?",false])
-    end
-
-    redirect_to ({action: :index}), :notice => '締め処理を取り消しました。'
-
-  rescue => e
-    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
-  end
-
-  #
   # 印刷処理
   #
   def print
@@ -57,6 +23,42 @@ class PapersController < ApplicationController
   end
 
   #
+  # 締め処理
+  #
+  def freeze_up
+    
+    ActiveRecord::Base.transaction do
+      freeze_up_proc
+      # init
+      # @attendances.update_all(["freezed = ?",true])
+
+      # init true
+      # create_attendances true
+    end
+
+    redirect_to ({action: :index_freeze}), :notice => '締め処理を完了しました。'
+    
+  rescue => e
+    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
+  end
+
+  #
+  # 締め取消し処理
+  #
+  def cancel_freeze
+    ActiveRecord::Base.transaction do
+      cancel_freeze_proc
+      # init
+      # @attendances.update_all(["freezed = ?",false])
+    end
+
+    redirect_to ({action: :index_freeze}), :notice => '締め処理を取り消しました。'
+
+  rescue => e
+    render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
+  end
+
+  #
   # 上長承認処理
   #
   def approve
@@ -66,8 +68,8 @@ class PapersController < ApplicationController
   #
   # 上長破棄処理
   #
-  def discard
-    discard_proc
+  def cancel_approval
+    cancel_approval_proc
   end
 
   #
@@ -87,9 +89,9 @@ class PapersController < ApplicationController
   #
   # 本人未確認処理
   #
-  def miss_check
+  def cancel_check
     ActiveRecord::Base.transaction do
-      miss_check_proc
+      cancel_check_proc
     end
 
     redirect_to ({action: :index}), :notice => '本人確認を取り消しました。'
@@ -101,25 +103,25 @@ class PapersController < ApplicationController
 
   protected
 
-  def freeze_proc
-  end
-
-  def unfreeze_proc
-  end
-
   def print_proc
   end
   
+  def freeze_up_proc
+  end
+
+  def cancel_freeze_proc
+  end
+
   def approve_proc
   end
   
-  def discard_proc
+  def cancel_approval_proc
   end
   
   def check_proc
   end
 
-  def miss_check_proc
+  def cancel_check_proc
   end
   
   #
