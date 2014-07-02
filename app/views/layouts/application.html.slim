@@ -12,7 +12,7 @@ html lang="en"
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tag
     = render 'layouts/shim'
-
+    = javascript_include_tag "application"
   body
     = render 'layouts/header'
 
@@ -28,5 +28,5 @@ html lang="en"
     = render 'layouts/footer'
     = debug(params) if Rails.env.development?
     = debug(current_user) if Rails.env.development?
-    = javascript_include_tag "application"
+    
 
