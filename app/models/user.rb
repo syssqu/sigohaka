@@ -56,9 +56,11 @@ class User < ActiveRecord::Base
 
 
   validates :current_password, presence: true, on: :update, if: "self.update_target == 'password'"
-  validate :authenticate, unless: "self.update_target.blank?"
+  validate :authenticate, if: "self.update_target == 'password'"
   
   def authenticate
+    return if self.current_password.blank?
+    
     user = User.find_for_authentication(id: self.id)
     unless user.valid_password?(self.current_password)
       errors.add(:current_password, 'が不正です。')
