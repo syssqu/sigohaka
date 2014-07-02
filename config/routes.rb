@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :summary_attendances do
     collection do
       get 'print'
+      get 'data_make'
     end
   end
 
@@ -34,14 +35,26 @@ Rails.application.routes.draw do
   resources :projects
   
   resources :transportation_expresses do
-     collection do
+    collection do
       post 'transportation_confirm'
       get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'freeze_up'
+      get 'cancel_freeze'
+      get 'approve'
+      get 'cancel_approval'
     end
   end
-  #  resource :transportation_expresses, only: [] do
-  #   get :print
-  # end
+  # match '/freeze_up', to:'transportation_expresses#freeze_up', via: :get
+  # match '/cancel_freeze', to:'transportation_expresses#cancel_freeze', via: :get
+  # match '/approve', to:'transportation_expresses#approve', via: :get
+  # match '/cancel_approval', to:'transportation_expresses#cancel_approval', via: :get
+  # # match '/check', to:'transportation_expresses#check', via: :get
+  # match '/cancel_check', to:'transportation_expresses#cancel_check', via: :get
+  # #  resource :transportation_expresses, only: [] do
+  # #   get :print
+  # # end
 
   resource :vacation_requests, only:[] do
     get :print
@@ -66,17 +79,28 @@ Rails.application.routes.draw do
 
   resources :kinmu_patterns
   resources :sections
-  resources :attendances, only:[:index, :new, :create, :edit, :update]
+  resources :attendances, only:[:index, :new, :create, :edit, :update] do
+    collection do
+      get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'freeze_up'
+      get 'cancel_freeze'
+      get 'approve'
+      get 'cancel_approval'
+    end
+  end
   match '/init_attendances', to:'attendances#init_attendances', via: :get
   match '/calculate_attendance', to:'attendances#calculate', via: :get
   match '/input_attendance_time', to:'attendances#input_attendance_time', via: :get
 
-  match '/freeze_up', to:'attendances#freeze_up', via: :get
-  match '/cancel_freeze', to:'attendances#cancel_freeze', via: :get
-  match '/approve', to:'attendances#approve', via: :get
-  match '/cancel_approval', to:'attendances#cancel_approval', via: :get
-  match '/check', to:'attendances#check', via: :get
-  match '/cancel_check', to:'attendances#cancel_check', via: :get
+  # match '/freeze_up', to:'attendances#freeze_up', via: :get
+  # match '/cancel_freeze', to:'attendances#cancel_freeze', via: :get
+  # match '/approve', to:'attendances#approve', via: :get
+  # match '/cancel_approval', to:'attendances#cancel_approval', via: :get
+  # match '/check', to:'attendances#check', via: :get
+  # match '/cancel_check', to:'attendances#cancel_check', via: :get
+
 
   # match '/data_clear', to:'attendances#clear', via: :get
   

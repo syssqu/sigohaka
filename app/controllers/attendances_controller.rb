@@ -19,7 +19,7 @@ class AttendancesController < PapersController
     create_attendances
 
     session[:years] = "#{@nendo}#{@gatudo}"
-
+    logger.debug("session_years"+session[:years])
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
@@ -74,11 +74,11 @@ class AttendancesController < PapersController
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
-    if params[:attendance]['start_time(4i)'.to_sym].blank? or params[:attendance]['start_time(5i)'.to_sym].blank?
+    if params[:paper]['start_time(4i)'.to_sym].blank? or params[:paper]['start_time(5i)'.to_sym].blank?
       @attendance.is_blank_start_time = true
     end
 
-    if params[:attendance]['end_time(4i)'.to_sym].blank? or params[:attendance]['end_time(5i)'.to_sym].blank?
+    if params[:paper]['end_time(4i)'.to_sym].blank? or params[:paper]['end_time(5i)'.to_sym].blank?
       @attendance.is_blank_end_time = true
     end
     
@@ -233,7 +233,7 @@ class AttendancesController < PapersController
   def init(freezed=false)
 
     if changed_attendance_years?
-      session[:years] = params[:attendance][:years]
+      session[:years] = params[:paper][:years]
     end
 
     @attendance_years = get_years(current_user.attendances, freezed)
@@ -359,7 +359,7 @@ class AttendancesController < PapersController
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
   def changed_attendance_years?
-    return ! params[:attendance].nil?
+    return ! params[:paper].nil?
   end
 
   # 勤怠その他を作成します
