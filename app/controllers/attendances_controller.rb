@@ -74,11 +74,11 @@ class AttendancesController < PapersController
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
-    if params[:paper]['start_time(4i)'.to_sym].blank? or params[:paper]['start_time(5i)'.to_sym].blank?
+    if params[:attendance]['start_time(4i)'.to_sym].blank? or params[:attendance]['start_time(5i)'.to_sym].blank?
       @attendance.is_blank_start_time = true
     end
 
-    if params[:paper]['end_time(4i)'.to_sym].blank? or params[:paper]['end_time(5i)'.to_sym].blank?
+    if params[:attendance]['end_time(4i)'.to_sym].blank? or params[:attendance]['end_time(5i)'.to_sym].blank?
       @attendance.is_blank_end_time = true
     end
     
@@ -288,7 +288,7 @@ class AttendancesController < PapersController
         break
       end
     end
-
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     create_years_collection current_user.attendances, freezed
   end
 

@@ -1,4 +1,5 @@
 # 一覧ページで年月度が変更された際に表示を切り替える
+
 $("select#paper_years").change ->
   $("form").submit();
 
