@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
     REGULAR = "regular"
   end
 
+  before_save do
+    if self.role.nil?
+      self.role = "regular"
+    end
+  end
   belongs_to :section
   
   has_many :projects

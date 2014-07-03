@@ -3,28 +3,73 @@
 /* =============================================================================
    交通費精算書(一覧)
    ========================================================================== */
-article.transport_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
-article.transport_index table th{padding:5px 5px;text-align: center;font-size:12px;}
-article.transport_index table td{padding:2px 0px !important;min-width: 40px;font-size:12px;}
+/*article.transport_index table{ border-spacing: 0;padding: 0px;max-width: 800px;}
+article.transport_index table tr th{padding:5px 5px!important;text-align: center;font-size:12px;}
+article.transport_index table tr td{padding:2px 0px !important;min-width: 40px;font-size:12px;}
 article.transport_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.transport_index select {display: inline-block;width:50%;}*/
+
+article.transport_index span{margin:0px;color:red;}
+
+article.transport_index table{border-collapse: collapse;border-spacing: 0;}
+article.transport_index table tr th {font-size:12px;}
+article.transport_index table tr th{padding:5px 5px !important;}
+article.transport_index table tr td {font-size:12px;}
+article.transport_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
+article.transport_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.transport_ table tr td.bg_gray{background-color:#9F9687 !important;}
 article.transport_index select {display: inline-block;width:50%;}
 
+article.transport_index #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.transport_index #paper_header table#paper_project table {border:none;}
+article.transport_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.transport_index #paper_header table#paper_project td strong{color:#6E6E6E;}
+article.transport_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+article.transport_index #attendance_nengetu{width:240px;text-align:center;}
+article.transport_index #paper_header table#paper_project{margin-bottom:0px;}
 
+article.transport_index .main {max-width: 1080px;}
+article.transport_index .main tr td {text-align: center;padding: 0px !important;}
+article.transport_index .main tr th {text-align: center;padding: 5px 2px !important;border: solid 1px;border-color: lightgray;}
+article.transport_index .main tr td {border: solid 1px;border-color: lightgray;}
+
+
+article {padding-left:5px;}
+
+
+article.transport_index label{padding-right: 20px;}
+
+article.transport_index .button.tiny.radius a{color:white;}
+article.transport_index .button.tiny.radius a:hover{background:none;}
+
+
+/*
 #transport_header{width:755px;}
 #transport_header table#transport_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
 #transport_header table#transport_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
-#transport_header table#transport_project td strong{color:#6E6E6E;}
+#transport_header table#transport_project td strong{color:#6E6E6E;}*/
 /* =============================================================================
-   交通費精算書(編集)
+   勤務状況報告書(編集)
    ========================================================================== */
-article.transport_edit select {display: inline-block;width:45%;}
+article.transport_edit select {display: inline-block;width:10%;}
+article.transport_edit select#transportation_express_koutu_date_1i{display: inline-block;width: 20%;}
+article.transport_edit select#transport_pattern {display: inline-block;width:35%;}
+article.transport_edit .kubun{padding-right:10px;}
+article.transport_edit table#hours{border:0px;}
+article.transport_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
+article.transport_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
+
+article.transport_edit input{margin-bottom:0px !important;}
+article.transport_edit .button{margin-bottom:0px;}
 /* =============================================================================
    交通費精算書(PDF)
    ========================================================================== */
-article.transport_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
+article.transport_print table{table-layout: fixed;border-spacing: 0;border-collapse: collapse;padding: 0px;}
 article.transport_print .hyou{table-layout: fixed !important;border:3px solid;}
 article.transport_print .hyou tr td{background-color:#fff;border:1px solid black;font-size:10px;height: 40px;padding:0px;padding-left:2px;padding-right: 2px;}
 article.transport_print .hyou tr.title td{font-size: 14px;padding-bottom: 0px !important;padding-top: 8px !important;font-weight:bold;height: 10px;font-family: ＭＳ Ｐ明朝;text-align:center;}
+
+article.transport_print table tr td,article.transport_print th,article.transport_print table {font-size: 12px;border:none;background-color: #FFF;}
 
 article.transport_print table tr .hanko{text-align: center;border:1px solid;padding-bottom: 0px;padding-top: 5px;}
 article.transport_print table tr .head{text-align: left;border-bottom:1px solid;padding-bottom: 0px;}

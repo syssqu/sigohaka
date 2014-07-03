@@ -40,8 +40,7 @@ Rails.application.routes.draw do
       get 'print'
       get 'check'
       get 'cancel_check'
-      get 'freeze_up'
-      get 'cancel_freeze'
+
       get 'approve'
       get 'cancel_approval'
     end
@@ -84,8 +83,7 @@ Rails.application.routes.draw do
       get 'print'
       get 'check'
       get 'cancel_check'
-      get 'freeze_up'
-      get 'cancel_freeze'
+
       get 'approve'
       get 'cancel_approval'
     end
@@ -94,8 +92,8 @@ Rails.application.routes.draw do
   match '/calculate_attendance', to:'attendances#calculate', via: :get
   match '/input_attendance_time', to:'attendances#input_attendance_time', via: :get
 
-  # match '/freeze_up', to:'attendances#freeze_up', via: :get
-  # match '/cancel_freeze', to:'attendances#cancel_freeze', via: :get
+  match '/freeze_up', to:'papers#freeze_up', via: :get
+  match '/cancel_freeze', to:'papers#cancel_freeze', via: :get
   # match '/approve', to:'attendances#approve', via: :get
   # match '/cancel_approval', to:'attendances#cancel_approval', via: :get
   # match '/check', to:'attendances#check', via: :get
