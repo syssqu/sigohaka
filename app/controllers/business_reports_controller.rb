@@ -13,6 +13,8 @@ class BusinessReportsController < ApplicationController
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    #group byにidを追加しないとheroku上でエラーとなったため追加した。でもこれだときちんと動かないよね？
     year_month_set = current_user.attendances.group('id, year, month')
     @nengatudo_set = []
     year_month_set.each do |year_month|
