@@ -1,7 +1,7 @@
 class QualificationAllowance < ActiveRecord::Base
 	belongs_to :user
 
-  def self.item_choices
+  ITEM = 
     [["ITストラテジスト","ITストラテジスト"],
      ["システム監査技術者","システム監査技術者"],
      ["システムアーキテクト","システムアーキテクト"],
@@ -14,27 +14,23 @@ class QualificationAllowance < ActiveRecord::Base
      ["ITサービスマネーシャー","ITサービスマネーシャー"],
      ["基本情報技術者","基本情報技術者"],
      ["ITパスポート","ITパスポート"]]
-  end
 
-  def self.number_choices
-    [["A1","A1"],
-     ["A2","A2"],
-     ["A3","A3"],
-     ["A4","A4"],
-     ["A5","A5"],
-     ["A6","A6"],
-     ["A7","A7"],
-     ["A8","A8"],
-     ["A9","A9"],
-     ["A10","A10"],
-     ["A11","A11"],
-     ["A12","A12"]]
-  end
+  NUMBER = [["A1","A1"],
+            ["A2","A2"],
+            ["A3","A3"],
+            ["A4","A4"],
+            ["A5","A5"],
+            ["A6","A6"],
+            ["A7","A7"],
+            ["A8","A8"],
+            ["A9","A9"],
+            ["A10","A10"],
+            ["A11","A11"],
+            ["A12","A12"]]
 
-  def self.money_choices
+  MONEY = 
     [["A1~A3 : 30000 円","30000"],
      ["A4~A10 : 20000 円","20000"],
      ["A11 : 10000 円","10000"],
      ["A12 : 3000 円","3000"]]
-  end
 end
