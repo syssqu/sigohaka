@@ -7,12 +7,13 @@
           li = message
   .row
     .large-12.columns
-      / .field
-      /   = f.label :user_id
-      /   = f.number_field :user_id
+      
+
       .field
         label 月/日
         = f.date_select :koutu_date
+        = f.hidden_field :year,value:@nendo if @transportation_express.year.nil?
+        = f.hidden_field :month,value:@gatudo if @transportation_express.month.nil?
       .field
         label 行先
         = f.text_field :destination
@@ -31,10 +32,5 @@
       / .field
       /   = f.label :sum
       /   = f.number_field :sum
-      / .field
-      /   = f.label :year
-      /   = f.text_field :year
-      / .field
-      /   = f.label :month
-      /   = f.text_field :month
+      
       .actions = f.submit 'Save'

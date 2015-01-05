@@ -12,7 +12,7 @@ class PapersController < ApplicationController
     print_proc
     
     respond_to do |format|
-      format.html { redirect_to print_attendances_path(format: :pdf, debug: 1)}
+      format.html { redirect_to :action=> 'print',format: :pdf, debug: 1}
       format.pdf do
         render pdf: @title,
                encoding: 'UTF-8',
