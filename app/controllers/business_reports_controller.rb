@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class BusinessReportsController < ApplicationController
   before_action :set_business_report, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
@@ -12,7 +13,7 @@ class BusinessReportsController < ApplicationController
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    year_month_set = current_user.attendances.group('year, month')
+    year_month_set = current_user.attendances.group('id, year, month')
     @nengatudo_set = []
     year_month_set.each do |year_month|
       # nengatudo = { key: year_month[:year] + "/" + year_month[:month], value: year_month[:year] + "年" + year_month[:month] + "月度"}
