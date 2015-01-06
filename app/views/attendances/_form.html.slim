@@ -2,12 +2,7 @@
   .large-12.columns
     / = form_for [ :confirm, @attendance ] do |f|
     = form_for @attendance do |f|
-      - if @attendance.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@attendance.errors.count, "error")} prohibited this attendance from being saved:"
-          ul
-            - @attendance.errors.full_messages.each do |message|
-              li = message
+      = render 'shared/error_messages', object: f.object
 
       = f.hidden_field :id, id:"target_id"
       = f.hidden_field :year

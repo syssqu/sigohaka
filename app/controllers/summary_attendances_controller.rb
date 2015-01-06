@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 class SummaryAttendancesController < ApplicationController
   before_action :set_summary_attendance, only: [:show, :edit, :update, :destroy]
@@ -119,7 +120,7 @@ class SummaryAttendancesController < ApplicationController
     if @nen_gatudo.nil?
       attendance_years = Date.today
     else
-      attendance_years = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..-1].to_i, 1)
+      attendance_years = Date.new(@nen_gatudo[0..3].to_i, @nen_gatudo[4..5].to_i, 1)
     end
 
     @nendo = get_nendo(attendance_years)
@@ -226,7 +227,7 @@ class SummaryAttendancesController < ApplicationController
         return Date.today
       else
         temp = nen_gatudo[:nen_gatudo]
-        return Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+        return Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       end
     end
     def get_attendance_others_info
