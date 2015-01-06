@@ -1,4 +1,4 @@
-selectedChange('attendance_start_time_4i', <%= @attendance.start_time.hour %>, <%= @time_blank %>);
-selectedChange('attendance_start_time_5i', <%= @attendance.start_time.min %>, <%= @time_blank %>);
-selectedChange('attendance_end_time_4i', <%= @attendance.end_time.hour %>, <%= @time_blank %>);
-selectedChange('attendance_end_time_5i', <%= @attendance.end_time.min %>, <%= @time_blank %>);
+selectedChange('attendance_start_time_4i', <%= @attendance.start_time.nil? ? "" : @attendance.start_time.hour %>, <%= @time_blank %>);
+selectedChange('attendance_start_time_5i', <%= @attendance.start_time.nil? ? "" : @attendance.start_time.min %>, <%= @time_blank %>);
+selectedChange('attendance_end_time_4i', <%= @attendance.end_time.nil? ? "" : @attendance.end_time.hour %>, <%= @time_blank %>);
+selectedChange('attendance_end_time_5i', <%= @attendance.end_time.nil? ? "" : @attendance.end_time.min %>, <%= @time_blank %>);

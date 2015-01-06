@@ -15,13 +15,13 @@ $("#attendance_pattern").change ->
     success: (data) ->
       return data
     error: (XMLHttpRequest, textStatus, errorThrown) ->
+
       msg = "--- Error Status ---"
       msg = msg + "<BR>" + "status:" + XMLHttpRequest.status
       msg = msg + "<BR>" + "statusText:" + XMLHttpRequest.statusText
       msg = msg + "<BR>" + "textStatus:" + textStatus
       msg = msg + "<BR>" + "errorThrown:" + errorThrown
-      for i of errorThrown
-        msg = msg + "<BR>" + "error " + i + ":" + errorThrown[i]
+
       document.open()
       document.write msg
       document.close()
