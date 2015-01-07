@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   resources :commutes do
     collection do
       get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
     end
   end
   resources :reasons
@@ -40,7 +44,6 @@ Rails.application.routes.draw do
       get 'print'
       get 'check'
       get 'cancel_check'
-
       get 'approve'
       get 'cancel_approval'
     end
