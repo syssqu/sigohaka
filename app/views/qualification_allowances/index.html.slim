@@ -14,13 +14,15 @@ article.qualification_allowance_index
           td 氏名:
           td #{current_user.family_name} #{current_user.first_name}
 
+|&nbsp;&nbsp;&nbsp;
 = link_to "PDF出力", print_qualification_allowances_path, class: "button tiny radius"
+|&nbsp;&nbsp;&nbsp;
 = link_to '新規作成', new_qualification_allowance_path, class: "button tiny radius"
 table
   thead
     tr
       / th User
-      th 資格所得年月日
+      th 資格取得年月日
       th No.
       th 資格取得項目
       th 支給金額

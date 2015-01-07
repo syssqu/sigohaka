@@ -19,7 +19,7 @@ class QualificationAllowancesController < ApplicationController
     #   # @nengatudo_set << nengatudo
     #   @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
     # end
-
+    @project = get_project
     @qualification_allowances = current_user.qualification_allowances.all
   end
 
@@ -47,7 +47,7 @@ class QualificationAllowancesController < ApplicationController
 
     respond_to do |format|
       if @qualification_allowance.save
-        format.html { redirect_to @qualification_allowance, notice: '登録しました' }
+        format.html { redirect_to @qualification_allowance, notice: '資格手当申請書を登録しました' }
         format.json { render :show, status: :created, location: @qualification_allowance }
       else
         format.html { render :new }
@@ -61,7 +61,7 @@ class QualificationAllowancesController < ApplicationController
   def update
     respond_to do |format|
       if @qualification_allowance.update(qualification_allowance_params)
-        format.html { redirect_to @qualification_allowance, notice: '更新しました' }
+        format.html { redirect_to qualification_allowances_url, notice: '資格手当申請書を更新しました' }
         format.json { render :show, status: :ok, location: @qualification_allowance }
       else
         format.html { render :edit }
@@ -75,7 +75,7 @@ class QualificationAllowancesController < ApplicationController
   def destroy
     @qualification_allowance.destroy
     respond_to do |format|
-      format.html { redirect_to qualification_allowances_url, notice: '削除しました' }
+      format.html { redirect_to qualification_allowances_url, notice: '資格手当申請書を削除しました' }
       format.json { head :no_content }
     end
   end
@@ -95,7 +95,7 @@ class QualificationAllowancesController < ApplicationController
     @qualification_allowances = QualificationAllowance.all
     @qualification_allowances = current_user.qualification_allowances.all
     @project = current_user.projects.find_by(active: true)
-    @date=@qualification_allowances.maximum(:updated_at ,:include)
+    @date = @qualification_allowances.maximum(:updated_at ,:include)
 
     @qualification_allowance = current_user.qualification_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     

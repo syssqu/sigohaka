@@ -36,7 +36,7 @@
         td.text-center = f.text_field :self_value
         td = f.text_area :self_reason
     tr
-      h7.center
+      h7.center style="font-size:14px;"
        | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
   tbody
     h7#business_report_headline
@@ -85,5 +85,5 @@
 
   .row
     .large-7.large-centered.columns
-      = f.submit '登録', class: "button radius"
-      = link_to '戻る', business_reports_path, class: "button radius gray"
+      = f.submit '登 録', class: "button tiny radius"
+      = link_to '戻 る', business_reports_path, class: "button tiny radius gray"

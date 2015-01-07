@@ -45,7 +45,7 @@ class BusinessReportsController < ApplicationController
 
     respond_to do |format|
       if @business_report.save
-        format.html { redirect_to @business_report, notice: '業務報告書を作成しました' }
+        format.html { redirect_to business_reports_url, notice: '業務報告書を作成しました' }
         format.json { render :show, status: :created, location: @business_report }
       else
         format.html { render :new }
