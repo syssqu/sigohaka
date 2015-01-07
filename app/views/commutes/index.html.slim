@@ -14,9 +14,9 @@ article.commute_index
 
       table style="border:none;"
         tr align="left" valign="top"
-          td style="border:none;" width="310"
+          td style="border:none;" width="290"
 
-            table.sub style="border:none;" width="260"
+            table.sub style="border:none;padding-right:10px;" width="260"
               tr
                 td width="70" 現住所
                 td colspan="2" width="200" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
@@ -56,17 +56,17 @@ article.commute_index
               tr
                 td.in 届出理由<br>（その他）
                 td.in colspan="2" = @reasons.reason_text if ! @reasons.nil?
-          td style="border:none;" width="1100"
-            .row
-              table.main style="border:solid 2px;"
+          td style="border:none;"
+            div
+              table.main width="650"
                 thead
                   tr
-                    th 交通機関名称
-                    th 利用区間１(出発)
-                    th 利用区間２(到着)
-                    th １ヶ月の定期金額
-                    th
-                    th
+                    th width="90"交通機関名称
+                    th width="200"利用区間１(出発)
+                    th width="200"利用区間２(到着)
+                    th width="110"１ヶ月の定期金額
+                    th width="30"
+                    th width="30"
 
                 tbody
                   - @commutes.each do |commute|
@@ -77,7 +77,7 @@ article.commute_index
                       td#money = commute.money.to_s+'円'
                       td = link_to edit_commute_path(commute) , class:"button tiny radius" do
                         i.fi-plus
-                      td = link_to commute, data: {:confirm => 'Are you sure?'}, :method => :delete ,class: "button tiny alert" do
+                      td = link_to commute, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete ,class: "button tiny alert" do
                         i.fi-x
                   tr
                     td#kei colspan="3" 計
