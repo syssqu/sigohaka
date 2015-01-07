@@ -207,8 +207,7 @@ class TransportationExpressesController < PapersController
     @project = get_project
 
     @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-
-    
+ 
   end
 
 
