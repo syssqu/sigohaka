@@ -41,6 +41,8 @@ article.commute_index .button.tiny.radius a:hover{background:none;}
 article.commute_index .sub tr td{border:solid 1px ;border-color: lightgray;padding:5px 2px !important;}
 article.commute_index .sub .in{/*background-color: #FFBEDA;*/}
 article.commute_index .main tr td{border:solid 1px;border-color: lightgray;padding:5px 2px !important;}
+article.commute_index .main tr th{border:solid 1px;border-color: lightgray;padding:5px 2px !important;}
+
 // #transport_header{width:755px;font-size:10px;}
 // #commute_header table#commute_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
 // #commute_header table#commute_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
@@ -90,7 +92,7 @@ article.commute_print .title #day{border-bottom: solid 1px;font-size: 13px;}
 article.commute_print .user td{border:solid 1px;}
 article.commute_print .user #ten{border-bottom:2px dashed ;}
 article.commute_print .user #zyusyo{border-bottom:none;font-size: 12px;text-align: left;}
-article.commute_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: center;}
+article.commute_print .user #phone{border-top:none;border-left:none;font-size: 11px;text-align: center;}
 article.commute_print .user #reason{padding:5px;text-align: left;}
 article.commute_print .user span{color: #000;font-size: 11px;}
 article.commute_print .user span#ok{font-size: 11px;border: solid 2px;border-radius:70em 70em 70em 70em;}

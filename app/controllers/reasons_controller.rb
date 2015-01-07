@@ -28,7 +28,7 @@ class ReasonsController < PapersController
   def update
     respond_to do |format|
       if @reason.update(reason_params)
-        format.html { redirect_to @reason, notice: 'Commute was successfully updated.' }
+        format.html { redirect_to commutes_path, notice: '編集を完了しました。' }
         format.json { render :show, status: :ok, location: @reason }
       else
         format.html { render :edit }

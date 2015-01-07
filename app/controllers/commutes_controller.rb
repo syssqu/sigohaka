@@ -97,7 +97,7 @@ class CommutesController < PapersController
 
     respond_to do |format|
       if @commute.save
-        format.html { redirect_to @commute, notice: 'Commute was successfully created.' }
+        format.html { redirect_to commutes_url, notice: 'データの登録を完了しました。' }
         format.json { render :show, status: :created, location: @commute }
       else
         format.html { render :new }
@@ -116,7 +116,7 @@ class CommutesController < PapersController
 
     init true
     create_commutes true
-    # create_reasons      二つあると月度が増える
+    # create_reasons      二つあると二月分、月度が増える
   end
 
   #
@@ -148,7 +148,7 @@ class CommutesController < PapersController
   def update
     respond_to do |format|
       if @commute.update(commute_params)
-        format.html { redirect_to @commute, notice: 'Commute was successfully updated.' }
+        format.html { redirect_to commutes_url, notice: '編集を完了しました。' }
         format.json { render :show, status: :ok, location: @commute }
       else
         format.html { render :edit }
@@ -162,7 +162,7 @@ class CommutesController < PapersController
   def destroy
     @commute.destroy
     respond_to do |format|
-      format.html { redirect_to commutes_url, notice: 'Commute was successfully destroyed.' }
+      format.html { redirect_to commutes_url, notice: 'データを削除しました。' }
       format.json { head :no_content }
     end
   end
