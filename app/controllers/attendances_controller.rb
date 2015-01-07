@@ -301,6 +301,7 @@ class AttendancesController < PapersController
       if @attendance.save
         target_date = target_date.tomorrow
       else
+        logger.debug("勤怠登録処理エラー");
         break
       end
     end
