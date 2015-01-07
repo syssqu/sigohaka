@@ -3,7 +3,7 @@ article.business_report_print
     table#business_report_project.left
       tbody
         tr
-          td width="80px;" プロジェクト名:
+          td width="100px;" プロジェクト名:
           td = truncate(@project.summary, length:20) if ! @project.nil?
         tr
           td 所属:
@@ -13,7 +13,7 @@ article.business_report_print
           td #{current_user.family_name} #{current_user.first_name}
     div.left
       h5#business_report_title 業務報告書
-      #business_report_nengetu #{seireki2wareki(2014, 6, 1)} #{@gatudo}月度
+      #business_report_nengetu #{seireki2wareki(@nendo, @gatudo, 1)} #{@gatudo}月度
     table#business_report_inkan.right border="1"
       tbody
         tr
@@ -56,7 +56,7 @@ article.business_report_print
         td.text-center #{business_report.self_value}
         td #{business_report.self_reason}
 	  tr
-	    h7.center
+	    h7.center style="font-size:13px;"
 	     | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
   tbody
     h7#business_report_headline
@@ -104,4 +104,4 @@ article.business_report_print
         td #{business_report.note}
   tbody
     h7#business_report_footer 
-     | 株式会社　システム・スクゥェアー
+     | &nbsp;&nbsp;&nbsp;株式会社　システム・スクゥェアー
