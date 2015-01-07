@@ -14,19 +14,19 @@ class Attendance < ActiveRecord::Base
   validates :month, presence: true
   validates :user_id, presence: true
 
-  validate :check_pattern_and_time
+  validate :check_pattern_and_time, on: :update
   
   def check_pattern_and_time
 
     
-    Rails.logger.debug("start_time blank is " + self.is_blank_start_time.to_s)
-    Rails.logger.debug("end_time blank is " + self.is_blank_end_time.to_s)
+    # Rails.logger.debug("start_time blank is " + self.is_blank_start_time.to_s)
+    # Rails.logger.debug("end_time blank is " + self.is_blank_end_time.to_s)
 
     
-    Rails.logger.debug("start_time is " + self.start_time.to_s)
-    Rails.logger.debug("end_time is " + self.end_time.to_s)
+    # Rails.logger.debug("start_time is " + self.start_time.to_s)
+    # Rails.logger.debug("end_time is " + self.end_time.to_s)
 
-    Rails.logger.debug("pattern blank is " + pattern.blank?.to_s)
+    # Rails.logger.debug("pattern blank is " + pattern.blank?.to_s)
     
     if self.is_blank_start_time and ! self.is_blank_end_time
       errors.add(:start_time, '出退勤時刻のうち退勤時刻のみ入力することはできません。')
