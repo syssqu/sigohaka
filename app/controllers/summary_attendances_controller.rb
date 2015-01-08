@@ -98,19 +98,14 @@ class SummaryAttendancesController < ApplicationController
     @pattern = KinmuPattern.find(params[:pattern])
 
     
-    params[:start_time_hour]
-    params[:start_time_minute]
-    params[:end_time_hour]
-    params[:end_time_minute]
+    params[:start_time]
+    params[:end_time]
 
 
     Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
     Rails.logger.info("input_start_date: " + @pattern.start_time.to_s)
 
-    
     @attendance.over_time = 0
-    
-
   end
 
   def print
