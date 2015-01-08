@@ -75,13 +75,11 @@ class AttendancesController < PapersController
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
-    #if params[:paper]['start_time(4i)'.to_sym].blank? or params[:paper]['start_time(5i)'.to_sym].blank?
-    if params['start_time(4i)'.to_sym].blank? or params['start_time(5i)'.to_sym].blank?
+    if params[:attendance]['start_time'].blank?
       @attendance.is_blank_start_time = true
     end
 
-    #if params[:paper]['end_time(4i)'.to_sym].blank? or params[:paper]['end_time(5i)'.to_sym].blank?
-    if params['end_time(4i)'.to_sym].blank? or params['end_time(5i)'.to_sym].blank?
+    if params[:attendance]['end_time'].blank?
       @attendance.is_blank_end_time = true
     end
     
@@ -140,19 +138,17 @@ class AttendancesController < PapersController
   #
   def input_attendance_time
 
-    # @pattern = KinmuPattern.find_by(id: params[:pattern])
     temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
-    @time_blank = false
 
-    logger.debug "勤務パターン変更:1 " + temp_pattern.to_s
-    
     if temp_pattern.nil?
-      @time_blank = true
+      @attendance[:start_time] = "";
+      @attendance[:end_time] = "";
     else
-      @attendance.start_time = temp_pattern.start_time
-      @attendance.end_time = temp_pattern.end_time
+      # @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
+      # @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
+      @attendance[:start_time] = "22:22"
+      @attendance[:end_time] = "44:22"
     end
-
   end
 
   #
@@ -170,8 +166,8 @@ class AttendancesController < PapersController
     Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
     Rails.logger.info("pattern_end_date - pattern_start_date: " + (temp_pattern.end_time - temp_pattern.start_time).to_s)
 
-    attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time_hour], params[:start_time_minute], 0)
-    attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time_hour], params[:end_time_minute], 0)
+    attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
+    attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
 
     Rails.logger.info("input_start_date: " + attendance_start_time.to_s)
     Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
@@ -290,9 +286,10 @@ class AttendancesController < PapersController
       if holiday?(target_date)
         @attendance[:holiday] = "1"
       elsif ! current_user.kinmu_patterns.first.nil?
+
         @attendance[:pattern] = current_user.kinmu_patterns.first.code
-        @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
-        @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+        @attendance[:start_time] = current_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
+        @attendance[:end_time] = current_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
         @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
         @attendance[:holiday] = "0"
 
