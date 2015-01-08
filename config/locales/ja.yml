@@ -200,17 +200,9 @@ ja:
     errors:
       <<: *errors
 
-  activemodel:
-     models:
-       inquiry: お問い合わせ
-     attributes:
-       inquiry:
-         family_name: 氏名 ( 漢字 ) 姓
-         first_name: 氏名 ( 漢字 ) 名
-         kana_family_name: 氏名 ( フリガナ ) セイ
-         kana_first_name: 氏名 ( フリガナ ) メイ
-         company_name: 会社名
-         dep_name: 部署名 
-         mail: メールアドレス 
-         mail_confirmation: メールアドレス( 確認用 ) 
-         inquiry: お問い合わせ内容
+  activerecord:
+    models:
+      attendance: 勤怠
+    attributes:
+      attendance:
+        start_time: 開始時刻
