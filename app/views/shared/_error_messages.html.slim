@@ -3,7 +3,7 @@
     .alert-box.error.radius data-alert=""
       | #{object.errors.count}件のエラーがあります。
     .row
-      .large-10.columns
+      .large-12.columns
         ul.pricing-table
           - object.errors.full_messages.each do |msg|
             li.bullet-item.left

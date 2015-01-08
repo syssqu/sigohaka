@@ -2,12 +2,7 @@
   .large-12.columns
     / = form_for [ :confirm, @attendance ] do |f|
     = form_for @attendance do |f|
-      - if @attendance.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@attendance.errors.count, "error")} prohibited this attendance from being saved:"
-          ul
-            - @attendance.errors.full_messages.each do |message|
-              li = message
+      = render 'shared/error_messages', object: f.object
 
       = f.hidden_field :id, id:"target_id"
       = f.hidden_field :year
@@ -33,12 +28,11 @@
       .row
         .large-2.small-4.columns
           label.left.inline 出退勤
-        .large-6.large-pull-4.small-8.columns
-          = f.time_select :start_time, {minute_step: 15, include_blank: true}
-          |&nbsp;&nbsp;〜&nbsp;&nbsp;
-          = f.time_select :end_time, {minute_step: 15, include_blank: true}
-          |&nbsp;&nbsp;
-          
+        .large-1.small-3.columns
+          = f.text_field :start_time
+        .large-1.small-3.columns
+          = f.text_field :end_time
+        .large-7.small-2.columns
           #calculate.button.radius.tiny.success
             i.fi-check
             |自動計算

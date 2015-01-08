@@ -15,6 +15,7 @@ article.business_report_print
           td #{current_user.family_name} #{current_user.first_name}
 
 = link_to "PDF出力", print_business_reports_path, class: "button tiny radius"
+= link_to '新規作成', new_business_report_path, class: "button tiny radius"
 - @business_reports.each do |business_report|
   tbody
     tr
