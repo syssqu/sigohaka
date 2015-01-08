@@ -16,8 +16,12 @@ class TransportationExpressesController < PapersController
     # @project = current_user.projects.find_by(active: true)
     session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
-    @freezed = @transportation_expresses.first.freezed
-    create_years_collection current_user.transportation_expresses, @freezed
+    if !@transportation_expresses.blank?
+      @freezed = @transportation_expresses.first.freezed
+    else
+      @freezed = @transportation_expresses.first.freezed
+    end 
+    # create_years_collection current_user.transportation_expresses, @freezed
     # year = Date.today.year
     # month = Date.today.month
     # day = Date.today.day
@@ -45,12 +49,14 @@ class TransportationExpressesController < PapersController
 
     # =============
     @status = "本人未確認"
-    if @transportation_expresses.first.freezed
-      @status = "凍結中"
-    elsif @transportation_expresses.first.boss_approved
-      @status = "上長承認済み"
-    elsif @transportation_expresses.first.self_approved
-      @status = "本人確認済み"
+    unless @transportation_expresses.first.nil?
+      if @transportation_expresses.first.freezed
+        @status = "凍結中"
+      elsif @transportation_expresses.first.boss_approved
+        @status = "上長承認済み"
+      elsif @transportation_expresses.first.self_approved
+        @status = "本人確認済み"
+      end
     end
     # =============
   end
@@ -72,7 +78,7 @@ class TransportationExpressesController < PapersController
 
   def print_proc
      years = session[:years]
-
+     @sum = session[:sum]
     if years.nil?
       transportation_express_years = Date.today
     else
@@ -152,7 +158,7 @@ class TransportationExpressesController < PapersController
   def update
     respond_to do |format|
       if @transportation_express.update(transportation_express_params)
-        format.html { redirect_to @transportation_express, notice: 'Transportation express was successfully updated.' }
+        format.html { redirect_to transportation_expresses_path, notice: '更新しました' }
         format.json { render :show, status: :ok, location: @transportation_express }
       else
         format.html { render :edit }
@@ -167,7 +173,7 @@ class TransportationExpressesController < PapersController
   def destroy
     @transportation_express.destroy
     respond_to do |format|
-      format.html { redirect_to transportation_expresses_url, notice: 'Transportation express was successfully destroyed.' }
+      format.html { redirect_to transportation_expresses_url, notice: '削除しました' }
       format.json { head :no_content }
     end
   end
@@ -202,8 +208,7 @@ class TransportationExpressesController < PapersController
     @project = get_project
 
     @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-
-    
+ 
   end
 
 
@@ -227,8 +232,9 @@ class TransportationExpressesController < PapersController
         @transportation_expresses << @transportation_express
         target_date = target_date.tomorrow
       end
+      @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     end
-
+    create_years_collection current_user.transportation_expresses, freezed
   end
 
   #   def init(freezed=false)

@@ -9,17 +9,7 @@
           |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           u #{ @date.strftime("%Y年%_m月%_d日")} #{@holi_1} #{@holi_2} #{@holi_3} #{@holi_4}
         .large-4.columns
-      / table
-      /   tbody
-      /     tr
-      /       td プロジェクト名
-      /       td 
-      /     tr
-      /       td 所属
-      /       td = current_user.section.name
-      /     tr
-      /       td 氏名
-      /       td #{current_user.family_name} #{current_user.first_name}
+     
       table class="hyou" border="7" width="630" cellpadding="0"
         tr class="title"
           td width="55px"月/日
@@ -37,7 +27,7 @@
               td = truncate("#{transportation_express.transport}",:length=>8,:omission=>"…")
               td = truncate("#{'¥'+transportation_express.money.to_s}",:length=>11,:omission=>"…")
               td = truncate("#{transportation_express.note}",:length=>14,:omission=>"…")
-              / td = link_to 'Show', transportation_express
+             
           tr
             td style="text-align:center;font-size:14px;font-weight:bold;" colspan="3" 合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;計
             td
@@ -58,11 +48,11 @@
           td class="info" width="140px" #{current_user.section.name}
           td width="5px"
           td class="head" width="70px" 社員Ｎｏ
-          td colspan="2" class="info" width="150px"
+          td.head colspan="2" width="150px" #{current_user.employee_no}
         tr
-          td class="head" Ｐｒｏｊ
+          td class="head" Proj
           td class="info" = @project.summary if ! @project.nil? 
           td width="5px"
           td class="head" 氏名
           td class="info" #{current_user.family_name} #{current_user.first_name}
-          td class="info" ㊞
+          td.info = image_tag "#{current_user.imprint_id}.png", size: '40x40', class:"imprint"

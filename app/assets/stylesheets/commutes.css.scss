@@ -5,39 +5,105 @@
 //============================================================================
 //   通勤届　一覧
 //============================================================================
-article.commute_index table{table-layout: fixed; border-spacing: 0;border-collapse: collapse;padding: 0px; padding: 4px;max-width: 800px;}
-article.commute_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
-article.commute_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
-article.commute_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.commute_index table{ border-spacing: 0;border-collapse: collapse;padding: 0px;max-width: 1500px;}
+// article.commute_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
+// article.commute_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
+// article.commute_index table tr td .button {padding:4px !important;margin:0px !important;}
 article.commute_index #kei {text-align: right;}
 article.commute_index #money {text-align: right;}
 
-// #transport_header{width:755px;font-size:10px;}
-#commute_header table#commute_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
-#commute_header table#commute_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
-#commute_header table#commute_project td strong{color:#6E6E6E;}
+// ========================================
+article.commute_index span{margin:0px;color:red;}
 
+article.commute_index table{border-collapse: collapse;border-spacing: 0;}
+// article.commute_index table tr th {font-size:12px;}
+article.commute_index table tr th{font-size:12px;padding:5px 5px !important;}
+// article.commute_index table tr td {font-size:12px;}
+article.commute_index table tr td{font-size:12px;padding:2px 0px !important;height:24px !important;background-color:#fff;}
+article.commute_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.commute_ table tr td.bg_gray{background-color:#9F9687 !important;}
+article.commute_index select {display: inline-block;width:50%;}
+
+article.commute_index #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.commute_index #paper_header table#paper_project table {border:none;}
+article.commute_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.commute_index #paper_header table#paper_project td strong{color:#6E6E6E;}
+article.commute_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+article.commute_index #attendance_nengetu{width:240px;text-align:center;}
+article.commute_index #paper_header table#paper_project{margin-bottom:0px;}
+
+article.commute_index label{padding-right: 20px;}
+
+article.commute_index .button.tiny.radius a{color:white;}
+article.commute_index .button.tiny.radius a:hover{background:none;}
+
+// ========================================
+article.commute_index .sub tr td{border:solid 1px ;border-color: lightgray;padding:5px 2px !important;}
+article.commute_index .sub .in{/*background-color: #FFBEDA;*/}
+article.commute_index .main tr td{border:solid 1px;border-color: lightgray;padding:5px 2px !important;}
+article.commute_index .main tr th{border:solid 1px;border-color: lightgray;padding:5px 2px !important;}
+
+// #transport_header{width:755px;font-size:10px;}
+// #commute_header table#commute_project {border:none; width:230px;margin-right:60px;margin-top:10px;}
+// #commute_header table#commute_project td {border:none;background-color:#fff;border-bottom: 1px solid #ECECEC;font-size: 12px;padding:0px;}
+// #commute_header table#commute_project td strong{color:#6E6E6E;}
+
+
+/* =============================================================================
+   勤務状況報告書(編集)
+   ========================================================================== */
+article.commute_edit select {display: inline-block;width:10%;}
+article.commute_edit select#transportation_express_koutu_date_1i{display: inline-block;width: 20%;}
+article.commute_edit select#transport_pattern {display: inline-block;width:35%;}
+article.commute_edit .kubun{padding-right:10px;}
+article.commute_edit table#hours{border:0px;}
+article.commute_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
+article.commute_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
+
+article.commute_edit input{margin-bottom:0px !important;}
+article.commute_edit .button{margin-bottom:0px;}
 //============================================================================
 //   通勤届　PDF
 //============================================================================
-article.commute_print table{width:500px;border-spacing: 0;border-collapse: collapse;padding: 0px;border:none;background-color: #FFF;}
+article.commute_print table{
+	width:650px;
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0px;border:none;
+	background-color: #FFF;
+	margin-left: 25px;
+}
 article.commute_print table td{margin:0px;padding: 1px; text-align: center;}
-article.commute_print table #title{background-color: #DDE;font-size: 20px;border-bottom: solid 2px;}
-article.commute_print table #ate{text-align: center;font-size: 14px;border-bottom: solid 1px;width:100px;}
-article.commute_print table #day{border-bottom: solid 1px;font-size: 13px;}
+
+article.commute_print .title{
+	width:650px;
+	padding: 0px;
+	border:none;
+	background-color: #FFF;
+	margin-left: 25px;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+article.commute_print .title td{margin:0px; text-align: center;border-collapse: collapse;}
+article.commute_print .title #title{background-color: #DDE;font-size: 20px;border-bottom: solid 2px;width: 300px;}
+article.commute_print .title #ate{border-bottom: solid 1px;text-align: center;font-size: 14px;width:100px;}
+article.commute_print .title #day{border-bottom: solid 1px;font-size: 13px;}
 
 article.commute_print .user td{border:solid 1px;}
 article.commute_print .user #ten{border-bottom:2px dashed ;}
 article.commute_print .user #zyusyo{border-bottom:none;font-size: 12px;text-align: left;}
-article.commute_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: left;}
+article.commute_print .user #phone{border-top:none;border-left:none;font-size: 11px;text-align: center;}
 article.commute_print .user #reason{padding:5px;text-align: left;}
-article.commute_print .user span{color: #000;}
-article.commute_print .user span#ok{border: solid 2px;border-radius:70em 70em 70em 70em;}
+article.commute_print .user span{color: #000;font-size: 11px;}
+article.commute_print .user span#ok{font-size: 11px;border: solid 2px;border-radius:70em 70em 70em 70em;}
 
 
-article.commute_print .koutu td{font-size: 11px;border:solid 1px;}
+article.commute_print .koutu td{
+	font-size: 11px;
+	border:solid 1px;
+}
 article.commute_print table #coltitle td{font-size: 13px;}
 article.commute_print .koutu tr #yazirusi{width: 40px;font-size: 6px;border:none;border-bottom: solid 1px;}
-article.commute_print .koutu #kukan{border:none;border-bottom: solid 1px;}
-article.commute_print .koutu tr #money{text-align: right;}
+article.commute_print .koutu #kukan{width:120px;border:none;border-bottom: solid 1px;}
+article.commute_print .koutu tr #money{width:110px;text-align: right;}
 article.commute_print .koutu .nonborder{border: none;text-align: right;color: #00F;}
