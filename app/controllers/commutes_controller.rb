@@ -233,7 +233,7 @@ class CommutesController < PapersController
         target_date = target_date.tomorrow
       end
       @commutes = current_user.commutes.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-      # @reasons = current_user.reasons.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+      @reasons = current_user.reasons.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     end
     create_years_collection current_user.commutes, freezed
 
