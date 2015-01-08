@@ -10,61 +10,43 @@ article.transport_index
         |交通費精算書
 
       = render partial: 'shared/paper_proc', locals: { target: "transportation_expresses", years: @years, project: @project, status: @status }
-      / .row
-      /   .large-12.columns
-
-      /     h2 交通費精算書
-
-      /     #transport_header
-      /       table#transport_project
-      /         tbody
-      /           tr
-      /             td プロジェクト名:
-      /             td = truncate(@project.summary, length:20) if ! @project.nil?
-      /           tr
-      /             td 所属:
-      /             td = current_user.section.name if ! current_user.section.nil?
-      /           tr
-      /             td 氏名:
-      /             td #{current_user.family_name} #{current_user.first_name}
-      /     .row
-      /       .small-4.columns
-      /         |&nbsp;&nbsp;&nbsp;
-      /         = link_to '新規追加', new_transportation_express_path, class: "button tiny radius"
-      /         |&nbsp;&nbsp;&nbsp;
-      /         = link_to print_transportation_expresses_path, class:"button tiny radius" do
-      /           i.fi-print
-      /           |印刷用画面
-      / .row
-      /   .small-2.columns.push-6.columns
-      /     = @date.strftime("%Y年%_m月%_d日")
-      table
+      
+      table.main width="1000"
         thead style="text-align:center;"
           tr
-            th 月/日
-            th 行先
-            th 乗り物経路
-            th 交通機関
-            th 金額
-            th 備考
-            th
-            th
+            th width="100" 月/日
+            th width="50" 行先
+            th width="300" 乗り物経路
+            th width="100" 交通機関
+            th width="100" 金額
+            th width="200" 備考
+            th width="30" 修正
+            th width="30" 削除
         tbody
           - @transportation_expresses.each do |transportation_express|
             tr
-              / td = transportation_express.user_id
-              / td = transportation_express.koutu_date.strftime('%m/%d')
+              
               td = transportation_express.koutu_date
               td = transportation_express.destination
               td = transportation_express.route
               td = transportation_express.transport
               td = '¥'+transportation_express.money.to_s
               td = transportation_express.note
-              / td = link_to 'Show', transportation_express
-              td = link_to edit_transportation_express_path(transportation_express), class:"button tiny radius" do
-                  i.fi-plus
-              td = link_to transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete , class:"button tiny alert" do
-                  i.fi-x
+              
+              td
+                - unless @freezed 
+                  = link_to edit_transportation_express_path(transportation_express), class:"button tiny radius" do
+                    i.fi-plus
+              td
+                - unless @freezed
+                  = link_to transportation_express, data: {:confirm => 'Are you sure?'}, :method => :delete , class:"button tiny alert" do
+                    i.fi-x
+          tr
+            td colspan="4" style="font-weight:bold;" 合計金額　　
+            td = '¥'+@sum.to_s
+            td
+            td
+            td
          
   br
 

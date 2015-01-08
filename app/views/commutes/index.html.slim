@@ -1,4 +1,4 @@
-- @commute.each do |commute|
+- @commutes.each do |commute|
   - @sum = commute.money.to_i + @sum.to_i
 / = hidden_field :sum, @sum
 - session[:sum] = @sum
@@ -6,95 +6,82 @@ article.commute_index
   .row
     .large-12.columns
 
-      h2 現住所変更及び通勤届
+      h3
+        i.fi-clipboard-pencil
+        |現住所変更及び通勤届
 
-      #transport_header
-        table#transport_project
-          tbody
-            tr
-              td プロジェクト名:
-              td = truncate(@project.summary, length:20) if ! @project.nil?
-            tr
-              td 所属:
-              td = current_user.section.name if ! current_user.section.nil?
-            tr
-              td 氏名:
-              td #{current_user.family_name} #{current_user.first_name}
+      = render partial: 'shared/paper_proc', locals: { target: "commutes", years: @years, project: @project, status: @status }
 
-      .row
-        .small-2.columns.push-4.columns
-          = @date.strftime("%Y年%_m月%_d日")
-      .row
-        table
-          tr
-            td 現住所
-            td colspan="2" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
-            td
-          tr
-            td 電話番号
-            td colspan="2" #{current_user.phone}
-            td
-          tr
-            td 届出理由
-            - if !@reason.nil?
-              - if @reason.reason == "new" && !@reason.nil?
-                td colspan="2" 新規
-              - elsif @reason.reason == "now" && !@reason.nil?
-                td colspan="2" 現住所変更
-              - elsif @reason.reason == "proj" && !@reason.nil?
-                td colspan="2" プロジェクト変更
-              - elsif @reason.reason == "tran" && !@reason.nil?
-                td colspan="2" 通勤経路変更
-              - elsif @reason.reason == "sai" && !@reason.nil?
-                td colspan="2" 再提出
-              - elsif @reason.reason == "up" && !@reason.nil?
-                td colspan="2" 運賃値上げ
-              - elsif @reason.reason == "ta" && !@reason.nil?
-                td colspan="2" その他
-            -else
-              td colspan="2"　
+      table style="border:none;"
+        tr align="left" valign="top"
+          td style="border:none;" width="290"
 
-            - if ! @reason.nil?
-              td rowspan="2" = link_to edit_reason_path(@reason),class:"button tiny radius" do
-                i.fi-plus
-            - elsif @reason.nil?
-              td rowspan="2" = link_to "新規", new_reason_path(@reason) ,class: "button tiny success"
-            
-          tr
-            td 届出理由（その他）
-            td colspan="2" = @reason.reason_text if ! @reason.nil?
-            
-      .row
-        .small-4.columns
-          |&nbsp;&nbsp;&nbsp;
-          = link_to '新規追加', new_commute_path, class: "button tiny radius"
-          |&nbsp;&nbsp;&nbsp;
-          = link_to print_commutes_path, class:"button tiny radius" do
-            i.fi-print
-            |印刷用画面
-      .row
-        table
-          thead
-            tr
-              th 交通機関名称
-              th 利用区間１(出発)
-              th 利用区間２(到着)
-              th １ヶ月の定期金額
-              th
-              th
-
-          tbody
-            - @commute.each do |commute|
+            table.sub style="border:none;padding-right:10px;" width="260"
               tr
-                td = commute.transport
-                td = commute.segment1
-                td = commute.segment2
-                td#money = commute.money.to_s+'円'
-                td = link_to edit_commute_path(commute) , class:"button tiny radius" do
-                  i.fi-plus
-                td = link_to '削除', commute, data: {:confirm => 'Are you sure?'}, :method => :delete ,class: "button tiny alert"
-            tr
-              td#kei colspan="3" 計
-              td#money #{@sum.to_s+'円'}
+                td width="70" 現住所
+                td colspan="2" width="200" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
+                td
+              tr
+                td 電話番号
+                td colspan="2" #{current_user.phone}
+                td
+              tr
+                td.in 届出理由
+                - if !@reasons.nil?
+                  - if @reasons.reason == "new" && !@reasons.nil?
+                    td.in colspan="2" 新規
+                  - elsif @reasons.reason == "now" && !@reasons.nil?
+                    td.in colspan="2" 現住所変更
+                  - elsif @reasons.reason == "proj" && !@reasons.nil?
+                    td.in colspan="2" プロジェクト変更
+                  - elsif @reasons.reason == "tran" && !@reasons.nil?
+                    td.in colspan="2" 通勤経路変更
+                  - elsif @reasons.reason == "sai" && !@reasons.nil?
+                    td.in colspan="2" 再提出
+                  - elsif @reasons.reason == "up" && !@reasons.nil?
+                    td.in colspan="2" 運賃値上げ
+                  - elsif @reasons.reason == "ta" && !@reasons.nil?
+                    td.in colspan="2" その他
+                  - else
+                    td.in colspan="2"
+                -else
+                  td.in colspan="2"　
 
-        br
+                - if ! @reasons.nil?
+                  td.in.text-center rowspan="2" width="35" = link_to edit_reason_path(@reasons),class:"button tiny radius" do
+                    i.fi-plus
+                - elsif @reasons.nil?
+                  td rowspan="2" = link_to "新規", new_reason_path(@reasons) ,class: "button tiny success"
+                
+              tr
+                td.in 届出理由<br>（その他）
+                td.in colspan="2" = @reasons.reason_text if ! @reasons.nil?
+          td style="border:none;"
+            div
+              table.main width="650"
+                thead
+                  tr
+                    th width="90"交通機関名称
+                    th width="200"利用区間１(出発)
+                    th width="200"利用区間２(到着)
+                    th width="110"１ヶ月の定期金額
+                    th width="30"
+                    th width="30"
+
+                tbody
+                  - @commutes.each do |commute|
+                    tr
+                      td = commute.transport
+                      td = commute.segment1
+                      td = commute.segment2
+                      td#money = commute.money.to_s+'円'
+                      td = link_to edit_commute_path(commute) , class:"button tiny radius" do
+                        i.fi-plus
+                      td = link_to commute, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete ,class: "button tiny alert" do
+                        i.fi-x
+                  tr
+                    td#kei colspan="3" 計
+                    td#money #{@sum.to_s+'円'}
+                    td colspan="2"
+
+              br

@@ -62,14 +62,23 @@ class PapersController < ApplicationController
   # 上長承認処理
   #
   def approve
-    approve_proc
+    ActiveRecord::Base.transaction do
+      approve_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '上長承認を行いました。'
   end
 
   #
   # 上長破棄処理
   #
   def cancel_approval
-    cancel_approval_proc
+    ActiveRecord::Base.transaction do
+      cancel_approval_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '上長承認を取り消しました。'
+
   end
 
   #
@@ -135,8 +144,8 @@ class PapersController < ApplicationController
     if freezed
       temp = session[:years]
       
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
-      next_years = years.months_since(1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+      next_years = years.next_month
       
       session[:years] = "#{next_years.year}#{next_years.month}"
     end
@@ -154,7 +163,7 @@ class PapersController < ApplicationController
     
     unless session[:years].blank?
       temp = session[:years]
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else
       temp = objects.select('year, month').where("freezed = ? and self_approved = ? and boss_approved = ?", false, false, false).group('year, month').order('year, month')
       if temp.exists?
@@ -165,7 +174,7 @@ class PapersController < ApplicationController
     end
 
     if freezed
-      years.months_since(1)
+      years.next_month
     else
       years
     end

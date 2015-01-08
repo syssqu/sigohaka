@@ -79,18 +79,18 @@ namespace :db do
 
 
 
-    5.times do |m|
-      3.times do |n|
-        TransportationExpress.create!(user_id: "#{n}",
-                                koutu_date: "2014-06-01",
-                                destination: "大阪#{n}",
-                                route: "東京ー＞大阪#{n}",
-                                transport: "JR#{n}",
-                                money: "#{n+m}",
-                                note: Faker::Lorem.sentence(5)
-                                )
-      end
-    end
+    # 5.times do |m|
+    #   3.times do |n|
+    #     TransportationExpress.create!(user_id: "#{n}",
+    #                             koutu_date: "2014-06-01",
+    #                             destination: "大阪#{n}",
+    #                             route: "東京ー＞大阪#{n}",
+    #                             transport: "JR#{n}",
+    #                             money: "#{n+m}",
+    #                             note: Faker::Lorem.sentence(5)
+    #                             )
+    #   end
+    # end
 
 
     ##############################
