@@ -7,8 +7,10 @@
           li = message
   .row
     .large-12.columns
+      = f.hidden_field :year,value:@nendo if @reason.year.nil?
+      = f.hidden_field :month,value:@gatudo if @reason.month.nil?
       .field
-        label ・届出理由 <該当項目を選択してください>
+        label ・届出理由 <br><該当項目を選択してください>
         / = f.text_field :reason
         label.left.inline = f.radio_button :reason, :new
         label.left.inline style="width:40px;" for="new" 新規
@@ -33,6 +35,9 @@
   .row
     .large-12.columns
       .field
-        label.left.inline ・届出理由（その他）
-        = f.text_field :reason_text
-      .actions = f.submit 'Save'
+        label ・「その他」の場合は理由を記述してください。
+        label.left.inline.large-4 = f.text_field :reason_text
+  .row
+    .large-3.large-centered.columns
+      = f.submit '登録', class: "button radius"
+      = link_to "戻る", commutes_path,class: "button radius gray"

@@ -20,6 +20,7 @@ class AttendancesController < PapersController
 
     session[:years] = "#{@nendo}#{@gatudo}"
     logger.debug("session_years"+session[:years])
+    
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
@@ -74,19 +75,25 @@ class AttendancesController < PapersController
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
-    #if params[:paper]['start_time(4i)'.to_sym].blank? or params[:paper]['start_time(5i)'.to_sym].blank?
-    if params['start_time(4i)'.to_sym].blank? or params['start_time(5i)'.to_sym].blank?
+    if params[:attendance]['start_time'].blank?
       @attendance.is_blank_start_time = true
     end
 
-    #if params[:paper]['end_time(4i)'.to_sym].blank? or params[:paper]['end_time(5i)'.to_sym].blank?
-    if params['end_time(4i)'.to_sym].blank? or params['end_time(5i)'.to_sym].blank?
+    if params[:attendance]['end_time'].blank?
       @attendance.is_blank_end_time = true
     end
     
     if @attendance.update_attributes(attendance_params)
       redirect_to attendances_path, notice: '更新しました。'
     else
+
+      temp = current_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+      @pattern = temp.collect do |k|
+        [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
+      end
+
+      @pattern << [" * 定例外勤務(休出 or シフト)", 4]
+      
       render :edit
     end
   end
@@ -131,15 +138,16 @@ class AttendancesController < PapersController
   #
   def input_attendance_time
 
-    # @pattern = KinmuPattern.find_by(id: params[:pattern])
-    @pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
-    @time_blank = false
+    temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
 
-    if @pattern.nil?
-      @time_blank = true
+    if temp_pattern.nil?
+      @attendance[:start_time] = "";
+      @attendance[:end_time] = "";
     else
-      @attendance.start_time = @pattern.start_time
-      @attendance.end_time = @pattern.end_time
+      # @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
+      # @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
+      @attendance[:start_time] = "22:22"
+      @attendance[:end_time] = "44:22"
     end
   end
 
@@ -152,20 +160,20 @@ class AttendancesController < PapersController
     
     Rails.logger.info("PARAMS: #{params.inspect}")
     
-    @pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
 
-    Rails.logger.info("pattern_start_date: " + @pattern.start_time.to_s)
-    Rails.logger.info("pattern_end_date: " + @pattern.end_time.to_s)
-    Rails.logger.info("pattern_end_date - pattern_start_date: " + (@pattern.end_time - @pattern.start_time).to_s)
+    Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
+    Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
+    Rails.logger.info("pattern_end_date - pattern_start_date: " + (temp_pattern.end_time - temp_pattern.start_time).to_s)
 
-    attendance_start_time = Time.local(@pattern.start_time.year, @pattern.start_time.month, @pattern.start_time.day, params[:start_time_hour], params[:start_time_minute], 0)
-    attendance_end_time = Time.local(@pattern.end_time.year, @pattern.end_time.month, @pattern.end_time.day, params[:end_time_hour], params[:end_time_minute], 0)
+    attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
+    attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
 
     Rails.logger.info("input_start_date: " + attendance_start_time.to_s)
     Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
     Rails.logger.info("input_end_date - input_start_date: " + (attendance_end_time - attendance_start_time).to_s)
     
-    @attendance.calculate(@pattern, attendance_start_time, attendance_end_time)
+    @attendance.calculate(temp_pattern, attendance_start_time, attendance_end_time)
   end
 
   #
@@ -178,10 +186,10 @@ class AttendancesController < PapersController
     if years.nil?
       attendance_years = Date.today
     else
-      attendance_years = Date.new(years[0..3].to_i, years[4..-1].to_i, 1)
+      attendance_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
     end
 
-    @nendo = get_nendo(attendance_years)
+    @nendo = get_target_year(attendance_years)
     @gatudo = get_gatudo(attendance_years)
     @project = get_project
     
@@ -240,7 +248,7 @@ class AttendancesController < PapersController
 
     @attendance_years = get_years(current_user.attendances, freezed)
     
-    @nendo = get_nendo(@attendance_years)
+    @nendo = get_target_year(@attendance_years)
     @gatudo = get_gatudo(@attendance_years)
     @project = get_project
 
@@ -259,10 +267,13 @@ class AttendancesController < PapersController
       return
     end
       
-    target_date = Date.new(@attendance_years.year, get_month(@attendance_years), 16)
+    target_date = Date.new(get_nendo(@attendance_years), get_month(@attendance_years), 16)
+
     end_attendance_date = target_date.months_since(1)
 
     while target_date != end_attendance_date
+
+      logger.debug("勤怠日: " + target_date.to_s)
 
       @attendance = current_user.attendances.build
         
@@ -275,22 +286,23 @@ class AttendancesController < PapersController
       if holiday?(target_date)
         @attendance[:holiday] = "1"
       elsif ! current_user.kinmu_patterns.first.nil?
+
         @attendance[:pattern] = current_user.kinmu_patterns.first.code
-        @attendance[:start_time] = current_user.kinmu_patterns.first.start_time
-        @attendance[:end_time] = current_user.kinmu_patterns.first.end_time
+        @attendance[:start_time] = current_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
+        @attendance[:end_time] = current_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
         @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
         @attendance[:holiday] = "0"
 
       end
 
       if @attendance.save
-        @attendances << @attendance
         target_date = target_date.tomorrow
       else
+        logger.debug("勤怠登録処理エラー");
         break
       end
     end
-
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     create_years_collection current_user.attendances, freezed
   end
 
@@ -324,14 +336,27 @@ class AttendancesController < PapersController
     gatudo
   end
 
-  # 対象日付の年度を返す
+  # 対象年を返す
+  # @param [Date] target_date 対象日付
+  # @return [Integer] 対象日付の年度
+  def get_target_year(target_date)
+    year = target_date.year
+
+    if target_date.month == 12 and target_date.day > 15
+      year = target_date.next_year.year
+    end
+
+    year
+  end
+
+  # 対象年度を返す
   # @param [Date] target_date 対象日付
   # @return [Integer] 対象日付の年度
   def get_nendo(target_date)
     nendo = target_date.year
 
-    if target_date.month == 12 and target_date.day > 15
-      nendo = target_date.years_since(1).year
+    if target_date.month >= 1 and target_date.month < 4
+      nendo = target_date.prev_year.year
     end
 
     nendo

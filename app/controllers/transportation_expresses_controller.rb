@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class TransportationExpressesController < PapersController
   before_action :set_transportation_express, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
@@ -15,8 +16,12 @@ class TransportationExpressesController < PapersController
     # @project = current_user.projects.find_by(active: true)
     session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
-    @freezed = @transportation_expresses.first.freezed
-    create_years_collection current_user.transportation_expresses, @freezed
+    if !@transportation_expresses.blank?
+      @freezed = @transportation_expresses.first.freezed
+    else
+      @freezed = @transportation_expresses.first.freezed
+    end 
+    # create_years_collection current_user.transportation_expresses, @freezed
     # year = Date.today.year
     # month = Date.today.month
     # day = Date.today.day
@@ -44,12 +49,14 @@ class TransportationExpressesController < PapersController
 
     # =============
     @status = "本人未確認"
-    if @transportation_expresses.first.freezed
-      @status = "凍結中"
-    elsif @transportation_expresses.first.boss_approved
-      @status = "上長承認済み"
-    elsif @transportation_expresses.first.self_approved
-      @status = "本人確認済み"
+    unless @transportation_expresses.first.nil?
+      if @transportation_expresses.first.freezed
+        @status = "凍結中"
+      elsif @transportation_expresses.first.boss_approved
+        @status = "上長承認済み"
+      elsif @transportation_expresses.first.self_approved
+        @status = "本人確認済み"
+      end
     end
     # =============
   end
@@ -71,11 +78,11 @@ class TransportationExpressesController < PapersController
 
   def print_proc
      years = session[:years]
-
+     @sum = session[:sum]
     if years.nil?
       transportation_express_years = Date.today
     else
-      transportation_express_years = Date.new(years[0..3].to_i, years[4..-1].to_i, 1)
+      transportation_express_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
     end
 
     @nendo = get_nendo(transportation_express_years)
@@ -151,7 +158,7 @@ class TransportationExpressesController < PapersController
   def update
     respond_to do |format|
       if @transportation_express.update(transportation_express_params)
-        format.html { redirect_to @transportation_express, notice: 'Transportation express was successfully updated.' }
+        format.html { redirect_to transportation_expresses_path, notice: '更新しました' }
         format.json { render :show, status: :ok, location: @transportation_express }
       else
         format.html { render :edit }
@@ -166,7 +173,7 @@ class TransportationExpressesController < PapersController
   def destroy
     @transportation_express.destroy
     respond_to do |format|
-      format.html { redirect_to transportation_expresses_url, notice: 'Transportation express was successfully destroyed.' }
+      format.html { redirect_to transportation_expresses_url, notice: '削除しました' }
       format.json { head :no_content }
     end
   end
@@ -201,8 +208,7 @@ class TransportationExpressesController < PapersController
     @project = get_project
 
     @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-
-    
+ 
   end
 
 
@@ -226,8 +232,9 @@ class TransportationExpressesController < PapersController
         @transportation_expresses << @transportation_express
         target_date = target_date.tomorrow
       end
+      @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     end
-
+    create_years_collection current_user.transportation_expresses, freezed
   end
 
   #   def init(freezed=false)
@@ -261,7 +268,7 @@ class TransportationExpressesController < PapersController
     if freezed
       temp = session[:years]
       
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.months_since(1)
       
       @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
@@ -329,7 +336,7 @@ class TransportationExpressesController < PapersController
     
     unless session[:years].blank?
       temp = session[:years]
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else
       temp = current_user.transportation_expresses.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
       if temp.exists?
