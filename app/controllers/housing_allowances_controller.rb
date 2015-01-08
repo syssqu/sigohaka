@@ -134,4 +134,25 @@ class HousingAllowancesController < ApplicationController
     def housing_allowance_params
       params.require(:housing_allowance).permit(:user_id, :year, :month, :reason, :reason_text, :housing_style, :housing_style_text, :agree_date_s, :agree_date_e, :spouse, :spouse_name, :spouse_other, :support, :support_name1, :support_name2, :money)
     end
+
+
+    # =================================================================================================-
+    #
+  # 勤怠日付の初期化
+  #
+  def init(freezed=false)
+
+    if changed_housing_allowance_years?
+      session[:years] = params[:paper][:years]
+    end
+
+    @housing_allowance_years = get_years(current_user.housing_allowances, freezed)
+    
+    @nendo = get_nendo(@housing_allowance_years)
+    @gatudo = get_gatudo(@housing_allowance_years)
+    @project = get_project
+
+    @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+ 
+  end
 end
