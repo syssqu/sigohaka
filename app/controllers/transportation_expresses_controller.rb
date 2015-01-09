@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class TransportationExpressesController < PapersController
   before_action :set_transportation_express, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
@@ -81,7 +82,7 @@ class TransportationExpressesController < PapersController
     if years.nil?
       transportation_express_years = Date.today
     else
-      transportation_express_years = Date.new(years[0..3].to_i, years[4..-1].to_i, 1)
+      transportation_express_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
     end
 
     @nendo = get_nendo(transportation_express_years)
@@ -267,7 +268,7 @@ class TransportationExpressesController < PapersController
     if freezed
       temp = session[:years]
       
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.months_since(1)
       
       @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
@@ -335,7 +336,7 @@ class TransportationExpressesController < PapersController
     
     unless session[:years].blank?
       temp = session[:years]
-      years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else
       temp = current_user.transportation_expresses.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
       if temp.exists?

@@ -21,7 +21,7 @@ article.qualification_allowance_print
        | 申 請 　平成#{@nendo-1988}#{ @date.strftime("年%_m月%_d日")}
 	table#qualification_allowance_user border="1"
 		tr width="640" height="45"
-			td.us width="139" 所&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属
+			td.us width="145" 所&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属
 			td.us width="250" = current_user.section.name if ! current_user.section.nil?
 			td width="290" 
 		tr height="55"
@@ -31,10 +31,10 @@ article.qualification_allowance_print
 - @qualification_allowances.each do |qualification_allowance|
 	table#qualification_allowance_year border="1"
 		tr
-			td.ye width="136" 資格取得年月日
+			td.ye width="141" 資格取得年月日
 			td.ye #{qualification_allowance.get_date}
 		tr
-			td.ye2 取得No. 【 #{qualification_allowance.number} 】
+			td.ye2 取得No.【 #{qualification_allowance.number} 】
 			td.ye2 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;第#{qualification_allowance.registration_no_alphabet}―#{qualification_allowance.registration_no_year}―#{qualification_allowance.registration_no_month}―#{qualification_allowance.registration_no_individual}号 （コピー添付）
 	table#qualification_allowance_item border="1"
 		tr
