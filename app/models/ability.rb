@@ -41,6 +41,8 @@ class Ability
     
     if user.role == User::Roles::ADMIN
       can :manage, :all
+    elsif user.role == User::Roles::MANAGER
+        can :manage, :all
     else
       can :read, :all
     end
