@@ -5,17 +5,30 @@
       ul
         - @commute.errors.full_messages.each do |message|
           li = message
+  = f.hidden_field :year,value:@nendo if @commute.year.nil?
+  = f.hidden_field :month,value:@gatudo if @commute.month.nil?
 
-  .field
-    label 交通機関名称
-    = f.text_field :transport
-  .field
-    label 利用区間(出発)
-    = f.text_field :segment1
-  .field
-    label 利用区間(到着)
-    = f.text_field :segment2
-  .field
-    label １ヶ月の定期金額
-    = f.number_field :money
-  .actions = f.submit 'Save'
+  .row
+    .large-2.small-4.columns
+      label.left.inline 交通機関名称
+    .large-5.large-pull-5.small-8.columns
+      = f.text_field :transport
+  .row
+    .large-2.small-4.columns
+      label.left.inline 利用区間(出発)
+    .large-5.large-pull-5.small-8.columns
+      = f.text_field :segment1
+  .row
+    .large-2.small-4.columns
+      label.left.inline 利用区間(到着)
+    .large-5.large-pull-5.small-8.columns
+      = f.text_field :segment2
+  .row
+    .large-2.small-4.columns
+      label.left.inline １ヶ月の定期金額
+    .large-5.large-pull-5.small-8.columns
+      = f.number_field :money
+  .row
+    .large-3.large-centered.columns
+      = f.submit '登録', class: "button radius"
+      = link_to "戻る", commutes_path,class: "button radius gray"

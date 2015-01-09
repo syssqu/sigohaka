@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 20150107073756) do
 
   create_table "commutes", force: true do |t|
     t.integer  "user_id"
-    t.string   "year",        limit: 4
-    t.string   "month",       limit: 2
+    t.string   "year",          limit: 4
+    t.string   "month",         limit: 2
     t.string   "reason"
     t.string   "reason_text"
     t.string   "transport"
@@ -97,6 +97,9 @@ ActiveRecord::Schema.define(version: 20150107073756) do
     t.integer  "money"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "freezed"
+    t.boolean  "self_approved"
+    t.boolean  "boss_approved"
   end
 
   create_table "housing_allowances", force: true do |t|
@@ -177,10 +180,13 @@ ActiveRecord::Schema.define(version: 20150107073756) do
     t.integer  "user_id"
     t.string   "reason"
     t.string   "reason_text"
-    t.string   "year",        limit: 4
-    t.string   "month",       limit: 2
+    t.string   "year",          limit: 4
+    t.string   "month",         limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "freezed"
+    t.boolean  "self_approved"
+    t.boolean  "boss_approved"
   end
 
   create_table "sections", force: true do |t|

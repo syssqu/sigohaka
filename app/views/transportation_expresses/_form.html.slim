@@ -1,36 +1,48 @@
-= form_for @transportation_express do |f|
-  - if @transportation_express.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@transportation_express.errors.count, "error")} prohibited this transportation_express from being saved:"
-      ul
-        - @transportation_express.errors.full_messages.each do |message|
-          li = message
-  .row
-    .large-12.columns
-      
+.row
+  .large-12.columns
+    = form_for @transportation_express do |f|
+      - if @transportation_express.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@transportation_express.errors.count, "error")} prohibited this transportation_express from being saved:"
+          ul
+            - @transportation_express.errors.full_messages.each do |message|
+              li = message
 
-      .field
-        label 月/日
-        = f.date_select :koutu_date
-        = f.hidden_field :year,value:@nendo if @transportation_express.year.nil?
-        = f.hidden_field :month,value:@gatudo if @transportation_express.month.nil?
-      .field
-        label 行先
-        = f.text_field :destination
-      .field
-        label 乗物経路
-        = f.text_field :route
-      .field
-        label 交通機関
-        = f.text_field :transport
-      .field
-        label 金額
-        = f.number_field :money
-      .field
-        label 備考
-        = f.text_field :note
-      / .field
-      /   = f.label :sum
-      /   = f.number_field :sum
-      
-      .actions = f.submit 'Save'
+      .row
+        .large-2.small-4.columns
+          label.left.inline 月/日
+        .large-6.large-pull-4.small-8.columns
+          = raw sprintf( f.date_select(:koutu_date,:use_month_numbers => true,:size=>5 , date_separator:'%s'), '年　', '月　') + '日　'
+
+          = f.hidden_field :year,value:@nendo if @transportation_express.year.nil?
+          = f.hidden_field :month,value:@gatudo if @transportation_express.month.nil?
+      .row
+        .large-2.small-4.columns
+          label.left.inline 行先
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :destination
+      .row
+        .large-2.small-4.columns
+          label.left.inline 乗物経路
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :route
+      .row
+        .large-2.small-4.columns
+          label.left.inline 交通機関
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :transport
+      .row
+        .large-2.small-4.columns
+          label.left.inline 金額
+        .large-5.large-pull-5.small-8.columns
+          = f.number_field :money
+      .row
+        .large-2.small-4.columns
+          label.left.inline 備考
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :note
+          
+      .row
+        .large-3.large-centered.columns
+          = f.submit '登録', class: "button radius"
+          = link_to "戻る", transportation_expresses_path,class: "button radius gray"

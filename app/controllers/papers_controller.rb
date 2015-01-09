@@ -62,14 +62,23 @@ class PapersController < ApplicationController
   # 上長承認処理
   #
   def approve
-    approve_proc
+    ActiveRecord::Base.transaction do
+      approve_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '上長承認を行いました。'
   end
 
   #
   # 上長破棄処理
   #
   def cancel_approval
-    cancel_approval_proc
+    ActiveRecord::Base.transaction do
+      cancel_approval_proc
+    end
+
+    redirect_to ({action: :index}), :notice => '上長承認を取り消しました。'
+
   end
 
   #
