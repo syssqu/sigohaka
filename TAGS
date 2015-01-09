@@ -1,0 +1,756 @@
+
+app/controllers/static_pages_controller.rb,141
+class StaticPagesController < ApplicationControllerStaticPagesController1,0
+  def homehome5,0
+  def helphelp8,0
+  def aboutabout11,0
+
+app/controllers/users/sessions_controller.rb,154
+class Users::SessionsController < Devise::SessionsControllerSessionsController1,0
+  def newnew5,0
+  def createcreate10,0
+  def destroydestroy14,0
+
+app/controllers/users/passwords_controller.rb,175
+class Users::PasswordsController < Devise::PasswordsControllerPasswordsController1,0
+  def createcreate3,0
+  def newnew8,0
+  def editedit12,0
+  def updateupdate17,0
+
+app/controllers/users/registrations_controller.rb,299
+class Users::RegistrationsController < Devise::RegistrationsControllerRegistrationsController2,0
+  def cancelcancel7,0
+  def createcreate11,0
+  def destroydestroy15,0
+  def newnew19,0
+  def editedit24,0
+  def updateupdate61,0
+    def needs_password?(user, params)needs_password?91,0
+
+app/controllers/resumes_controller.rb,114
+class ResumesController < ApplicationControllerResumesController2,0
+  def indexindex5,0
+  def printprint8,0
+
+app/controllers/application_controller.rb,270
+class ApplicationController < ActionController::BaseApplicationController1,0
+    def configure_permitted_parametersconfigure_permitted_parameters9,0
+    def get_projectget_project16,0
+    def after_sign_out_path_for(resource_or_scope)after_sign_out_path_for27,0
+
+app/controllers/kinmu_patterns_controller.rb,346
+class KinmuPatternsController < ApplicationControllerKinmuPatternsController2,0
+  def indexindex6,0
+  def showshow29,0
+  def newnew32,0
+  def editedit36,0
+  def createcreate39,0
+  def updateupdate49,0
+  def destroydestroy57,0
+    def set_kinmu_patternset_kinmu_pattern63,0
+    def kinmu_pattern_paramskinmu_pattern_params67,0
+
+app/controllers/attendances_controller.rb,1086
+class AttendancesController < PapersControllerAttendancesController2,0
+  def indexindex9,0
+  def newnew42,0
+  def createcreate49,0
+  def editedit62,0
+  def updateupdate74,0
+  def init_attendancesinit_attendances105,0
+  def input_attendance_timeinput_attendance_time139,0
+  def calculatecalculate158,0
+  def print_procprint_proc186,0
+  def check_proccheck_proc209,0
+  def cancel_check_proccancel_check_proc220,0
+  def approve_procapprove_proc228,0
+  def cancel_approval_proccancel_approval_proc236,0
+  def init(freezed=false)init247,0
+  def create_attendances(freezed=false)create_attendances266,0
+  def set_attendanceset_attendance319,0
+  def attendance_paramsattendance_params326,0
+  def get_gatudo(target_date)get_gatudo335,0
+  def get_target_year(target_date)get_target_year348,0
+  def get_nendo(target_date)get_nendo361,0
+  def get_month(target_date)get_month375,0
+  def holiday?(target_date)holiday?388,0
+  def changed_attendance_years?changed_attendance_years?394,0
+  def get_attendance_others_infoget_attendance_others_info400,0
+
+app/controllers/sections_controller.rb,312
+class SectionsController < ApplicationControllerSectionsController2,0
+  def indexindex7,0
+  def showshow11,0
+  def newnew14,0
+  def editedit18,0
+  def createcreate21,0
+  def updateupdate31,0
+  def destroydestroy39,0
+    def set_sectionset_section49,0
+    def section_paramssection_params54,0
+
+app/controllers/papers_controller.rb,933
+class PapersController < ApplicationControllerPapersController2,0
+  attr_accessor :title, :yearstitle3,0
+  attr_accessor :title, :yearstitle=3,0
+  attr_accessor :title, :yearsyears3,0
+  attr_accessor :title, :yearsyears=3,0
+  def index_freezeindex_freeze5,0
+  def printprint11,0
+  def freeze_upfreeze_up28,0
+  def cancel_freezecancel_freeze48,0
+  def approveapprove64,0
+  def cancel_approvalcancel_approval71,0
+  def checkcheck78,0
+  def cancel_checkcancel_check92,0
+  def print_procprint_proc106,0
+  def freeze_up_procfreeze_up_proc109,0
+  def cancel_freeze_proccancel_freeze_proc112,0
+  def approve_procapprove_proc115,0
+  def cancel_approval_proccancel_approval_proc118,0
+  def check_proccheck_proc121,0
+  def cancel_check_proccancel_check_proc124,0
+  def create_years_collection(objects, freezed=false)create_years_collection132,0
+  def get_years(objects, freezed=false)get_years153,0
+
+app/controllers/summary_attendances_controller.rb,971
+class SummaryAttendancesController < ApplicationControllerSummaryAttendancesController3,0
+  def initinit8,0
+  def indexindex28,0
+  def showshow51,0
+  def newnew55,0
+  def editedit60,0
+  def createcreate65,0
+  def updateupdate81,0
+  def calculatecalculate93,0
+  def printprint111,0
+  def destroydestroy147,0
+  def data_makedata_make155,0
+    def set_attendanceset_attendance170,0
+    def attendance_paramsattendance_params174,0
+    def get_gatudo(target_date)get_gatudo180,0
+    def get_nendo(target_date)get_nendo190,0
+    def get_month(target_date)get_month200,0
+    def holiday?(target_date)holiday?210,0
+    def changed_attendance_years?changed_attendance_years?214,0
+    def get_attendance_years(nen_gatudo)get_attendance_years219,0
+    def get_attendance_others_infoget_attendance_others_info228,0
+    def set_summary_attendanceset_summary_attendance253,0
+    def summary_attendance_paramssummary_attendance_params259,0
+
+app/controllers/projects_controller.rb,312
+class ProjectsController < ApplicationControllerProjectsController2,0
+  def indexindex6,0
+  def showshow10,0
+  def newnew14,0
+  def editedit18,0
+  def createcreate21,0
+  def updateupdate31,0
+  def destroydestroy49,0
+    def set_projectset_project55,0
+    def project_paramsproject_params59,0
+
+app/controllers/qualification_allowances_controller.rb,431
+class QualificationAllowancesController < ApplicationControllerQualificationAllowancesController1,0
+  def indexindex6,0
+  def showshow28,0
+  def newnew33,0
+  def editedit39,0
+  def createcreate44,0
+  def updateupdate61,0
+  def destroydestroy75,0
+  def printprint83,0
+    def set_qualification_allowanceset_qualification_allowance116,0
+    def qualification_allowance_paramsqualification_allowance_params121,0
+
+app/controllers/business_reports_controller.rb,609
+class BusinessReportsController < ApplicationControllerBusinessReportsController2,0
+  def indexindex7,0
+  def showshow31,0
+  def newnew36,0
+  def editedit41,0
+  def createcreate46,0
+  def updateupdate62,0
+  def destroydestroy76,0
+  def printprint84,0
+    def set_business_reportset_business_report125,0
+    def business_report_paramsbusiness_report_params130,0
+    def get_gatudo(target_date)get_gatudo134,0
+    def get_nendo(target_date)get_nendo144,0
+    def get_month(target_date)get_month154,0
+    def get_projectget_project164,0
+    def holiday?(target_date)holiday?172,0
+
+app/controllers/commutes_controller.rb,339
+class CommutesController < ApplicationControllerCommutesController1,0
+  def indexindex6,0
+  def showshow24,0
+  def newnew28,0
+  def printprint32,0
+  def editedit80,0
+  def createcreate85,0
+  def updateupdate102,0
+  def destroydestroy116,0
+    def set_commuteset_commute126,0
+    def commute_paramscommute_params131,0
+
+app/controllers/attendance_others_controller.rb,364
+class AttendanceOthersController < ApplicationControllerAttendanceOthersController2,0
+  def indexindex7,0
+  def showshow13,0
+  def newnew17,0
+  def editedit22,0
+  def createcreate27,0
+  def updateupdate39,0
+  def destroydestroy49,0
+    def set_attendance_otherset_attendance_other56,0
+    def attendance_other_paramsattendance_other_params61,0
+
+app/controllers/reasons_controller.rb,251
+class ReasonsController < ApplicationControllerReasonsController1,0
+  def editedit4,0
+  def newnew7,0
+  def showshow11,0
+  def createcreate14,0
+  def updateupdate27,0
+  def set_reasonset_reason39,0
+  def reason_paramsreason_params47,0
+
+app/controllers/transportation_expresses_controller.rb,1236
+class TransportationExpressesController < PapersControllerTransportationExpressesController2,0
+  def indexindex8,0
+  def showshow60,0
+  def newnew64,0
+  def transportation_confirm transportation_confirm69,0
+  def print_procprint_proc73,0
+  def editedit96,0
+  def createcreate101,0
+  def check_proccheck_proc118,0
+  def cancel_check_proccancel_check_proc129,0
+  def approve_procapprove_proc137,0
+  def cancel_approval_proccancel_approval_proc145,0
+  def updateupdate152,0
+  def destroydestroy167,0
+    def set_transportation_expressset_transportation_express177,0
+    def transportation_express_paramstransportation_express_params182,0
+  def init(freezed=false)init192,0
+  def create_transportation_expresses(freezed=false)create_transportation_expresses211,0
+  def create_transportation_express_years(freezed=false)create_transportation_express_years259,0
+  def get_gatudo(target_date)get_gatudo276,0
+  def get_nendo(target_date)get_nendo289,0
+  def get_month(target_date)get_month303,0
+  def changed_transportation_express_years?changed_transportation_express_years?317,0
+  def get_transportation_express_years(transportation_express, freezed=false)get_transportation_express_years329,0
+
+app/controllers/housing_allowances_controller.rb,397
+class HousingAllowancesController < ApplicationControllerHousingAllowancesController1,0
+  def indexindex6,0
+  def showshow44,0
+  def newnew48,0
+  def printprint52,0
+  def editedit83,0
+  def createcreate88,0
+  def updateupdate105,0
+  def destroydestroy119,0
+    def set_housing_allowanceset_housing_allowance129,0
+    def housing_allowance_paramshousing_allowance_params134,0
+
+app/controllers/vacation_requests_controller.rb,389
+class VacationRequestsController < ApplicationControllerVacationRequestsController1,0
+  def indexindex6,0
+  def showshow14,0
+  def newnew19,0
+  def editedit24,0
+  def createcreate29,0
+  def updateupdate45,0
+  def destroydestroy59,0
+  def printprint67,0
+    def set_vacation_requestset_vacation_request108,0
+    def vacation_request_paramsvacation_request_params113,0
+
+app/controllers/licenses_controller.rb,312
+class LicensesController < ApplicationControllerLicensesController1,0
+  def indexindex7,0
+  def showshow13,0
+  def newnew17,0
+  def editedit22,0
+  def createcreate27,0
+  def updateupdate39,0
+  def destroydestroy49,0
+    def set_licenseset_license56,0
+    def license_paramslicense_params61,0
+
+app/helpers/kinmu_patterns_helper.rb,51
+module KinmuPatternsHelperKinmuPatternsHelper1,0
+
+app/helpers/papers_helper.rb,37
+module PapersHelperPapersHelper1,0
+
+app/helpers/reasons_helper.rb,39
+module ReasonsHelperReasonsHelper1,0
+
+app/helpers/qualification_allowances_helper.rb,71
+module QualificationAllowancesHelperQualificationAllowancesHelper1,0
+
+app/helpers/business_reports_helper.rb,55
+module BusinessReportsHelperBusinessReportsHelper1,0
+
+app/helpers/commutes_helper.rb,41
+module CommutesHelperCommutesHelper1,0
+
+app/helpers/projects_helper.rb,41
+module ProjectsHelperProjectsHelper1,0
+
+app/helpers/resumes_helper.rb,39
+module ResumesHelperResumesHelper1,0
+
+app/helpers/attendance_others_helper.rb,57
+module AttendanceOthersHelperAttendanceOthersHelper1,0
+
+app/helpers/attendances_helper.rb,47
+module AttendancesHelperAttendancesHelper1,0
+
+app/helpers/vacation_requests_helper.rb,57
+module VacationRequestsHelperVacationRequestsHelper1,0
+
+app/helpers/housing_allowances_helper.rb,59
+module HousingAllowancesHelperHousingAllowancesHelper1,0
+
+app/helpers/licenses_helper.rb,41
+module LicensesHelperLicensesHelper1,0
+
+app/helpers/application_helper.rb,235
+module ApplicationHelperApplicationHelper2,0
+  def get_month_term(start_date, end_date)get_month_term8,0
+  def seireki2wareki(year, month, day)seireki2wareki18,0
+  def gravatar_for(user, options = { size: 50 })gravatar_for89,0
+
+app/helpers/transportation_expresses_helper.rb,71
+module TransportationExpressesHelperTransportationExpressesHelper1,0
+
+app/helpers/sections_helper.rb,41
+module SectionsHelperSectionsHelper1,0
+
+app/helpers/static_pages_helper.rb,47
+module StaticPagesHelperStaticPagesHelper1,0
+
+app/helpers/summary_attendances_helper.rb,61
+module SummaryAttendancesHelperSummaryAttendancesHelper1,0
+
+app/models/section.rb,167
+class Section < ActiveRecord::BaseSection1,0
+  has_many :usersusers2,0
+  has_many :usersusers=2,0
+  has_many :usersuser_ids2,0
+  has_many :usersuser_ids=2,0
+
+app/models/attendance_other.rb,225
+class AttendanceOther < ActiveRecord::BaseAttendanceOther1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
+
+app/models/qualification_allowance.rb,312
+class QualificationAllowance < ActiveRecord::BaseQualificationAllowance1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+  ITEM = ITEM4,0
+  NUMBER = [["A1","A1"],NUMBER18,0
+  MONEY = MONEY31,0
+
+app/models/license.rb,209
+class License < ActiveRecord::BaseLicense1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
+
+app/models/vacation_request.rb,225
+class VacationRequest < ActiveRecord::BaseVacationRequest1,0
+  belongs_to :useruser4,0
+  belongs_to :useruser=4,0
+  belongs_to :userbuild_user4,0
+  belongs_to :usercreate_user4,0
+  belongs_to :usercreate_user!4,0
+
+app/models/business_report.rb,218
+class BusinessReport < ActiveRecord::BaseBusinessReport1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+
+app/models/summary_attendance.rb,224
+class SummaryAttendance < ActiveRecord::BaseSummaryAttendance1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+
+app/models/kinmu_pattern.rb,219
+class KinmuPattern < ActiveRecord::BaseKinmuPattern1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
+
+app/models/attendance.rb,1144
+class Attendance < ActiveRecord::BaseAttendance2,0
+  belongs_to :useruser3,0
+  belongs_to :useruser=3,0
+  belongs_to :userbuild_user3,0
+  belongs_to :usercreate_user3,0
+  belongs_to :usercreate_user!3,0
+  attr_accessor :nen_gatudonen_gatudo5,0
+  attr_accessor :nen_gatudonen_gatudo=5,0
+  attr_accessor :is_blank_start_timeis_blank_start_time6,0
+  attr_accessor :is_blank_start_timeis_blank_start_time=6,0
+  attr_accessor :is_blank_end_timeis_blank_end_time7,0
+  attr_accessor :is_blank_end_timeis_blank_end_time=7,0
+  def check_pattern_and_timecheck_pattern_and_time19,0
+  def calculate(pattern, attendance_start_time, attendance_end_time)calculate41,0
+  def init_time_info()init_time_info65,0
+    def get_work_time(pattern, start_hour, start_min, end_hour, end_min)get_work_time89,0
+    def get_over_time(pattern)get_over_time105,0
+    def get_midnight_time(start_hour, start_min, end_hour, end_min)get_midnight_time112,0
+    def get_kouzyo_time(pattern)get_kouzyo_time119,0
+    def tikoku?(pattern, start_hour, start_min)tikoku?125,0
+    def hankekkin?(pattern, start_hour, start_min)hankekkin?140,0
+
+app/models/ability.rb,64
+class AbilityAbility1,0
+  def initialize(user)initialize4,0
+
+app/models/housing_allowance.rb,222
+class HousingAllowance < ActiveRecord::BaseHousingAllowance1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+
+app/models/reason.rb,202
+class Reason < ActiveRecord::BaseReason1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+
+app/models/commute.rb,209
+class Commute < ActiveRecord::BaseCommute1,0
+	belongs_to :user user2,0
+	belongs_to :user user=2,0
+	belongs_to :user build_user2,0
+	belongs_to :user create_user2,0
+	belongs_to :user create_user!2,0
+
+app/models/user.rb,3329
+class User < ActiveRecord::BaseUser2,0
+  attr_accessor :update_targetupdate_target8,0
+  attr_accessor :update_targetupdate_target=8,0
+  attr_accessor :current_passwordcurrent_password9,0
+  attr_accessor :current_passwordcurrent_password=9,0
+  module RolesRoles11,0
+    ADMIN = "admin"ADMIN12,0
+    MANAGER = "manager"MANAGER13,0
+    REGULAR = "regular"REGULAR14,0
+  belongs_to :sectionsection17,0
+  belongs_to :sectionsection=17,0
+  belongs_to :sectionbuild_section17,0
+  belongs_to :sectioncreate_section17,0
+  belongs_to :sectioncreate_section!17,0
+  has_many :projectsprojects19,0
+  has_many :projectsprojects=19,0
+  has_many :projectsproject_ids19,0
+  has_many :projectsproject_ids=19,0
+  has_many :licenseslicenses20,0
+  has_many :licenseslicenses=20,0
+  has_many :licenseslicense_ids20,0
+  has_many :licenseslicense_ids=20,0
+  has_many :kinmu_patternskinmu_patterns21,0
+  has_many :kinmu_patternskinmu_patterns=21,0
+  has_many :kinmu_patternskinmu_pattern_ids21,0
+  has_many :kinmu_patternskinmu_pattern_ids=21,0
+  has_many :attendancesattendances22,0
+  has_many :attendancesattendances=22,0
+  has_many :attendancesattendance_ids22,0
+  has_many :attendancesattendance_ids=22,0
+  has_many :attendance_othersattendance_others23,0
+  has_many :attendance_othersattendance_others=23,0
+  has_many :attendance_othersattendance_other_ids23,0
+  has_many :attendance_othersattendance_other_ids=23,0
+  has_many :transportation_expressestransportation_expresses24,0
+  has_many :transportation_expressestransportation_expresses=24,0
+  has_many :transportation_expressestransportation_expresse_ids24,0
+  has_many :transportation_expressestransportation_expresse_ids=24,0
+  has_many :vacation_requestsvacation_requests25,0
+  has_many :vacation_requestsvacation_requests=25,0
+  has_many :vacation_requestsvacation_request_ids25,0
+  has_many :vacation_requestsvacation_request_ids=25,0
+  has_many :commutescommutes27,0
+  has_many :commutescommutes=27,0
+  has_many :commutescommute_ids27,0
+  has_many :commutescommute_ids=27,0
+  has_many :reasonsreasons28,0
+  has_many :reasonsreasons=28,0
+  has_many :reasonsreason_ids28,0
+  has_many :reasonsreason_ids=28,0
+  has_many :business_reportsbusiness_reports30,0
+  has_many :business_reportsbusiness_reports=30,0
+  has_many :business_reportsbusiness_report_ids30,0
+  has_many :business_reportsbusiness_report_ids=30,0
+  has_many :housing_allowanceshousing_allowances31,0
+  has_many :housing_allowanceshousing_allowances=31,0
+  has_many :housing_allowanceshousing_allowance_ids31,0
+  has_many :housing_allowanceshousing_allowance_ids=31,0
+  has_many :qualification_allowancesqualification_allowances33,0
+  has_many :qualification_allowancesqualification_allowances=33,0
+  has_many :qualification_allowancesqualification_allowance_ids33,0
+  has_many :qualification_allowancesqualification_allowance_ids=33,0
+  has_many :summary_attendancessummary_attendances34,0
+  has_many :summary_attendancessummary_attendances=34,0
+  has_many :summary_attendancessummary_attendance_ids34,0
+  has_many :summary_attendancessummary_attendance_ids=34,0
+  def authenticateauthenticate61,0
+  def update_without_current_password(params, *options)update_without_current_password73,0
+
+app/models/transportation_express.rb,232
+class TransportationExpress < ActiveRecord::BaseTransportationExpress1,0
+	belongs_to :useruser2,0
+	belongs_to :useruser=2,0
+	belongs_to :userbuild_user2,0
+	belongs_to :usercreate_user2,0
+	belongs_to :usercreate_user!2,0
+
+app/models/project.rb,209
+class Project < ActiveRecord::BaseProject1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
+
+spec/support/controller_macros.rb,77
+module ControllerMacrosControllerMacros2,0
+  def login_userlogin_user3,0
+
+db/migrate/20140701022526_add_partiol_column_to_transportation_express.rb,140
+class AddPartiolColumnToTransportationExpress < ActiveRecord::MigrationAddPartiolColumnToTransportationExpress1,0
+  def changechange2,0
+
+db/migrate/20140605061508_create_vacation_requests.rb,106
+class CreateVacationRequests < ActiveRecord::MigrationCreateVacationRequests1,0
+  def changechange2,0
+
+db/migrate/20140626010852_add_registration_no_year_to_qualification_allowances.rb,154
+class AddRegistrationNoYearToQualificationAllowances < ActiveRecord::MigrationAddRegistrationNoYearToQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140604003418_modify_column_to_attendance.rb,110
+class ModifyColumnToAttendance < ActiveRecord::MigrationModifyColumnToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140605050254_add_various_columns_to_user.rb,108
+class AddVariousColumnsToUser < ActiveRecord::MigrationAddVariousColumnsToUser1,0
+  def changechange2,0
+
+db/migrate/20140604052220_remove_user_id_from_section.rb,108
+class RemoveUserIdFromSection < ActiveRecord::MigrationRemoveUserIdFromSection1,0
+  def changechange2,0
+
+db/migrate/20140606070609_add_active_to_project.rb,98
+class AddActiveToProject < ActiveRecord::MigrationAddActiveToProject1,0
+  def changechange2,0
+
+db/migrate/20140606040035_rename_titoku_to_attendance.rb,110
+class RenameTitokuToAttendance < ActiveRecord::MigrationRenameTitokuToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140605063352_modify_decimal_from_integer_to_attendance.rb,134
+class ModifyDecimalFromIntegerToAttendance < ActiveRecord::MigrationModifyDecimalFromIntegerToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140626010843_add_registration_no_alphabet_to_qualification_allowances.rb,162
+class AddRegistrationNoAlphabetToQualificationAllowances < ActiveRecord::MigrationAddRegistrationNoAlphabetToQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140625042825_add_imprint_to_user.rb,94
+class AddImprintToUser < ActiveRecord::MigrationAddImprintToUser1,0
+  def changechange2,0
+
+db/migrate/20140604052307_add_section_id_to_user.rb,98
+class AddSectionIdToUser < ActiveRecord::MigrationAddSectionIdToUser1,0
+  def changechange2,0
+
+db/migrate/20140605064606_modify_decimal_scale_to_attendance.rb,122
+class ModifyDecimalScaleToAttendance < ActiveRecord::MigrationModifyDecimalScaleToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140612074057_remove_code_name_to_projects.rb,122
+class RemoveCodeNameToProjects < ActiveRecord::MigrationRemoveCodeNameToProjects1,0
+  def upup2,0
+  def downdown8,0
+
+db/migrate/20140613012118_add_reflection_to_business_reports.rb,122
+class AddReflectionToBusinessReports < ActiveRecord::MigrationAddReflectionToBusinessReports1,0
+  def changechange2,0
+
+db/migrate/20140630013737_add_column_to_summary_attendance.rb,118
+class AddColumnToSummaryAttendance < ActiveRecord::MigrationAddColumnToSummaryAttendance1,0
+  def changechange2,0
+
+db/migrate/20140610025136_modify_decimal_from_integer_to_kinmu_patterns.rb,140
+class ModifyDecimalFromIntegerToKinmuPatterns < ActiveRecord::MigrationModifyDecimalFromIntegerToKinmuPatterns1,0
+  def changechange2,0
+
+db/migrate/20140612005425_midify_gender_size_to_user.rb,106
+class MidifyGenderSizeToUser < ActiveRecord::MigrationMidifyGenderSizeToUser1,0
+  def changechange2,0
+
+db/migrate/20140623041335_modify_dafault_value_to_kinum_patterns.rb,128
+class ModifyDafaultValueToKinumPatterns < ActiveRecord::MigrationModifyDafaultValueToKinumPatterns1,0
+  def changechange2,0
+
+db/migrate/20140623025403_modify_dafault_value_to_attendance.rb,122
+class ModifyDafaultValueToAttendance < ActiveRecord::MigrationModifyDafaultValueToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140613010301_create_business_reports.rb,104
+class CreateBusinessReports < ActiveRecord::MigrationCreateBusinessReports1,0
+  def changechange2,0
+
+db/migrate/20140603024806_devise_create_users.rb,96
+class DeviseCreateUsers < ActiveRecord::MigrationDeviseCreateUsers1,0
+  def changechange2,0
+
+db/migrate/20140604042724_add_columns_to_user.rb,94
+class AddColumnsToUser < ActiveRecord::MigrationAddColumnsToUser1,0
+  def changechange2,0
+
+db/migrate/20140626005621_add_get_date_to_qualification_allowances.rb,132
+class AddGetDateToQualificationAllowances < ActiveRecord::MigrationAddGetDateToQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140617045809_create_reasons.rb,88
+class CreateReasons < ActiveRecord::MigrationCreateReasons1,0
+  def changechange2,0
+
+db/migrate/20140623082358_create_qualification_allowances.rb,120
+class CreateQualificationAllowances < ActiveRecord::MigrationCreateQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140605073313_add_holiday_to_attendance.rb,106
+class AddHolidayToAttendance < ActiveRecord::MigrationAddHolidayToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140617014653_create_commutes.rb,90
+class CreateCommutes < ActiveRecord::MigrationCreateCommutes1,0
+  def changechange2,0
+
+db/migrate/20150107073756_change_datatype_start_time_of_attendance.rb,132
+class ChangeDatatypeStartTimeOfAttendance < ActiveRecord::MigrationChangeDatatypeStartTimeOfAttendance1,0
+  def changechange2,0
+
+db/migrate/20140606054654_create_projects.rb,90
+class CreateProjects < ActiveRecord::MigrationCreateProjects1,0
+  def changechange2,0
+
+db/migrate/20140620080011_create_housing_allowances.rb,108
+class CreateHousingAllowances < ActiveRecord::MigrationCreateHousingAllowances1,0
+  def changechange2,0
+
+db/migrate/20140604042440_create_sections.rb,90
+class CreateSections < ActiveRecord::MigrationCreateSections1,0
+  def changechange2,0
+
+db/migrate/20140626010906_add_registration_no_individual_to_qualification_allowances.rb,166
+class AddRegistrationNoIndividualToQualificationAllowances < ActiveRecord::MigrationAddRegistrationNoIndividualToQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140604002718_create_attendances.rb,96
+class CreateAttendances < ActiveRecord::MigrationCreateAttendances1,0
+  def changechange2,0
+
+db/migrate/20140610040347_create_attendance_others.rb,106
+class CreateAttendanceOthers < ActiveRecord::MigrationCreateAttendanceOthers1,0
+  def changechange2,0
+
+db/migrate/20140624052409_create_summary_attendances.rb,110
+class CreateSummaryAttendances < ActiveRecord::MigrationCreateSummaryAttendances1,0
+  def changechange2,0
+
+db/migrate/20140623040349_modify_dafault_value_to_attendance_others.rb,134
+class ModifyDafaultValueToAttendanceOthers < ActiveRecord::MigrationModifyDafaultValueToAttendanceOthers1,0
+  def changechange2,0
+
+db/migrate/20140613012756_add_station_to_user.rb,94
+class AddStationToUser < ActiveRecord::MigrationAddStationToUser1,0
+  def changechange2,0
+
+db/migrate/20140609065006_add_role_to_users.rb,90
+class AddRoleToUsers < ActiveRecord::MigrationAddRoleToUsers1,0
+  def changechange2,0
+
+db/migrate/20140605054113_create_transportation_expresses.rb,120
+class CreateTransportationExpresses < ActiveRecord::MigrationCreateTransportationExpresses1,0
+  def changechange2,0
+
+db/migrate/20140624093737_add_hankyuu_to_attendance.rb,106
+class AddHankyuuToAttendance < ActiveRecord::MigrationAddHankyuuToAttendance1,0
+  def changechange2,0
+
+db/migrate/20140623041049_remove_decimal_to_attendance_others.rb,124
+class RemoveDecimalToAttendanceOthers < ActiveRecord::MigrationRemoveDecimalToAttendanceOthers1,0
+  def changechange2,0
+
+db/migrate/20140630055300_add_column_to_transportation_express.rb,126
+class AddColumnToTransportationExpress < ActiveRecord::MigrationAddColumnToTransportationExpress1,0
+  def changechange2,0
+
+db/migrate/20140626010859_add_registration_no_month_to_qualification_allowances.rb,156
+class AddRegistrationNoMonthToQualificationAllowances < ActiveRecord::MigrationAddRegistrationNoMonthToQualificationAllowances1,0
+  def changechange2,0
+
+db/migrate/20140604042452_create_kinmu_patterns.rb,100
+class CreateKinmuPatterns < ActiveRecord::MigrationCreateKinmuPatterns1,0
+  def changechange2,0
+
+db/migrate/20140613005403_drop_table_businesses.rb,76
+class DropTableBusinesses < ActiveRecord::MigrationDropTableBusinesses1,0
+
+db/migrate/20140630064553_add_column_day_to_transportation_express.rb,132
+class AddColumnDayToTransportationExpress < ActiveRecord::MigrationAddColumnDayToTransportationExpress1,0
+  def changechange2,0
+
+db/migrate/20140606061439_create_licenses.rb,90
+class CreateLicenses < ActiveRecord::MigrationCreateLicenses1,0
+  def changechange2,0
+
+db/migrate/20140613015918_modify_decimal_experience_to_user.rb,132
+class ModifyDecimalExperienceToUser < ActiveRecord::MigrationModifyDecimalExperienceToUser1,0
+  def upup2,0
+  def downdown6,0
+
+db/migrate/20140605051239_add_code_to_kinmu_pattern.rb,104
+class AddCodeToKinmuPattern < ActiveRecord::MigrationAddCodeToKinmuPattern1,0
+  def changechange2,0
+
+config/initializers/const.rb,213
+YOUBI = %w[日 月 火 水 木 金 土].freezeYOUBI2,0
+GENDER = {  man: "男", woman: "女"}.freezeGENDER3,0
+GENDER = {  admin: "管理者", manager: "マネージャー", regular: "一般"}.freezeGENDER4,0
+
+config/application.rb,88
+module SigohakaSigohaka16,0
+  class Application < Rails::ApplicationApplication17,0
