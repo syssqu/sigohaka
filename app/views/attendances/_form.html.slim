@@ -100,12 +100,12 @@
                 td 実働時間
             tbody
               tr
-                td = f.text_field :over_time, :value => number_with_precision(f.object.over_time,:precision => 2)
-                td = f.text_field :holiday_time, :value => number_with_precision(f.object.holiday_time,:precision => 2)
-                td = f.text_field :midnight_time, :value => number_with_precision(f.object.midnight_time,:precision => 2)
-                td = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
-                td = f.text_field :kouzyo_time, :value => number_with_precision(f.object.kouzyo_time,:precision => 2)
-                td = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
+                td = f.number_field :over_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :holiday_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :midnight_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :break_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :kouzyo_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :work_time, :class => 'text_field', :step => 0.25
       .row
         .large-2.small-4.columns
           label.left.inline 備考

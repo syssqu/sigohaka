@@ -29,8 +29,16 @@ $("#attendance_pattern").change ->
 
 # 区分や各時間を勤務パターンと出退勤時刻によって自動計算する
 $("#calculate").click ->
-  if $("#attendance_pattern").val() == "" or $("#attendance_start_time").val() == "" or $("#attendance_end_time").val() == ""
-    alert "勤務パターンと出退勤時間を入力して下さい。"
+  # if $("#attendance_pattern").val() == "" or $.trim($("#attendance_start_time").val()) == "" or $.trim($("#attendance_end_time").val()) == ""
+  #   alert "勤務パターンと出退勤時間を入力して下さい。"
+  #   return
+
+  if $.trim($("#attendance_start_time").val()) != "" and ! $.trim($("#attendance_start_time").val()).match(/^\d{1,2}\:\d{2}$/)
+    alert "出勤時刻が正しくありません。"
+    return
+
+  if $.trim($("#attendance_end_time").val()) != "" and ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/)
+    alert "退勤時刻が正しくありません。"
     return
 
   $.ajax

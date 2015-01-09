@@ -62,7 +62,7 @@ class AttendancesController < PapersController
   def edit
     temp = current_user.kinmu_patterns.where("start_time is not null and end_time is not null")
     @pattern = temp.collect do |k|
-      [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
+      [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.id]
     end
 
     @pattern << [" * 定例外勤務(休出 or シフト)", 4]
@@ -114,12 +114,12 @@ class AttendancesController < PapersController
       # 休日でない場合は勤務パターンをベースに値を設定
       @attendances.where("holiday = '0'").update_all([sql,
           current_user.kinmu_patterns.first.code,
-          current_user.kinmu_patterns.first.start_time,
-          current_user.kinmu_patterns.first.end_time,
+          current_user.kinmu_patterns.first.start_time.strftime("%_H:%M"),
+          current_user.kinmu_patterns.first.end_time.strftime("%_H:%M"),
           false,false,false,false,false,false,false,
           false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
           current_user.kinmu_patterns.first.work_time,nil])
-
+      
       # 休日は全て空白に設定
       @attendances.where("holiday = '1'").update_all([sql,
           "","","",false,false,false,false,false,false,
@@ -141,14 +141,13 @@ class AttendancesController < PapersController
     temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
 
     if temp_pattern.nil?
-      @attendance[:start_time] = "";
-      @attendance[:end_time] = "";
+      @attendance.start_time = "";
+      @attendance.end_time = "";
     else
-      # @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
-      # @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
-      @attendance[:start_time] = "22:22"
-      @attendance[:end_time] = "44:22"
+      @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
+      @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
     end
+
   end
 
   #
@@ -157,23 +156,28 @@ class AttendancesController < PapersController
   # 編集画面にて呼び出される
   #
   def calculate
-    
+
+    Rails.logger.info("自動計算処理")
     Rails.logger.info("PARAMS: #{params.inspect}")
+
+    @attendance.init_time_info()
+
+    if params[:pattern].blank? or params[:start_time].blank? or params[:end_time].blank?
+      return
+    end
     
-    temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = current_user.kinmu_patterns.find(params[:pattern])
 
     Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
     Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
-    Rails.logger.info("pattern_end_date - pattern_start_date: " + (temp_pattern.end_time - temp_pattern.start_time).to_s)
 
-    attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
-    attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
+    logger.debug("画面入力値(出勤時刻)" + params[:start_time]);
+    logger.debug("画面入力値(退勤時刻)" + params[:end_time]);
 
-    Rails.logger.info("input_start_date: " + attendance_start_time.to_s)
-    Rails.logger.info("input_start_date: " + attendance_end_time.to_s)
-    Rails.logger.info("input_end_date - input_start_date: " + (attendance_end_time - attendance_start_time).to_s)
-    
-    @attendance.calculate(temp_pattern, attendance_start_time, attendance_end_time)
+    # attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
+    # attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
+
+    @attendance.calculate(temp_pattern, params[:start_time], params[:end_time])
   end
 
   #

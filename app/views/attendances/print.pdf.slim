@@ -118,8 +118,8 @@ article.attendance_print
             td.text-center
               span = YOUBI[attendance.wday.to_i]
           td.text-center = attendance.pattern
-          td.text-center = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
-          td.text-center = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
+          td.text-center = attendance.start_time
+          td.text-center = attendance.end_time
           td.text-center = "○" if attendance.byouketu
           td.text-center = "○" if attendance.kekkin
           td.text-center = "○" if attendance.hankekkin
