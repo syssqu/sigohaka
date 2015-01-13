@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108021022) do
+ActiveRecord::Schema.define(version: 20150113070008) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.string   "day",             limit: 2
     t.string   "wday",            limit: 1
     t.string   "pattern",         limit: 1
-    t.time     "start_time"
-    t.time     "end_time"
+    t.string   "start_time",      limit: 5
+    t.string   "end_time",        limit: 5
     t.boolean  "byouketu",                                          default: false
     t.boolean  "kekkin",                                            default: false
     t.boolean  "hankekkin",                                         default: false
@@ -210,6 +210,15 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "note"
+  end
+
+  create_table "time_lines", force: true do |t|
+    t.string   "title"
+    t.text     "contents"
+    t.integer  "user_id"
+    t.integer  "create_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "transportation_expresses", force: true do |t|

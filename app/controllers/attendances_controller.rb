@@ -24,16 +24,30 @@ class AttendancesController < PapersController
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
-    @freezed = @attendances.first.freezed
+    set_freeze_info
 
     @status = "本人未確認"
-    if @attendances.first.freezed
-      @status = "凍結中"
-    elsif @attendances.first.boss_approved
+    if @attendances.first.boss_approved
       @status = "上長承認済み"
     elsif @attendances.first.self_approved
       @status = "本人確認済み"
     end
+
+    @be_self = view_context.be_self @attendances.first
+  end
+
+  def set_freeze_info
+
+    logger.debug("凍結状態の取得")
+    
+    if view_context.be_self @attendances.first
+      @freezed = @attendances.first.self_approved or @attendances.first.boss_approved
+    else
+      @freezed = @attendances.first.boss_approved
+    end
+    
+    logger.debug("勤怠情報: " + @attendances.first.id.to_s + ", " + @attendances.first.year + ", " + @attendances.first.month + ", " + @attendances.first.self_approved.to_s + ", " + @attendances.first.boss_approved.to_s)
+    logger.debug("凍結状態: " + @freezed.to_s)
   end
 
   #
@@ -171,8 +185,8 @@ class AttendancesController < PapersController
     Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
     Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
 
-    logger.debug("画面入力値(出勤時刻)" + params[:start_time]);
-    logger.debug("画面入力値(退勤時刻)" + params[:end_time]);
+    logger.debug("画面入力値(出勤時刻)" + params[:start_time])
+    logger.debug("画面入力値(退勤時刻)" + params[:end_time])
 
     # attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
     # attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
@@ -207,9 +221,12 @@ class AttendancesController < PapersController
   # 本人確認処理
   #
   def check_proc
+
+    # 画面選択年月分の勤怠情報を本人確認済みにする
     init
     @attendances.update_all(["self_approved = ?",true])
 
+    # 翌月分の勤怠情報を作成し画面に出力する
     init true
     create_attendances true
   end
@@ -256,7 +273,7 @@ class AttendancesController < PapersController
     @gatudo = get_gatudo(@attendance_years)
     @project = get_project
 
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
   end
 
   #
@@ -266,7 +283,8 @@ class AttendancesController < PapersController
   def create_attendances(freezed=false)
     
     if @attendances.exists?
-      @freezed = @attendances.first.freezed
+      set_freeze_info
+      
       create_years_collection current_user.attendances, freezed
       return
     end
@@ -302,7 +320,7 @@ class AttendancesController < PapersController
       if @attendance.save
         target_date = target_date.tomorrow
       else
-        logger.debug("勤怠登録処理エラー");
+        logger.debug("勤怠登録処理エラー")
         break
       end
     end
