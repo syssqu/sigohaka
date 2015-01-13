@@ -1,0 +1,3 @@
+watch( 'spec/(.*)_spec\.rb' )  {system("ripper-tags -e -R -f TAGS") }
+watch( 'lib/.*\.rb' ) { system("ripper-tags -e -R -f TAGS") }
+
