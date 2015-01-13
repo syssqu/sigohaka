@@ -15,13 +15,13 @@
       table
         tr
           td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
-        tr style="background-color: #fff;"
-          td.right style="margin-top:15px;" 第
-          td width="65" = f.text_field :registration_no_alphabet
+        tr.left style="background-color: #fff; width: 525px;"
+          td style="margin-top: 15px;" 第
+          td width="70" = f.select :registration_no_alphabet, QualificationAllowance::ALPHABET
           td ―
-          td width="90" = f.text_field :registration_no_year
+          td width="80" = f.text_field :registration_no_year
           td ―
-          td width="65" = f.text_field :registration_no_month
+          td width="60" = f.text_field :registration_no_month
           td ―
           td width="90" = f.text_field :registration_no_individual
           td 号
@@ -30,19 +30,19 @@
         label No.
         = f.select :number, QualificationAllowance::NUMBER, {:include_blank => '▼ 選択してください'}
         / select name="selectName1"
-          option value="選択されていません" ▼ 選択してください
-          option value="A1" A1
-          option value="A2" A2
-          option value="A3" A3
-          option value="A4" A4
-          option value="A5" A5
-          option value="A6" A6
-          option value="A7" A7
-          option value="A8" A8
-          option value="A9" A9
-          option value="A10" A10
-          option value="A11" A11
-          option value="A12" A12
+          / option value="選択されていません" ▼ 選択してください
+          / option value="A1" A1
+          / option value="A2" A2
+          / option value="A3" A3
+          / option value="A4" A4
+          / option value="A5" A5
+          / option value="A6" A6
+          / option value="A7" A7
+          / option value="A8" A8
+          / option value="A9" A9
+          / option value="A10" A10
+          / option value="A11" A11
+          / option value="A12" A12
 
       .field 
         label 資格取得項目
@@ -119,43 +119,11 @@
 
 /   select3.options.length = 0;
 
-/   if (select2.options[select2.selectedIndex].value == "ITストラテジスト")
+/   if (select2.options[select2.selectedIndex].value == "ITストラテジスト" || select2.options[select2.selectedIndex].value == "システム監査技術者" || select2.options[select2.selectedIndex].value == "システムアーキテクト")
 /   {
 /   select3.options[0] = new Option("30,000 円");
 /   }
-/   else if (select2.options[select2.selectedIndex].value == "システム監査技術者")
-/   {
-/   select3.options[0] = new Option("30,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "システムアーキテクト")
-/   {
-/   select3.options[0] = new Option("30,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "応用情報技術者")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "プロジェクトマネージャー")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "ネットワークスペシャリスト")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "データベーススペシャリスト")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "エンベンデッドシステムスペシャリスト")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "情報セキュリティースペシャリスト")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "ITサービスマネージャー")
+/   else if (select2.options[select2.selectedIndex].value == "応用情報技術者" || select2.options[select2.selectedIndex].value == "プロジェクトマネージャー" || select2.options[select2.selectedIndex].value == "ネットワークスペシャリスト" || select2.options[select2.selectedIndex].value == "データベーススペシャリスト" || select2.options[select2.selectedIndex].value == "エンベンデッドシステムスペシャリスト" || select2.options[select2.selectedIndex].value == "情報セキュリティースペシャリスト" || select2.options[select2.selectedIndex].value == "ITサービスマネージャー")
 /   {
 /   select3.options[0] = new Option("20,000 円");
 /   }
@@ -177,19 +145,14 @@
 /   var index = document.itemForm.selectName3.selectedIndex;
 /   var value = document.itemForm.selectName3.options[index].value;
 
-/   }
+/ var sel = document.getElementById("selectName1");
+/ var sel = document.getElementById("selectName2");
+/ var sel = document.getElementById("selectName3");
+
+  / }
 
 
 
-
-
-
-/ document.itemForm.myItem.value = value;
-/ document.itemForm.myItem2.value = value;
-/ document.itemForm.myItem3.value = value;
-
-/ = f.submit '登録', class: "button tiny radius"
-/ = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"
 
 / table#qualification_allowance
 /   form name="itemForm" 
@@ -300,25 +263,3 @@
 
   /   = f.submit '登録', class: "button tiny radius"
   /   = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"
-
-
-
-
-        / .field
-      /   = f.label :user_id
-      /   = f.number_field :user_id
-      / .field
-      /   label 資格取得年月日
-      /   = f.date_select :get_date
-      / .field
-      /   label No.
-      /   / = f.text_field :number
-      /   = raw sprintf f.select :number, QualificationAllowance.number_choices
-      / .field
-      /   label 資格取得項目
-      /   / = f.text_field :item
-      /   = raw sprintf f.select :item, QualificationAllowance.item_choices
-      / .field
-      /   label 支給金額
-      /   / = f.number_field :money
-      /   = raw sprintf f.select :money, QualificationAllowance.money_choices

@@ -13,15 +13,15 @@
       tr
         td.cate.text-left 作業内容
       tr
-        td = f.text_area :naiyou
+        td = f.text_area :naiyou, :size => "1x3", :maxlength => "155"
       tr
         td.cate.text-left 作業実績
       tr
-        td = f.text_area :jisseki
+        td = f.text_area :jisseki, :size => "1x3", :maxlength => "155"
       tr
         td.cate.text-left 開発ツールや言語等
       tr
-        td = f.text_field :tool
+        td = f.text_field :tool, :maxlength => "50"
   tbody
     h7#business_report_headline
      | 2. 個人状況
@@ -32,11 +32,14 @@
         td.cate2.text-center 自己評価
         td.cate 評価理由
       tr 
-        td = f.text_area :self_purpose
-        td.text-center = f.text_field :self_value
-        td = f.text_area :self_reason
+        td = f.text_area :self_purpose, :size => "1x3", :maxlength => "65"
+        td.text-center = f.select :self_value
+          option value="A" A
+          option value="B" B
+          option value="C" C
+        td = f.text_area :self_reason, :size => "1x3", :maxlength => "65"
     tr
-      h7.center style="font-size:14px;"
+      h7.center style="font-size: 14px;"
        | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
   tbody
     h7#business_report_headline
@@ -44,21 +47,21 @@
   table#business_report_text
     tbody
       tr
-        td = f.text_area :user_situation
+        td = f.text_area :user_situation, :size => "1x3", :maxlength => "155"
   tbody
     h7#business_report_headline 
      | 4. 会社への提案・要望事項
   table#business_report_text
     tbody
       tr
-        td = f.text_area :request
+        td = f.text_area :request, :size => "1x3", :maxlength => "155"
   tbody
     h7#business_report_headline 
      | 5. 今月度の反省および所感等
   table#business_report_text
     tbody
       tr 
-        td = f.text_area :reflection
+        td = f.text_area :reflection, :size => "1x3", :maxlength => "155"
   tbody
     h7#business_report_headline 
      | 6. 自己啓発等
@@ -67,12 +70,12 @@
       tr
         td.cate.text-left 目標
       tr
-        td = f.text_field :develop_purpose
+        td = f.text_field :develop_purpose, :maxlength => "50"
     tbody
       tr
         td.cate.text-left 今月の実績
       tr 
-        td = f.text_area :develop_jisseki
+        td = f.text_area :develop_jisseki, :size => "1x3", :maxlength => "155"
     tbody
       tr
   tbody
@@ -81,7 +84,7 @@
   table#business_report_text
     tbody
       tr
-        td = f.text_area :note
+        td = f.text_area :note, :size => "1x2", :maxlength => "50"
 
   .row
     .large-7.large-centered.columns

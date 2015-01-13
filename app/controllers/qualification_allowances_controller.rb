@@ -9,7 +9,6 @@ class QualificationAllowancesController < ApplicationController
 
     # @nendo = get_nendo(processing_date)
     # @gatudo = get_gatudo(processing_date)
-    # @project = get_project
 
     # @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     # year_month_set = current_user.attendances.group('year, month')
@@ -47,7 +46,7 @@ class QualificationAllowancesController < ApplicationController
 
     respond_to do |format|
       if @qualification_allowance.save
-        format.html { redirect_to @qualification_allowance, notice: '資格手当申請書を登録しました' }
+        format.html { redirect_to qualification_allowances_url, notice: '資格手当申請書を登録しました' }
         format.json { render :show, status: :created, location: @qualification_allowance }
       else
         format.html { render :new }
