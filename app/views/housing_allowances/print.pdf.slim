@@ -51,26 +51,26 @@
         tr
           td 届出理由
           td#reason colspan="6"
-            - if @housing_allowances.reason=='new'
+            - if @housing_allowance.reason=='new'
               span#ok 新規届出
-            - elsif @housing_allowances.reason!='new'
+            - elsif @housing_allowance.reason!='new'
               span 新規届出
 
-            - if @housing_allowances.reason=='chan'
+            - if @housing_allowance.reason=='chan'
               span#ok 住居変更
-            - elsif @housing_allowances.reason!='chan'
+            - elsif @housing_allowance.reason!='chan'
               span 住居変更
 
-            - if @housing_allowances.reason=='updw'
+            - if @housing_allowance.reason=='updw'
               span#ok 扶養親族の増減
-            - elsif @housing_allowances.reason!='updw'
+            - elsif @housing_allowance.reason!='updw'
               span 扶養親族の増減
 
-            - if @housing_allowances.reason=='ta'
+            - if @housing_allowance.reason=='ta'
               span#ok その他
-            - elsif @housing_allowances.reason!='ta'
+            - elsif @housing_allowance.reason!='ta'
               span その他
-            | (#{@housing_allowances.reason_text})
+            | (#{@housing_allowance.reason_text})
 
         tr
           td rowspan="2"現住所
@@ -83,67 +83,67 @@
         tr
           td 住宅様式
           td#reason colspan="6"
-            - if @housing_allowances.housing_style=="my"
+            - if @housing_allowance.housing_style=="my"
               span#ok 自宅
-            -elsif @housing_allowances.housing_style!="my"
+            -elsif @housing_allowance.housing_style!="my"
               span 自宅
-            - if @housing_allowances.housing_style=="kari"
+            - if @housing_allowance.housing_style=="kari"
               span#ok 借家
-            -elsif @housing_allowances.housing_style!="kari"
+            -elsif @housing_allowance.housing_style!="kari"
               span 借家
-            - if @housing_allowances.housing_style=="kou"
+            - if @housing_allowance.housing_style=="kou"
               span#ok 公団
-            -elsif @housing_allowances.housing_style!="kou"
+            -elsif @housing_allowance.housing_style!="kou"
               span 公団
-            - if @housing_allowances.housing_style=="si"
+            - if @housing_allowance.housing_style=="si"
               span#ok 市営
-            -elsif @housing_allowances.housing_style!="si"
+            -elsif @housing_allowance.housing_style!="si"
               span 市営
-            - if @housing_allowances.housing_style=="min"
+            - if @housing_allowance.housing_style=="min"
               span#ok 民間アパート
-            -elsif @housing_allowances.housing_style!="min"
+            -elsif @housing_allowance.housing_style!="min"
               span 民間アパート
             - if @housing_allowances.housing_style=="ta"
               span#ok その他
-            -elsif @housing_allowances.housing_style!="ta"
+            -elsif @housing_allowance.housing_style!="ta"
               span その他
-            | (#{@housing_allowances.housing_style_text})
+            | (#{@housing_allowance.housing_style_text})
 
         tr
           td 契約期間
-          td colspan="6" #{ @housing_allowances.agree_date_s.strftime("%Y年%_m月%_d日")} ～　#{ @housing_allowances.agree_date_e.strftime("%Y年%_m月%_d日")}
+          td colspan="6" #{ @housing_allowance.agree_date_s.strftime("%Y年%_m月%_d日")} ～　#{ @housing_allowance.agree_date_e.strftime("%Y年%_m月%_d日")}
 
         tr
           td rowspan="2" 配偶者
           td.nonborder
-            - if @housing_allowances.spouse=="u"
+            - if @housing_allowance.spouse=="u"
               span#ok 有
-            - elsif @housing_allowances.spouse!="u"
+            - elsif @housing_allowance.spouse!="u"
               span 有
 
           td.nonborder 配偶者名
           td rowspan="2" 配偶者以外<br>の扶養親族
           td.nonborder  style="text-align:center;"
-            - if @housing_allowances.spouse_other=="u"
+            - if @housing_allowance.spouse_other=="u"
               span#ok 有
-            - elsif @housing_allowances.spouse_other!="u"
+            - elsif @housing_allowance.spouse_other!="u"
               span 有
-          td 扶養者(#{@housing_allowances.support})人
+          td 扶養者(#{@housing_allowance.support})人
 
         tr
           td.nonborder
-            - if @housing_allowances.spouse=="mu"
+            - if @housing_allowance.spouse=="mu"
               span#ok 無
-            - elsif @housing_allowances.spouse!="mu"
+            - elsif @housing_allowance.spouse!="mu"
               span 無
-          td.nonborder #{'('+@housing_allowances.spouse_name+')'}
+          td.nonborder #{'('+@housing_allowance.spouse_name+')'}
           td.nonborder style="text-align:center;"
-            - if @housing_allowances.spouse_other=="mu"
+            - if @housing_allowance.spouse_other=="mu"
               span#ok 無
-            - elsif @housing_allowances.spouse_other!="mu"
+            - elsif @housing_allowance.spouse_other!="mu"
               span 無
 
-          td #{'('+@housing_allowances.support_name1+')'}#{'('+@housing_allowances.support_name2+')'}
+          td #{'('+@housing_allowance.support_name1+')'}#{'('+@housing_allowance.support_name2+')'}
 
 
         tr
