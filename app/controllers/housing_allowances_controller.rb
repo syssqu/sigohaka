@@ -155,7 +155,7 @@ class HousingAllowancesController < PapersController
   def update
     respond_to do |format|
       if @housing_allowance.update(housing_allowance_params)
-        format.html { redirect_to housing_allowances_url, notice: 'Housing allowance was successfully updated.' }
+        format.html { redirect_to housing_allowances_url, notice: 'データの変更を完了しました。' }
         format.json { render :show, status: :ok, location: @housing_allowance }
       else
         format.html { render :edit }
