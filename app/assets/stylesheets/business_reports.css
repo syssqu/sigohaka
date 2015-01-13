@@ -17,7 +17,7 @@ article.business_report_print table tr td {font-size: 10px; padding: 0px 0px !im
 h7#business_report_headline {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight: bold; background: #cccccc;}
 h7#business_report_footer   {font-size: 12px; padding-left: 560px; font-family: ＭＳ Ｐゴシック; font-weight: bold;}
 #business_report_text       {margin: 8px; border:1px solid; margin-left: 45px; width: 700px;table-layout: fixed;word-wrap: break-word;}
-#business_report_text td    {padding: 5px; font-size: 13px;}
+#business_report_text  td   {padding: 5px; font-size: 13px;}
 #business_report_text2 td   {padding: 6px; font-size: 13px;}
 #business_report_text2      {margin: 7px; border: 1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;}
 #business_report_inkan      {border: 1px solid; margin-right: 10px; border-collapse: collapse;}

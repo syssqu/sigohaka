@@ -1,6 +1,5 @@
 article.business_report_print
   h3 style="padding-left: 10px;" 業務報告書
-  / = select :business_report, 'business_report_target_date', @nengatudo_set
   #business_report_header.clearfix
     table#business_report_project
       tbody
@@ -15,7 +14,9 @@ article.business_report_print
           td #{current_user.family_name} #{current_user.first_name}
 
 |&nbsp;&nbsp;&nbsp;
-= link_to "PDF出力", print_business_reports_path, class: "button tiny radius"
+= link_to print_business_reports_path, class: "button tiny radius" do
+  i.fi-print
+  | 印刷用画面
 |&nbsp;&nbsp;&nbsp;
 = link_to '新規作成', new_business_report_path, class: "button tiny radius"
 - @business_reports.each do |business_report|
@@ -55,7 +56,7 @@ article.business_report_print
         td.text-center #{business_report.self_value}
         td #{business_report.self_reason}
     tr
-      h7.center style="font-size:14px;"
+      h7.center style="font-size: 14px;"
        | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
   tbody
     h7#business_report_headline
