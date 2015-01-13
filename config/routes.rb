@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   resources :housing_allowances do
     collection do
       get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
     end
   end
 
