@@ -44,7 +44,7 @@ i.fi-plus{padding: 0px 5px;}
 i.fi-check{padding-right:10px;}
 i.fi-x{padding: 0px 5px;color: white;}
 
-/* article.attendance_index table.kinmu_pattern td {height: 80px;} */
+/* article.attendance_index table.kinmu_pattern td {font-size:6px;} */
 
 /* =============================================================================
    勤務状況報告書(編集)
@@ -64,7 +64,7 @@ article.attendance_edit .button{margin-bottom:0px;}
 /* =============================================================================
    勤務状況報告書(PDF)
    ========================================================================== */
-article.attendance_print{margin-top:70px;}
+article.attendance_print{margin-top:30px;}
 article.attendance_print span{margin:0px;color:red;}
 
 article.attendance_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
