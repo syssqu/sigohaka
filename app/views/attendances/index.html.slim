@@ -183,6 +183,7 @@ article.attendance_index
             td.text-center 合計
             td.text-center
             td.text-center
+                
       table.kinmu_pattern border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr
@@ -196,7 +197,7 @@ article.attendance_index
           - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
             tr
               - if kinmu.code == "1"
-                td.text-center width="60px;" rowspan=4
+                td.text-center width="60px;" rowspan=6
                   |勤務
                   br
                   |パターン

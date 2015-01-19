@@ -241,16 +241,11 @@ class AttendancesController < PapersController
     @time_line[:contents] = "勤怠状況報告書の本人確認を完了しました。"
     @time_line.save
 
-    logger.debug("aaaaaaaaaaaaaaaaaaaaaaaaaa")
-    
     # マネージャーのタイムラインへ上長承認依頼を表示させる
-    katagaki = Katagaki.where( role: "manager")
-    logger.debug("cccccccccc")
+    manager = User::Roles::MANAGER
+    katagaki = Katagaki.where( role: manager)
     temp_user = katagaki[0].users.where(section_id: current_user.section_id)
-    logger.debug("dddddddddd")
     @time_line = temp_user[0].time_lines.build
-
-    logger.debug("zzzzzzzzzz")
     
     @time_line[:title] = "上長承認依頼"
     @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが勤怠状況報告書の本人確認を完了しました。"

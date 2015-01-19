@@ -25,7 +25,7 @@ namespace :db do
                  email: "njsekay@gmail.com",
                  password: "hydeouT4342",
                  gender: :man,
-                 section_id: 3,
+                 section_id: 2,
                  birth_date: "1979/6/28",
                  age:34,
                  postal_code:"",
@@ -50,6 +50,8 @@ namespace :db do
     admin.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     admin.kinmu_patterns.create!(code: "2")
     admin.kinmu_patterns.create!(code: "3")
+    admin.kinmu_patterns.create!(code: "4")
+    admin.kinmu_patterns.create!(code: "5")
     admin.kinmu_patterns.create!(code: "*")
 
     admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")

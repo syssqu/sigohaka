@@ -7,7 +7,7 @@ class KinmuPatternsController < ApplicationController
     @kinmu_patterns = current_user.kinmu_patterns.where("code <> '*'")
 
     if ! @kinmu_patterns.exists?
-      (1..3).each do |num|
+      (1..5).each do |num|
         @kinmu_pattern = current_user.kinmu_patterns.build
 
         # デフォルトの勤務パターン
