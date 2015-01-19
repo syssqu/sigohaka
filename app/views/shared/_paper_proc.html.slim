@@ -44,7 +44,7 @@ hr
       = link_to raw("<i class='fi-refresh'></i>本人確認取消し"), {controller: target, action: "cancel_check"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius alert"}
 
     / 上長承認(マネージャークラス以上の場合のみ表示)
-    - if can? :manage, current_user or can? :admin, current_user
+    - if can? :manage, current_user
       - if status == "上長承認済み"
         = link_to raw("<i class='fi-refresh'></i>上長承認取消し"), {controller: target, action: "cancel_approval"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius alert"}
       - else

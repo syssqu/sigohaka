@@ -52,6 +52,6 @@ class SectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
-      params.require(:section).permit(:code, :name)
+      params.require(:section).permit(:code, :name, :user_id)
     end
 end

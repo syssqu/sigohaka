@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113070008) do
+ActiveRecord::Schema.define(version: 20150119065150) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -124,6 +124,13 @@ ActiveRecord::Schema.define(version: 20150113070008) do
     t.boolean  "freezed"
     t.boolean  "self_approved"
     t.boolean  "boss_approved"
+  end
+
+  create_table "katagakis", force: true do |t|
+    t.string   "name"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "kinmu_patterns", force: true do |t|
@@ -275,6 +282,7 @@ ActiveRecord::Schema.define(version: 20150113070008) do
     t.string   "station"
     t.string   "imprint_id"
     t.date     "employee_date"
+    t.integer  "katagaki_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
