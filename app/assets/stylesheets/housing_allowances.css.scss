@@ -3,7 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 article.housing_index table{ border-spacing: 0;border-collapse: collapse;max-width: 800px;}
-article.housing_index table#main{}
+article.housing_index table#main{
+	width: 400px;
+
+	td{
+		font-size: 14px;
+		height: 1.5em;
+	}
+}
+article.housing_index table#sub{width: 400px;}
 article.housing_index table th{border:solid 1px;border-color: lightgray; padding: 4px;text-align: center;}
 article.housing_index table td{border:solid 1px;border-color: lightgray; padding: 4px;min-width: 40px;}
 article.housing_index table tr td .button {padding:4px !important;margin:0px !important;}
@@ -29,22 +37,40 @@ article.housing_index label{padding-right: 20px;}	// 対象年月横に空白
 //　住宅手当申請書（印刷）
 //===========================================================
 
-article.housing_print table{width:500px;border-spacing: 0;border-collapse: collapse;padding: 0px;border:none;background-color: #FFF;}
+article.housing_print table{
+	width:650px;
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0px;
+	border:none;
+	background-color: #FFF;
+	margin-left: 25px;
+}
+article.housing_print .title{
+	width:650px;
+	padding: 0px;
+	border:none;
+	background-color: #FFF;
+	margin-left: 25px;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+article.housing_print .textcenter{text-align: center}
 article.housing_print table td{margin:0px;padding: 1px; text-align: center;font-size: 12px}
 article.housing_print table #title{background-color: #DDE;font-size: 20px;border-bottom: solid 2px;}
 article.housing_print table #ate{text-align: center;font-size: 14px;border-bottom: solid 1px;width:100px;}
 article.housing_print table #day{border-bottom: solid 1px;font-size: 13px;}
 
-
+article.housing_print .colleft{text-align: left;padding-left:20px;}
 article.housing_print .user td{border:solid 1px;}
 // article.housing_print .user #ten{border-bottom:2px dashed ;}
-article.housing_print .user #zyusyo{border-bottom:none;font-size: 12px;text-align: left;}
-article.housing_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: left;}
+article.housing_print .user #zyusyo{padding-left:17px;border-bottom:none;font-size: 12px;text-align: left;}
+article.housing_print .user #phone{border-top:none;border-left:none;font-size: 5px;text-align: center;}
 article.housing_print .user #reason{padding:5px;text-align: left;}
 article.housing_print .user span{color: #000;}
 article.housing_print .user span#ok{border: solid 2px;border-radius:70em 70em 70em 70em;}
 
-article.housing_print .user span#allmoney{border-bottom: solid1px;}
+article.housing_print .user span#allmoney{font-size: 14px;border-bottom: 2px dashed;display:inline-block;line-height:1;}
 article.housing_print .user .nonborderB{border: none;text-align: right;color: #00F;}
-article.housing_print .user #zyouken{padding: 5px;font-size: 13px;}
+article.housing_print .user .zyouken{text-align:left;font-size: 13px;border-bottom:none;}
 article.housing_print .user .nonborder{border: none;text-align: right;}

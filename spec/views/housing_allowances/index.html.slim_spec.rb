@@ -56,4 +56,7 @@ describe "housing_allowances/index" do
     assert_select "tr>td", :text => "Support Name2".to_s, :count => 2
     assert_select "tr>td", :text => 2.to_s, :count => 2
   end
+
+
+  
 end

@@ -87,8 +87,8 @@ class HousingAllowancesController < PapersController
     @gatudo = get_gatudo(housing_allowance_years)
     @project = get_project
     
-    @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    @date=@housing_allowances.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).first
+    @date=HousingAllowance.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
       @date=Date.today
     end
