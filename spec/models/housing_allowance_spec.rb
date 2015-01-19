@@ -19,5 +19,8 @@ RSpec.describe HousingAllowance, :type => :model do
   	it { should respond_to(:support)}
   	it { should respond_to(:support_name1)}
   	it { should respond_to(:support_name2)}
+    it { should respond_to(:freezed)}
+    it { should respond_to(:self_approved)}
+    it { should respond_to(:boss_approved)}
   end
 end

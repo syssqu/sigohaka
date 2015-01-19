@@ -87,8 +87,8 @@ class HousingAllowancesController < PapersController
     @gatudo = get_gatudo(housing_allowance_years)
     @project = get_project
     
-    @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    @date=@housing_allowances.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).first
+    @date=HousingAllowance.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
       @date=Date.today
     end
@@ -155,7 +155,7 @@ class HousingAllowancesController < PapersController
   def update
     respond_to do |format|
       if @housing_allowance.update(housing_allowance_params)
-        format.html { redirect_to housing_allowances_url, notice: 'Housing allowance was successfully updated.' }
+        format.html { redirect_to housing_allowances_url, notice: 'データの変更を完了しました。' }
         format.json { render :show, status: :ok, location: @housing_allowance }
       else
         format.html { render :edit }

@@ -3,25 +3,25 @@
     article.housing_print
       br
       br
-      table
+      table.title
         tr
         tr
-          td#ate colspan="2"総務人事部　　　　殿
-          td colspan="2" width="40"
-          td width="60"style="border:solid 2px;"人事
-          td width="60"style="border:solid 2px;"所属長
-          td colspan="2" width="60" style="border:solid 2px;"本人
+          td#ate colspan="2"総務人事部　　　殿
+          td colspan="2" width="50"
+          td width="80"style="border:solid 2px;border-right:solid 1px;border-bottom:solid 1px;"人事
+          td width="80"style="border:solid 2px;border-right:solid 1px;border-bottom:solid 1px;border-left:solid 1px;"所属長
+          td colspan="2" width="40" style="border:solid 2px;border-left:solid 1px;border-bottom:solid 1px;"本人
 
         tr
           td colspan="4" height="30"
-          td rowspan="2"style="border:solid 2px;"
-          td rowspan="2"style="border:solid 2px;"
-          td rowspan="2" colspan="2" style="border:solid 2px;"
+          td rowspan="2" height="60"style="border:solid 2px;border-right:solid 1px;border-top:solid 1px;"
+          td rowspan="2"style="border:solid 2px;border-right:solid 1px;border-top:solid 1px;border-left:solid 1px;"
+          td rowspan="2" colspan="2" style="border:solid 2px;border-left:solid 1px;border-top:solid 1px;"  = image_tag "#{current_user.imprint_id}.png", size: '40x40', class:"imprint"
 
         tr
-          td width="40"
+          td width="80"
           td#title colspan="2" 住宅手当申請書
-          td width="20px"
+          td width="50px"
 
         tr
           td 
@@ -32,144 +32,171 @@
 
       table.user
         tr
-          td width="80"所属
-          td colspan="3" width="200"#{current_user.section.name}
+          td.textcenter width="100"所　　　属
+          td.colleft colspan="3" width="700"#{current_user.section.name}
 
-          td width="90" style="border-right:none;"プロジェクト名:
+          td width="110" colspan="2" style="border-right:none;"プロジェクト名:
           td style="border-left:none;"#{@project.summary}
           
           / td width="110"#{current_user.employee_no}
 
         tr
-          td 氏名
-          td colspan="3" #{current_user.family_name}#{current_user.first_name}
+          td 氏　　　名
+          td.colleft colspan="3" style="font-size:14px;" #{current_user.family_name}#{current_user.first_name}
 
-          td style="border-right:none;"社員　NO:
+          td colspan="2" style="border-right:none;"社員　NO:
           td style="border-left:none;"#{current_user.employee_no}
 
         
         tr
-          td 届出理由
+          td 届　出　理　由
           td#reason colspan="6"
-            - if @housing_allowance.reason=='new'
+            - if @housing_allowances.reason=='new'
               span#ok 新規届出
-            - elsif @housing_allowance.reason!='new'
+            - elsif @housing_allowances.reason!='new'
               span 新規届出
-
-            - if @housing_allowance.reason=='chan'
+            |　・
+            - if @housing_allowances.reason=='chan'
               span#ok 住居変更
-            - elsif @housing_allowance.reason!='chan'
+            - elsif @housing_allowances.reason!='chan'
               span 住居変更
-
-            - if @housing_allowance.reason=='updw'
+            |　・
+            - if @housing_allowances.reason=='updw'
               span#ok 扶養親族の増減
-            - elsif @housing_allowance.reason!='updw'
+            - elsif @housing_allowances.reason!='updw'
               span 扶養親族の増減
-
-            - if @housing_allowance.reason=='ta'
+            |　・
+            - if @housing_allowances.reason=='ta'
               span#ok その他
-            - elsif @housing_allowance.reason!='ta'
+            - elsif @housing_allowances.reason!='ta'
               span その他
-            | (#{@housing_allowance.reason_text})
+            | (#{@housing_allowances.reason_text})
 
         tr
-          td rowspan="2"現住所
+          td rowspan="2"現　　住　　所
           td#zyusyo colspan="6" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
 
         tr
           td style="border-right:none;border-top:none;"
-          td#phone colspan="5"TEL #{current_user.phone}
+          td#phone colspan="5"
+            |　　　　　　TEL #{current_user.phone}
 
         tr
-          td 住宅様式
+          td 住　宅　様　式
           td#reason colspan="6"
-            - if @housing_allowance.housing_style=="my"
+            - if @housing_allowances.housing_style=="my"
               span#ok 自宅
-            -elsif @housing_allowance.housing_style!="my"
+            -elsif @housing_allowances.housing_style!="my"
               span 自宅
-            - if @housing_allowance.housing_style=="kari"
+            |　・
+            - if @housing_allowances.housing_style=="kari"
               span#ok 借家
-            -elsif @housing_allowance.housing_style!="kari"
+            -elsif @housing_allowances.housing_style!="kari"
               span 借家
-            - if @housing_allowance.housing_style=="kou"
+            |　・
+            - if @housing_allowances.housing_style=="kou"
               span#ok 公団
-            -elsif @housing_allowance.housing_style!="kou"
+            -elsif @housing_allowances.housing_style!="kou"
               span 公団
-            - if @housing_allowance.housing_style=="si"
+            |　・  
+            - if @housing_allowances.housing_style=="si"
               span#ok 市営
-            -elsif @housing_allowance.housing_style!="si"
+            -elsif @housing_allowances.housing_style!="si"
               span 市営
-            - if @housing_allowance.housing_style=="min"
+            |　・
+            - if @housing_allowances.housing_style=="min"
               span#ok 民間アパート
-            -elsif @housing_allowance.housing_style!="min"
+            -elsif @housing_allowances.housing_style!="min"
               span 民間アパート
+            |　・
             - if @housing_allowances.housing_style=="ta"
               span#ok その他
-            -elsif @housing_allowance.housing_style!="ta"
+            -elsif @housing_allowances.housing_style!="ta"
               span その他
-            | (#{@housing_allowance.housing_style_text})
+            | (#{@housing_allowances.housing_style_text})
 
         tr
-          td 契約期間
-          td colspan="6" #{ @housing_allowance.agree_date_s.strftime("%Y年%_m月%_d日")} ～　#{ @housing_allowance.agree_date_e.strftime("%Y年%_m月%_d日")}
+          td 契　約　期　間
+          td colspan="6"
+            - if !@housing_allowances.agree_date_s.nil?
+              |#{ @housing_allowances.agree_date_s.strftime("%Y年%_m月%_d日")} 
+            |～　
+            - if !@housing_allowances.agree_date_e.nil?
+              |#{ @housing_allowances.agree_date_e.strftime("%Y年%_m月%_d日")}
 
         tr
-          td rowspan="2" 配偶者
-          td.nonborder
-            - if @housing_allowance.spouse=="u"
+          td rowspan="2" 配　　偶　　者
+          td.nonborder style="text-align:center;padding-top:4px;"
+            - if @housing_allowances.spouse=="u"
               span#ok 有
-            - elsif @housing_allowance.spouse!="u"
+            - elsif @housing_allowances.spouse!="u"
               span 有
 
-          td.nonborder 配偶者名
-          td rowspan="2" 配偶者以外<br>の扶養親族
-          td.nonborder  style="text-align:center;"
-            - if @housing_allowance.spouse_other=="u"
+          td.nonborder width="170" style="text-align:center;" 配偶者名
+          td rowspan="2" colspan="2" width="200" 配偶者以外<br>の扶養親族
+          td.nonborder  style="text-align:center;padding-top:4px;"
+            - if @housing_allowances.spouse_other=="u"
               span#ok 有
-            - elsif @housing_allowance.spouse_other!="u"
+            - elsif @housing_allowances.spouse_other!="u"
               span 有
-          td 扶養者(#{@housing_allowance.support})人
+          td width="165" style="border-bottom:none;" 扶養者(#{@housing_allowances.support})人
 
         tr
-          td.nonborder
-            - if @housing_allowance.spouse=="mu"
-              span#ok 無
-            - elsif @housing_allowance.spouse!="mu"
-              span 無
-          td.nonborder #{'('+@housing_allowance.spouse_name+')'}
           td.nonborder style="text-align:center;"
-            - if @housing_allowance.spouse_other=="mu"
+            - if @housing_allowances.spouse=="mu"
               span#ok 無
-            - elsif @housing_allowance.spouse_other!="mu"
+            - elsif @housing_allowances.spouse!="mu"
+              span 無
+          td.nonborder style="text-align:center;"
+            - if !@housing_allowances.spouse_name.nil?
+              #{'('+@housing_allowances.spouse_name+')'}
+          td.nonborder style="text-align:center;"
+            - if @housing_allowances.spouse_other=="mu"
+              span#ok 無
+            - elsif @housing_allowances.spouse_other!="mu"
               span 無
 
-          td #{'('+@housing_allowance.support_name1+')'}#{'('+@housing_allowance.support_name2+')'}
+          td style="border-top:none;"
+            |名前(
+            - if !@housing_allowances.support_name1.nil?
+              |#{@housing_allowances.support_name1}
+            |)(
+            - if !@housing_allowances.support_name2.nil?  
+              |#{@housing_allowances.support_name2}
+            |)
 
 
         tr
-          td#zyouken colspan="5" 支給条件
-          td#zyouken 支給金額
+          td.zyouken colspan="6" 
+            |　　　　　　　　　支給条件
+          td 支給金額
         tr
-          td#zyouken colspan="5" 独身借家及び自家保有者<br>(独身者で当然の必然性により自宅又は借家居住)
-          td#zyouken １３，０００　円
+          td.zyouken colspan="6" 
+            |　　独身借家及び自家保有者<br>
+            |　　　　(独身者で当然の必然性により自宅又は借家居住)
+          td <br>１３，０００　円
         tr
-          td#zyouken colspan="5" 妻帯者及び有扶養者<br>(妻以外の扶養者を有している者)
-          td#zyouken ２２，０００　円
+          td.zyouken colspan="6" 
+            |　　妻帯者及び有扶養者<br>
+            |　　　　(妻以外の扶養者を有している者)
+          td <br>２２，０００　円
         tr
-          td#zyouken colspan="5" 上記条件で世帯数(３名本人も含めて)以上の者
-          td#zyouken ２３，０００　円
+          td.zyouken colspan="6" <br>　　上記条件で世帯数(３名本人も含めて)以上の者
+          td <br>２３，０００　円
         tr
-          td#zyouken colspan="5" 上記条件で世帯数(４名本人も含めて)以上の者
-          td#zyouken ２５，０００　円
+          td.zyouken colspan="6" <br>　　上記条件で世帯数(４名本人も含めて)以上の者
+          td <br>２５，０００　円
         tr
-          td#zyouken colspan="5" 上記条件で世帯数が５名以上の者
-          td#zyouken ２７，０００　円
+          td.zyouken colspan="6" <br>　　上記条件で世帯数が５名以上の者
+          td <br>２７，０００　円
         tr
-          td#zyouken colspan="3"  (人事記入欄) 　  支 給 金 額
-          td#zyouken colspan="3" 
-            span#allmoney 　　　　　　　　　　　　　　　　　　　円
-
+          td colspan="3" height="40" style="border-bottom:none;" (人事記入欄) 　  支 給 金 額
+          td colspan="4" cellpadding="0" style="text-decoration:underline;vertical-align:bottom;border-bottom:none;"
+            span#allmoney　　　　　　　　　　　　　円　　
+        tr
+          td colspan="3" style="border:solid 1px;border-top:none;"
+          td colspan="4" style="border:solid 1px;border-top:none;border-left:solid 1px;"
         tr.nonborderB
-          td.nonborderB colspan="6"　
+          td.nonborderB colspan="7"　
         tr.nonborderB
-          td.nonborderB colspan="6"株式会社　システム・スクゥェアー
+          td.nonborderB colspan="7"株式会社　システム・スクゥェアー

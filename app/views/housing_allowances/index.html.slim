@@ -81,7 +81,7 @@ article.housing_index
         tr
           td#title 契約期間
           - if !@housing_allowances.nil?
-            td #{@housing_allowances.agree_date_s} ～ #{@housing_allowances.agree_date_e}
+            td style="text-align:center;"#{@housing_allowances.agree_date_s} ～ #{@housing_allowances.agree_date_e}
           -else
             td
 
@@ -129,7 +129,7 @@ article.housing_index
             td #{@housing_allowances.support_name2}
           -else
             td
-      table
+      table#sub
         tr
           td#title 支給条件
           td#title 支給金額
