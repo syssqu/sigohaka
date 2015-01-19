@@ -100,5 +100,17 @@ module ApplicationHelper
   def be_self(object)
     current_user.id == object.user_id
   end
+
+  def role_info(role_name)
+    result = ""
+    
+    $role_info.each do |r|
+        if r[1] == role_name
+          result = r[0]
+        end 
+    end
+    
+    result
+  end
   
 end

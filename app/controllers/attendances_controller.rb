@@ -8,6 +8,15 @@ class AttendancesController < PapersController
   #
   def index
 
+    logger.debug("ユーザ権限: " + current_user.role);
+    logger.debug("管理者権限: " + User::Roles::ADMIN);
+
+    if current_user.role == User::Roles::ADMIN
+      logger.debug("管理者!");
+    else
+      logger.debug("管理者でない!");
+    end
+
     init
 
     # 勤務パターンは3個固定で作成するので存在しない場合は考慮しない。
@@ -225,6 +234,27 @@ class AttendancesController < PapersController
     # 画面選択年月分の勤怠情報を本人確認済みにする
     init
     @attendances.update_all(["self_approved = ?",true])
+
+    # 自分のタイムラインへ本人確認済みを表示させる
+    @time_line = current_user.time_lines.build
+    @time_line[:title] = "本人確認済み"
+    @time_line[:contents] = "勤怠状況報告書の本人確認を完了しました。"
+    @time_line.save
+
+    logger.debug("aaaaaaaaaaaaaaaaaaaaaaaaaa")
+    
+    # マネージャーのタイムラインへ上長承認依頼を表示させる
+    katagaki = Katagaki.where( role: "manager")
+    logger.debug("cccccccccc")
+    temp_user = katagaki[0].users.where(section_id: current_user.section_id)
+    logger.debug("dddddddddd")
+    @time_line = temp_user[0].time_lines.build
+
+    logger.debug("zzzzzzzzzz")
+    
+    @time_line[:title] = "上長承認依頼"
+    @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが勤怠状況報告書の本人確認を完了しました。"
+    @time_line.save
 
     # 翌月分の勤怠情報を作成し画面に出力する
     init true

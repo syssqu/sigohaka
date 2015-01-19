@@ -10,6 +10,8 @@
             span Menu
       section.top-bar-section
         ul.right
+          li = link_to "マイカレンダー", ""
+          li = link_to "投稿", ""
           li.has-dropdown.not-click
             = link_to "勤怠管理", "#"
             ul.dropdown
@@ -29,15 +31,16 @@
                 = link_to '住宅手当申請書', housing_allowances_path
               li
                 = link_to '資格手当申請書', qualification_allowances_path
-              - if can? :manage, current_user or can? :manage, current_user
+              - if can? :manage, current_user
                 li
                   = link_to '勤務状況集計表', summary_attendances_path
-          - if can? :manage, current_user or can? :manage, current_user
+          - if can? :manage, current_user
             li.has-dropdown
               = link_to "管理者", "#"
               ul.dropdown
                 li = link_to "ユーザ登録", new_user_registration_path
                 li = link_to '課マスタ', sections_path
+                li = link_to '役職マスタ', katagakis_path
                 li = link_to '勤怠締め', index_freeze_path
           - if user_signed_in?
             li

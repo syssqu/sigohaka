@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :katagakis
+  
   resources :summary_attendances do
     collection do
       get 'print'

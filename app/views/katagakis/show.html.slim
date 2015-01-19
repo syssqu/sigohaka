@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @katagaki.name
+p
+  strong role:
+  = role_info(@katagaki.role)
+
+= link_to 'Edit', edit_katagaki_path(@katagaki)
+'|
+= link_to 'Back', katagakis_path
