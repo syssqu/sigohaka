@@ -1,8 +1,7 @@
 class BusinessReportsController < ApplicationController
   before_action :set_business_report, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  # GET /business_reports
-  # GET /business_reports.json
+
   def index
 
     processing_date = Date.today
@@ -15,31 +14,23 @@ class BusinessReportsController < ApplicationController
     year_month_set = current_user.attendances.group('year, month')
     @nengatudo_set = []
     year_month_set.each do |year_month|
-      # nengatudo = { key: year_month[:year] + "/" + year_month[:month], value: year_month[:year] + "年" + year_month[:month] + "月度"}
-      # @nengatudo_set << nengatudo
-      @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
+    @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
     end
 
     @business_reports = current_user.business_reports.all
   end
 
-  # GET /business_reports/1
-  # GET /business_reports/1.json
   def show
     @business_reports = current_user.business_reports.find(params[:id])
   end
 
-  # GET /business_reports/new
   def new
     @business_report = current_user.business_reports.build
   end
 
-  # GET /business_reports/1/edit
   def edit
   end
 
-  # POST /business_reports
-  # POST /business_reports.json
   def create
     @business_report = current_user.business_reports.build(business_report_params)
 
@@ -54,8 +45,6 @@ class BusinessReportsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /business_reports/1
-  # PATCH/PUT /business_reports/1.json
   def update
     respond_to do |format|
       if @business_report.update(business_report_params)
@@ -68,8 +57,6 @@ class BusinessReportsController < ApplicationController
     end
   end
 
-  # DELETE /business_reports/1
-  # DELETE /business_reports/1.json
   def destroy
     @business_report.destroy
     respond_to do |format|
@@ -118,12 +105,10 @@ class BusinessReportsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_business_report
       @business_report = BusinessReport.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def business_report_params
       params.require(:business_report).permit(:user_id, :naiyou, :jisseki, :tool, :self_purpose, :self_value, :self_reason, :user_situation, :request, :reflection, :develop_purpose, :develop_jisseki, :note)
     end
