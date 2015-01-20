@@ -7,7 +7,7 @@
 /* =============================================================================
    勤務状況報告書(一覧)
    ========================================================================== */
-article.attendance_index span{margin:0px;color:red;}
+article.attendance_index span{margin:0px;color:red; !important;}
 
 article.attendance_index table{border-spacing: 0;}
 article.attendance_index table tr th {font-size:12px;}
