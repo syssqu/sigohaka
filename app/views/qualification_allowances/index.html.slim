@@ -1,52 +1,52 @@
 article.qualification_allowance_index
   h3 style="padding-left: 10px;" 資格手当申請書
-  / = select :business_report, 'business_report_target_date', @nengatudo_set
   #qualification_allowance_header.clearfix
     table#qualification_allowance_project
       tbody
-        tr
+        tr style="height: 20px;"
           td プロジェクト名:
           td = truncate(@project.summary, length:20) if ! @project.nil?
-        tr
+        tr style="height: 20px;"
           td 所属:
           td = current_user.section.name if ! current_user.section.nil?
-        tr
+        tr style="height: 20px;"
           td 氏名:
           td #{current_user.family_name} #{current_user.first_name}
 
-= link_to "PDF出力", print_qualification_allowances_path, class: "button tiny radius"
+|&nbsp;&nbsp;&nbsp;
+= link_to print_qualification_allowances_path, class: "button tiny radius" do
+  i.fi-print
+  | 印刷用画面
+|&nbsp;&nbsp;&nbsp;
 = link_to '新規作成', new_qualification_allowance_path, class: "button tiny radius"
-table
-  thead
-    tr
-      / th User
-      th 資格所得年月日
-      th No.
-      th 資格取得項目
-      th 支給金額
-      / th
+- @qualification_allowances.each do |qualification_allowance|
   tbody
-  - @qualification_allowances.each do |qualification_allowance|
     tr
-      / td = qualification_allowance.user_id
-      td = qualification_allowance.get_date
-      td = qualification_allowance.number
-      td = qualification_allowance.item
-      td #{qualification_allowance.money} 円
-      / td = link_to '照会', qualification_allowance
-    table#qualification_allowance style="margin-top:-22px;"
+      td = link_to '編 集', edit_qualification_allowance_path(qualification_allowance), class: "button tiny radius"
+      td = link_to '削 除', qualification_allowance, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete, class: "button tiny radius"
+
+  table style="margin-left: 15px;"
+    thead
       tr
-        td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;第
-        td #{qualification_allowance.registration_no_alphabet}
-        td ―
-        td #{qualification_allowance.registration_no_year}
-        td ―
-        td #{qualification_allowance.registration_no_month}
-        td ―
-        td #{qualification_allowance.registration_no_individual}
-        td 号
+        th 資格取得年月日
+        th No.
+        th 資格取得項目
+        th 支給金額
     tbody
       tr
-        td = link_to '編集', edit_qualification_allowance_path(qualification_allowance)
-        br
-        td = link_to '削除', qualification_allowance, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete
+        td = qualification_allowance.get_date
+        td = qualification_allowance.number
+        td = qualification_allowance.item
+        td #{qualification_allowance.money} 円
+
+  table#qualification_allowance style="margin-top: -22px; margin-left: 15px;"
+    tr
+      td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;第
+      td #{qualification_allowance.registration_no_alphabet}
+      td ―
+      td #{qualification_allowance.registration_no_year}
+      td ―
+      td #{qualification_allowance.registration_no_month}
+      td ―
+      td #{qualification_allowance.registration_no_individual}
+      td 号
