@@ -64,24 +64,32 @@ article.attendance_edit .button{margin-bottom:0px;}
 /* =============================================================================
    勤務状況報告書(PDF)
    ========================================================================== */
-article.attendance_print{margin-top:100px;margin-left:55px;margin-bottom: 0px;}
+article.attendance_print{margin-left:55px;margin-bottom: 0px;}
 article.attendance_print span{margin:0px;color:red;}
 
 article.attendance_print table{border-spacing: 0;border-collapse: collapse;padding: 0px;}
 article.attendance_print table#attendance_main{width:755px;margin-bottom:15px;}
 article.attendance_print table tr th {font-size:10px;padding:1px 1px !important;background-color:#fff;font-weight:normal;border:1px solid black;}
-article.attendance_print table tr td {font-size:10px;padding:0px 0px !important;height:20px !important;background-color:#fff;border:1px solid black;}
+article.attendance_print table tr td {font-size:10px;padding:0px 0px !important;height:21px !important;background-color:#fff;border:1px solid black;}
 article.attendance_print table tr td .button {padding:4px !important;margin:0px !important;}
 /* article.attendance_print .dash_line{background-image: image-url("dash_line.png") !important;background-repeat:no-repeat;background-position:center;} */
 /* article.attendance_print .dash_line{position: absolute;border-right:1px dashed #000;width:25px;height:24px;;@include box_sizing;} */
 
-#dashed_line_over_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:336px;@include box_sizing;}
-#dashed_line_holiday_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:388px;@include box_sizing;}
-#dashed_line_midnight_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:440px;@include box_sizing;}
-#dashed_line_break_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:490px;@include box_sizing;}
-#dashed_line_kouzyo_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:542px;@include box_sizing;}
-#dashed_line_work_time{position: absolute;border-right:1px dashed #000;width:25px;height:714px;top:154px;left:592px;@include box_sizing;}
-  
+#dashed_line_over_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:396px;@include box_sizing;}
+#dashed_line_holiday_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:448px;@include box_sizing;}
+#dashed_line_midnight_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:500px;@include box_sizing;}
+#dashed_line_break_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:550px;@include box_sizing;}
+#dashed_line_kouzyo_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:602px;@include box_sizing;}
+#dashed_line_work_time{position: absolute;border-right:1px dashed #000;width:25px;height:756px;top:251px;left:652px;@include box_sizing;}
+
+#solid_line_start_time{position: absolute;border-right:1px solid #393B32;width:25px;height:714px;top:251px;left:142px;@include box_sizing;}
+#solid_line_end_time{position: absolute;border-right:1px solid #393B32;width:25px;height:714px;top:251px;left:192px;@include box_sizing;}
+
+#solid_line_pstart_time{position: absolute;border-right:1px solid #393B32;width:25px;height:106px;top:1058px;left:142px;@include box_sizing;}
+#solid_line_pend_time{position: absolute;border-right:1px solid #393B32;width:25px;height:106px;top:1058px;left:198px;@include box_sizing;}
+#dashed_line_pbreak_time{position: absolute;border-right:1px dashed #000;width:25px;height:106px;top:1058px;left:254px;@include box_sizing;}
+#dashed_line_pwork_time{position: absolute;border-right:1px dashed #000;width:25px;height:106px;top:1058px;left:309px;@include box_sizing;}
+
 
 article.attendance_print table tr td.bg_gray{background-color:#E3E3E3 !important;}
 
