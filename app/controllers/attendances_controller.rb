@@ -31,7 +31,7 @@ class AttendancesController < PapersController
     logger.debug("session_years"+session[:years])
     
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
-    @others = get_attendance_others_info
+    @others = get_attendance_others_info.order(:id)
 
     set_freeze_info
 
@@ -220,7 +220,7 @@ class AttendancesController < PapersController
     @gatudo = get_gatudo(attendance_years)
     @project = get_project
     
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = current_user.attendance_others
 
     @title = '勤務状況報告書'
@@ -440,7 +440,7 @@ class AttendancesController < PapersController
   # 勤怠その他を作成します
   # @return [AttendanceOthers] 勤怠その他
   def get_attendance_others_info
-    others = current_user.attendance_others
+    others = current_user.attendance_others.order(:id)
     
     if ! others.exists?
       @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
