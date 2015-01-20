@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108021022) do
+ActiveRecord::Schema.define(version: 20150114055113) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -126,6 +126,13 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.boolean  "boss_approved"
   end
 
+  create_table "katagakis", force: true do |t|
+    t.string   "name"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "kinmu_patterns", force: true do |t|
     t.time     "start_time"
     t.time     "end_time"
@@ -197,6 +204,7 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "summary_attendances", force: true do |t|
@@ -210,6 +218,15 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "note"
+  end
+
+  create_table "time_lines", force: true do |t|
+    t.string   "title"
+    t.text     "contents"
+    t.integer  "user_id"
+    t.integer  "create_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "transportation_expresses", force: true do |t|
@@ -266,6 +283,7 @@ ActiveRecord::Schema.define(version: 20150108021022) do
     t.string   "station"
     t.string   "imprint_id"
     t.date     "employee_date"
+    t.integer  "katagaki_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

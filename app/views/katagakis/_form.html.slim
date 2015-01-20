@@ -1,0 +1,17 @@
+.row
+  .large-12.columns.clearfix
+    = form_for @katagaki do |f|
+      - if @katagaki.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@katagaki.errors.count, "error")} prohibited this katagaki from being saved:"
+          ul
+            - @katagaki.errors.full_messages.each do |message|
+              li = message
+
+      .field
+        = f.label :name
+        = f.text_field :name
+      .field
+        = f.label :role
+        = f.select :role, $role_info
+      .actions = f.submit 'Save'
