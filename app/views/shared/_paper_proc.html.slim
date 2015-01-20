@@ -34,18 +34,18 @@ hr
 
     / データ初期化
     - if target == "attendances"
-      = link_to raw("<i class='fi-refresh'></i>データ初期化"), {controller: target, action: "init_attendances"}, {data: {:confirm => '今月度の勤怠データを初期化します。宜しいですか？'}, class: "button tiny radius"}
+      - unless@freezed
+        = link_to raw("<i class='fi-refresh'></i>データ初期化"), {controller: target, action: "init_attendances"}, {data: {:confirm => '今月度の勤怠データを初期化します。宜しいですか？'}, class: "button tiny radius"}
 
     / 本人確認
-    / 上長承認(マネージャーの場合のみ表示)
     - if status == "本人未確認"
       = link_to raw("<i class='fi-refresh'></i>本人確認"), {controller: target, action: "check"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius success"}
     - else
       = link_to raw("<i class='fi-refresh'></i>本人確認取消し"), {controller: target, action: "cancel_check"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius alert"}
 
-    / 上長承認(マネージャーの場合のみ表示)
-    - if can? :manage, current_user or can? :admin, current_user
-      - if status == "上長承認済み" or status == "凍結中"
+    / 上長承認(マネージャークラス以上の場合のみ表示)
+    - if can? :manage, current_user
+      - if status == "上長承認済み"
         = link_to raw("<i class='fi-refresh'></i>上長承認取消し"), {controller: target, action: "cancel_approval"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius alert"}
       - else
         = link_to raw("<i class='fi-refresh'></i>上長承認"), {controller: target, action: "approve"}, {data: {:confirm => '今月度の勤怠情報を確定します。宜しいですか？'}, class: "button tiny radius success"}

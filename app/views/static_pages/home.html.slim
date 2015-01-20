@@ -1,6 +1,15 @@
 .row
   .large-12.columns
-    h1 ホーム画面
-    p ほげほげ
-  
-
+    article.time_line_list
+      h1 タイムライン
+      table
+        thead
+          tr
+            th.text-center タイトル
+            th.text-center 詳細
+        tbody
+          - @time_lines.each do |time_line|
+            tr
+              td = time_line.title
+              td = time_line.contents
+      br
