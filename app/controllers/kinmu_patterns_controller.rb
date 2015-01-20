@@ -19,10 +19,13 @@ class KinmuPatternsController < ApplicationController
           @kinmu_pattern[:work_time] = 8.00
         end
         
-        if @kinmu_pattern.save
-          @kinmu_patterns << @kinmu_pattern
+        if ! @kinmu_pattern.save
+          logger.debug("勤務パターン登録エラー")
+          break
         end
       end
+
+      @kinmu_patterns = current_user.kinmu_patterns
     end
   end
 
