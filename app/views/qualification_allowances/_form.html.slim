@@ -8,258 +8,38 @@
             - @qualification_allowance.errors.full_messages.each do |message|
               li = message
 
-      .field
+      .small-5.columns style="margin-left: -15px;"
         label 資格取得年月日
-        = f.date_select :get_date
+        = f.date_field :get_date
+        / = f.date_select :get_date
 
       table
         tr
           td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;
-        tr.left style="background-color: #fff; width: 525px;"
-          td style="margin-top: 15px;" 第
+        tr.left style="background-color: #fff; width: 525px; height: 65px;"
+          td style="padding-top: 0px;" 第
           td width="70" = f.select :registration_no_alphabet, QualificationAllowance::ALPHABET
-          td ―
+          td style="padding-top: 0px;" ―
           td width="80" = f.text_field :registration_no_year
-          td ―
+          td style="padding-top: 0px;" ―
           td width="60" = f.text_field :registration_no_month
-          td ―
+          td style="padding-top: 0px;" ―
           td width="90" = f.text_field :registration_no_individual
-          td 号
+          td style="padding-top: 0px;" 号
 
       .field
         label No.
         = f.select :number, QualificationAllowance::NUMBER, {:include_blank => '▼ 選択してください'}
-        / select name="selectName1"
-          / option value="選択されていません" ▼ 選択してください
-          / option value="A1" A1
-          / option value="A2" A2
-          / option value="A3" A3
-          / option value="A4" A4
-          / option value="A5" A5
-          / option value="A6" A6
-          / option value="A7" A7
-          / option value="A8" A8
-          / option value="A9" A9
-          / option value="A10" A10
-          / option value="A11" A11
-          / option value="A12" A12
 
       .field 
         label 資格取得項目
         = f.select :item, QualificationAllowance::ITEM
-        / select name="selectName2"
 
       .field 
         label 支給金額
         = f.select :money, QualificationAllowance::MONEY
-        / select name="selectName3"
 
       .row
         .large-7.large-centered.columns
           = f.submit '登録', class: "button tiny radius"
           = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"
-
-/ javascript:
-/   function functionName()
-/   {
-/   var select1 = document.forms.itemForm.selectName1;
-/   var select2 = document.forms.itemForm.selectName2;
-/   var select3 = document.forms.itemForm.selectName3;
-
-/   select2.options.length = 0;
-
-/   if (select1.options[select1.selectedIndex].value == "A1")
-/   {
-/   select2.options[0] = new Option("ITストラテジスト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A2")
-/   {
-/   select2.options[0] = new Option("システム監査技術者");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A3")
-/   {
-/   select2.options[0] = new Option("システムアーキテクト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A4")
-/   {
-/   select2.options[0] = new Option("応用情報技術者");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A5")
-/   {
-/   select2.options[0] = new Option("プロジェクトマネージャー");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A6")
-/   {
-/   select2.options[0] = new Option("ネットワークスペシャリスト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A7")
-/   {
-/   select2.options[0] = new Option("データベーススペシャリスト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A8")
-/   {
-/   select2.options[0] = new Option("エンベンデッドシステムスペシャリスト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A9")
-/   {
-/   select2.options[0] = new Option("情報セキュリティースペシャリスト");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A10")
-/   {
-/   select2.options[0] = new Option("ITサービスマネージャー");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A11")
-/   {
-/   select2.options[0] = new Option("基本情報技術者");
-/   }
-/   else if (select1.options[select1.selectedIndex].value == "A12")
-/   {
-/   select2.options[0] = new Option("ITパスポート");
-/   }
-
-/   select3.options.length = 0;
-
-/   if (select2.options[select2.selectedIndex].value == "ITストラテジスト" || select2.options[select2.selectedIndex].value == "システム監査技術者" || select2.options[select2.selectedIndex].value == "システムアーキテクト")
-/   {
-/   select3.options[0] = new Option("30,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "応用情報技術者" || select2.options[select2.selectedIndex].value == "プロジェクトマネージャー" || select2.options[select2.selectedIndex].value == "ネットワークスペシャリスト" || select2.options[select2.selectedIndex].value == "データベーススペシャリスト" || select2.options[select2.selectedIndex].value == "エンベンデッドシステムスペシャリスト" || select2.options[select2.selectedIndex].value == "情報セキュリティースペシャリスト" || select2.options[select2.selectedIndex].value == "ITサービスマネージャー")
-/   {
-/   select3.options[0] = new Option("20,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "基本情報技術者")
-/   {
-/   select3.options[0] = new Option("10,000 円");
-/   }
-/   else if (select2.options[select2.selectedIndex].value == "ITパスポート")
-/   {
-/   select3.options[0] = new Option("3,000 円");
-/   }
-
-/   var index = document.itemForm.selectName1.selectedIndex;
-/   var value = document.itemForm.selectName1.options[index].value;
-
-/   var index = document.itemForm.selectName2.selectedIndex;
-/   var value = document.itemForm.selectName2.options[index].value;
-
-/   var index = document.itemForm.selectName3.selectedIndex;
-/   var value = document.itemForm.selectName3.options[index].value;
-
-/ var sel = document.getElementById("selectName1");
-/ var sel = document.getElementById("selectName2");
-/ var sel = document.getElementById("selectName3");
-
-  / }
-
-
-
-
-/ table#qualification_allowance
-/   form name="itemForm" 
-/     .field 
-/       label No.
-/       select name="selectName1" onChange="functionName()"
-/         option value="選択されていません" 選択してください
-/         option value="A1" A1
-/         option value="A2" A2
-/         option value="A3" A3
-/         option value="A4" A4
-/         option value="A5" A5
-/         option value="A6" A6
-/         option value="A7" A7
-/         option value="A8" A8
-/         option value="A9" A9
-/         option value="A10" A10
-/         option value="A11" A11
-/         option value="A12" A12
-/     .field 
-/       label 資格取得項目
-/       select name="selectName2" 
-/     .field 
-/       label 支給金額
-/       select name="selectName3"
-
-/ .field
-/   label No.
-/   select#item_no onchange="sel(this);"
-/     option A1
-/     option A2
-/     option A3
-/     option A4
-/     option A5
-/     option A6
-/     option A7
-/     option A8
-/     option A9
-/     option A10
-/     option A11
-/     option A12
-
-/ .field
-/   label 資格取得項目
-/   select#item_it onchange="sel(this);"
-/     option ITストラテジスト
-/     option システム監査技術者
-/     option システムアーキテクト
-/     option 応用情報技術者
-/     option プロジェクトマネージャー
-/     option ネットワークスペシャリスト
-/     option データベーススペシャリスト
-/     option エンベンデッドシステムスペシャリスト
-/     option 情報セキュリティースペシャリスト
-/     option ITサービスマネージャー
-/     option 基本情報技術者
-/     option ITパスポート
-
-/ label 支給金額
-/ select#item_mo onchange="sel(this);" 
-/   option -
-/   option 30,000
-/   option 30,000
-/   option 30,000
-/   option 20,000
-/   option 20,000
-/   option 20,000
-/   option 20,000
-/   option 20,000
-/   option 20,000
-/   option 20,000
-/   option 10,000
-/   option 3,000
-
-
-
-/ javascript:
-/   function sel(s) {
-/   var other = /no/.test(s.id) ? "it" : "no";
-/     document.getElementById("item_" + other).selectedIndex = s.selectedIndex;
-/   }
-
-/ 番号だけ取得可能なコード
-  / form name="itemForm" 
-  /   .field
-  /     label No.
-  /     td name="selectName1" onChange="functionName()"
-  /     = f.select :number 
-  /       option value="--" 選択してください
-  /       option value="A1" A1
-  /       option value="A2" A2
-  /       option value="A3" A3
-  /       option value="A4" A4
-  /       option value="A5" A5
-  /       option value="A6" A6
-  /       option value="A7" A7
-  /       option value="A8" A8
-  /       option value="A9" A9
-  /       option value="A10" A10
-  /       option value="A11" A11
-  /       option value="A12" A12
-  /   .field 
-  /     label 資格取得項目
-  /     select name="selectName2" 
-  /   .field 
-  /     label 支給金額
-  /     select name="selectName3"
-
-  /   = f.submit '登録', class: "button tiny radius"
-  /   = link_to '戻る', qualification_allowances_path, class: "button tiny radius gray"

@@ -11,15 +11,15 @@
   table#business_report_text2 border="1"
     tbody
       tr
-        td.cate.text-left 作業内容
+        td.cate.text-left 作業内容 (155字以内)
       tr
         td = f.text_area :naiyou, :size => "1x3", :maxlength => "155"
       tr
-        td.cate.text-left 作業実績
+        td.cate.text-left 作業実績 (155字以内)
       tr
         td = f.text_area :jisseki, :size => "1x3", :maxlength => "155"
       tr
-        td.cate.text-left 開発ツールや言語等
+        td.cate.text-left 開発ツールや言語等 (50字以内)
       tr
         td = f.text_field :tool, :maxlength => "50"
   tbody
@@ -28,9 +28,9 @@
   table#business_report_text2 border="1"
     tbody
       tr
-        td.cate 作業内容に対する目標または目的
+        td.cate 作業内容に対する目標または目的 (65字以内)
         td.cate2.text-center 自己評価
-        td.cate 評価理由
+        td.cate 評価理由 (65字以内)
       tr 
         td = f.text_area :self_purpose, :size => "1x3", :maxlength => "65"
         td.text-center = f.select :self_value
@@ -44,6 +44,8 @@
   tbody
     h7#business_report_headline
      | 3. ユーザー状況
+    h7#business_report_headline2
+     | (155字以内)
   table#business_report_text
     tbody
       tr
@@ -51,6 +53,8 @@
   tbody
     h7#business_report_headline 
      | 4. 会社への提案・要望事項
+    h7#business_report_headline2
+     | (155字以内)
   table#business_report_text
     tbody
       tr
@@ -58,6 +62,8 @@
   tbody
     h7#business_report_headline 
      | 5. 今月度の反省および所感等
+    h7#business_report_headline2
+     | (155字以内)
   table#business_report_text
     tbody
       tr 
@@ -68,19 +74,21 @@
   table#business_report_text2 border="1"
     tbody
       tr
-        td.cate.text-left 目標
+        td.cate.text-left 目標 (50字以内)
       tr
         td = f.text_field :develop_purpose, :maxlength => "50"
     tbody
       tr
-        td.cate.text-left 今月の実績
+        td.cate.text-left 今月の実績 (155字以内)
       tr 
         td = f.text_area :develop_jisseki, :size => "1x3", :maxlength => "155"
     tbody
       tr
   tbody
-    h7#business_report_headline 
+    h7#business_report_headline
      | 通信欄
+    h7#business_report_headline2
+     | (50字以内)
   table#business_report_text
     tbody
       tr

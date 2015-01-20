@@ -28,28 +28,25 @@ article.qualification_allowance_index
   table style="margin-left: 15px;"
     thead
       tr
-        / th User
         th 資格取得年月日
         th No.
         th 資格取得項目
         th 支給金額
-        / th
     tbody
       tr
-        / td = qualification_allowance.user_id
         td = qualification_allowance.get_date
         td = qualification_allowance.number
         td = qualification_allowance.item
         td #{qualification_allowance.money} 円
 
-      table#qualification_allowance style="margin-top: -22px; margin-left: 15px;"
-        tr
-          td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;第
-          td #{qualification_allowance.registration_no_alphabet}
-          td ―
-          td #{qualification_allowance.registration_no_year}
-          td ―
-          td #{qualification_allowance.registration_no_month}
-          td ―
-          td #{qualification_allowance.registration_no_individual}
-          td 号
+  table#qualification_allowance style="margin-top: -22px; margin-left: 15px;"
+    tr
+      td 登&nbsp;録&nbsp;番&nbsp;号&nbsp;&nbsp;&nbsp;&nbsp;第
+      td #{qualification_allowance.registration_no_alphabet}
+      td ―
+      td #{qualification_allowance.registration_no_year}
+      td ―
+      td #{qualification_allowance.registration_no_month}
+      td ―
+      td #{qualification_allowance.registration_no_individual}
+      td 号
