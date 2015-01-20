@@ -5,25 +5,26 @@ article.attendance_index
         i.fi-clipboard-pencil
         |勤務状況報告書
 
+      / ヘッダー
       = render partial: 'shared/paper_proc', locals: { target: "attendances", years: @years, project: @project, status: @status }
-
+      / 勤怠表
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr
-            th.text-center rowspan="2" width="38px" 日　　　　付
-            th.text-center rowspan="2" width="20px" 曜　日
-            th.text-center rowspan="2" width="20px" 勤　務
+            th.text-center rowspan="2" width="48px" 日付
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 曜日
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 勤務
             th.text-center colspan="2" width="100px" 勤務時間
-            th.text-center rowspan="2" width="20px" 傷病欠
-            th.text-center rowspan="2" width="20px" 欠　勤
-            th.text-center rowspan="2" width="20px" 半欠勤
-            th.text-center rowspan="2" width="20px" 遅　刻
-            th.text-center rowspan="2" width="20px" 早　退
-            th.text-center rowspan="2" width="20px" 私外出
-            th.text-center rowspan="2" width="20px" 特　休
-            th.text-center rowspan="2" width="20px" 振　休
-            th.text-center rowspan="2" width="20px" 有　休
-            th.text-center rowspan="2" width="20px" 出　張
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 傷病欠
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 欠勤
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 半欠勤
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 遅刻
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 早退
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 私外出
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 特休
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 振休
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 有休
+            th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 出張
             th.text-center colspan="3" width="140px" 所定時間外勤務
             th.text-center rowspan="2" width="50px" 
               |休憩
@@ -183,7 +184,8 @@ article.attendance_index
             td.text-center 合計
             td.text-center
             td.text-center
-                
+
+      / 勤務パターン         
       table.kinmu_pattern border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr
