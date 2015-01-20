@@ -94,5 +94,5 @@ article.attendance_print #attendance_nengetu{width:240px;text-align:center;}
 
 article.attendance_print .imprint{margin:5px 10px;}
 
-article.attendance_print table.kinmu_pattern{margin-top:15px;}
+article.attendance_print table.kinmu_pattern{margin-top:15px;margin-bottom: 0px;}
 #company_name p{margin-left:510px;font-size:11px;}
