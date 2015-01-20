@@ -158,8 +158,7 @@ article.attendance_index
                     i.fi-plus
           tr
             td.text-center colspan="3" 社員No. 
-            td.text-center = current_user.employee_no
-            td.text-center
+            td.text-center colspan="2" = current_user.employee_no
             td.text-center rowspan=2 = @attendances.where(byouketu: true).count
             td.text-center rowspan=2 = @attendances.where(kekkin: true).count
             td.text-center rowspan=2 = @attendances.where(hankekkin: true).count
@@ -176,14 +175,12 @@ article.attendance_index
             td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
             td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:kouzyo_time) + @others.sum(:kouzyo_time))
             td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:work_time) + @others.sum(:work_time))
-            td.text-center
-            td.text-center
+            td.text-center rowspan=2
+            td.text-center rowspan=2
           tr
             td.text-center colspan="3" 勤務日数
             td.text-center = @attendances.where("trim(pattern) is not null ").count
             td.text-center 合計
-            td.text-center
-            td.text-center
 
       / 勤務パターン         
       table.kinmu_pattern border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
