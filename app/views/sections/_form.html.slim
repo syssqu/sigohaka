@@ -7,11 +7,13 @@
           ul
             - @section.errors.full_messages.each do |message|
               li = message
-
       .field
         = f.label :code
         = f.text_field :code
       .field
         = f.label :name
         = f.text_field :name
+      .field
+        = f.label :user_id
+        = f.collection_select :user_id, User.where(section_id: f.object.id), :id, :view_name, include_blank: true
       .actions = f.submit 'Save'

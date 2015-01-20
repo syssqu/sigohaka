@@ -96,5 +96,21 @@ module ApplicationHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.family_name + user.first_name, class: "gravatar")
   end
+
+  def be_self(object)
+    current_user.id == object.user_id
+  end
+
+  def role_info(role_name)
+    result = ""
+    
+    $role_info.each do |r|
+        if r[1] == role_name
+          result = r[0]
+        end 
+    end
+    
+    result
+  end
   
 end

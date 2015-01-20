@@ -1,4 +1,5 @@
 # 一覧ページで年月度が変更された際に表示を切り替える
+
 $("select#paper_years").change ->
   $("form").submit();
 
@@ -15,13 +16,13 @@ $("#attendance_pattern").change ->
     success: (data) ->
       return data
     error: (XMLHttpRequest, textStatus, errorThrown) ->
+
       msg = "--- Error Status ---"
       msg = msg + "<BR>" + "status:" + XMLHttpRequest.status
       msg = msg + "<BR>" + "statusText:" + XMLHttpRequest.statusText
       msg = msg + "<BR>" + "textStatus:" + textStatus
       msg = msg + "<BR>" + "errorThrown:" + errorThrown
-      for i of errorThrown
-        msg = msg + "<BR>" + "error " + i + ":" + errorThrown[i]
+
       document.open()
       document.write msg
       document.close()
@@ -29,8 +30,16 @@ $("#attendance_pattern").change ->
 
 # 区分や各時間を勤務パターンと出退勤時刻によって自動計算する
 $("#calculate").click ->
-  if $("#attendance_pattern").val() == "" or $("#attendance_start_time_4i").val() == "" or $("#attendance_start_time_5i").val() == "" or $("#attendance_end_time_4i").val() == "" or $("#attendance_end_time_5i").val() == ""
-    alert "勤務パターンと出退勤時間を入力して下さい。"
+  # if $("#attendance_pattern").val() == "" or $.trim($("#attendance_start_time").val()) == "" or $.trim($("#attendance_end_time").val()) == ""
+  #   alert "勤務パターンと出退勤時間を入力して下さい。"
+  #   return
+
+  if $.trim($("#attendance_start_time").val()) != "" and ! $.trim($("#attendance_start_time").val()).match(/^\d{1,2}\:\d{2}$/)
+    alert "出勤時刻が正しくありません。"
+    return
+
+  if $.trim($("#attendance_end_time").val()) != "" and ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/)
+    alert "退勤時刻が正しくありません。"
     return
 
   $.ajax
@@ -39,10 +48,8 @@ $("#calculate").click ->
     data:
       id: $("#target_id").val() # Attendance.find(params[:id])のため
       pattern: $("#attendance_pattern").val()
-      start_time_hour: $("#attendance_start_time_4i").val()
-      start_time_minute: $("#attendance_start_time_5i").val()
-      end_time_hour: $("#attendance_end_time_4i").val()
-      end_time_minute: $("#attendance_end_time_5i").val()
+      start_time: $("#attendance_start_time").val()
+      end_time: $("#attendance_end_time").val()
     dataType: "script"
     success: (data) ->
       return data
@@ -62,10 +69,8 @@ $("#calculate").click ->
 # データクリア処理
 $("#data_clear").click ->
   $('#attendance_pattern').val("");
-  $('#attendance_start_time_4i').val("");
-  $('#attendance_start_time_5i').val("");
-  $('#attendance_end_time_4i').val("");
-  $('#attendance_end_time_5i').val("");
+  $('#attendance_start_time').val("");
+  $('#attendance_end_time').val("");
 
   $( "#attendance_byouketu" ).prop( "checked", false );
   $( "#attendance_kekkin" ).prop( "checked", false );

@@ -7,7 +7,7 @@ class KinmuPatternsController < ApplicationController
     @kinmu_patterns = current_user.kinmu_patterns.where("code <> '*'")
 
     if ! @kinmu_patterns.exists?
-      (1..3).each do |num|
+      (1..5).each do |num|
         @kinmu_pattern = current_user.kinmu_patterns.build
 
         # デフォルトの勤務パターン
@@ -19,10 +19,13 @@ class KinmuPatternsController < ApplicationController
           @kinmu_pattern[:work_time] = 8.00
         end
         
-        if @kinmu_pattern.save
-          @kinmu_patterns << @kinmu_pattern
+        if ! @kinmu_pattern.save
+          logger.debug("勤務パターン登録エラー")
+          break
         end
       end
+
+      @kinmu_patterns = current_user.kinmu_patterns
     end
   end
 
