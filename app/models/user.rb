@@ -14,7 +14,13 @@ class User < ActiveRecord::Base
     REGULAR = "regular"
   end
 
+  before_save do
+    if self.role.nil?
+      self.role = "regular"
+    end
+  end
   belongs_to :section
+  belongs_to :katagaki
   
   has_many :projects
   has_many :licenses
@@ -32,6 +38,8 @@ class User < ActiveRecord::Base
 
   has_many :qualification_allowances
   has_many :summary_attendances
+
+  has_many :time_lines
 
   validates :family_name, presence: true, length: { maximum: 20}
   validates :first_name, presence: true, length: { maximum: 20}
@@ -86,4 +94,7 @@ class User < ActiveRecord::Base
     result
   end
 
+  def view_name
+    self.family_name + " " + self.first_name
+  end
 end

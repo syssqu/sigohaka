@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Ability
   include CanCan::Ability
 
@@ -39,7 +40,9 @@ class Ability
 
     user ||= User.new # guest user (not logged in)
     
-    if user.role == User::Roles::ADMIN
+    if user.katagaki.role == User::Roles::ADMIN
+      can :manage, :all
+    elsif user.katagaki.role == User::Roles::MANAGER
       can :manage, :all
     else
       can :read, :all

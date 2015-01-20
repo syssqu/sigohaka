@@ -6,23 +6,24 @@ article.business_report_print {margin-top: 10px;}
 article.business_report_print table tr th {font-size: 10px; padding: 1px 1px !important;}
 article.business_report_print table tr td {font-size: 10px; padding: 0px 0px !important; height: 20px !important; background-color: #fff;}
 
-#business_report_header table#business_report_project {border: 0; width: 230px; margin-right: 60px; margin-top: 10px; padding-left: 15px;}
-#business_report_header table#business_report_project td {font-size: 12px; background-color: #fff; border-bottom: 1px solid #ECECEC; height: 60px;}
+#business_report_header table#business_report_project           {border: 0; width: 230px; margin-right: 60px; margin-top: 10px; padding-left: 15px;}
+#business_report_header table#business_report_project td        {font-size: 12px; background-color: #fff; border-bottom: 1px solid #ECECEC; height: 60px;}
 #business_report_header table#business_report_project td strong {color: #6E6E6E;}
 
-#business_report_title {font-size: 25px; width:190px; border-bottom:dashed 3px #000; text-align:center; margin-bottom:8px; margin-top:20px;background: #00FFFF;}
-#business_report_nengetu {width:188px; text-align:center;}
+#business_report_title   {font-size: 25px; width: 190px; border-bottom: dashed 3px #000; text-align: center; margin-bottom: 8px; margin-top:20px; background: #00FFFF;}
+#business_report_nengetu {width: 188px; text-align: center;}
 
-#business_report_header {width: 755px;}
-h7#business_report_headline {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight:bold; background: #cccccc;}
-h7#business_report_footer {font-size: 12px; padding-left: 560px; font-family: ＭＳ Ｐゴシック; font-weight:bold;}
-#business_report_text {margin: 8px; border:1px solid; margin-left: 45px; width: 700px;table-layout: fixed;word-wrap: break-word;}
-#business_report_text td {padding: 5px; font-size: 13px;}
-#business_report_text2 td {padding: 6px; font-size: 13px;}
-#business_report_text2 {margin: 7px; border:1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;}
-#business_report_inkan {border: 1px solid; margin-right: 10px; border-collapse: collapse;}
+#business_report_header      {width: 755px;}
+h7#business_report_headline  {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight: bold; background: #cccccc;}
+h7#business_report_headline2 {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight: bold;}
+h7#business_report_footer    {font-size: 12px; padding-left: 560px; font-family: ＭＳ Ｐゴシック; font-weight: bold;}
+#business_report_text        {margin: 8px; border:1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word;}
+#business_report_text  td    {padding: 5px; font-size: 13px;}
+#business_report_text2 td    {padding: 6px; font-size: 13px;}
+#business_report_text2       {margin: 7px; border: 1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;}
+#business_report_inkan       {border: 1px solid; margin-right: 10px; border-collapse: collapse;}
 
-table#business_report_inkan td.in {width: 60px;}
-table#business_report_text2 td.cate {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
+table#business_report_inkan td.in    {width: 60px;}
+table#business_report_text2 td.cate  {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
 table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
-table#business_report_text2 td {background-color: #fff;}
+table#business_report_text2 td       {background-color: #fff;}

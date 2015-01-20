@@ -1,5 +1,12 @@
+br
+br
+br
+br
+br
+br
 article.attendance_print
 
+  / ヘッダー
   #attendance_header.clearfix
     table#attendance_project.left
       tbody
@@ -25,26 +32,24 @@ article.attendance_print
           td 
           td
           td = image_tag "#{current_user.imprint_id}.png", size: '40x40', class:"imprint"
+  / 勤怠表
   table#attendance_main
     thead
       tr
-        th.text-center rowspan="2" width="45px"
-          |日　　　
-          br
-          |　　　　　　&nbsp;付
-        th.text-center rowspan="2" width="20px" 曜　日
-        th.text-center rowspan="2" width="20px" 勤　務
+        th.text-center rowspan="2" width="42px" 日付
+        th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 曜日
+        th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 勤務
         th.text-center colspan="2" width="120px" 勤務時間
-        th.text-center rowspan="2" width="15px" 傷病欠
-        th.text-center rowspan="2" width="15px" 欠　勤
-        th.text-center rowspan="2" width="15px" 半欠勤
-        th.text-center rowspan="2" width="15px" 遅　刻
-        th.text-center rowspan="2" width="15px" 早　退
-        th.text-center rowspan="2" width="15px" 私外出
-        th.text-center rowspan="2" width="15px" 特　休
-        th.text-center rowspan="2" width="15px" 振　休
-        th.text-center rowspan="2" width="15px" 有　休
-        th.text-center rowspan="2" width="15px" 出　張
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 傷病欠
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 欠勤
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 半欠勤
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 遅刻
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 早退
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 私外出
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 特休
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 振休
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 有休
+        th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 出張
         th.text-center colspan="3" width="150px" 所定時間外勤務
         th.text-center rowspan="2" width="50px" 
           |休憩
@@ -118,8 +123,8 @@ article.attendance_print
             td.text-center
               span = YOUBI[attendance.wday.to_i]
           td.text-center = attendance.pattern
-          td.text-center = attendance.start_time.strftime("%_H:%M") if ! attendance.start_time.nil?
-          td.text-center = attendance.end_time.strftime("%_H:%M") if ! attendance.end_time.nil?
+          td.text-center = attendance.start_time
+          td.text-center = attendance.end_time
           td.text-center = "○" if attendance.byouketu
           td.text-center = "○" if attendance.kekkin
           td.text-center = "○" if attendance.hankekkin
@@ -128,7 +133,12 @@ article.attendance_print
           td.text-center = "○" if attendance.gaisyutu
           td.text-center = "○" if attendance.tokkyuu
           td.text-center = "○" if attendance.furikyuu
-          td.text-center = "○" if attendance.yuukyuu
+          - if attendance.yuukyuu
+            td.text-center = "○"
+          - elsif attendance.hankyuu
+            td.text-center = "△"
+          - else
+            td.text-center
           td.text-center = "○" if attendance.syuttyou
           td.text-center = sprintf( "%.2f", attendance.over_time) if attendance.over_time > 0
           td.text-center = sprintf( "%.2f", attendance.holiday_time) if attendance.holiday_time > 0
@@ -165,32 +175,35 @@ article.attendance_print
             = other.remarks[0,10] unless other.remarks.blank?
       tr
         td.text-center colspan="3" 社員No. 
-        td.text-center = current_user.employee_no
-        td.text-center
-        td.text-center rowspan=2 = @attendances.where(byouketu: true).count
-        td.text-center rowspan=2 = @attendances.where(kekkin: true).count
-        td.text-center rowspan=2 = @attendances.where(hankekkin: true).count
-        td.text-center rowspan=2 = @attendances.where(tikoku: true).count
-        td.text-center rowspan=2 = @attendances.where(soutai: true).count
-        td.text-center rowspan=2 = @attendances.where(gaisyutu: true).count
-        td.text-center rowspan=2 = @attendances.where(tokkyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(furikyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(yuukyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(syuttyou: true).count
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:over_time) + @others.sum(:over_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:holiday_time) + @others.sum(:holiday_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:midnight_time) + @others.sum(:midnight_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
-        td.text-center rowspan=2
+        td.text-center colspan="2" = current_user.employee_no
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(hankekkin: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(tikoku: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(soutai: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(gaisyutu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(tokkyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(furikyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;"
+          = @attendances.where(hankyuu: true).count
+          br
+          = @attendances.where(yuukyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(syuttyou: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:over_time) + @others.sum(:over_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:holiday_time) + @others.sum(:holiday_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:midnight_time) + @others.sum(:midnight_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" 
           = sprintf( "%.2f", @attendances.sum(:kouzyo_time) + @others.sum(:kouzyo_time))
-        td.text-center rowspan=2
+        td.text-center rowspan=2 style="vertical-align: bottom;"
           = sprintf( "%.2f", @attendances.sum(:work_time) + @others.sum(:work_time))
-        td.text-center
+        td.text-center rowspan=2
       tr
         td.text-center colspan="3" 勤務日数
         td.text-center = @attendances.where("trim(pattern) is not null ").count
         td.text-center 合計
-        td.text-center
+        
+  / 勤務パターン
   table.kinmu_pattern.left border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
     thead
       tr
@@ -204,27 +217,33 @@ article.attendance_print
       - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
         tr
           - if kinmu.code == "1"
-            td.text-center width="60px;" rowspan=4
+            td.text-center width="60px;" rowspan=6
               |勤務
               br
               |パターン
           td.text-center width="20px;" = kinmu.code
-          td.text-center = kinmu.start_time.strftime("%_H:%M") if ! kinmu.start_time.nil?
-          td.text-center = kinmu.end_time.strftime("%_H:%M") if ! kinmu.end_time.nil?
-          td.text-center = sprintf( "%.2f", kinmu.break_time ) if ! kinmu.break_time.nil?
-          td.text-center = sprintf( "%.2f", kinmu.work_time ) if ! kinmu.work_time.nil?
+          td.text-center = kinmu.start_time.strftime("%_H:%M") unless kinmu.start_time.blank?
+          td.text-center = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
+          td.text-center = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+          td.text-center = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
       tr
         td.text-center ※
         td colspan=4
           |&nbsp;定例外勤務(休出 or シフト)
   #company_name
     p 株式会社　システム・スクゥェアー
-  / #solid_line_start_time
-  / #solid_line_end_time
+  / 罫線調整
+  #solid_line_start_time
+  #solid_line_end_time
   #dashed_line_over_time
   #dashed_line_holiday_time
   #dashed_line_midnight_time
   #dashed_line_break_time
   #dashed_line_kouzyo_time
   #dashed_line_work_time
+
+  #solid_line_pstart_time
+  #solid_line_pend_time
+  #dashed_line_pbreak_time
+  #dashed_line_pwork_time
 / = params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo')

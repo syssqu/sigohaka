@@ -91,13 +91,13 @@ article.registrations.edit
                   = f.text_field :phone
 
             .large-6.columns
-              .row
-                .large-2.small-4.columns
-                  label.left.inline.show-for-large-up
-                    | 権限
-                .large-4.large-pull-6.small-8.columns
-                  label.left.inline
-                    #{GENDER[f.object.role.to_sym]}
+              - if can? :manage, current_user
+                .row
+                  .large-2.small-4.columns
+                    label.left.inline.show-for-large-up
+                      | 役職
+                  .large-4.large-pull-6.small-8.columns
+                    = f.collection_select :katagaki_id, Katagaki.all, :id, :name, include_blank: true
               .row
                 .large-2.small-4.columns
                   label.left.inline.show-for-large-up

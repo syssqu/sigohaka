@@ -1,0 +1,26 @@
+.row
+  .large-12.columns
+    article.katagaki
+      h1 役職一覧画面
+
+      table
+        thead
+          tr
+            th.text-center 名称
+            th.text-center タイプ
+            th
+            th
+            th
+
+        tbody
+          - @katagakis.each do |katagaki|
+            tr
+              td = katagaki.name
+              td = role_info(katagaki.role)
+              td = link_to '照会', katagaki, class: "button tiny secondary"
+              td = link_to '編集', edit_katagaki_path(katagaki), class: "button tiny success"
+              td = link_to '削除', katagaki, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
+
+      br
+
+      = link_to '新規作成', new_katagaki_path, class: "button radius"
