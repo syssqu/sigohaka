@@ -349,6 +349,7 @@ class AttendancesController < PapersController
         break
       end
     end
+    
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     create_years_collection current_user.attendances, freezed
   end
