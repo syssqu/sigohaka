@@ -133,7 +133,12 @@ article.attendance_print
           td.text-center = "○" if attendance.gaisyutu
           td.text-center = "○" if attendance.tokkyuu
           td.text-center = "○" if attendance.furikyuu
-          td.text-center = "○" if attendance.yuukyuu
+          - if attendance.yuukyuu
+            td.text-center = "○"
+          - elsif attendance.hankyuu
+            td.text-center = "△"
+          - else
+            td.text-center
           td.text-center = "○" if attendance.syuttyou
           td.text-center = sprintf( "%.2f", attendance.over_time) if attendance.over_time > 0
           td.text-center = sprintf( "%.2f", attendance.holiday_time) if attendance.holiday_time > 0
@@ -171,23 +176,26 @@ article.attendance_print
       tr
         td.text-center colspan="3" 社員No. 
         td.text-center colspan="2" = current_user.employee_no
-        td.text-center rowspan=2 = @attendances.where(byouketu: true).count
-        td.text-center rowspan=2 = @attendances.where(kekkin: true).count
-        td.text-center rowspan=2 = @attendances.where(hankekkin: true).count
-        td.text-center rowspan=2 = @attendances.where(tikoku: true).count
-        td.text-center rowspan=2 = @attendances.where(soutai: true).count
-        td.text-center rowspan=2 = @attendances.where(gaisyutu: true).count
-        td.text-center rowspan=2 = @attendances.where(tokkyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(furikyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(yuukyuu: true).count
-        td.text-center rowspan=2 = @attendances.where(syuttyou: true).count
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:over_time) + @others.sum(:over_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:holiday_time) + @others.sum(:holiday_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:midnight_time) + @others.sum(:midnight_time))
-        td.text-center rowspan=2 = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
-        td.text-center rowspan=2
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(hankekkin: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(tikoku: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(soutai: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(gaisyutu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(tokkyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(furikyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;"
+          = @attendances.where(hankyuu: true).count
+          br
+          = @attendances.where(yuukyuu: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(syuttyou: true).count
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:over_time) + @others.sum(:over_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:holiday_time) + @others.sum(:holiday_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:midnight_time) + @others.sum(:midnight_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
+        td.text-center rowspan=2 style="vertical-align: bottom;" 
           = sprintf( "%.2f", @attendances.sum(:kouzyo_time) + @others.sum(:kouzyo_time))
-        td.text-center rowspan=2
+        td.text-center rowspan=2 style="vertical-align: bottom;"
           = sprintf( "%.2f", @attendances.sum(:work_time) + @others.sum(:work_time))
         td.text-center rowspan=2
       tr
@@ -214,10 +222,10 @@ article.attendance_print
               br
               |パターン
           td.text-center width="20px;" = kinmu.code
-          td.text-center = kinmu.start_time.strftime("%_H:%M") if ! kinmu.start_time.nil?
-          td.text-center = kinmu.end_time.strftime("%_H:%M") if ! kinmu.end_time.nil?
-          td.text-center = sprintf( "%.2f", kinmu.break_time ) if ! kinmu.break_time.nil?
-          td.text-center = sprintf( "%.2f", kinmu.work_time ) if ! kinmu.work_time.nil?
+          td.text-center = kinmu.start_time.strftime("%_H:%M") unless kinmu.start_time.blank?
+          td.text-center = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
+          td.text-center = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+          td.text-center = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
       tr
         td.text-center ※
         td colspan=4
