@@ -1,104 +1,87 @@
 article.business_report_print
-  h3 style="padding-left: 10px;" 業務報告書
-  #business_report_header.clearfix
-    table#business_report_project
-      tbody
-        tr
-          td プロジェクト名:
-          td = truncate(@project.summary, length:20) if ! @project.nil?
-        tr
-          td 所属:
-          td = current_user.section.name if ! current_user.section.nil?
-        tr
-          td 氏名:
-          td #{current_user.family_name} #{current_user.first_name}
+  .row
+    .large-12.columns
+      h3
+        i.fi-clipboard-pencil
+        |業務報告書
 
-|&nbsp;&nbsp;&nbsp;
-= link_to print_business_reports_path, class: "button tiny radius" do
-  i.fi-print
-  | 印刷用画面
-|&nbsp;&nbsp;&nbsp;
-= link_to '新規作成', new_business_report_path, class: "button tiny radius"
-- @business_reports.each do |business_report|
-  tbody
-    tr
-      td = link_to '編 集', edit_business_report_path(business_report), class: "button tiny radius"
-      td = link_to '削 除', business_report, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete, class: "button tiny radius"
-  br
-  tbody
-    h7#business_report_headline 
-     | 1. 業務状況
-  table#business_report_text2 border="1"
-    tbody
-      tr
-        td.cate.text-left 作業内容
-      tr
-        td #{business_report.naiyou}
-      tr
-        td.cate.text-left 作業実績
-      tr
-        td #{business_report.jisseki}
-      tr
-        td.cate.text-left 開発ツールや言語等
-      tr
-        td #{business_report.tool}
-  tbody
-    h7#business_report_headline
-     | 2. 個人状況
-  table#business_report_text2 border="1"
-    tbody
-      tr
-        td.cate 作業内容に対する目標または目的
-        td.cate2.text-center 自己評価
-        td.cate 評価理由
-      tr 
-        td #{business_report.self_purpose}
-        td.text-center #{business_report.self_value}
-        td #{business_report.self_reason}
-    tr
-      h7.center style="font-size: 14px;"
-       | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
-  tbody
-    h7#business_report_headline
-     | 3. ユーザー状況
-  table#business_report_text
-    tbody
-      tr
-        td #{business_report.user_situation}
-  tbody
-    h7#business_report_headline 
-     | 4. 会社への提案・要望事項
-  table#business_report_text
-    tbody
-      tr
-        td #{business_report.request}
-  tbody
-    h7#business_report_headline 
-     | 5. 今月度の反省および所感等
-  table#business_report_text
-    tbody
-      tr 
-        td #{business_report.reflection}
-  tbody
-    h7#business_report_headline 
-     | 6. 自己啓発等
-  table#business_report_text2 border="1"
-    tbody
-      tr
-        td.cate.text-left 目標
-      tr
-        td #{business_report.develop_purpose}
-    tbody
-      tr
-        td.cate.text-left 今月の実績
-      tr 
-        td #{business_report.develop_jisseki}
-    tbody
-      tr
-  tbody
-    h7#business_report_headline 
-     | 通信欄
-  table#business_report_text
-    tbody
-      tr
-        td #{business_report.note}
+      = render partial: 'shared/paper_proc', locals: { target: "business_reports", years: @years, project: @project, status: @status }
+      
+      - @business_reports.each do |business_report|
+        tbody
+          h7#business_report_headline 
+           | 1. 業務状況
+        table#business_report_text2 border="1"
+          tbody
+            tr
+              td.cate.text-left 作業内容
+            tr
+              td #{business_report.naiyou}
+            tr
+              td.cate.text-left 作業実績
+            tr
+              td #{business_report.jisseki}
+            tr
+              td.cate.text-left 開発ツールや言語等
+            tr
+              td #{business_report.tool}
+        tbody
+          h7#business_report_headline
+           | 2. 個人状況
+        table#business_report_text2 border="1"
+          tbody
+            tr
+              td.cate 作業内容に対する目標または目的
+              td.cate2.text-center 自己評価
+              td.cate 評価理由
+            tr 
+              td #{business_report.self_purpose}
+              td.text-center #{business_report.self_value}
+              td #{business_report.self_reason}
+          tr
+            h7.center style="font-size: 14px;"
+             | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
+        tbody
+          h7#business_report_headline
+           | 3. ユーザー状況
+        table#business_report_text
+          tbody
+            tr
+              td #{business_report.user_situation}
+        tbody
+          h7#business_report_headline 
+           | 4. 会社への提案・要望事項
+        table#business_report_text
+          tbody
+            tr
+              td #{business_report.request}
+        tbody
+          h7#business_report_headline 
+           | 5. 今月度の反省および所感等
+        table#business_report_text
+          tbody
+            tr 
+              td #{business_report.reflection}
+        tbody
+          h7#business_report_headline 
+           | 6. 自己啓発等
+        table#business_report_text2 border="1"
+          tbody
+            tr
+              td.cate.text-left 目標
+            tr
+              td #{business_report.develop_purpose}
+          tbody
+            tr
+              td.cate.text-left 今月の実績
+            tr 
+              td #{business_report.develop_jisseki}
+          tbody
+            tr
+        tbody
+          h7#business_report_headline 
+           | 通信欄
+        table#business_report_text
+          tbody
+            tr
+              td #{business_report.note}

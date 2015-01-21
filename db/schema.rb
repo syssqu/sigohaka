@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114055113) do
+ActiveRecord::Schema.define(version: 20150121040924) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -83,6 +83,11 @@ ActiveRecord::Schema.define(version: 20150114055113) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "reflection"
+    t.boolean  "freezed"
+    t.boolean  "self_approved"
+    t.boolean  "boss_approved"
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "commutes", force: true do |t|
@@ -184,6 +189,8 @@ ActiveRecord::Schema.define(version: 20150114055113) do
     t.integer  "registration_no_year"
     t.integer  "registration_no_month"
     t.integer  "registration_no_individual"
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "reasons", force: true do |t|
