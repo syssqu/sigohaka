@@ -8,6 +8,9 @@
             - @attendance_other.errors.full_messages.each do |message|
               li = message
 
+      = f.hidden_field :year
+      = f.hidden_field :month
+      
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 名称

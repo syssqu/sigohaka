@@ -1,12 +1,29 @@
-.row
-  .large-12.columns
-    article.time_line_list
-      - @time_lines.each do |time_line|
-        div
-          p
-            = time_line.title
-            span style="padding-left: 40px; color: #333;" = time_line.created_at
-          p
-            = time_line.user.family_name + " " + time_line.user.first_name + "さん"
-            = time_line.contents
-        hr
+article.home
+  .row
+    .large-12.columns
+      .time_line_list
+        br
+        
+        dl.tabs data-tab="" 
+          dd.active
+            a href="#panel1"  タイムライン
+          dd
+            a href="#panel2"  TODOリスト
+        .tabs-content
+          #panel1.content.active
+            - @time_lines.each do |time_line|
+              div 
+                p style="font-size:12px;"
+                  = image_tag "icons/1-6.png", size: '15x15'
+                  = time_line.title
+                p style="font-size:12px;"
+                  - unless time_line.create_user_id.blank?
+                    = gravatar_for User.find(time_line.create_user_id), size:30
+
+                  span style="padding-left: 10px; color: #333;" = time_line.user.family_name + " " + time_line.user.first_name + "さん"
+                  span style="padding-left: 20px; color: #333;" = time_line.created_at
+                p style="font-size:12px;"
+                  = time_line.contents
+              hr
+          #panel2.content
+            何か

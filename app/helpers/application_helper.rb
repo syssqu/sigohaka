@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def target_user=(user)
+    @target_user = user
+  end
+
+  def target_user target
+    @target_user = target.nil? ? current_user : target
+  end
+  
   # 指定された開始月から終了月までの月数を返す
   # @param [Date] start_date 開始月
   # @param [Date] end_date 終了月
