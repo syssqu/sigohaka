@@ -1,0 +1,140 @@
+article.attendance_index
+  .row
+    .large-12.columns
+      h3
+        i.fi-clipboard-pencil
+        |勤怠登録状況照会
+
+      / 対象年月
+      = render partial: 'shared/years', locals: { years: @years }
+
+      hr
+      / 勤怠表
+      table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
+        thead
+          tr
+            th.text-center rowspan="2" width="100px" 名前
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |勤
+              br
+              |務
+              br
+              |状
+              br
+              |況
+              br
+              |報
+              br
+              |告
+              br
+              |書
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |業
+              br
+              |務
+              br
+              |報
+              br
+              |告
+              br
+              |書
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |交
+              br
+              |通
+              br
+              |費
+              br
+              |精
+              br
+              |算
+              br
+              |書
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |休
+              br
+              |暇
+              br
+              |届
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |通
+              br
+              |勤
+              br
+              |届
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |住
+              br
+              |宅
+              br
+              |手
+              br
+              |当
+              br
+              |申
+              br
+              |請
+              br
+              |書
+            th.text-center colspan="2" width="20px" style="vertical-align: top;"
+              |資
+              br
+              |格
+              br
+              |手
+              br
+              |当
+              br
+              |申
+              br
+              |請
+              br
+              |書
+          tr
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+            th.text-center width="20px" 本人
+            th.text-center width="20px" 上長
+        tbody
+          - @infos.each do |info|
+            tr
+              td = info[:name]
+
+              / 勤務状況報告書
+              td.text-center = info[:attendances_self_approved]
+              td.text-center = info[:attendances_boss_approved]
+
+              / 業務報告書
+              td.text-center = info[:reports_self_approved]
+              td.text-center = info[:reports_boss_approved]
+
+              / 交通費精算書
+              td.text-center = info[:expresses_self_approved]
+              td.text-center = info[:expresses_boss_approved]
+
+              / 休暇届
+              td.text-center = info[:vacation_self_approved]
+              td.text-center = info[:vacation_boss_approved]
+
+              / 通勤届(本人)
+              td.text-center = info[:commutes_self_approved]
+              td.text-center = info[:commutes_boss_approved]
+
+              / 住宅手当申請書
+              td.text-center = info[:housing_self_approved]
+              td.text-center = info[:housing_boss_approved]
+
+              / 資格手当申請書
+              td.text-center = info[:qualification_self_approved]
+              td.text-center = info[:qualification_boss_approved]
+
