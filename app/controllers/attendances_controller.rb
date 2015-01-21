@@ -217,7 +217,7 @@ class AttendancesController < PapersController
     end
 
     @nendo = get_target_year(attendance_years)
-    @gatudo = get_gatudo(attendance_years)
+    @gatudo = YearsController.get_gatudo(attendance_years)
     @project = get_project
     
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
@@ -235,21 +235,8 @@ class AttendancesController < PapersController
     init
     @attendances.update_all(["self_approved = ?",true])
 
-    # 自分のタイムラインへ本人確認済みを表示させる
-    @time_line = current_user.time_lines.build
-    @time_line[:title] = "本人確認済み"
-    @time_line[:contents] = "勤怠状況報告書の本人確認を完了しました。"
-    @time_line.save
-
-    # マネージャーのタイムラインへ上長承認依頼を表示させる
-    manager = User::Roles::MANAGER
-    katagaki = Katagaki.where( role: manager)
-    temp_user = katagaki[0].users.where(section_id: current_user.section_id)
-    @time_line = temp_user[0].time_lines.build
-    
-    @time_line[:title] = "上長承認依頼"
-    @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが勤怠状況報告書の本人確認を完了しました。"
-    @time_line.save
+    # タイムラインへメッセージを投稿
+    posting_check_proc("勤怠状況報告書")
 
     # 翌月分の勤怠情報を作成し画面に出力する
     init true
@@ -262,6 +249,10 @@ class AttendancesController < PapersController
   def cancel_check_proc
     init
     @attendances.update_all(["self_approved = ?",false])
+
+    # タイムラインへメッセージを投稿
+    posting_check_proc("勤怠状況報告書")
+
   end
 
   #
@@ -270,6 +261,11 @@ class AttendancesController < PapersController
   def approve_proc
     init
     @attendances.update_all(["boss_approved = ?",true])
+
+    temp_user = @attendances.first.user
+
+    # タイムラインへメッセージを投稿
+    posting_approve_proc("勤怠状況報告書", temp_user)
   end
 
   #
@@ -278,6 +274,11 @@ class AttendancesController < PapersController
   def cancel_approval_proc
     init
     @attendances.update_all(["boss_approved = ?",false])
+
+    temp_user = @attendances.first.user
+    
+    # タイムラインへメッセージを投稿
+    posting_cancel_approve_proc("勤怠状況報告書", temp_user)
   end
 
   # ------------------------------------------------------------------------------------------------------------------------
@@ -288,14 +289,14 @@ class AttendancesController < PapersController
   #
   def init(freezed=false)
 
-    if changed_attendance_years?
+    if YearsController.changed_attendance_years?(params[:paper])
       session[:years] = params[:paper][:years]
     end
 
     @attendance_years = get_years(current_user.attendances, freezed)
     
-    @nendo = get_target_year(@attendance_years)
-    @gatudo = get_gatudo(@attendance_years)
+    @nendo = YearsController.get_target_year(@attendance_years)
+    @gatudo = YearsController.get_gatudo(@attendance_years)
     @project = get_project
 
     @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
@@ -314,7 +315,7 @@ class AttendancesController < PapersController
       return
     end
       
-    target_date = Date.new(get_nendo(@attendance_years), get_month(@attendance_years), 16)
+    target_date = Date.new( YearsController.get_nendo(@attendance_years), YearsController.get_month(@attendance_years), 16)
 
     end_attendance_date = target_date.months_since(1)
 
@@ -330,7 +331,7 @@ class AttendancesController < PapersController
 
       @attendance[:wday] = target_date.wday
 
-      if holiday?(target_date)
+      if YearsController.holiday?(target_date)
         @attendance[:holiday] = "1"
       elsif ! current_user.kinmu_patterns.first.nil?
 
@@ -362,81 +363,6 @@ class AttendancesController < PapersController
     @attendance = Attendance.find(params[:id])
   end
 
-  # 
-  # Strong Parameters
-  #
-  def attendance_params
-    params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
-      :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
-      :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
-  end
-
-  # 対象日付の月度を返す
-  # @param [Date] target_date 対象日付
-  # @return [Integer] 対象日付の月度
-  def get_gatudo(target_date)
-    gatudo = target_date.month
-
-    if target_date.day > 15
-      gatudo = target_date.months_since(1).month
-    end
-
-    gatudo
-  end
-
-  # 対象年を返す
-  # @param [Date] target_date 対象日付
-  # @return [Integer] 対象日付の年度
-  def get_target_year(target_date)
-    year = target_date.year
-
-    if target_date.month == 12 and target_date.day > 15
-      year = target_date.next_year.year
-    end
-
-    year
-  end
-
-  # 対象年度を返す
-  # @param [Date] target_date 対象日付
-  # @return [Integer] 対象日付の年度
-  def get_nendo(target_date)
-    nendo = target_date.year
-
-    if target_date.month >= 1 and target_date.month < 4
-      nendo = target_date.prev_year.year
-    end
-
-    nendo
-  end
-
-  # 対象日付の月を返す
-  # 対象日付の日が15日以前の場合に先月の月を返す。そうでない場合は当月の月を返す
-  # @param [Date] target_date 対象日付
-  # @return [Integer] 対象日付の月
-  def get_month(target_date)
-    month = target_date.month
-
-    if target_date.day < 16
-      month = target_date.months_ago(1).month
-    end
-
-    month
-  end
-
-  # 休日かどうかを判定する
-  # @param [Date] target_date 対象日付
-  # @return [Boolean] 対象日が休日の場合はtrueを返す。そうでない場合はfalseを返す
-  def holiday?(target_date)
-    target_date.wday == 0 or target_date.wday == 6 or target_date.national_holiday?
-  end
-
-  # 画面の対象年月が変更されたどうかを判定する
-  # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
-  def changed_attendance_years?
-    return ! params[:paper].nil?
-  end
-
   # 勤怠その他を作成します
   # @return [AttendanceOthers] 勤怠その他
   def get_attendance_others_info
@@ -461,6 +387,15 @@ class AttendancesController < PapersController
     end
 
     others
+  end
+
+  # 
+  # Strong Parameters
+  #
+  def attendance_params
+    params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
+      :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
+      :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
   end
 
 end
