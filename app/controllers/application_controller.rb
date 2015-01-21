@@ -5,9 +5,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  
 
   $role_info = [["管理者", User::Roles::ADMIN], ["マネージャー", User::Roles::MANAGER], ["一般", User::Roles::REGULAR]]
+
+  # 自分が属する課のマネージャーを取得する。
+  def getManager()
+    manager = User::Roles::MANAGER
+    katagaki = Katagaki.where( role: manager)
+    temp_user = katagaki[0].users.where(section_id: current_user.section_id)
+    temp_user
+  end
   
   protected
     def configure_permitted_parameters

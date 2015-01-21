@@ -16,6 +16,8 @@
             = link_to "勤怠管理", "#"
             ul.dropdown
               li
+                = link_to '勤怠登録状況照会', attendance_information_index_path
+              li
                 = link_to '勤務状況報告書', attendances_path
               li
                 = link_to '業務報告書', business_reports_path
@@ -26,11 +28,11 @@
               li
                 = link_to '通勤届', commutes_path
               li
-                = link_to '技術経歴書', resumes_index_path
-              li
                 = link_to '住宅手当申請書', housing_allowances_path
               li
                 = link_to '資格手当申請書', qualification_allowances_path
+              li
+                = link_to '技術経歴書', resumes_index_path
               - if can? :manage, current_user
                 li
                   = link_to '勤務状況集計表', summary_attendances_path

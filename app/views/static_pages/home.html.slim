@@ -1,15 +1,12 @@
 .row
   .large-12.columns
     article.time_line_list
-      h1 タイムライン
-      table
-        thead
-          tr
-            th.text-center タイトル
-            th.text-center 詳細
-        tbody
-          - @time_lines.each do |time_line|
-            tr
-              td = time_line.title
-              td = time_line.contents
-      br
+      - @time_lines.each do |time_line|
+        div
+          p
+            = time_line.title
+            span style="padding-left: 40px; color: #333;" = time_line.created_at
+          p
+            = time_line.user.family_name + " " + time_line.user.first_name + "さん"
+            = time_line.contents
+        hr
