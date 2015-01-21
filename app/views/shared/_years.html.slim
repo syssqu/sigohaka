@@ -1,0 +1,5 @@
+.row
+  .large-3.columns
+    = form_tag :attendance_information_index, :method => :get do
+      label.left.inline 対象年月
+      = collection_select :years, :years, years, :id, :value, {selected: session[:years]}

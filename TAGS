@@ -45,23 +45,24 @@ class ResumesController < ApplicationControllerResumesController2,0
   def indexindex5,0
   def printprint8,0
 
-app/controllers/application_controller.rb,271
+app/controllers/application_controller.rb,306
 class ApplicationController < ActionController::BaseApplicationController2,0
-    def configure_permitted_parametersconfigure_permitted_parameters13,0
-    def get_projectget_project20,0
-    def after_sign_out_path_for(resource_or_scope)after_sign_out_path_for31,0
+  def getManager()getManager12,0
+    def configure_permitted_parametersconfigure_permitted_parameters20,0
+    def get_projectget_project27,0
+    def after_sign_out_path_for(resource_or_scope)after_sign_out_path_for38,0
 
 app/controllers/kinmu_patterns_controller.rb,346
 class KinmuPatternsController < ApplicationControllerKinmuPatternsController2,0
   def indexindex6,0
-  def showshow29,0
-  def newnew32,0
-  def editedit36,0
-  def createcreate39,0
-  def updateupdate49,0
-  def destroydestroy57,0
-    def set_kinmu_patternset_kinmu_pattern63,0
-    def kinmu_pattern_paramskinmu_pattern_params67,0
+  def showshow32,0
+  def newnew35,0
+  def editedit39,0
+  def createcreate42,0
+  def updateupdate52,0
+  def destroydestroy60,0
+    def set_kinmu_patternset_kinmu_pattern66,0
+    def kinmu_pattern_paramskinmu_pattern_params70,0
 
 app/controllers/attendances_controller.rb,1129
 class AttendancesController < PapersControllerAttendancesController2,0
@@ -76,20 +77,20 @@ class AttendancesController < PapersControllerAttendancesController2,0
   def calculatecalculate181,0
   def print_procprint_proc209,0
   def check_proccheck_proc232,0
-  def cancel_check_proccancel_check_proc262,0
-  def approve_procapprove_proc270,0
-  def cancel_approval_proccancel_approval_proc278,0
-  def init(freezed=false)init289,0
-  def create_attendances(freezed=false)create_attendances308,0
-  def set_attendanceset_attendance360,0
-  def attendance_paramsattendance_params367,0
-  def get_gatudo(target_date)get_gatudo376,0
-  def get_target_year(target_date)get_target_year389,0
-  def get_nendo(target_date)get_nendo402,0
-  def get_month(target_date)get_month416,0
-  def holiday?(target_date)holiday?429,0
-  def changed_attendance_years?changed_attendance_years?435,0
-  def get_attendance_others_infoget_attendance_others_info441,0
+  def cancel_check_proccancel_check_proc249,0
+  def approve_procapprove_proc261,0
+  def cancel_approval_proccancel_approval_proc274,0
+  def init(freezed=false)init290,0
+  def create_attendances(freezed=false)create_attendances309,0
+  def set_attendanceset_attendance362,0
+  def attendance_paramsattendance_params369,0
+  def get_gatudo(target_date)get_gatudo378,0
+  def get_target_year(target_date)get_target_year391,0
+  def get_nendo(target_date)get_nendo404,0
+  def get_month(target_date)get_month418,0
+  def holiday?(target_date)holiday?431,0
+  def changed_attendance_years?changed_attendance_years?437,0
+  def get_attendance_others_infoget_attendance_others_info443,0
 
 app/controllers/sections_controller.rb,312
 class SectionsController < ApplicationControllerSectionsController2,0
@@ -103,7 +104,7 @@ class SectionsController < ApplicationControllerSectionsController2,0
     def set_sectionset_section49,0
     def section_paramssection_params54,0
 
-app/controllers/papers_controller.rb,934
+app/controllers/papers_controller.rb,1228
 class PapersController < ApplicationControllerPapersController2,0
   attr_accessor :title, :yearstitle3,0
   attr_accessor :title, :yearstitle=3,0
@@ -126,6 +127,10 @@ class PapersController < ApplicationControllerPapersController2,0
   def cancel_check_proccancel_check_proc133,0
   def create_years_collection(objects, freezed=false)create_years_collection141,0
   def get_years(objects, freezed=false)get_years162,0
+  def posting_check_proc(target)posting_check_proc184,0
+  def posting_cancel_check_proc(target)posting_cancel_check_proc201,0
+  def posting_approve_proc(target, target_user)posting_approve_proc218,0
+  def posting_cancel_approve_proc(target, target_user)posting_cancel_approve_proc233,0
 
 app/controllers/summary_attendances_controller.rb,971
 class SummaryAttendancesController < ApplicationControllerSummaryAttendancesController3,0
@@ -163,6 +168,10 @@ class ProjectsController < ApplicationControllerProjectsController2,0
   def destroydestroy49,0
     def set_projectset_project55,0
     def project_paramsproject_params59,0
+
+app/controllers/attendance_information_controller.rb,120
+class AttendanceInformationController < ApplicationControllerAttendanceInformationController1,0
+  def indexindex2,0
 
 app/controllers/qualification_allowances_controller.rb,431
 class QualificationAllowancesController < ApplicationControllerQualificationAllowancesController1,0
@@ -360,6 +369,9 @@ module VacationRequestsHelperVacationRequestsHelper1,0
 
 app/helpers/housing_allowances_helper.rb,59
 module HousingAllowancesHelperHousingAllowancesHelper1,0
+
+app/helpers/attendance_information_helper.rb,67
+module AttendanceInformationHelperAttendanceInformationHelper1,0
 
 app/helpers/roles_helper.rb,35
 module RolesHelperRolesHelper1,0

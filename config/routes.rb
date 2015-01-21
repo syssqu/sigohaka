@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'attendance_information/index'
+
   resources :katagakis
   
   resources :summary_attendances do
