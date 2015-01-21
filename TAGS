@@ -64,33 +64,27 @@ class KinmuPatternsController < ApplicationControllerKinmuPatternsController2,
     def set_kinmu_patternset_kinmu_pattern66,0
     def kinmu_pattern_paramskinmu_pattern_params70,0
 
-app/controllers/attendances_controller.rb,1129
+app/controllers/attendances_controller.rb,828
 class AttendancesController < PapersControllerAttendancesController2,0
   def indexindex9,0
-  def set_freeze_infoset_freeze_info48,0
-  def newnew65,0
-  def createcreate72,0
-  def editedit85,0
-  def updateupdate97,0
-  def init_attendancesinit_attendances128,0
-  def input_attendance_timeinput_attendance_time162,0
-  def calculatecalculate181,0
-  def print_procprint_proc209,0
-  def check_proccheck_proc232,0
-  def cancel_check_proccancel_check_proc249,0
-  def approve_procapprove_proc261,0
-  def cancel_approval_proccancel_approval_proc274,0
-  def init(freezed=false)init290,0
-  def create_attendances(freezed=false)create_attendances309,0
-  def set_attendanceset_attendance362,0
-  def attendance_paramsattendance_params369,0
-  def get_gatudo(target_date)get_gatudo378,0
-  def get_target_year(target_date)get_target_year391,0
-  def get_nendo(target_date)get_nendo404,0
-  def get_month(target_date)get_month418,0
-  def holiday?(target_date)holiday?431,0
-  def changed_attendance_years?changed_attendance_years?437,0
-  def get_attendance_others_infoget_attendance_others_info443,0
+  def set_freeze_infoset_freeze_info35,0
+  def newnew52,0
+  def createcreate59,0
+  def editedit72,0
+  def updateupdate84,0
+  def init_attendancesinit_attendances115,0
+  def input_attendance_timeinput_attendance_time149,0
+  def calculatecalculate168,0
+  def print_procprint_proc196,0
+  def check_proccheck_proc219,0
+  def cancel_check_proccancel_check_proc236,0
+  def approve_procapprove_proc248,0
+  def cancel_approval_proccancel_approval_proc261,0
+  def init(freezed=false)init277,0
+  def create_attendances(freezed=false)create_attendances296,0
+  def set_attendanceset_attendance349,0
+  def get_attendance_others_infoget_attendance_others_info355,0
+  def attendance_paramsattendance_params384,0
 
 app/controllers/sections_controller.rb,312
 class SectionsController < ApplicationControllerSectionsController2,0
@@ -128,9 +122,9 @@ class PapersController < ApplicationControllerPapersController2,0
   def create_years_collection(objects, freezed=false)create_years_collection141,0
   def get_years(objects, freezed=false)get_years162,0
   def posting_check_proc(target)posting_check_proc184,0
-  def posting_cancel_check_proc(target)posting_cancel_check_proc201,0
-  def posting_approve_proc(target, target_user)posting_approve_proc218,0
-  def posting_cancel_approve_proc(target, target_user)posting_cancel_approve_proc233,0
+  def posting_cancel_check_proc(target)posting_cancel_check_proc203,0
+  def posting_approve_proc(target, target_user)posting_approve_proc222,0
+  def posting_cancel_approve_proc(target, target_user)posting_cancel_approve_proc239,0
 
 app/controllers/summary_attendances_controller.rb,971
 class SummaryAttendancesController < ApplicationControllerSummaryAttendancesController3,0
@@ -169,40 +163,49 @@ class ProjectsController < ApplicationControllerProjectsController2,0
     def set_projectset_project55,0
     def project_paramsproject_params59,0
 
-app/controllers/attendance_information_controller.rb,120
-class AttendanceInformationController < ApplicationControllerAttendanceInformationController1,0
-  def indexindex2,0
+app/controllers/attendance_information_controller.rb,199
+class AttendanceInformationController < ApplicationControllerAttendanceInformationController2,0
+  def indexindex3,0
+  def init(freezed=false)init142,0
+  def changed_years?changed_years?158,0
 
-app/controllers/qualification_allowances_controller.rb,431
+app/controllers/qualification_allowances_controller.rb,429
 class QualificationAllowancesController < ApplicationControllerQualificationAllowancesController1,0
-  def indexindex6,0
-  def showshow28,0
-  def newnew33,0
-  def editedit39,0
-  def createcreate44,0
-  def updateupdate61,0
-  def destroydestroy75,0
-  def printprint83,0
-    def set_qualification_allowanceset_qualification_allowance116,0
-    def qualification_allowance_paramsqualification_allowance_params121,0
+  def indexindex5,0
+  def showshow10,0
+  def newnew14,0
+  def editedit18,0
+  def createcreate21,0
+  def updateupdate35,0
+  def destroydestroy47,0
+  def printprint55,0
+    def set_qualification_allowanceset_qualification_allowance87,0
+    def qualification_allowance_paramsqualification_allowance_params91,0
 
-app/controllers/business_reports_controller.rb,609
-class BusinessReportsController < ApplicationControllerBusinessReportsController2,0
-  def indexindex7,0
-  def showshow31,0
-  def newnew36,0
-  def editedit41,0
-  def createcreate46,0
-  def updateupdate62,0
-  def destroydestroy76,0
-  def printprint84,0
-    def set_business_reportset_business_report125,0
-    def business_report_paramsbusiness_report_params130,0
-    def get_gatudo(target_date)get_gatudo134,0
-    def get_nendo(target_date)get_nendo144,0
-    def get_month(target_date)get_month154,0
-    def get_projectget_project164,0
-    def holiday?(target_date)holiday?172,0
+app/controllers/business_reports_controller.rb,963
+class BusinessReportsController < PapersControllerBusinessReportsController2,0
+  def indexindex6,0
+  def set_freeze_infoset_freeze_info38,0
+  def showshow50,0
+  def newnew53,0
+  def print_procprint_proc58,0
+  def editedit77,0
+  def createcreate80,0
+  def check_proccheck_proc94,0
+  def cancel_check_proccancel_check_proc105,0
+  def approve_procapprove_proc113,0
+  def cancel_approval_proccancel_approval_proc121,0
+  def updateupdate126,0
+  def destroydestroy138,0
+  def set_business_reportset_business_report188,0
+  def business_report_paramsbusiness_report_params192,0
+  def init(freezed=false)init196,0
+  def create_business_reports(freezed=false)create_business_reports212,0
+  def get_gatudo(target_date)get_gatudo236,0
+  def get_nendo(target_date)get_nendo246,0
+  def get_month(target_date)get_month256,0
+  def changed_business_report_years?changed_business_report_years?266,0
+    def get_projectget_project270,0
 
 app/controllers/commutes_controller.rb,1023
 class CommutesController < PapersControllerCommutesController1,0
@@ -309,6 +312,18 @@ class HousingAllowancesController < PapersControllerHousingAllowancesController
   def changed_housing_allowance_years?changed_housing_allowance_years?295,0
   def get_housing_allowance_years(transportation_express, freezed=false)get_housing_allowance_years307,0
 
+app/controllers/years_controller.rb,707
+class YearsController < ApplicationControllerYearsController2,0
+  def YearsController.get_gatudo(target_date)get_gatudo7,0
+  def YearsController.get_nendo(target_date)get_nendo20,0
+  def YearsController.get_target_year(target_date)get_target_year33,0
+  def YearsController.get_month(target_date)get_month47,0
+  def YearsController.holiday?(target_date)holiday?60,0
+  def YearsController.changed_attendance_years?(target)changed_attendance_years?66,0
+  def YearsController.create_years_collection(objects)create_years_collection70,0
+  def YearsController.next_years(temp_years, freezed=false)next_years74,0
+  def YearsController.get_years(objects, temp_years, freezed=false)get_years96,0
+
 app/controllers/vacation_requests_controller.rb,389
 class VacationRequestsController < ApplicationControllerVacationRequestsController1,0
   def indexindex6,0
@@ -342,6 +357,9 @@ module PapersHelperPapersHelper1,0
 
 app/helpers/reasons_helper.rb,39
 module ReasonsHelperReasonsHelper1,0
+
+app/helpers/years_helper.rb,35
+module YearsHelperYearsHelper1,0
 
 app/helpers/qualification_allowances_helper.rb,71
 module QualificationAllowancesHelperQualificationAllowancesHelper1,0
@@ -379,13 +397,15 @@ module RolesHelperRolesHelper1,0
 app/helpers/licenses_helper.rb,41
 module LicensesHelperLicensesHelper1,0
 
-app/helpers/application_helper.rb,314
+app/helpers/application_helper.rb,398
 module ApplicationHelperApplicationHelper2,0
-  def get_month_term(start_date, end_date)get_month_term8,0
-  def seireki2wareki(year, month, day)seireki2wareki18,0
-  def gravatar_for(user, options = { size: 50 })gravatar_for89,0
-  def be_self(object)be_self100,0
-  def role_info(role_name)role_info104,0
+  def target_user=(user)target_user=4,0
+  def target_user targettarget_user8,0
+  def get_month_term(start_date, end_date)get_month_term16,0
+  def seireki2wareki(year, month, day)seireki2wareki26,0
+  def gravatar_for(user, options = { size: 50 })gravatar_for97,0
+  def be_self(object)be_self108,0
+  def role_info(role_name)role_info112,0
 
 app/helpers/transportation_expresses_helper.rb,71
 module TransportationExpressesHelperTransportationExpressesHelper1,0
@@ -414,7 +434,7 @@ class AttendanceOther < ActiveRecord::BaseAttendanceOther1,0
   belongs_to :usercreate_user2,0
   belongs_to :usercreate_user!2,0
 
-app/models/qualification_allowance.rb,312
+app/models/qualification_allowance.rb,327
 class QualificationAllowance < ActiveRecord::BaseQualificationAllowance1,0
 	belongs_to :useruser2,0
 	belongs_to :useruser=2,0
@@ -422,8 +442,9 @@ class QualificationAllowance < ActiveRecord::BaseQualificationAllowance1,0
 	belongs_to :usercreate_user2,0
 	belongs_to :usercreate_user!2,0
   ITEM = ITEM4,0
-  NUMBER = [["A1","A1"],NUMBER18,0
-  MONEY = MONEY31,0
+  NUMBER = NUMBER18,0
+  MONEY = MONEY32,0
+  ALPHABET = ALPHABET38,0
 
 app/models/license.rb,209
 class License < ActiveRecord::BaseLicense1,0
@@ -679,6 +700,10 @@ db/migrate/20140626010843_add_registration_no_alphabet_to_qualification_allowanc
 class AddRegistrationNoAlphabetToQualificationAllowances < ActiveRecord::MigrationAddRegistrationNoAlphabetToQualificationAllowances1,0
   def changechange2,0
 
+db/migrate/20150121023714_add_column_to_business_reports.rb,114
+class AddColumnToBusinessReports < ActiveRecord::MigrationAddColumnToBusinessReports1,0
+  def changechange2,0
+
 db/migrate/20140625042825_add_imprint_to_user.rb,94
 class AddImprintToUser < ActiveRecord::MigrationAddImprintToUser1,0
   def changechange2,0
@@ -710,6 +735,10 @@ class ModifyDecimalFromIntegerToKinmuPatterns < ActiveRecord::MigrationModifyDe
 
 db/migrate/20150114055113_add_user_id_to_users.rb,94
 class AddUserIdToUsers < ActiveRecord::MigrationAddUserIdToUsers1,0
+  def changechange2,0
+
+db/migrate/20150121040924_add_column_to_qualification_allowances.rb,130
+class AddColumnToQualificationAllowances < ActiveRecord::MigrationAddColumnToQualificationAllowances1,0
   def changechange2,0
 
 db/migrate/20150114025750_rename_pattern_to_role_in_user.rb,112
@@ -750,6 +779,10 @@ class AddGetDateToQualificationAllowances < ActiveRecord::MigrationAddGetDateTo
 
 db/migrate/20140617045809_create_reasons.rb,88
 class CreateReasons < ActiveRecord::MigrationCreateReasons1,0
+  def changechange2,0
+
+db/migrate/20150121052811_add_year_and_month_to_attendance_others.rb,128
+class AddYearAndMonthToAttendanceOthers < ActiveRecord::MigrationAddYearAndMonthToAttendanceOthers1,0
   def changechange2,0
 
 db/migrate/20140623082358_create_qualification_allowances.rb,120
