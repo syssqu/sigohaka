@@ -59,6 +59,6 @@ class AttendanceOthersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_other_params
-      params.require(:attendance_other).permit(:summary, :start_time, :end_time, :over_time, :holiday_time, :midnight_time,:break_time, :kouzyo_time, :work_time, :remarks, :user_id)
+      params.require(:attendance_other).permit(:summary, :start_time, :end_time, :over_time, :holiday_time, :midnight_time,:break_time, :kouzyo_time, :work_time, :remarks, :user_id, :year, :month)
     end
 end

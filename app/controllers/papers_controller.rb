@@ -184,16 +184,18 @@ class PapersController < ApplicationController
   def posting_check_proc(target)
     # 自分のタイムラインへ本人確認済みを表示させる
     @time_line = current_user.time_lines.build
-    @time_line[:title] = "本人確認済み"
+    @time_line[:title] = "[勤怠管理] 本人確認実施"
     @time_line[:contents] = target + "の本人確認を完了しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
 
     # マネージャーのタイムラインへ上長承認依頼を表示させる
     temp_user = getManager
     @time_line = temp_user[0].time_lines.build
     
-    @time_line[:title] = "上長承認依頼"
+    @time_line[:title] = "[勤怠管理] 上長承認依頼"
     @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが" + target + "の本人確認を完了しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
   end
 
@@ -201,16 +203,18 @@ class PapersController < ApplicationController
   def posting_cancel_check_proc(target)
     # 自分のタイムラインへ本人確認済みを表示させる
     @time_line = current_user.time_lines.build
-    @time_line[:title] = "本人確認取消"
+    @time_line[:title] = "[勤怠管理] 本人確認取消"
     @time_line[:contents] = target + "の本人確認を取消しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
 
     # マネージャーのタイムラインへ上長承認依頼を表示させる
     temp_user = getManager
     @time_line = temp_user[0].time_lines.build
 
-    @time_line[:title] = "上長承認依頼取消"
+    @time_line[:title] = "[勤怠管理] 上長承認依頼取消"
     @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが" + target + "の本人確認を取消しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
   end
 
@@ -218,14 +222,16 @@ class PapersController < ApplicationController
   def posting_approve_proc(target, target_user)
     # 自分のタイムラインへ上長承認済みを表示させる
     @time_line = current_user.time_lines.build
-    @time_line[:title] = "上長承認"
+    @time_line[:title] = "[勤怠管理] 上長承認"
     @time_line[:contents] = target_user.family_name + " " + target_user.first_name + "さんの" + target + "を承認しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
 
     # 社員のタイムラインへ上長承認依頼を表示させる
     @time_line = target_user.time_lines.build
-    @time_line[:title] = "上長承認完了"
+    @time_line[:title] = "[勤怠管理] 上長承認完了"
     @time_line[:contents] = target + "が承認されました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
   end
 
@@ -233,14 +239,16 @@ class PapersController < ApplicationController
   def posting_cancel_approve_proc(target, target_user)
     # 自分のタイムラインへ上長承認取消を表示させる
     @time_line = current_user.time_lines.build
-    @time_line[:title] = "上長承認取消"
+    @time_line[:title] = "[勤怠管理] 上長承認取消"
     @time_line[:contents] = target_user.family_name + " " + target_user.first_name + "さんの" + target + "の承認を取消しました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
 
     # 社員のタイムラインへ上長承認依頼を表示させる
     @time_line = target_user.time_lines.build
-    @time_line[:title] = "上長承認取消"
+    @time_line[:title] = "[勤怠管理] 上長承認取消"
     @time_line[:contents] = target + "の承認が取消されました。"
+    @time_line[:create_user_id] = current_user.id
     @time_line.save!
   end
 end

@@ -9,29 +9,16 @@ class AttendancesController < PapersController
   def index
 
     logger.debug("ユーザ権限: " + current_user.role);
-    logger.debug("管理者権限: " + User::Roles::ADMIN);
-
-    if current_user.role == User::Roles::ADMIN
-      logger.debug("管理者!");
-    else
-      logger.debug("管理者でない!");
-    end
-
+    
     init
 
-    # 勤務パターンは3個固定で作成するので存在しない場合は考慮しない。
-    # if current_user.kinmu_patterns.first.nil?
-    #   flash.now[:alert] = '勤務パターンを登録して下さい。'
-    #   return false
-    # end
-    
     create_attendances
 
     session[:years] = "#{@nendo}#{@gatudo}"
     logger.debug("session_years"+session[:years])
     
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
-    @others = get_attendance_others_info.order(:id)
+    @others = get_attendance_others_info
 
     set_freeze_info
 
@@ -366,24 +353,28 @@ class AttendancesController < PapersController
   # 勤怠その他を作成します
   # @return [AttendanceOthers] 勤怠その他
   def get_attendance_others_info
-    others = current_user.attendance_others.order(:id)
+
+    others = current_user.attendance_others.where(year: @nendo, month: @gatudo).order(:id)
     
     if ! others.exists?
-      @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
+      @other = current_user.attendance_others.build(summary:"課会", year: @nendo, month: @gatudo)
       
-      if @other.save
-        others << @other
+      unless @other.save
+        logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = current_user.attendance_others.build(summary:"全体会")
-      if @other.save
-        others << @other
+      @other = current_user.attendance_others.build(summary:"全体会", year: @nendo, month: @gatudo)
+      
+      unless @other.save
+        logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = current_user.attendance_others.build()
-      if @other.save
-        others << @other
+      @other = current_user.attendance_others.build(year: @nendo, month: @gatudo)
+      unless @other.save
+        logger.debug("勤怠(その他)登録エラー")
       end
+
+      others = current_user.attendance_others().where(year: @nendo, month: @gatudo).order(:id)
     end
 
     others
