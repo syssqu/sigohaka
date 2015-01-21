@@ -71,10 +71,15 @@ Rails.application.routes.draw do
 
 
 
-  resource :business_reports, only:[] do
-    get :print
+  resources :business_reports, only:[:index, :new, :create, :edit, :update] do
+    collection do
+      get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
+    end
   end
-  resources :business_reports
 
 
 
