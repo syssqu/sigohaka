@@ -54,10 +54,6 @@ namespace :db do
     admin.kinmu_patterns.create!(code: "5")
     admin.kinmu_patterns.create!(code: "*")
 
-    admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")
-    admin.attendance_others.create!(summary: "全体会")
-    admin.attendance_others.create!(summary: "")
-
     ##############################
     # 幡山
     ##############################
@@ -82,11 +78,9 @@ namespace :db do
     hatayama.kinmu_patterns.create!(code: "2")
     hatayama.kinmu_patterns.create!(code: "3")
 
-    hatayama.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
-    hatayama.attendance_others.create!(summary: "全体会")
-    hatayama.attendance_others.create!(summary: "")
-
-
+    # hatayama.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
+    # hatayama.attendance_others.create!(summary: "全体会")
+    # hatayama.attendance_others.create!(summary: "")
 
     # 5.times do |m|
     #   3.times do |n|
@@ -126,9 +120,9 @@ namespace :db do
     isumi.kinmu_patterns.create!(code: "2")
     isumi.kinmu_patterns.create!(code: "3")
 
-    isumi.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
-    isumi.attendance_others.create!(summary: "全体会")
-    isumi.attendance_others.create!(summary: "")
+    # isumi.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
+    # isumi.attendance_others.create!(summary: "全体会")
+    # isumi.attendance_others.create!(summary: "")
 
     ##############################
     # テスト管理者
@@ -167,8 +161,8 @@ namespace :db do
     admin.kinmu_patterns.create!(code: "3")
     admin.kinmu_patterns.create!(code: "*")
 
-    admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")
-    admin.attendance_others.create!(summary: "全体会")
-    admin.attendance_others.create!(summary: "")
+    # admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")
+    # admin.attendance_others.create!(summary: "全体会")
+    # admin.attendance_others.create!(summary: "")
   end
 end

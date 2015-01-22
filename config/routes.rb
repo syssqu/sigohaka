@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   resources :summary_attendances do
     collection do
       get 'print'
-      get 'data_make'
+      # get 'data_make'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
     end
   end
 
@@ -82,7 +86,7 @@ Rails.application.routes.draw do
       get 'cancel_approval'
     end
   end
-
+  resources :business_reports
 
 
   resource :qualification_allowances, only:[] do
@@ -96,10 +100,11 @@ Rails.application.routes.draw do
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update] do
     collection do
+      get 'edit_header'
+      patch 'update_header'
       get 'print'
       get 'check'
       get 'cancel_check'
-
       get 'approve'
       get 'cancel_approval'
     end

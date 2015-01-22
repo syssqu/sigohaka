@@ -4,7 +4,7 @@ class AttendanceInformationController < ApplicationController
 
     init
 
-    @years = YearsController.create_years_collection current_user.attendances
+    @years = create_years_collection current_user.attendances
     # temp_years = YearsController.create_years_collection current_user.attendances, session[:years], false
     # if temp_years.blank?
     #   session[:years] = temp_years
@@ -19,23 +19,26 @@ class AttendanceInformationController < ApplicationController
       @users = User.where(id: current_user.id)
     end
 
-    info = {}
+    @infos = []
+    
     @users.each do |user|
+      info = {}
+      
       info[:name] = user.family_name + " " + user.first_name
 
       # 勤務状況報告書
-      attendances = user.attendances.where(year: @year, month: @month)
+      attendances = user.attendances.where(year: @nendo, month: @gatudo)
       info[:attendances_self_approved] = attendances.exists? && attendances.first.self_approved ? "○" : "×"
       info[:attendances_boss_approved] = attendances.exists? && attendances.first.boss_approved ? "○" : "×"
 
       # 業務報告書
-      reports = user.business_reports.where(year: @year, month: @month)
+      reports = user.business_reports.where(year: @nendo, month: @gatudo)
       info[:reports_self_approved] = reports.exists? && reports.first.self_approved ? "○" : "×"
       info[:reports_boss_approved] = reports.exists? && reports.first.boss_approved ? "○" : "×"
 
       # 交通費精算書(本人)
-      expresses = user.transportation_expresses.where(year: @year, month: @month)
-      if expresses.exists?
+      expresses = user.transportation_expresses.where(year: @nendo, month: @gatudo)
+      if ! expresses.exists?
         info[:expresses_self_approved] = "-"
       elsif expresses.first.self_approved
         info[:expresses_self_approved] = "○"
@@ -44,7 +47,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 交通費精算書(上長)
-      if expresses.exists?
+      if ! expresses.exists?
         info[:expresses_boss_approved] = "-"
       elsif expresses.first.boss_approved
         info[:expresses_boss_approved] = "○"
@@ -53,8 +56,8 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 休暇届(本人)
-      vacation = user.vacation_requests.where(year: @year, month: @month)
-      if vacation.exists?
+      vacation = user.vacation_requests.where(year: @nendo, month: @gatudo)
+      if ! vacation.exists?
         info[:vacation_self_approved] = "-"
       elsif vacation.first.self_approved
         info[:vacation_self_approved] = "○"
@@ -63,7 +66,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 休暇届(上長)
-      if vacation.exists?
+      if ! vacation.exists?
         info[:vacation_boss_approved] = "-"
       elsif vacation.first.boss_approved
         info[:vacation_boss_approved] = "○"
@@ -72,8 +75,8 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 通勤届(本人)
-      commutes = user.commutes.where(year: @year, month: @month)
-      if commutes.exists?
+      commutes = user.commutes.where(year: @nendo, month: @gatudo)
+      if ! commutes.exists?
         info[:commutes_self_approved] = "-"
       elsif commutes.first.self_approved
         info[:commutes_self_approved] = "○"
@@ -82,7 +85,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 通勤届(上長)
-      if commutes.exists?
+      if ! commutes.exists?
         info[:commutes_boss_approved] = "-"
       elsif commutes.first.boss_approved
         info[:commutes_boss_approved] = "○"
@@ -91,8 +94,8 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 住宅手当申請書(本人)
-      housing = user.housing_allowances.where(year: @year, month: @month)
-      if housing.exists?
+      housing = user.housing_allowances.where(year: @nendo, month: @gatudo)
+      if ! housing.exists?
         info[:housing_self_approved] = "-"
       elsif housing.first.self_approved
         info[:housing_self_approved] = "○"
@@ -101,7 +104,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 住宅手当申請書(上長)
-      if housing.exists?
+      if ! housing.exists?
         info[:housing_boss_approved] = "-"
       elsif housing.first.boss_approved
         info[:housing_boss_approved] = "○"
@@ -110,8 +113,8 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 資格手当申請書(本人)
-      qualification = user.qualification_allowances.where(year: @year, month: @month)
-      if qualification.exists?
+      qualification = user.qualification_allowances.where(year: @nendo, month: @gatudo)
+      if ! qualification.exists?
         info[:qualification_self_approved] = "-"
       elsif qualification.first.self_approved
         info[:qualification_self_approved] = "○"
@@ -120,7 +123,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 資格手当申請書(上長)
-      if qualification.exists?
+      if ! qualification.exists?
         info[:qualification_boss_approved] = "-"
       elsif qualification.first.boss_approved
         info[:qualification_boss_approved] = "○"
@@ -128,9 +131,12 @@ class AttendanceInformationController < ApplicationController
         info[:qualification_boss_approved] = "×"
       end
 
-      @infos.push info
+      @infos << info
     end
-    
+
+    @infos.each do |info|
+      logger.debug("勤怠登録状況照会 ユーザ名: " + info[:name])
+    end
   end
 
   def init(freezed=false)

@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :summary_attendances
 
   has_many :time_lines
+  has_many :kintai_headers
 
   validates :family_name, presence: true, length: { maximum: 20}
   validates :first_name, presence: true, length: { maximum: 20}

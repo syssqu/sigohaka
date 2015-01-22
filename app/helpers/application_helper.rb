@@ -1,6 +1,24 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def target_user
+    logger.debug("ApplicationHelper::target_user=")
+    
+    if session[:target_user].nil? or session[:target_user].blank?
+      @target_user = current_user
+    else
+      @target_user = User.find(session[:target_user])
+    end
+
+    @target_user
+  end
+
+  # def target_user
+  #   logger.debug("ApplicationHelper::target_user")
+  #   @target_user
+  #   logger.debug("@target_user: " + @target_user.id.to_s)
+  # end
+  
   # 指定された開始月から終了月までの月数を返す
   # @param [Date] start_date 開始月
   # @param [Date] end_date 終了月

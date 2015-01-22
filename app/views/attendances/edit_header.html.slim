@@ -1,0 +1,35 @@
+article.attendance_edit_header
+  .row
+  .large-12.columns.clearfix
+    = form_for( @kintai_header, :url => {:controller => :attendances, :action => :update_header}) do |f|
+      
+      - if @kintai_header.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@kintai_header.errors.count, "error")} prohibited this katagaki from being saved:"
+          ul
+            - @kintai_header.errors.full_messages.each do |message|
+              li = message
+
+      = f.hidden_field :id
+      br
+      br
+      .row
+        .large-2.columns
+          label.left.inline 氏名
+        .large-3.large-pull-7.columns
+          = f.text_field :user_name
+      .row
+        .large-2.columns
+          label.left.inline 所属
+        .large-3.large-pull-7.columns
+          = f.text_field :section_name
+      .row
+        .large-2.columns
+          label.left.inline プロジェクト名
+        .large-3.large-pull-7.columns
+          = f.text_field :project_name
+      hr
+      .row
+        .large-8.large-centered.columns
+          = f.submit "更新", class: "button radius"
+          = link_to "戻る", :back, class: "button radius"

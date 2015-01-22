@@ -3,6 +3,9 @@ class BusinessReportsController < PapersController
   before_action :set_business_report, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
+  #
+  # 一覧画面
+  #
   def index
 
     init
@@ -11,18 +14,35 @@ class BusinessReportsController < PapersController
 
     session[:years] = "#{@nendo}#{@gatudo}"
 
-    set_freeze_info
+    # set_freeze_info
 
-    @date=@business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
-    if @date==nil                                           #更新日時が空なら今日の日付を使用
-      @date=Date.today
+    if !@business_reports.blank?
+      @freezed = @business_reports.first.freezed
+    else
+      @freezed = @business_reports.first.freezed
     end
 
+    @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    if @date == nil                                           #更新日時が空なら今日の日付を使用
+      @date = Date.today
+    end
+
+    # @status = "本人未確認"
+    # if @business_reports.first.boss_approved
+    #   @status = "上長承認済み"
+    # elsif @business_reports.first.self_approved
+    #   @status = "本人確認済み"
+    # end
+
     @status = "本人未確認"
-    if @business_reports.first.boss_approved
-      @status = "上長承認済み"
-    elsif @business_reports.first.self_approved
-      @status = "本人確認済み"
+    unless @business_reports.first.nil?
+      if @business_reports.first.freezed
+        @status = "凍結中"
+      elsif @business_reports.first.boss_approved
+        @status = "上長承認済み"
+      elsif @business_reports.first.self_approved
+        @status = "本人確認済み"
+      end
     end
 
     #group byにidを追加しないとheroku上でエラーとなったため追加した。でもこれだときちんと動かないよね？
@@ -35,48 +55,65 @@ class BusinessReportsController < PapersController
     # @business_reports = current_user.business_reports.all
   end
 
-  def set_freeze_info
+  # def set_freeze_info
 
-    logger.debug("凍結状態の取得")
+  #   logger.debug("凍結状態の取得")
     
-    if view_context.be_self @business_reports.first
-      @freezed = @business_reports.first.self_approved or @business_reports.first.boss_approved
-    else
-      @freezed = @business_reports.first.boss_approved
-    end
+  #   if view_context.be_self @business_reports.first
+  #     @freezed = @business_reports.first.self_approved or @business_reports.first.boss_approved
+  #   else
+  #     @freezed = @business_reports.first.boss_approved
+  #   end
 
-  end
+  # end
 
   def show
   end
 
+  #
+  # 新規作成画面
+  #
   def new
     init
     @business_report = current_user.business_reports.build
   end
 
+  #
+  # 印刷画面
+  #
   def print_proc
 
     years = session[:years]
 
     if years.nil?
-      business_reports_years = Date.today
+      business_report_years = Date.today
     else
-      business_reports_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
+      business_report_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
     end
 
-    @nendo = get_target_year(business_reports_years)
-    @gatudo = get_gatudo(business_reports_years)
+    @nendo = get_nendo(business_report_years)
+    @gatudo = get_gatudo(business_report_years)
     @project = get_project
     
-    @business_reports = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @business_reports = current_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    if @date == nil                                           #更新日時が空なら今日の日付を使用
+      @date = Date.today
+    end
 
     @title = '業務報告書'
   end
 
+  #
+  # 編集画面
+  #
   def edit
   end
 
+  #
+  # 新規登録処理
+  #
   def create
     @business_report = current_user.business_reports.build(business_report_params)
 
@@ -91,6 +128,9 @@ class BusinessReportsController < PapersController
     end
   end
 
+  #
+  # 本人確認処理
+  #
   def check_proc
     init
     @business_reports.update_all(["self_approved = ?",true])
@@ -123,6 +163,9 @@ class BusinessReportsController < PapersController
     @business_reports.update_all(["boss_approved = ?",false])
   end
 
+  #
+  # 更新処理
+  #
   def update
     respond_to do |format|
       if @business_report.update(business_report_params)
@@ -135,6 +178,9 @@ class BusinessReportsController < PapersController
     end
   end
 
+  #
+  # 削除処理
+  #
   def destroy
     @business_report.destroy
     respond_to do |format|
@@ -142,46 +188,6 @@ class BusinessReportsController < PapersController
       format.json { head :no_content }
     end
   end
-
-  # def print
-
-  #   year = Date.today.year
-  #   month = Date.today.month
-  #   day = Date.today.day
-    
-  #   @nendo = Date.today.year
-  #   @gatudo = Date.today.month
-
-  #   if Date.today.day < 16
-  #     month = Date.today.months_ago(1).month
-  #   end
-
-  #   if Date.today.day > 15
-  #     @gatudo = Date.today.months_since(1).month
-  #   end
-
-  #   if Date.today.month == 12 and Date.today.day > 15
-  #     @nendo = Date.today.years_since(1).year
-  #   end
-  #   @business_reports = BusinessReport.all
-  #   @business_reports = current_user.business_reports.all
-  #   @project = current_user.projects.find_by(active: true)
-  #   @date=@business_reports.maximum(:updated_at ,:include)
-
-  #   @business_report = current_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    
-  #   respond_to do |format|
-
-  #     format.html { redirect_to print_business_reports_path(format: :pdf, debug: 1)}
-  #     format.pdf do
-  #       render pdf: '業務報告書',
-  #              encoding: 'UTF-8',
-  #              layout: 'pdf.html',
-  #              show_as_html: params[:debug].present?
-  #     end
-  #   end
-  # end
-
 
   private
 
@@ -209,6 +215,10 @@ class BusinessReportsController < PapersController
  
   end
 
+  #
+  # 業務報告書の作成
+  # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
+  #
   def create_business_reports(freezed=false)
 
     if @business_reports.exists?
@@ -218,12 +228,12 @@ class BusinessReportsController < PapersController
     end
 
     if !@business_reports.exists?
-      target_date = Date.new(@business_report_years.year, get_month(@business_reports_years), 16)
+      target_date = Date.new(@business_report_years.year, get_month(@business_report_years), 16)
       
 
-      @business_reports = current_user.business_reports.build
-      @business_reports[:year] = @nendo
-      @business_reports[:month] = @gatudo
+      @business_report = current_user.business_reports.build
+      @business_report[:year] = @nendo
+      @business_report[:month] = @gatudo
       if @business_report.save
         @business_reports << @business_report
         target_date = target_date.tomorrow
@@ -267,12 +277,33 @@ class BusinessReportsController < PapersController
     return ! params[:paper].nil?
   end
 
-    def get_project
-      if current_user.projects.nil?
-        Project.new
+  # def get_project
+  #   if current_user.projects.nil?
+  #     Project.new
+  #   else
+  #     current_user.projects.find_by(active: true)
+  #   end
+  # end
+
+  def get_business_report_years(business_report, freezed=false)
+    
+    unless session[:years].blank?
+      temp = session[:years]
+      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    else
+      temp = current_user.business_reports.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
+      if temp.exists?
+        years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
       else
-        current_user.projects.find_by(active: true)
+        years = Date.today
       end
     end
+
+    if freezed
+      years.months_since(1)
+    else
+      years
+    end
+  end
 
 end
