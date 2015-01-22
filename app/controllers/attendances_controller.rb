@@ -7,16 +7,18 @@ class AttendancesController < PapersController
   # 一覧画面
   #
   def index
+    logger.debug("attendances_controller::index")
 
-    logger.debug("ユーザ権限: " + current_user.role);
-    
+    # 勤怠年月、勤怠情報、年度、月度の取得
     init
 
-    create_attendances
+    unless @attendances.exists?
+      create_attendances
+    end
 
-    session[:years] = "#{@nendo}#{@gatudo}"
-    logger.debug("session_years"+session[:years])
-    
+    @years = create_years_collection view_context.target_user.attendances # 対象年月リスト 要修正
+    @users = create_users_collection                                      # 対象ユーザーリスト
+
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
@@ -30,6 +32,26 @@ class AttendancesController < PapersController
     end
 
     @be_self = view_context.be_self @attendances.first
+  end
+
+  #
+  # 印刷画面
+  #
+  def print_proc
+
+    if session[:years].nil?
+      redirect_to :index
+    end
+
+    @nendo = session[:years][0..3].to_i
+    @gatudo = session[:years][4..5].to_i
+    @project = get_project
+    
+    @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
+    @others = get_attendance_others_info
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+
+    @title = '勤務状況報告書'
   end
 
   def set_freeze_info
@@ -70,12 +92,36 @@ class AttendancesController < PapersController
   # 編集画面
   #
   def edit
-    temp = current_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+    temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null")
     @pattern = temp.collect do |k|
       [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.id]
     end
 
     @pattern << [" * 定例外勤務(休出 or シフト)", 4]
+  end
+
+  #
+  # 更新処理
+  #
+  def edit_header
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: session[:years][0..3], month: session[:years][4..5])
+  end
+
+  #
+  # 更新処理
+  #
+  def update_header
+    logger.debug("attendances_controller::header_update")
+    
+    @kintai_header = KintaiHeader.find(params[:kintai_header][:id])
+    
+    if @kintai_header.update_attributes(header_params)
+      logger.debug("success")
+      redirect_to attendances_path, notice: '更新しました。'
+    else
+      logger.debug("faile")
+      render :header_edit
+    end
   end
 
   #
@@ -97,7 +143,7 @@ class AttendancesController < PapersController
       redirect_to attendances_path, notice: '更新しました。'
     else
 
-      temp = current_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null")
       @pattern = temp.collect do |k|
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
@@ -123,12 +169,12 @@ class AttendancesController < PapersController
 
       # 休日でない場合は勤務パターンをベースに値を設定
       @attendances.where("holiday = '0'").update_all([sql,
-          current_user.kinmu_patterns.first.code,
-          current_user.kinmu_patterns.first.start_time.strftime("%_H:%M"),
-          current_user.kinmu_patterns.first.end_time.strftime("%_H:%M"),
+          view_context.target_user.kinmu_patterns.first.code,
+          view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M"),
+          view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M"),
           false,false,false,false,false,false,false,
           false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
-          current_user.kinmu_patterns.first.work_time,nil])
+          view_context.target_user.kinmu_patterns.first.work_time,nil])
       
       # 休日は全て空白に設定
       @attendances.where("holiday = '1'").update_all([sql,
@@ -148,7 +194,7 @@ class AttendancesController < PapersController
   #
   def input_attendance_time
 
-    temp_pattern = current_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
 
     if temp_pattern.nil?
       @attendance.start_time = "";
@@ -176,7 +222,7 @@ class AttendancesController < PapersController
       return
     end
     
-    temp_pattern = current_user.kinmu_patterns.find(params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.find(params[:pattern])
 
     Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
     Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
@@ -188,29 +234,6 @@ class AttendancesController < PapersController
     # attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
 
     @attendance.calculate(temp_pattern, params[:start_time], params[:end_time])
-  end
-
-  #
-  # 印刷画面
-  #
-  def print_proc
-
-    years = session[:years]
-
-    if years.nil?
-      attendance_years = Date.today
-    else
-      attendance_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
-    end
-
-    @nendo = get_target_year(attendance_years)
-    @gatudo = YearsController.get_gatudo(attendance_years)
-    @project = get_project
-    
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
-    @others = current_user.attendance_others
-
-    @title = '勤務状況報告書'
   end
 
   #
@@ -227,7 +250,13 @@ class AttendancesController < PapersController
 
     # 翌月分の勤怠情報を作成し画面に出力する
     init true
-    create_attendances true
+    create_attendances
+    
+    # 対象年月を翌月に設定する
+    temp_years = YearsController.next_years(session[:years])
+    unless temp_years.blank?
+      session[:years] = temp_years
+    end
   end
 
   #
@@ -273,34 +302,43 @@ class AttendancesController < PapersController
 
   #
   # 勤怠日付の初期化
+  # 勤怠年月、勤怠情報、年度、月度の取得
   #
   def init(freezed=false)
 
+    logger.debug("attendances_controller::init")
+
+    # 対象年月
     if YearsController.changed_attendance_years?(params[:paper])
       session[:years] = params[:paper][:years]
     end
+    
+    # 対象ユーザー
+    session[:target_user] ||= current_user.id
+    if YearsController.changed_attendance_users?(params[:user])
+      session[:target_user] = params[:user][:id]
+    end
 
-    @attendance_years = get_years(current_user.attendances, freezed)
+    @attendance_years = get_years(view_context.target_user.attendances, freezed)
     
     @nendo = YearsController.get_target_year(@attendance_years)
     @gatudo = YearsController.get_gatudo(@attendance_years)
     @project = get_project
+    
+    session[:years] ||= "#{@nendo}#{@gatudo}"
 
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
+    @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+
   end
 
   #
   # 勤怠情報の作成
   # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
   #
-  def create_attendances(freezed=false)
-    
-    if @attendances.exists?
-      set_freeze_info
-      
-      create_years_collection current_user.attendances, freezed
-      return
-    end
+  def create_attendances
+
+    logger.debug("attendances_controller::create_attendances")
       
     target_date = Date.new( YearsController.get_nendo(@attendance_years), YearsController.get_month(@attendance_years), 16)
 
@@ -310,7 +348,7 @@ class AttendancesController < PapersController
 
       logger.debug("勤怠日: " + target_date.to_s)
 
-      @attendance = current_user.attendances.build
+      @attendance = view_context.target_user.attendances.build
         
       @attendance[:attendance_date] = target_date
       @attendance[:year] = @nendo
@@ -320,12 +358,12 @@ class AttendancesController < PapersController
 
       if YearsController.holiday?(target_date)
         @attendance[:holiday] = "1"
-      elsif ! current_user.kinmu_patterns.first.nil?
+      elsif ! view_context.target_user.kinmu_patterns.first.nil?
 
-        @attendance[:pattern] = current_user.kinmu_patterns.first.code
-        @attendance[:start_time] = current_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
-        @attendance[:end_time] = current_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
-        @attendance[:work_time] = current_user.kinmu_patterns.first.work_time
+        @attendance[:pattern] = view_context.target_user.kinmu_patterns.first.code
+        @attendance[:start_time] = view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
+        @attendance[:end_time] = view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
+        @attendance[:work_time] = view_context.target_user.kinmu_patterns.first.work_time
         @attendance[:holiday] = "0"
 
       end
@@ -337,9 +375,22 @@ class AttendancesController < PapersController
         break
       end
     end
+
+    # ヘッダー情報(ユーザー名、所属、プロジェクト名)の登録
+    kintai_header = view_context.target_user.kintai_headers.build
+    kintai_header[:year] = @nendo
+    kintai_header[:month] = @gatudo
+    kintai_header[:user_name] = "#{view_context.target_user.family_name} #{view_context.target_user.first_name}"
+    kintai_header[:section_name] = view_context.target_user.section.name unless view_context.target_user.section.blank?
+
+    @project = get_project
+    kintai_header[:project_name] = @project.summary unless @project.blank?
+    unless kintai_header.save
+      logger.debug("勤怠ヘッダ登録処理エラー")
+    end
     
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    create_years_collection current_user.attendances, freezed
+    @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
 
   #
@@ -354,27 +405,27 @@ class AttendancesController < PapersController
   # @return [AttendanceOthers] 勤怠その他
   def get_attendance_others_info
 
-    others = current_user.attendance_others.where(year: @nendo, month: @gatudo).order(:id)
+    others = view_context.target_user.attendance_others.where(year: @nendo, month: @gatudo).order(:id)
     
     if ! others.exists?
-      @other = current_user.attendance_others.build(summary:"課会", year: @nendo, month: @gatudo)
+      @other = view_context.target_user.attendance_others.build(summary:"課会", year: @nendo, month: @gatudo)
       
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = current_user.attendance_others.build(summary:"全体会", year: @nendo, month: @gatudo)
+      @other = view_context.target_user.attendance_others.build(summary:"全体会", year: @nendo, month: @gatudo)
       
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = current_user.attendance_others.build(year: @nendo, month: @gatudo)
+      @other = view_context.target_user.attendance_others.build(year: @nendo, month: @gatudo)
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      others = current_user.attendance_others().where(year: @nendo, month: @gatudo).order(:id)
+      others = view_context.target_user.attendance_others().where(year: @nendo, month: @gatudo).order(:id)
     end
 
     others
@@ -387,6 +438,10 @@ class AttendancesController < PapersController
     params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
       :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
       :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
+  end
+
+  def header_params
+    params.require(:kintai_header).permit(:user_name, :section_name, :project_name)
   end
 
 end

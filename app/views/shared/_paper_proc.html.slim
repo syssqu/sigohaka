@@ -1,28 +1,40 @@
 .row
+  .larte-12.columns
+    = form_tag target, method: "get" do
+      .row
+        .large-2.columns
+            label.left.inline 対象年月
+            .attendances_hearder = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
+            / .attendances_hearder = select_tag 'paper[years]', options_for_select(years, session[:years])
+        - if can? :manage, current_user
+          .large-2.columns
+              label.left.inline 対象ユーザー
+              .attendances_hearder = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
+          .large-8.columns
+        - else
+          .large-10.columns
+.row
   .large-12.columns
     #paper_header
+      = link_to raw("<i class='fi-print'></i>ヘッダー情報の修正"), {controller: target, action: "edit_header"}, {class: "button tiny radius"}
       table#paper_project
         tbody
           tr
             td 氏名:
-            td #{current_user.family_name} #{current_user.first_name}
+            td = kintai_header.user_name
           tr
             td 所属:
-            td = current_user.section.name unless current_user.section.blank?
+            td = kintai_header.section_name unless kintai_header.project_name.blank?
           tr
             td プロジェクト名:
-            td = truncate(project.summary, length:20) unless project.blank?
+            td = truncate(kintai_header.project_name, length:20) unless kintai_header.project_name.blank?
           tr
             td ステータス:
             td = status
+
 hr
 .row
-  .large-3.columns
-    = form_tag target, method: "get" do
-      label.left.inline 対象年月
-      = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
-
-  .large-9.columns
+  .large-12.columns
     / 新規作成
     - if target!="attendances" and target!="housing_allowances" and target!="summary_attendances"
       = link_to raw("<i class='fi-print'></i>新規追加"),{controller: target, action: "new"},{class: "button tiny radius"}

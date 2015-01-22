@@ -12,13 +12,13 @@ article.attendance_print
       tbody
         tr
           td width="78px" プロジェクト名:
-          td = truncate(@project.summary, length:20) if ! @project.nil?
+          td = truncate(@kintai_header.project_name, length:20) if ! @kintai_header.project_name.nil?
         tr
           td 所属:
-          td = current_user.section.name if ! current_user.section.nil?
+          td = @kintai_header.section_name if ! @kintai_header.section_name.nil?
         tr
           td 氏名:
-          td #{current_user.family_name} #{current_user.first_name}
+          td = @kintai_header.user_name
     div.left
       h5#attendance_title 勤務状況報告書
       #attendance_nengetu #{seireki2wareki(@nendo, @gatudo, 1)} #{@gatudo}月度
@@ -31,7 +31,7 @@ article.attendance_print
         tr height="48px;"
           td 
           td
-          td = image_tag "#{current_user.imprint_id}.png", size: '40x40', class:"imprint"
+          td = image_tag "#{target_user.imprint_id}.png", size: '40x40', class:"imprint"
   / 勤怠表
   table#attendance_main
     thead
@@ -175,7 +175,7 @@ article.attendance_print
             = other.remarks[0,10] unless other.remarks.blank?
       tr
         td.text-center colspan="3" 社員No. 
-        td.text-center colspan="2" = current_user.employee_no
+        td.text-center colspan="2" = target_user.employee_no
         td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
         td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
         td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(hankekkin: true).count
@@ -214,7 +214,7 @@ article.attendance_print
         td.text-center width="55px;" 休憩
         td.text-center width="55px;" 実働
     tbody
-      - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
+      - target_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
         tr
           - if kinmu.code == "1"
             td.text-center width="60px;" rowspan=6
