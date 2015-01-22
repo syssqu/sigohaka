@@ -23,7 +23,7 @@ article.business_report_print
         tr height="60px;"
           td 
           td
-          td
+          td.info = image_tag "#{current_user.imprint_id}.png", size: '45x45', class:"imprint"
 - @business_reports.each do |business_report|
   tbody
     h7#business_report_headline 

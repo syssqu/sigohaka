@@ -1,6 +1,49 @@
-//============================================================================
-//   業務報告書(PDF)
-//============================================================================
+#paper_header{width:755px;}
+#attendance_header{width:755px;}
+
+/* =============================================================================
+   勤務状況報告書(一覧)
+   ========================================================================== */
+article.business_report_index span{margin:0px;color:red; !important;}
+
+article.business_report_index table{border-spacing: 0;}
+article.business_report_index table tr th {font-size:12px;}
+article.business_report_index table tr th{padding:5px 5px !important;}
+article.business_report_index table tr td {font-size:12px;}
+article.business_report_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
+article.business_report_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.business_report_index table tr td.bg_gray{background-color:#9F9687 !important;}
+article.business_report_index select {display: inline-block;width:50%;}
+
+article.business_report_index #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.business_report_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.business_report_index #paper_header table#paper_project{margin-bottom:0px;}
+
+article.business_report_index table#business_report_text2 td.cate  {font-size: 14px !important; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
+article.business_report_index table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
+article.business_report_index #business_report_text2 td    {padding: 6px !important; font-size: 13px !important;}
+article.business_report_index #business_report_text td    {padding: 6px !important; font-size: 13px !important;}
+
+.button.important{background-color:#4F7D06 !important;}
+
+article {padding-left:5px;}
+
+article.business_report_index label{padding-right: 20px;}
+
+/*article.business_report_index .button.tiny.radius a{color:white;}
+article.business_report_index .button.tiny.radius a:hover{background:none;}
+
+i.fi-clipboard-pencil{padding-right: 5px;}
+i.fi-print{color:white;padding-right:10px;}
+i.fi-refresh{color:white;padding-right:10px;}
+i.fi-plus{padding: 0px 5px;}
+i.fi-check{padding-right:10px;}
+i.fi-x{padding: 0px 5px;color: white;}*/
+
+
+/* =============================================================================
+   勤務状況報告書(PDF)
+   ========================================================================== */
 article.business_report_print {margin-top: 10px;}
 
 article.business_report_print table tr th {font-size: 10px; padding: 1px 1px !important;}
@@ -14,16 +57,17 @@ article.business_report_print table tr td {font-size: 10px; padding: 0px 0px !im
 #business_report_nengetu {width: 188px; text-align: center;}
 
 #business_report_header      {width: 755px;}
-h7#business_report_headline  {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight: bold; background: #cccccc;}
-h7#business_report_headline2 {font-size: 14px; padding-left: 10px; font-family: ＭＳ Ｐゴシック; font-weight: bold;}
-h7#business_report_footer    {font-size: 12px; padding-left: 560px; font-family: ＭＳ Ｐゴシック; font-weight: bold;}
+h7#business_report_headline  {font-size: 14px; padding-left: 10px; font-weight: bold; background: #cccccc;}
+h7#business_report_headline2 {font-size: 14px; padding-left: 10px; font-weight: bold;}
+h7#business_report_footer    {font-size: 12px; padding-left: 540px; font-weight: bold;}
 #business_report_text        {margin: 8px; border:1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word;}
 #business_report_text  td    {padding: 5px; font-size: 13px;}
 #business_report_text2 td    {padding: 6px; font-size: 13px;}
 #business_report_text2       {margin: 7px; border: 1px solid; margin-left: 45px; width: 700px; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;}
-#business_report_inkan       {border: 1px solid; margin-right: 10px; border-collapse: collapse;}
+#business_report_inkan       {border: 1px solid; margin-right: 15px; border-collapse: collapse;}
 
 table#business_report_inkan td.in    {width: 60px;}
+table#business_report_inkan tr .info {text-align: center;}
 table#business_report_text2 td.cate  {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
 table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
 table#business_report_text2 td       {background-color: #fff;}

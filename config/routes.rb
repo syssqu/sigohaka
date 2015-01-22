@@ -86,7 +86,7 @@ Rails.application.routes.draw do
       get 'cancel_approval'
     end
   end
-
+  resources :business_reports
 
 
   resource :qualification_allowances, only:[] do
