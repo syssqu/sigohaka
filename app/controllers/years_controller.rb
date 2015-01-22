@@ -64,11 +64,23 @@ class YearsController < ApplicationController
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
   def YearsController.changed_attendance_years?(target)
-    return ! target.nil?
+    if target.nil? or target.blank?
+      logger.debug("対象がnil")
+      false
+    else
+      logger.debug("対象が入力済:" + target.to_s)
+      true
+    end
   end
 
-  def YearsController.create_years_collection(objects)
-    return objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+  # 画面の対象ユーザーが変更されたどうかを判定する
+  # @return [Boolean] 対象ユーザーが変更されている場合はtrueを返す。そうでない場合はfalseを返す
+  def YearsController.changed_attendance_users?(target)
+    if target.nil? or target.blank?
+      false
+    else
+      true
+    end
   end
   
   def YearsController.next_years(temp_years, freezed=false)
@@ -79,7 +91,7 @@ class YearsController < ApplicationController
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.next_month
       
-      "#{next_years.year}#{next_years.month}"
+      return "#{next_years.year}#{next_years.month}"
     end
 
     ""

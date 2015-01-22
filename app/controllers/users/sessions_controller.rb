@@ -15,5 +15,8 @@ class Users::SessionsController < Devise::SessionsController
     super
     # session[:user_id] = nil
     # redirect_to root_url
+
+    session[:years] = nil
+    session[:target_user] = nil
   end
 end

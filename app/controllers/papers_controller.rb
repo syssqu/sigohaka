@@ -138,18 +138,18 @@ class PapersController < ApplicationController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @param [Object] objects
   #
-  def create_years_collection(objects, freezed=false)
-    @years = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+  # def create_years_collection(objects, freezed=false)
+  #   @years = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
 
-    if freezed
-      temp = session[:years]
+  #   if freezed
+  #     temp = session[:years]
       
-      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
-      next_years = years.next_month
+  #     years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+  #     next_years = years.next_month
       
-      session[:years] = "#{next_years.year}#{next_years.month}"
-    end
-  end
+  #     session[:years] = "#{next_years.year}#{next_years.month}"
+  #   end
+  # end
 
   # 画面に出力する勤怠日付を確定する
   # 締め処理の場合
@@ -161,7 +161,7 @@ class PapersController < ApplicationController
   # @return [Date] 対象勤怠日付
   def get_years(objects, freezed=false)
     
-    unless session[:years].blank?
+    unless session[:years].nil?
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else

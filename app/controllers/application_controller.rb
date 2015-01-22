@@ -8,6 +8,30 @@ class ApplicationController < ActionController::Base
 
   $role_info = [["管理者", User::Roles::ADMIN], ["マネージャー", User::Roles::MANAGER], ["一般", User::Roles::REGULAR]]
 
+
+  #
+  # 勤怠登録されている年月を返す
+  #
+  def create_years_collection(objects)
+    logger.debug("create_years_collection")
+
+    result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+    
+    # years = Date.today
+    # result = []
+    # result << ["2015年3月度", "20153"]
+    # result << ["2015年2月度", "20152"]
+    
+    result
+  end
+
+  #
+  # 自身が所属する課のユーザーを返す
+  #
+  def create_users_collection
+    return User.select("id, family_name || ' ' || first_name as value").where(section_id: current_user.section_id).order("family_name, first_name")
+  end
+
   # 自分が属する課のマネージャーを取得する。
   def getManager()
     manager = User::Roles::MANAGER
@@ -25,10 +49,10 @@ class ApplicationController < ActionController::Base
     end
 
     def get_project
-      if current_user.projects.nil?
+      if view_context.target_user.projects.nil?
         Project.new
       else
-        current_user.projects.find_by(active: true)
+        view_context.target_user.projects.find_by(active: true)
       end
     end
 

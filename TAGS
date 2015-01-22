@@ -45,12 +45,14 @@ class ResumesController < ApplicationControllerResumesController2,0
   def indexindex5,0
   def printprint8,0
 
-app/controllers/application_controller.rb,306
+app/controllers/application_controller.rb,433
 class ApplicationController < ActionController::BaseApplicationController2,0
-  def getManager()getManager12,0
-    def configure_permitted_parametersconfigure_permitted_parameters20,0
-    def get_projectget_project27,0
-    def after_sign_out_path_for(resource_or_scope)after_sign_out_path_for38,0
+  def create_years_collection(objects)create_years_collection15,0
+  def create_users_collectioncreate_users_collection25,0
+  def getManager()getManager30,0
+    def configure_permitted_parametersconfigure_permitted_parameters38,0
+    def get_projectget_project45,0
+    def after_sign_out_path_for(resource_or_scope)after_sign_out_path_for56,0
 
 app/controllers/kinmu_patterns_controller.rb,346
 class KinmuPatternsController < ApplicationControllerKinmuPatternsController2,0
@@ -64,27 +66,30 @@ class KinmuPatternsController < ApplicationControllerKinmuPatternsController2,
     def set_kinmu_patternset_kinmu_pattern66,0
     def kinmu_pattern_paramskinmu_pattern_params70,0
 
-app/controllers/attendances_controller.rb,828
+app/controllers/attendances_controller.rb,929
 class AttendancesController < PapersControllerAttendancesController2,0
   def indexindex9,0
-  def set_freeze_infoset_freeze_info35,0
-  def newnew52,0
-  def createcreate59,0
-  def editedit72,0
-  def updateupdate84,0
-  def init_attendancesinit_attendances115,0
-  def input_attendance_timeinput_attendance_time149,0
-  def calculatecalculate168,0
-  def print_procprint_proc196,0
-  def check_proccheck_proc219,0
-  def cancel_check_proccancel_check_proc236,0
-  def approve_procapprove_proc248,0
-  def cancel_approval_proccancel_approval_proc261,0
-  def init(freezed=false)init277,0
-  def create_attendances(freezed=false)create_attendances296,0
-  def set_attendanceset_attendance349,0
-  def get_attendance_others_infoget_attendance_others_info355,0
-  def attendance_paramsattendance_params384,0
+  def print_procprint_proc40,0
+  def set_freeze_infoset_freeze_info57,0
+  def newnew74,0
+  def createcreate81,0
+  def editedit94,0
+  def edit_headeredit_header106,0
+  def update_headerupdate_header113,0
+  def updateupdate130,0
+  def init_attendancesinit_attendances161,0
+  def input_attendance_timeinput_attendance_time195,0
+  def calculatecalculate214,0
+  def check_proccheck_proc242,0
+  def cancel_check_proccancel_check_proc265,0
+  def approve_procapprove_proc277,0
+  def cancel_approval_proccancel_approval_proc290,0
+  def init(freezed=false)init307,0
+  def create_attendancescreate_attendances339,0
+  def set_attendanceset_attendance400,0
+  def get_attendance_others_infoget_attendance_others_info406,0
+  def attendance_paramsattendance_params437,0
+  def header_paramsheader_params443,0
 
 app/controllers/sections_controller.rb,312
 class SectionsController < ApplicationControllerSectionsController2,0
@@ -98,7 +103,7 @@ class SectionsController < ApplicationControllerSectionsController2,0
     def set_sectionset_section49,0
     def section_paramssection_params54,0
 
-app/controllers/papers_controller.rb,1228
+app/controllers/papers_controller.rb,1144
 class PapersController < ApplicationControllerPapersController2,0
   attr_accessor :title, :yearstitle3,0
   attr_accessor :title, :yearstitle=3,0
@@ -119,7 +124,6 @@ class PapersController < ApplicationControllerPapersController2,0
   def cancel_approval_proccancel_approval_proc127,0
   def check_proccheck_proc130,0
   def cancel_check_proccancel_check_proc133,0
-  def create_years_collection(objects, freezed=false)create_years_collection141,0
   def get_years(objects, freezed=false)get_years162,0
   def posting_check_proc(target)posting_check_proc184,0
   def posting_cancel_check_proc(target)posting_cancel_check_proc203,0
@@ -312,7 +316,7 @@ class HousingAllowancesController < PapersControllerHousingAllowancesController
   def changed_housing_allowance_years?changed_housing_allowance_years?295,0
   def get_housing_allowance_years(transportation_express, freezed=false)get_housing_allowance_years307,0
 
-app/controllers/years_controller.rb,707
+app/controllers/years_controller.rb,711
 class YearsController < ApplicationControllerYearsController2,0
   def YearsController.get_gatudo(target_date)get_gatudo7,0
   def YearsController.get_nendo(target_date)get_nendo20,0
@@ -320,9 +324,9 @@ class YearsController < ApplicationControllerYearsController2,0
   def YearsController.get_month(target_date)get_month47,0
   def YearsController.holiday?(target_date)holiday?60,0
   def YearsController.changed_attendance_years?(target)changed_attendance_years?66,0
-  def YearsController.create_years_collection(objects)create_years_collection70,0
-  def YearsController.next_years(temp_years, freezed=false)next_years74,0
-  def YearsController.get_years(objects, temp_years, freezed=false)get_years96,0
+  def YearsController.changed_attendance_users?(target)changed_attendance_users?78,0
+  def YearsController.next_years(temp_years, freezed=false)next_years86,0
+  def YearsController.get_years(objects, temp_years, freezed=false)get_years108,0
 
 app/controllers/vacation_requests_controller.rb,389
 class VacationRequestsController < ApplicationControllerVacationRequestsController1,0
@@ -397,15 +401,14 @@ module RolesHelperRolesHelper1,0
 app/helpers/licenses_helper.rb,41
 module LicensesHelperLicensesHelper1,0
 
-app/helpers/application_helper.rb,398
+app/helpers/application_helper.rb,350
 module ApplicationHelperApplicationHelper2,0
-  def target_user=(user)target_user=4,0
-  def target_user targettarget_user8,0
-  def get_month_term(start_date, end_date)get_month_term16,0
-  def seireki2wareki(year, month, day)seireki2wareki26,0
-  def gravatar_for(user, options = { size: 50 })gravatar_for97,0
-  def be_self(object)be_self108,0
-  def role_info(role_name)role_info112,0
+  def target_usertarget_user4,0
+  def get_month_term(start_date, end_date)get_month_term26,0
+  def seireki2wareki(year, month, day)seireki2wareki36,0
+  def gravatar_for(user, options = { size: 50 })gravatar_for107,0
+  def be_self(object)be_self118,0
+  def role_info(role_name)role_info122,0
 
 app/helpers/transportation_expresses_helper.rb,71
 module TransportationExpressesHelperTransportationExpressesHelper1,0
@@ -552,7 +555,7 @@ class TimeLine < ActiveRecord::BaseTimeLine1,0
   belongs_to :usercreate_user2,0
   belongs_to :usercreate_user!2,0
 
-app/models/user.rb,3731
+app/models/user.rb,3927
 class User < ActiveRecord::BaseUser2,0
   attr_accessor :update_targetupdate_target8,0
   attr_accessor :update_targetupdate_target=8,0
@@ -628,9 +631,21 @@ class User < ActiveRecord::BaseUser2,0
   has_many :time_linestime_lines=42,0
   has_many :time_linestime_line_ids42,0
   has_many :time_linestime_line_ids=42,0
-  def authenticateauthenticate69,0
-  def update_without_current_password(params, *options)update_without_current_password81,0
-  def view_nameview_name97,0
+  has_many :kintai_headerskintai_headers43,0
+  has_many :kintai_headerskintai_headers=43,0
+  has_many :kintai_headerskintai_header_ids43,0
+  has_many :kintai_headerskintai_header_ids=43,0
+  def authenticateauthenticate70,0
+  def update_without_current_password(params, *options)update_without_current_password82,0
+  def view_nameview_name98,0
+
+app/models/kintai_header.rb,219
+class KintaiHeader < ActiveRecord::BaseKintaiHeader1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
 
 app/models/transportation_express.rb,232
 class TransportationExpress < ActiveRecord::BaseTransportationExpress1,0
@@ -735,6 +750,10 @@ class ModifyDecimalFromIntegerToKinmuPatterns < ActiveRecord::MigrationModifyDe
 
 db/migrate/20150114055113_add_user_id_to_users.rb,94
 class AddUserIdToUsers < ActiveRecord::MigrationAddUserIdToUsers1,0
+  def changechange2,0
+
+db/migrate/20150122024033_create_kintai_headers.rb,100
+class CreateKintaiHeaders < ActiveRecord::MigrationCreateKintaiHeaders1,0
   def changechange2,0
 
 db/migrate/20150121040924_add_column_to_qualification_allowances.rb,130

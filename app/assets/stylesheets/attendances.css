@@ -18,7 +18,7 @@ article.attendance_index table tr td .button {padding:4px !important;margin:0px 
 article.attendance_index table tr td.bg_gray{background-color:#9F9687 !important;}
 article.attendance_index select {display: inline-block;width:50%;}
 
-article.attendance_index #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.attendance_index #paper_header table#paper_project {border-style:none !important;width:300px;margin-right:60px;margin-top:10px;}
 article.attendance_index #paper_header table#paper_project table {border:none;}
 article.attendance_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
 article.attendance_index #paper_header table#paper_project td strong{color:#6E6E6E;}
@@ -104,3 +104,7 @@ article.attendance_print .imprint{margin:5px 10px;}
 
 article.attendance_print table.kinmu_pattern{margin-top:15px;margin-bottom: 0px;}
 #company_name p{margin-left:510px;font-size:11px;}
+
+
+
+

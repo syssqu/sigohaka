@@ -4,7 +4,7 @@ class AttendanceInformationController < ApplicationController
 
     init
 
-    @years = YearsController.create_years_collection current_user.attendances
+    @years = create_years_collection current_user.attendances
     # temp_years = YearsController.create_years_collection current_user.attendances, session[:years], false
     # if temp_years.blank?
     #   session[:years] = temp_years
