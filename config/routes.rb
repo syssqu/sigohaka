@@ -96,10 +96,11 @@ Rails.application.routes.draw do
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update] do
     collection do
+      get 'edit_header'
+      patch 'update_header'
       get 'print'
       get 'check'
       get 'cancel_check'
-
       get 'approve'
       get 'cancel_approval'
     end

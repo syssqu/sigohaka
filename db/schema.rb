@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121052811) do
+ActiveRecord::Schema.define(version: 20150122024033) do
 
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
@@ -149,6 +149,17 @@ ActiveRecord::Schema.define(version: 20150121052811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code",       limit: 2
+  end
+
+  create_table "kintai_headers", force: true do |t|
+    t.string   "year",         limit: 4
+    t.string   "month",        limit: 2
+    t.string   "user_name"
+    t.string   "section_name"
+    t.string   "project_name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "licenses", force: true do |t|

@@ -6,7 +6,7 @@ article.attendance_index
         |勤務状況報告書
 
       / ヘッダー
-      = render partial: 'shared/paper_proc', locals: { target: "attendances", years: @years, project: @project, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "attendances", years: @years, users: @users, kintai_header: @kintai_header, status: @status }
       / 勤怠表
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
@@ -163,7 +163,7 @@ article.attendance_index
                     i.fi-plus
           tr
             td.text-center colspan="3" 社員No. 
-            td.text-center colspan="2" = current_user.employee_no
+            td.text-center colspan="2" = target_user.employee_no
             td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
             td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
             td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(hankekkin: true).count
@@ -201,7 +201,7 @@ article.attendance_index
             td.text-center width="55px;" 休憩
             td.text-center width="55px;" 実働
         tbody
-          - current_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
+          - target_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
             tr
               - if kinmu.code == "1"
                 td.text-center width="60px;" rowspan=6
