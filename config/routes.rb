@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   resources :summary_attendances do
     collection do
       get 'print'
-      get 'data_make'
+      # get 'data_make'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
     end
   end
 
