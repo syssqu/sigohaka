@@ -19,17 +19,14 @@ article.business_report_index #paper_header table#paper_project {border-style:no
 article.business_report_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
 article.business_report_index #paper_header table#paper_project{margin-bottom:0px;}
 
-article.business_report_index table#business_report_text2 td.cate  {font-size: 14px; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
+article.business_report_index table#business_report_text2 td.cate  {font-size: 14px !important; padding: 4px; background: #E5E5E5; width: 316px; height: 20px;}
 article.business_report_index table#business_report_text2 td.cate2 {font-size: 14px; padding: 4px; background: #E5E5E5; width: 67px;}
-
 article.business_report_index #business_report_text2 td    {padding: 6px !important; font-size: 13px !important;}
 article.business_report_index #business_report_text td    {padding: 6px !important; font-size: 13px !important;}
 
 .button.important{background-color:#4F7D06 !important;}
 
-
 article {padding-left:5px;}
-
 
 article.business_report_index label{padding-right: 20px;}
 

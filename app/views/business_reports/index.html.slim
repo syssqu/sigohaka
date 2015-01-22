@@ -5,6 +5,7 @@ article.business_report_index
         i.fi-clipboard-pencil
         |業務報告書
 
+      / ヘッダー
       = render partial: 'shared/paper_proc', locals: { target: "business_reports", years: @years, project: @project, status: @status }
       
       - @business_reports.each do |business_report|
@@ -57,7 +58,7 @@ article.business_report_index
               td.text-center #{business_report.self_value}
               td #{business_report.self_reason}
           tr
-            h7.center style="font-size: 14px;"
+            h7.center style="font-size: 13px;"
              | &nbsp;&nbsp;&nbsp;※自己評価 (A:好調、B:想定通り、C:不調)
         tbody
           h7#business_report_headline
