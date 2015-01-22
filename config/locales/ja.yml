@@ -206,3 +206,7 @@ ja:
     attributes:
       attendance:
         start_time: 開始時刻
+
+      summary_attendance:
+        previous_m: 前月繰越
+        present_m: 当月繰越

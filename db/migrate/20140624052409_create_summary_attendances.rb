@@ -4,8 +4,8 @@ class CreateSummaryAttendances < ActiveRecord::Migration
       t.integer :user_id
       t.string :year, limit: 4
       t.string :month, limit: 2
-      t.integer :previous_m
-      t.integer :present_m
+      t.decimal :previous_m
+      t.decimal :present_m
       t.integer :vacation
       t.integer :half_holiday
 
