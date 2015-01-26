@@ -16,12 +16,6 @@ class ApplicationController < ActionController::Base
     logger.debug("create_years_collection")
 
     result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
-    
-    # years = Date.today
-    # result = []
-    # result << ["2015年3月度", "20153"]
-    # result << ["2015年2月度", "20152"]
-    
     result
   end
 

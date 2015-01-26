@@ -7,65 +7,45 @@ class BusinessReportsController < PapersController
   # 一覧画面
   #
   def index
+    logger.info("business_reports_controller::index")
 
     init
 
-    create_business_reports
-
-    session[:years] = "#{@nendo}#{@gatudo}"
-
-    # set_freeze_info
-
-    if !@business_reports.blank?
-      @freezed = @business_reports.first.freezed
-    else
-      @freezed = @business_reports.first.freezed
+    unless @business_reports.exists?
+      create_business_reports
     end
 
-    @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
-    if @date == nil                                           #更新日時が空なら今日の日付を使用
-      @date = Date.today
+    unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      create_kintai_header
     end
+    
 
-    # @status = "本人未確認"
-    # if @business_reports.first.boss_approved
-    #   @status = "上長承認済み"
-    # elsif @business_reports.first.self_approved
-    #   @status = "本人確認済み"
-    # end
+    @years = create_years_collection view_context.target_user.business_reports # 対象年月リスト 要修正
+    @users = create_users_collection                                      # 対象ユーザーリスト
+    
+    set_freeze_info @business_reports
 
-    @status = "本人未確認"
-    unless @business_reports.first.nil?
-      if @business_reports.first.freezed
-        @status = "凍結中"
-      elsif @business_reports.first.boss_approved
-        @status = "上長承認済み"
-      elsif @business_reports.first.self_approved
-        @status = "本人確認済み"
-      end
-    end
+    set_status @business_reports
 
-    #group byにidを追加しないとheroku上でエラーとなったため追加した。でもこれだときちんと動かないよね？
-    # year_month_set = current_user.attendances.group('id, year, month')
-    # @nengatudo_set = []
-    # year_month_set.each do |year_month|
-    # @nengatudo_set << [year_month[:year] + "年" + year_month[:month] + "月度", year_month[:year] + "/" + year_month[:month]]
-    # end
-
-    # @business_reports = current_user.business_reports.all
+    @be_self = view_context.be_self @business_reports.first
   end
 
-  # def set_freeze_info
+  #
+  # 印刷画面
+  #
+  def print_proc
 
-  #   logger.debug("凍結状態の取得")
+    setBasicInfo
     
-  #   if view_context.be_self @business_reports.first
-  #     @freezed = @business_reports.first.self_approved or @business_reports.first.boss_approved
-  #   else
-  #     @freezed = @business_reports.first.boss_approved
-  #   end
+    @business_reports = view_context.target_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+    # if @date == nil                                           #更新日時が空なら今日の日付を使用
+    #   @date = Date.today
+    # end
 
-  # end
+    @title = '業務報告書'
+  end
 
   def show
   end
@@ -75,47 +55,14 @@ class BusinessReportsController < PapersController
   #
   def new
     init
-    @business_report = current_user.business_reports.build
-  end
-
-  #
-  # 印刷画面
-  #
-  def print_proc
-
-    years = session[:years]
-
-    if years.nil?
-      business_report_years = Date.today
-    else
-      business_report_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
-    end
-
-    @nendo = get_nendo(business_report_years)
-    @gatudo = get_gatudo(business_report_years)
-    @project = get_project
-    
-    @business_reports = current_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-
-    @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
-    if @date == nil                                           #更新日時が空なら今日の日付を使用
-      @date = Date.today
-    end
-
-    @title = '業務報告書'
-  end
-
-  #
-  # 編集画面
-  #
-  def edit
+    @business_report = view_context.target_user.business_reports.build
   end
 
   #
   # 新規登録処理
   #
   def create
-    @business_report = current_user.business_reports.build(business_report_params)
+    @business_report = view_context.target_user.business_reports.build(business_report_params)
 
     respond_to do |format|
       if @business_report.save
@@ -129,38 +76,9 @@ class BusinessReportsController < PapersController
   end
 
   #
-  # 本人確認処理
+  # 編集画面
   #
-  def check_proc
-    init
-    @business_reports.update_all(["self_approved = ?",true])
-
-    init true
-    create_business_reports true
-  end
-
-  #
-  # 本人確認取消
-  #
-  def cancel_check_proc
-    init
-    @business_reports.update_all(["self_approved = ?",false])
-  end
-
-  #
-  # 上長承認処理
-  #
-  def approve_proc
-    init
-    @business_reports.update_all(["boss_approved = ?",true])
-  end
-
-  #
-  # 上長承認取消
-  #
-  def cancel_approval_proc
-    init
-    @business_reports.update_all(["boss_approved = ?",false])
+  def edit
   end
 
   #
@@ -189,6 +107,61 @@ class BusinessReportsController < PapersController
     end
   end
 
+  def update_header
+    super(attendances_path)
+  end
+
+  #
+  # 本人確認処理
+  #
+  def check_proc
+    init
+    @business_reports.update_all(["self_approved = ?",true])
+
+    # タイムラインへメッセージを投稿
+    posting_check_proc("業務報告書")
+    
+    init true
+    create_business_reports
+  end
+
+  #
+  # 本人確認取消
+  #
+  def cancel_check_proc
+    init
+    @business_reports.update_all(["self_approved = ?",false])
+
+    # タイムラインへメッセージを投稿
+    posting_check_proc("業務報告書")
+  end
+
+  #
+  # 上長承認処理
+  #
+  def approve_proc
+    init
+    @business_reports.update_all(["boss_approved = ?",true])
+
+    temp_user = @business_reports.first.user
+
+    # タイムラインへメッセージを投稿
+    posting_approve_proc("業務報告書", temp_user)
+  end
+
+  #
+  # 上長承認取消
+  #
+  def cancel_approval_proc
+    init
+    @business_reports.update_all(["boss_approved = ?",false])
+
+    temp_user = @business_reports.first.user
+    
+    # タイムラインへメッセージを投稿
+    posting_cancel_approve_proc("業務報告書", temp_user)
+  end
+
   private
 
   def set_business_report
@@ -201,18 +174,13 @@ class BusinessReportsController < PapersController
 
   def init(freezed=false)
 
-    if changed_business_report_years?
-      session[:years] = params[:paper][:years]
-    end
+    logger.info("business_reports_controller::init")
 
-    @business_report_years = get_years(current_user.business_reports, freezed)
+    super(view_context.target_user.business_reports, freezed)
     
-    @nendo = get_nendo(@business_report_years)
-    @gatudo = get_gatudo(@business_report_years)
-    @project = get_project
+    @business_reports = view_context.target_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
 
-    @business_reports = current_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
- 
   end
 
   #
@@ -221,89 +189,20 @@ class BusinessReportsController < PapersController
   #
   def create_business_reports(freezed=false)
 
-    if @business_reports.exists?
-      @freezed = @business_reports.first.freezed
-      create_years_collection current_user.business_reports, freezed
-      return
-    end
-
-    if !@business_reports.exists?
-      target_date = Date.new(@business_report_years.year, get_month(@business_report_years), 16)
-      
-
-      @business_report = current_user.business_reports.build
-      @business_report[:year] = @nendo
-      @business_report[:month] = @gatudo
-      if @business_report.save
-        @business_reports << @business_report
-        target_date = target_date.tomorrow
-      end
-      @business_reports = current_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    end
-    create_years_collection current_user.business_reports, freezed
-  end
-
-  def get_gatudo(target_date)
-    gatudo = target_date.month
-
-    if target_date.day > 15
-      gatudo = target_date.months_since(1).month
-    end
-
-    gatudo
-  end
-
-  def get_nendo(target_date)
-    nendo = target_date.year
-
-    if target_date.month == 12 and target_date.day > 15
-      nendo = target_date.years_since(1).year
-    end
-
-    nendo
-  end
-
-  def get_month(target_date)
-    month = target_date.month
-
-    if target_date.day < 16
-      month = target_date.months_ago(1).month
-    end
-
-    month
-  end
-
-  def changed_business_report_years?
-    return ! params[:paper].nil?
-  end
-
-  # def get_project
-  #   if current_user.projects.nil?
-  #     Project.new
-  #   else
-  #     current_user.projects.find_by(active: true)
-  #   end
-  # end
-
-  def get_business_report_years(business_report, freezed=false)
+    logger.info("create_business_reports")
     
-    unless session[:years].blank?
-      temp = session[:years]
-      years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
-    else
-      temp = current_user.business_reports.select('year, month').where("freezed = ?", false).group('year, month').order('year, month')
-      if temp.exists?
-        years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
-      else
-        years = Date.today
-      end
+    target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
+
+    @business_report = view_context.target_user.business_reports.build
+    @business_report[:year] = @nendo
+    @business_report[:month] = @gatudo
+    
+    if @business_report.save
+      @business_reports << @business_report
+      target_date = target_date.tomorrow
     end
 
-    if freezed
-      years.months_since(1)
-    else
-      years
-    end
+    @business_reports = view_context.target_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
-
 end

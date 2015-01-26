@@ -7,13 +7,17 @@ class AttendancesController < PapersController
   # 一覧画面
   #
   def index
-    logger.debug("attendances_controller::index")
-
-    # 勤怠年月、勤怠情報、年度、月度の取得
+    
+    logger.info("attendances_controller::index")
+    
     init
 
     unless @attendances.exists?
       create_attendances
+    end
+
+    unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      create_kintai_header
     end
 
     @years = create_years_collection view_context.target_user.attendances # 対象年月リスト 要修正
@@ -22,14 +26,9 @@ class AttendancesController < PapersController
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     @others = get_attendance_others_info
 
-    set_freeze_info
+    set_freeze_info @attendances
 
-    @status = "本人未確認"
-    if @attendances.first.boss_approved
-      @status = "上長承認済み"
-    elsif @attendances.first.self_approved
-      @status = "本人確認済み"
-    end
+    set_status @attendances
 
     @be_self = view_context.be_self @attendances.first
   end
@@ -39,33 +38,13 @@ class AttendancesController < PapersController
   #
   def print_proc
 
-    if session[:years].nil?
-      redirect_to :index
-    end
-
-    @nendo = session[:years][0..3].to_i
-    @gatudo = session[:years][4..5].to_i
-    @project = get_project
+    setBasicInfo
     
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = get_attendance_others_info
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
 
     @title = '勤務状況報告書'
-  end
-
-  def set_freeze_info
-
-    logger.debug("凍結状態の取得")
-    
-    if view_context.be_self @attendances.first
-      @freezed = @attendances.first.self_approved or @attendances.first.boss_approved
-    else
-      @freezed = @attendances.first.boss_approved
-    end
-    
-    logger.debug("勤怠情報: " + @attendances.first.id.to_s + ", " + @attendances.first.year + ", " + @attendances.first.month + ", " + @attendances.first.self_approved.to_s + ", " + @attendances.first.boss_approved.to_s)
-    logger.debug("凍結状態: " + @freezed.to_s)
   end
 
   #
@@ -98,30 +77,6 @@ class AttendancesController < PapersController
     end
 
     @pattern << [" * 定例外勤務(休出 or シフト)", 4]
-  end
-
-  #
-  # 更新処理
-  #
-  def edit_header
-    @kintai_header = view_context.target_user.kintai_headers.find_by(year: session[:years][0..3], month: session[:years][4..5])
-  end
-
-  #
-  # 更新処理
-  #
-  def update_header
-    logger.debug("attendances_controller::header_update")
-    
-    @kintai_header = KintaiHeader.find(params[:kintai_header][:id])
-    
-    if @kintai_header.update_attributes(header_params)
-      logger.debug("success")
-      redirect_to attendances_path, notice: '更新しました。'
-    else
-      logger.debug("faile")
-      render :header_edit
-    end
   end
 
   #
@@ -194,16 +149,27 @@ class AttendancesController < PapersController
   #
   def input_attendance_time
 
+    logger.debug("attendances_controller::input_attendance_time")
+    
     temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
 
     if temp_pattern.nil?
       @attendance.start_time = "";
       @attendance.end_time = "";
     else
-      @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
-      @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
-    end
+      if temp_pattern.start_time.blank?
+        @attendance.start_time = ""
+      else
+        @attendance.start_time = temp_pattern.start_time.strftime("%_H:%M")
+      end
 
+      if temp_pattern.end_time.blank?
+        @attendance.end_time = ""
+      else
+        @attendance.end_time = temp_pattern.end_time.strftime("%_H:%M")
+      end
+
+    end
   end
 
   #
@@ -251,12 +217,6 @@ class AttendancesController < PapersController
     # 翌月分の勤怠情報を作成し画面に出力する
     init true
     create_attendances
-    
-    # 対象年月を翌月に設定する
-    temp_years = YearsController.next_years(session[:years])
-    unless temp_years.blank?
-      session[:years] = temp_years
-    end
   end
 
   #
@@ -268,7 +228,6 @@ class AttendancesController < PapersController
 
     # タイムラインへメッセージを投稿
     posting_check_proc("勤怠状況報告書")
-
   end
 
   #
@@ -308,28 +267,10 @@ class AttendancesController < PapersController
 
     logger.debug("attendances_controller::init")
 
-    # 対象年月
-    if YearsController.changed_attendance_years?(params[:paper])
-      session[:years] = params[:paper][:years]
-    end
-    
-    # 対象ユーザー
-    session[:target_user] ||= current_user.id
-    if YearsController.changed_attendance_users?(params[:user])
-      session[:target_user] = params[:user][:id]
-    end
-
-    @attendance_years = get_years(view_context.target_user.attendances, freezed)
-    
-    @nendo = YearsController.get_target_year(@attendance_years)
-    @gatudo = YearsController.get_gatudo(@attendance_years)
-    @project = get_project
-    
-    session[:years] ||= "#{@nendo}#{@gatudo}"
+    super(view_context.target_user.attendances, freezed)
 
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
-
   end
 
   #
@@ -340,7 +281,7 @@ class AttendancesController < PapersController
 
     logger.debug("attendances_controller::create_attendances")
       
-    target_date = Date.new( YearsController.get_nendo(@attendance_years), YearsController.get_month(@attendance_years), 16)
+    target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
 
     end_attendance_date = target_date.months_since(1)
 
@@ -376,19 +317,6 @@ class AttendancesController < PapersController
       end
     end
 
-    # ヘッダー情報(ユーザー名、所属、プロジェクト名)の登録
-    kintai_header = view_context.target_user.kintai_headers.build
-    kintai_header[:year] = @nendo
-    kintai_header[:month] = @gatudo
-    kintai_header[:user_name] = "#{view_context.target_user.family_name} #{view_context.target_user.first_name}"
-    kintai_header[:section_name] = view_context.target_user.section.name unless view_context.target_user.section.blank?
-
-    @project = get_project
-    kintai_header[:project_name] = @project.summary unless @project.blank?
-    unless kintai_header.save
-      logger.debug("勤怠ヘッダ登録処理エラー")
-    end
-    
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
@@ -438,10 +366,6 @@ class AttendancesController < PapersController
     params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
       :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
       :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
-  end
-
-  def header_params
-    params.require(:kintai_header).permit(:user_name, :section_name, :project_name)
   end
 
 end

@@ -63,19 +63,17 @@ class YearsController < ApplicationController
 
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
-  def YearsController.changed_attendance_years?(target)
+  def YearsController.changed_years_list?(target)
     if target.nil? or target.blank?
-      logger.debug("対象がnil")
       false
     else
-      logger.debug("対象が入力済:" + target.to_s)
       true
     end
   end
 
   # 画面の対象ユーザーが変更されたどうかを判定する
   # @return [Boolean] 対象ユーザーが変更されている場合はtrueを返す。そうでない場合はfalseを返す
-  def YearsController.changed_attendance_users?(target)
+  def YearsController.changed_users_list?(target)
     if target.nil? or target.blank?
       false
     else
