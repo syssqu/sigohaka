@@ -12,7 +12,6 @@ class VacationRequestsController < ApplicationController
   # GET /vacation_requests/1
   # GET /vacation_requests/1.json
   def show
-    @vacation_requests = current_user.vacation_requests.find(params[:id])
   end
 
   # GET /vacation_requests/new
@@ -31,7 +30,7 @@ class VacationRequestsController < ApplicationController
 
     respond_to do |format|
       if @vacation_request.save
-        format.html { redirect_to @vacation_request, notice: '休暇届を作成しました' }
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を作成しました' }
         format.json { render :show, status: :created, location: @vacation_request }
       else
         format.html { render :new }
@@ -45,7 +44,7 @@ class VacationRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @vacation_request.update(vacation_request_params)
-        format.html { redirect_to @vacation_request, notice: '休暇届を更新しました' }
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を更新しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
         format.html { render :edit }
