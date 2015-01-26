@@ -16,7 +16,7 @@
 .row
   .large-12.columns
     #paper_header
-      = link_to raw("<i class='fi-print'></i>ヘッダー情報の修正"), {controller: target, action: "edit_header"}, {class: "button tiny radius"}
+      = link_to raw("<i class='fi-print'></i>ヘッダー情報の修正"), {controller: :kintai_header, action: "edit", id: kintai_header.id}, {class: "button tiny radius"}
       table#paper_project
         tbody
           tr

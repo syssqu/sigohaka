@@ -6,6 +6,58 @@ class PapersController < ApplicationController
   end
 
   #
+  # 初期化
+  #
+  def init(target, freezed)
+    logger.debug("PapersController::init")
+
+    # 対象年月
+    if YearsController.changed_years_list?(params[:paper])
+      session[:years] = params[:paper][:years]
+    end
+    
+    # 対象ユーザー
+    session[:target_user] ||= current_user.id
+    if YearsController.changed_users_list?(params[:user])
+      session[:target_user] = params[:user][:id]
+    end
+
+    @target_years = get_years(target, freezed)
+    
+    @nendo = YearsController.get_target_year(@target_years)
+    @gatudo = YearsController.get_gatudo(@target_years)
+    @project = get_project
+    
+    session[:years] ||= "#{@nendo}#{@gatudo}"
+  end
+
+  #
+  # 凍結情報をセットする
+  #
+  def set_freeze_info(target)
+
+    logger.debug("set_freeze_info")
+    
+    if view_context.be_self target.first
+      @freezed = target.first.self_approved or target.first.boss_approved
+    else
+      @freezed = target.first.boss_approved
+    end
+  end
+
+  #
+  # ステータスをセットする
+  #
+  def set_status(target)
+    @status = "本人未確認"
+    if target.first.boss_approved
+      @status = "上長承認済み"
+    elsif target.first.self_approved
+      @status = "本人確認済み"
+    end
+  end
+
+  #
   # 印刷処理
   #
   def print
@@ -20,6 +72,19 @@ class PapersController < ApplicationController
                show_as_html: params[:debug].present?
       end
     end
+  end
+
+  #
+  # 基本情報のセット
+  #
+  def setBasicInfo
+    if session[:years].nil?
+      redirect_to :index
+    end
+
+    @nendo = session[:years][0..3].to_i
+    @gatudo = session[:years][4..5].to_i
+    @project = get_project
   end
 
   #
@@ -87,6 +152,12 @@ class PapersController < ApplicationController
   def check
     ActiveRecord::Base.transaction do
       check_proc
+    end
+
+    # 対象年月を翌月に設定する
+    temp_years = YearsController.next_years(session[:years])
+    unless temp_years.blank?
+      session[:years] = temp_years
     end
 
     redirect_to ({action: :index}), :notice => '本人確認を行いました。'
@@ -250,5 +321,33 @@ class PapersController < ApplicationController
     @time_line[:contents] = target + "の承認が取消されました。"
     @time_line[:create_user_id] = current_user.id
     @time_line.save!
+  end
+  
+  #
+  # 勤怠ヘッダーの作成
+  #
+  def create_kintai_header
+
+    logger.info("create_kintai_header")
+
+    if view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      return
+    end
+    
+    # ヘッダー情報(ユーザー名、所属、プロジェクト名)の登録
+    kintai_header = view_context.target_user.kintai_headers.build
+    kintai_header[:year] = @nendo
+    kintai_header[:month] = @gatudo
+    kintai_header[:user_name] = "#{view_context.target_user.family_name} #{view_context.target_user.first_name}"
+    kintai_header[:section_name] = view_context.target_user.section.name unless view_context.target_user.section.blank?
+
+    @project = get_project
+    kintai_header[:project_name] = @project.summary unless @project.blank?
+    
+    unless kintai_header.save
+      logger.debug("勤怠ヘッダ登録処理エラー")
+    end
+
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
 end

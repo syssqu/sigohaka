@@ -1,7 +1,7 @@
 article.attendance_edit_header
   .row
   .large-12.columns.clearfix
-    = form_for( @kintai_header, :url => {:controller => :attendances, :action => :update_header}) do |f|
+    = form_for( @kintai_header, :url => {:controller => :papers, :action => :update_header}) do |f|
       
       - if @kintai_header.errors.any?
         #error_explanation

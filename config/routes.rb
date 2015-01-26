@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  get 'kintai_header/edit/:id', to: 'kintai_header#edit'
+  patch 'kintai_header/update/:id', to: 'kintai_header#update'
+
   get 'attendance_information/index'
 
   resources :katagakis
@@ -100,8 +103,6 @@ Rails.application.routes.draw do
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update] do
     collection do
-      get 'edit_header'
-      patch 'update_header'
       get 'print'
       get 'check'
       get 'cancel_check'
@@ -115,6 +116,7 @@ Rails.application.routes.draw do
 
   match '/freeze_up', to:'papers#freeze_up', via: :get
   match '/cancel_freeze', to:'papers#cancel_freeze', via: :get
+
   # match '/approve', to:'attendances#approve', via: :get
   # match '/cancel_approval', to:'attendances#cancel_approval', via: :get
   # match '/check', to:'attendances#check', via: :get
