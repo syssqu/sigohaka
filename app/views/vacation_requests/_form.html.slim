@@ -6,39 +6,95 @@
         - @vacation_request.errors.full_messages.each do |message|
           li = message
 
-  .field
-    / = f.label :user_id
-    / = f.number_field :user_id
-  .field
-    = f.label :いつから
-    = f.date_select :start_date
-  .field
-    = f.label :いつまで
-    = f.date_select :end_date
-  .field
-    = f.label :期間
-    = f.number_field :term
-  .field
-    = f.label :カテゴリー
-    = f.text_field :category
-  / input name="category" type="checkbox" value="yuu" 
-  /   | ①有給休暇
-  / input name="category" type="checkbox" value="hann" 
-  /   | ②半日有給休暇
-  / input name="category" type="checkbox" value="furi" 
-  /   | ③振替休暇
-  / input name="category" type="checkbox" value="kekkin"
-  /   | ④欠勤
-  .field
-    = f.label :事由
-    = f.text_field :reason
-  .field
-    = f.label :備考
-    = f.text_field :note
-  / .field
-  /   = f.label :year
-  /   = f.text_field :year
-  / .field
-  /   = f.label :month
-  /   = f.text_field :month
-  .actions = f.submit '登録する'
+  .row
+    .large-6.columns
+      .field
+        label いつから
+        = f.date_select :start_date
+
+  .row
+    .large-6.columns
+      .field
+        label いつまで
+        = f.date_select :end_date
+
+  .row
+    .large-6.columns
+      .field
+        label 期間
+        = f.number_field :term
+
+  .row
+    .large-6.columns style="height: 70px;"
+      .field
+        label 区別 <br><該当区別を選択してください>
+
+        label.left.inline = f.radio_button :category, :yuu, :checked => true
+        label.left.inline style="width:75px;" for="yuu" 有給休暇
+
+        label.left.inline = f.radio_button :category, :hann
+        label.left.inline style="width:105px;" for="hann" 半日有給休暇
+
+        label.left.inline = f.radio_button :category, :furi
+        label.left.inline style="width:75px;" for="furi" 振替休暇
+
+        label.left.inline = f.radio_button :category, :kekkin
+        label.left.inline style="width:45px;" for="kekkin" 欠勤
+
+    .large-8.columns style="height: 50px;"
+      .field
+        label.left.inline ・特別休暇 (&nbsp;&nbsp;
+
+        label.left.inline = f.radio_button :category, :kaki
+        label.left.inline style="width:75px;" for="kaki" 夏季休暇
+
+        label.left.inline = f.radio_button :category, :funin
+        label.left.inline style="width:45px;" for="funin" 赴任
+
+        label.left.inline = f.radio_button :category, :idou
+        label.left.inline style="width:45px;" for="idou" 異動
+
+        label.left.inline = f.radio_button :category, :komu
+        label.left.inline style="width:45px;" for="komu" 公務
+
+        label.left.inline = f.radio_button :category, :kekkon
+        label.left.inline style="width:45px;" for="kekkon" 結婚
+
+        label.left.inline = f.radio_button :category, :seiri
+        label.left.inline style="width:45px;" for="seiri" 生理
+
+        label.left.inline = f.radio_button :category, :syussan
+        label.left.inline style="width:87px;" for="syussan" 配偶者出産
+
+        label.left.inline = f.radio_button :category, :zengo
+        label.left.inline style="width:72px;" for="zengo" 産前産後
+
+        label.left.inline = f.radio_button :category, :kibiki
+        label.left.inline style="width:45px;" for="kibiki" 忌引
+
+        label.left.inline = f.radio_button :category, :saigai
+        label.left.inline style="width:37px;" for="saigai" 災害
+
+        label.left.inline )&nbsp;&nbsp;&nbsp;
+
+    .large-12.columns style="height: 50px;margin-top: -20px;"
+      .field
+        label.left.inline = f.radio_button :category, :ta
+        label.left.inline style="width:240px;" for="ta" その他(詳細を事由に記載すること)
+
+  .row
+    .large-12.columns style="height: 90px;"
+      .field
+        label 事由
+        label.left.inline.large-6 = f.text_field :reason
+
+  .row
+    .large-12.columns style="height: 90px;"
+      .field
+        label 備考
+        label.left.inline.large-6 = f.text_field :note
+
+  .row
+    .large-7.large-centered.columns
+      = f.submit '登 録', class: "button tiny radius"
+      = link_to '戻 る', vacation_requests_path, class: "button tiny radius gray"

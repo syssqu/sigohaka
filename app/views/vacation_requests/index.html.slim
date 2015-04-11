@@ -1,6 +1,5 @@
 article.vacation_request_index
   h3 style="padding-left: 15px;margin-top:10px;" 休暇届
-  / = select :business_report, 'business_report_target_date', @nengatudo_set
   #vacation_request_header.clearfix
     table#vacation_request_project
       tbody
@@ -20,29 +19,60 @@ article.vacation_request_index
 table
   thead
     tr
-      / th User
       th いつから
       th いつまで
       th 期間
-      th カテゴリー
+      th 区別
       th 事由
       th 備考
-      / th Year
-      / th Month
 
   tbody
     - @vacation_requests.each do |vacation_request|
       tr
-        / td = vacation_request.user_id
         td = vacation_request.start_date
         td = vacation_request.end_date
         td = vacation_request.term
-        td = vacation_request.category
+
+        - if !@vacation_requests.nil?
+          - if vacation_request.category == "yuu" && !@vacation_requests.nil?
+            td 有給休暇
+          - elsif vacation_request.category == "hann" && !@vacation_requests.nil?
+            td 半日有給休暇
+          - elsif vacation_request.category == "furi" && !@vacation_requests.nil?
+            td 振替休暇
+          - elsif vacation_request.category == "kekkin" && !@vacation_requests.nil?
+            td 欠勤
+          - elsif vacation_request.category == "" && !@vacation_requests.nil?
+            td 特別休暇
+          - elsif vacation_request.category == "ta" && !@vacation_requests.nil?
+            td その他
+          - elsif vacation_request.category == "kaki" && !@vacation_requests.nil?
+            td 夏季休暇
+          - elsif vacation_request.category == "funin" && !@vacation_requests.nil?
+            td 赴任
+          - elsif vacation_request.category == "idou" && !@vacation_requests.nil?
+            td 異動
+          - elsif vacation_request.category == "komu" && !@vacation_requests.nil?
+            td 公務
+          - elsif vacation_request.category == "kekkon" && !@vacation_requests.nil?
+            td 結婚
+          - elsif vacation_request.category == "seiri" && !@vacation_requests.nil?
+            td 生理
+          - elsif vacation_request.category == "syussan" && !@vacation_requests.nil?
+            td 出産
+          - elsif vacation_request.category == "zengo" && !@vacation_requests.nil?
+            td 産前産後
+          - elsif vacation_request.category == "kibiki" && !@vacation_requests.nil?
+            td 忌引
+          - elsif vacation_request.category == "saigai" && !@vacation_requests.nil?
+            td 災害
+          - else
+            td
+        -else
+          td
+
         td = vacation_request.reason
         td = vacation_request.note
-        / td = vacation_request.year
-        / td = vacation_request.month
 
-        td = link_to '照会', vacation_request
         td = link_to '編集 ', edit_vacation_request_path(vacation_request)
         td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete

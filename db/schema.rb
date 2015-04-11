@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20150122024033) do
     t.boolean  "freezed"
     t.boolean  "self_approved"
     t.boolean  "boss_approved"
-    t.string   "year",            limit: 4
-    t.string   "month",           limit: 2
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "commutes", force: true do |t|
@@ -202,8 +202,8 @@ ActiveRecord::Schema.define(version: 20150122024033) do
     t.integer  "registration_no_year"
     t.integer  "registration_no_month"
     t.integer  "registration_no_individual"
-    t.string   "year",                       limit: 4
-    t.string   "month",                      limit: 2
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "reasons", force: true do |t|
