@@ -5,7 +5,7 @@ ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 5.3.0.1'
 
 gem 'will_paginate'
 gem 'foundation-will_paginate'
