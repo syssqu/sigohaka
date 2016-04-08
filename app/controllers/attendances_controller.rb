@@ -7,9 +7,9 @@ class AttendancesController < PapersController
   # 一覧画面
   #
   def index
-    
+
     logger.info("attendances_controller::index")
-    
+
     init
 
     unless @attendances.exists?
@@ -39,7 +39,7 @@ class AttendancesController < PapersController
   def print_proc
 
     setBasicInfo
-    
+
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = get_attendance_others_info
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
@@ -93,7 +93,7 @@ class AttendancesController < PapersController
     if params[:attendance]['end_time'].blank?
       @attendance.is_blank_end_time = true
     end
-    
+
     if @attendance.update_attributes(attendance_params)
       redirect_to attendances_path, notice: '更新しました。'
     else
@@ -104,7 +104,7 @@ class AttendancesController < PapersController
       end
 
       @pattern << [" * 定例外勤務(休出 or シフト)", 4]
-      
+
       render :edit
     end
   end
@@ -130,7 +130,7 @@ class AttendancesController < PapersController
           false,false,false,false,false,false,false,
           false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
           view_context.target_user.kinmu_patterns.first.work_time,nil])
-      
+
       # 休日は全て空白に設定
       @attendances.where("holiday = '1'").update_all([sql,
           "","","",false,false,false,false,false,false,
@@ -138,7 +138,7 @@ class AttendancesController < PapersController
     end
 
     redirect_to attendances_path, notice: '勤怠データを初期化しました。'
- 
+
   rescue => e
     render :index, notice: '勤怠データの初期化に失敗しました。'
   end
@@ -150,7 +150,7 @@ class AttendancesController < PapersController
   def input_attendance_time
 
     logger.debug("attendances_controller::input_attendance_time")
-    
+
     temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
 
     if temp_pattern.nil?
@@ -187,7 +187,7 @@ class AttendancesController < PapersController
     if params[:pattern].blank? or params[:start_time].blank? or params[:end_time].blank?
       return
     end
-    
+
     temp_pattern = view_context.target_user.kinmu_patterns.find(params[:pattern])
 
     Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
@@ -251,7 +251,7 @@ class AttendancesController < PapersController
     @attendances.update_all(["boss_approved = ?",false])
 
     temp_user = @attendances.first.user
-    
+
     # タイムラインへメッセージを投稿
     posting_cancel_approve_proc("勤怠状況報告書", temp_user)
   end
@@ -280,7 +280,7 @@ class AttendancesController < PapersController
   def create_attendances
 
     logger.debug("attendances_controller::create_attendances")
-      
+
     target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
 
     end_attendance_date = target_date.months_since(1)
@@ -290,7 +290,7 @@ class AttendancesController < PapersController
       logger.debug("勤怠日: " + target_date.to_s)
 
       @attendance = view_context.target_user.attendances.build
-        
+
       @attendance[:attendance_date] = target_date
       @attendance[:year] = @nendo
       @attendance[:month] = @gatudo
@@ -318,7 +318,7 @@ class AttendancesController < PapersController
     end
 
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
-    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s, month: @gatudo.to_s)
   end
 
   #
@@ -333,33 +333,33 @@ class AttendancesController < PapersController
   # @return [AttendanceOthers] 勤怠その他
   def get_attendance_others_info
 
-    others = view_context.target_user.attendance_others.where(year: @nendo, month: @gatudo).order(:id)
-    
+    others = view_context.target_user.attendance_others.where(year: @nendo.to_s, month: @gatudo.to_s).order(:id)
+
     if ! others.exists?
-      @other = view_context.target_user.attendance_others.build(summary:"課会", year: @nendo, month: @gatudo)
-      
+      @other = view_context.target_user.attendance_others.build(summary:"課会", year: @nendo.to_s, month: @gatudo.to_s)
+
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = view_context.target_user.attendance_others.build(summary:"全体会", year: @nendo, month: @gatudo)
-      
+      @other = view_context.target_user.attendance_others.build(summary:"全体会", year: @nendo.to_s, month: @gatudo.to_s)
+
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      @other = view_context.target_user.attendance_others.build(year: @nendo, month: @gatudo)
+      @other = view_context.target_user.attendance_others.build(year: @nendo.to_s, month: @gatudo.to_s)
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
 
-      others = view_context.target_user.attendance_others().where(year: @nendo, month: @gatudo).order(:id)
+      others = view_context.target_user.attendance_others().where(year: @nendo.to_s, month: @gatudo.to_s).order(:id)
     end
 
     others
   end
 
-  # 
+  #
   # Strong Parameters
   #
   def attendance_params

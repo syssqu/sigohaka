@@ -5,6 +5,7 @@ ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 
+gem 'pg', '0.15.1'
 gem 'foundation-rails', '~> 5.3.0.1'
 
 gem 'will_paginate'
@@ -20,8 +21,8 @@ gem 'holiday_japan'
 gem 'minitest'
 
 # PDF
-gem 'wkhtmltopdf-binary'
-gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary' , '~> 0.9.9.3'
+gem 'wicked_pdf', '~> 0.11.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -74,7 +75,6 @@ gem 'spring',        group: :development
 
 
 group :production do
-  gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
 

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   #
   # 勤怠登録されている年月を返す
   #
-  def create_years_collection(objects)
+  def create_years_collection(objects, freezed=false)
     logger.debug("create_years_collection")
 
     result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     temp_user = katagaki[0].users.where(section_id: current_user.section_id)
     temp_user
   end
-  
+
   protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << [:family_name, :first_name, :kana_family_name, :kana_first_name, :section_id, :gender]
