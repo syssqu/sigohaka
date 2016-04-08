@@ -1,5 +1,5 @@
 class RenameRoleToKatagaki < ActiveRecord::Migration
   def change
-    rename_table :Roles, :Katagakis
+    rename_table :roles, :katagakis
   end
 end

@@ -12,7 +12,7 @@ class AttendanceInformationController < ApplicationController
 
     session[:years] = "#{@nendo}#{@gatudo}"
     logger.debug("session_years"+session[:years])
-    
+
     if current_user.katagaki.role == User::Roles::ADMIN or current_user.katagaki.role == User::Roles::MANAGER
       @users = User.where(section_id: current_user.section_id)
     else
@@ -20,24 +20,24 @@ class AttendanceInformationController < ApplicationController
     end
 
     @infos = []
-    
+
     @users.each do |user|
       info = {}
-      
+
       info[:name] = user.family_name + " " + user.first_name
 
       # 勤務状況報告書
-      attendances = user.attendances.where(year: @nendo, month: @gatudo)
+      attendances = user.attendances.where(year: @nendo.to_s, month: @gatudo.to_s)
       info[:attendances_self_approved] = attendances.exists? && attendances.first.self_approved ? "○" : "×"
       info[:attendances_boss_approved] = attendances.exists? && attendances.first.boss_approved ? "○" : "×"
 
       # 業務報告書
-      reports = user.business_reports.where(year: @nendo, month: @gatudo)
+      reports = user.business_reports.where(year: @nendo.to_s, month: @gatudo.to_s)
       info[:reports_self_approved] = reports.exists? && reports.first.self_approved ? "○" : "×"
       info[:reports_boss_approved] = reports.exists? && reports.first.boss_approved ? "○" : "×"
 
       # 交通費精算書(本人)
-      expresses = user.transportation_expresses.where(year: @nendo, month: @gatudo)
+      expresses = user.transportation_expresses.where(year: @nendo.to_s, month: @gatudo.to_s)
       if ! expresses.exists?
         info[:expresses_self_approved] = "-"
       elsif expresses.first.self_approved
@@ -56,7 +56,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 休暇届(本人)
-      vacation = user.vacation_requests.where(year: @nendo, month: @gatudo)
+      vacation = user.vacation_requests.where(year: @nendo.to_s, month: @gatudo.to_s)
       if ! vacation.exists?
         info[:vacation_self_approved] = "-"
       elsif vacation.first.self_approved
@@ -75,7 +75,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 通勤届(本人)
-      commutes = user.commutes.where(year: @nendo, month: @gatudo)
+      commutes = user.commutes.where(year: @nendo.to_s, month: @gatudo.to_s)
       if ! commutes.exists?
         info[:commutes_self_approved] = "-"
       elsif commutes.first.self_approved
@@ -94,7 +94,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 住宅手当申請書(本人)
-      housing = user.housing_allowances.where(year: @nendo, month: @gatudo)
+      housing = user.housing_allowances.where(year: @nendo.to_s, month: @gatudo.to_s)
       if ! housing.exists?
         info[:housing_self_approved] = "-"
       elsif housing.first.self_approved
@@ -113,7 +113,7 @@ class AttendanceInformationController < ApplicationController
       end
 
       # 資格手当申請書(本人)
-      qualification = user.qualification_allowances.where(year: @nendo, month: @gatudo)
+      qualification = user.qualification_allowances.where(year: @nendo.to_s, month: @gatudo.to_s)
       if ! qualification.exists?
         info[:qualification_self_approved] = "-"
       elsif qualification.first.self_approved
@@ -148,7 +148,7 @@ class AttendanceInformationController < ApplicationController
     logger.debug("init session_years2" + session[:years])
 
     @attendance_years = YearsController.get_years(current_user.attendances, session[:years], freezed)
-    
+
     @nendo = YearsController.get_target_year(@attendance_years)
     @gatudo = YearsController.get_gatudo(@attendance_years)
   end

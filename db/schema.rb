@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150122024033) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "attendance_others", force: true do |t|
     t.string   "summary"
     t.time     "start_time"
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 20150122024033) do
     t.boolean  "freezed",                                           default: false
   end
 
-  add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day"
+  add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day", using: :btree
 
   create_table "business_reports", force: true do |t|
     t.integer  "user_id"
@@ -306,8 +309,8 @@ ActiveRecord::Schema.define(version: 20150122024033) do
     t.integer  "katagaki_id"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "vacation_requests", force: true do |t|
     t.integer  "user_id"
@@ -323,6 +326,6 @@ ActiveRecord::Schema.define(version: 20150122024033) do
     t.datetime "updated_at"
   end
 
-  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month"
+  add_index "vacation_requests", ["user_id", "year", "month"], name: "index_vacation_requests_on_user_id_and_year_and_month", using: :btree
 
 end

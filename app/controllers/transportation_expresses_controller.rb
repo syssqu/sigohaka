@@ -9,23 +9,30 @@ class TransportationExpressesController < PapersController
 
     init
 
-
     create_transportation_expresses
     # @transportation_expresses = TransportationExpress.all
     # @transportation_express=current_user.transportation_expresses.all
     # @project = current_user.projects.find_by(active: true)
+
+    unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      create_kintai_header
+    end
+
+    @years = create_years_collection view_context.target_user.transportation_expresses # 対象年月リスト 要修正
+    @users = create_users_collection                                      # 対象ユーザーリスト
+
     session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
     if !@transportation_expresses.blank?
       @freezed = @transportation_expresses.first.freezed
     else
       @freezed = @transportation_expresses.first.freezed
-    end 
+    end
     # create_years_collection current_user.transportation_expresses, @freezed
     # year = Date.today.year
     # month = Date.today.month
     # day = Date.today.day
-    
+
     # @nendo = Date.today.year
     # @gatudo = Date.today.month
 
@@ -40,7 +47,7 @@ class TransportationExpressesController < PapersController
     # if Date.today.month == 12 and Date.today.day > 15
     #   @nendo = Date.today.years_since(1).year
     # end
-    
+
     # @date=Time.parse(session[:date])
     @date=@transportation_expresses.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
@@ -72,7 +79,7 @@ class TransportationExpressesController < PapersController
     @transportation_express = current_user.transportation_expresses.build
   end
 
-  def transportation_confirm 
+  def transportation_confirm
     @transportation_express = current_user.transportation_expresses.build(transportation_express_params)
   end
 
@@ -88,7 +95,7 @@ class TransportationExpressesController < PapersController
     @nendo = get_nendo(transportation_express_years)
     @gatudo = get_gatudo(transportation_express_years)
     @project = get_project
-    
+
     @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
     @date=@transportation_expresses.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
@@ -202,13 +209,14 @@ class TransportationExpressesController < PapersController
     end
 
     @transportation_express_years = get_years(current_user.transportation_expresses, freezed)
-    
+
     @nendo = get_nendo(@transportation_express_years)
     @gatudo = get_gatudo(@transportation_express_years)
     @project = get_project
 
     @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
- 
+
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
 
 
@@ -223,7 +231,7 @@ class TransportationExpressesController < PapersController
 
     if !@transportation_expresses.exists?
       target_date = Date.new(@transportation_express_years.year, get_month(@transportation_express_years), 16)
-      
+
 
       @transportation_express = current_user.transportation_expresses.build
       @transportation_express[:year] = @nendo
@@ -242,14 +250,14 @@ class TransportationExpressesController < PapersController
   #   unless session[:years].blank?
   #     @selected_nen_gatudo = session[:years]
   #   end
-    
+
   #   if changed_transportation_express_years?
   #     @selected_nen_gatudo = params[:transportation_express][:nen_gatudo]
   #     session[:years] = params[:transportation_express][:nen_gatudo]
   #   end
 
   #   @transportation_express_years = get_transportation_express_years(params[:transportation_express], freezed)
-    
+
   #   @nendo = get_nendo(@transportation_express_years)
   #   @gatudo = get_gatudo(@transportation_express_years)
   #   @project = get_project
@@ -257,7 +265,7 @@ class TransportationExpressesController < PapersController
   #   @transportation_express = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
   # end
 
-  
+
   #
   # 対象年月のセレクトボックス内に含めるデータを作成する
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
@@ -267,10 +275,10 @@ class TransportationExpressesController < PapersController
 
     if freezed
       temp = session[:years]
-      
+
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.months_since(1)
-      
+
       @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
       session[:years] = @selected_nen_gatudo
     end
@@ -316,7 +324,7 @@ class TransportationExpressesController < PapersController
     month
   end
 
- 
+
 
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
@@ -333,7 +341,7 @@ class TransportationExpressesController < PapersController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def get_transportation_express_years(transportation_express, freezed=false)
-    
+
     unless session[:years].blank?
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
