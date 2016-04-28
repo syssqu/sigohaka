@@ -21,15 +21,26 @@
           = f.time_select :end_time, {minute_step: 15}
       .row
         .large-1.columns.show-for-large-up
-          label.left.inline 休憩時間
+          label.left.inline 休憩時間（日中）
         .large-1.large-pull-10.columns
           = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline 休憩時間（深夜）
+        .large-1.large-pull-10.columns
+          = f.text_field :midnight_break_time, :value => number_with_precision(f.object.midnight_break_time,:precision => 2)
       hr
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 実働時間
         .large-1.large-pull-10.columns
           = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
+          
+      .row
+        .large-1.columns.show-for-large-up
+          label.left.inline シフト
+        .large-1.large-pull-10.columns
+          = f.check_box :shift
       .row
         .large-6.large-centered.columns
           = f.submit "登録", class: "button radius"

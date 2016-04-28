@@ -14,8 +14,10 @@ article.kinmu_patterns_index
             th コード
             th 出勤
             th 退勤
-            th 休憩時間
+            th 休憩時間(日中) 
+            th 休憩時間(深夜)  
             th 実働時間
+            th シフト
             th
             th
         tbody
@@ -25,5 +27,7 @@ article.kinmu_patterns_index
               td.text-center = kinmu_pattern.start_time.strftime("%H:%M") if ! kinmu_pattern.start_time.nil?
               td.text-center = kinmu_pattern.end_time.strftime("%H:%M") if ! kinmu_pattern.end_time.nil?
               td.text-center = sprintf( "%.2f", kinmu_pattern.break_time) if ! kinmu_pattern.break_time.nil?
+              td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) if ! kinmu_pattern.midnight_break_time.nil?
               td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) if ! kinmu_pattern.work_time.nil?
+              td.text-center = "○" if kinmu_pattern.shift
               td.text-center = link_to '編集', edit_kinmu_pattern_path(kinmu_pattern)

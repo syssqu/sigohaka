@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+#
+# 勤務状況報告書用コントローラー
+#
 class AttendancesController < PapersController
   before_action :set_attendance, only: [:show, :edit, :update, :destroy, :input_attendance_time, :calculate]
   before_action :authenticate_user!
@@ -42,7 +45,7 @@ class AttendancesController < PapersController
 
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = get_attendance_others_info
-    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s, month: @gatudo.to_s)
 
     @title = '勤務状況報告書'
   end
@@ -344,6 +347,11 @@ class AttendancesController < PapersController
 
       @other = view_context.target_user.attendance_others.build(summary:"全体会", year: @nendo.to_s, month: @gatudo.to_s)
 
+      unless @other.save
+        logger.debug("勤怠(その他)登録エラー")
+      end
+
+      @other = view_context.target_user.attendance_others.build(year: @nendo.to_s, month: @gatudo.to_s)
       unless @other.save
         logger.debug("勤怠(その他)登録エラー")
       end
