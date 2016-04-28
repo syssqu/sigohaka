@@ -1,44 +1,55 @@
-= form_for @vacation_request do |f|
-  - if @vacation_request.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@vacation_request.errors.count, "error")} prohibited this vacation_request from being saved:"
-      ul
-        - @vacation_request.errors.full_messages.each do |message|
-          li = message
+.row
+  .large-12.columns
+    = form_for @vacation_request do |f|
+      - if @vacation_request.errors.any?
+        #error_explanation
+          h2 = "#{pluralize(@vacation_request.errors.count, "error")} prohibited this vacation_request from being saved:"
+          ul
+            - @vacation_request.errors.full_messages.each do |message|
+              li = message
 
-  .field
-    / = f.label :user_id
-    / = f.number_field :user_id
-  .field
-    = f.label :いつから
-    = f.date_select :start_date
-  .field
-    = f.label :いつまで
-    = f.date_select :end_date
-  .field
-    = f.label :期間
-    = f.number_field :term
-  .field
-    = f.label :カテゴリー
-    = f.text_field :category
-  / input name="category" type="checkbox" value="yuu" 
-  /   | ①有給休暇
-  / input name="category" type="checkbox" value="hann" 
-  /   | ②半日有給休暇
-  / input name="category" type="checkbox" value="furi" 
-  /   | ③振替休暇
-  / input name="category" type="checkbox" value="kekkin"
-  /   | ④欠勤
-  .field
-    = f.label :事由
-    = f.text_field :reason
-  .field
-    = f.label :備考
-    = f.text_field :note
-  / .field
-  /   = f.label :year
-  /   = f.text_field :year
-  / .field
-  /   = f.label :month
-  /   = f.text_field :month
-  .actions = f.submit '登録する'
+      .row
+        .large-2.small-4.columns
+          label.left.inline いつから
+        .large-5.large-pull-5.small-8.columns
+          = f.date_select :start_date
+      .row
+        .large-2.small-4.columns
+          label.left.inline いつまで
+        .large-5.large-pull-5.small-8.columns
+          = f.date_select :end_date
+      .row
+        .large-2.small-4.columns
+          label.left.inline 期間
+        .large-5.large-pull-5.small-8.columns
+          = f.number_field :term
+      .row
+        .large-2.small-4.columns
+          label.left.inline カテゴリー
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :category
+          
+        / input name="category" type="checkbox" value="yuu" 
+        /   | ①有給休暇
+        / input name="category" type="checkbox" value="hann" 
+        /   | ②半日有給休暇
+        / input name="category" type="checkbox" value="furi" 
+        /   | ③振替休暇
+        / input name="category" type="checkbox" value="kekkin"
+        /   | ④欠勤
+      .row
+        .large-2.small-4.columns
+          label.left.inline 事由
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :reason
+      .row
+        .large-2.small-4.columns
+          label.left.inline 備考
+        .large-5.large-pull-5.small-8.columns
+          = f.text_field :note
+          
+      .row
+        .large-3.large-centered.columns
+          = f.submit '登録', class: "button radius"
+          = link_to "戻る", vacation_requests_path,　class: "button radius gray"
+          

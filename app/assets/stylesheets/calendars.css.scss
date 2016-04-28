@@ -1,0 +1,35 @@
+/* =============================================================================
+   カレンダー
+   ========================================================================== */
+article.calendar_index span{margin:0px;color:red;}
+
+article.calendar_index table{border-collapse: collapse;border-spacing: 0;}
+article.calendar_index table tr th {font-size:12px;}
+article.calendar_index table tr th{padding:5px 5px !important;}
+article.calendar_index table tr td {font-size:12px;}
+article.calendar_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
+article.calendar_index table tr td .button {padding:4px !important;margin:0px !important;}
+article.calendar_ table tr td.bg_gray{background-color:#9F9687 !important;}
+article.calendar_index select {display: inline-block;width:50%;}
+
+article.calendar_index #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
+article.calendar_index #paper_header table#paper_project table {border:none;}
+article.calendar_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.calendar_index #paper_header table#paper_project td strong{color:#6E6E6E;}
+article.calendar_index #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
+article.calendar_index #attendance_nengetu{width:240px;text-align:center;}
+article.calendar_index #paper_header table#paper_project{margin-bottom:0px;}
+
+article.calendar_index .main {max-width: 1080px;}
+article.calendar_index .main tr td {text-align: center;padding: 0px !important;}
+article.calendar_index .main tr th {text-align: center;padding: 5px 2px !important;border: solid 1px;border-color: lightgray;}
+article.calendar_index .main tr td {border: solid 1px;border-color: lightgray;}
+
+
+article {padding-left:5px;}
+
+
+article.calendar_index label{padding-right: 20px;}
+
+article.calendar_index .button.tiny.radius a{color:white;}
+article.calendar_index .button.tiny.radius a:hover{background:none;}
