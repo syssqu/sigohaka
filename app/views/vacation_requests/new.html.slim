@@ -1,17 +1,7 @@
-h1 休暇届　作成画面
-table
-  tbody
-    tr
-      td プロジェクト名
-      td = truncate(@project.summary, length:20) if ! @project.nil?
-    tr
-      td 所属
-      td = current_user.section.name
-    tr
-      td 氏名
-      td #{current_user.family_name} #{current_user.first_name}
+article.vacation_request_edit
+  .row
+  	.large-12.columns
+  		h4 休暇届　作成画面
 
 
-== render 'form'
-
-= link_to '前へ戻る', vacation_requests_path
+  == render 'form'

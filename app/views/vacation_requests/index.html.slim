@@ -1,48 +1,38 @@
 article.vacation_request_index
-  h3 style="padding-left: 15px;margin-top:10px;" 休暇届
-  / = select :business_report, 'business_report_target_date', @nengatudo_set
-  #vacation_request_header.clearfix
-    table#vacation_request_project
-      tbody
-        tr
-          td プロジェクト名:
-          td = truncate(@project.summary, length:20) if ! @project.nil?
-        tr
-          td 所属:
-          td = current_user.section.name if ! current_user.section.nil?
-        tr
-          td 氏名:
-          td #{current_user.family_name} #{current_user.first_name}
+  .row
+    .large-12.columns
+      h3
+        i.fi-clipboard-pencil
+        |休暇届
 
-= link_to "PDF出力", print_vacation_requests_path, class: "button tiny radius"
-= link_to '新規作成', new_vacation_request_path, class: "button tiny radius"
+      = render partial: 'shared/paper_proc', locals: { target: "vacation_requests", years: @years, users: @users, kintai_header: @kintai_header, project: @project, status: @status }
 
-table
-  thead
-    tr
-      / th User
-      th いつから
-      th いつまで
-      th 期間
-      th カテゴリー
-      th 事由
-      th 備考
-      / th Year
-      / th Month
+      table
+        thead
+          tr
+            / th User
+            th いつから
+            th いつまで
+            th 期間
+            th カテゴリー
+            th 事由
+            th 備考
+            / th Year
+            / th Month
 
-  tbody
-    - @vacation_requests.each do |vacation_request|
-      tr
-        / td = vacation_request.user_id
-        td = vacation_request.start_date
-        td = vacation_request.end_date
-        td = vacation_request.term
-        td = vacation_request.category
-        td = vacation_request.reason
-        td = vacation_request.note
-        / td = vacation_request.year
-        / td = vacation_request.month
+        tbody
+          - @vacation_requests.each do |vacation_request|
+            tr
+              / td = vacation_request.user_id
+              td = vacation_request.start_date
+              td = vacation_request.end_date
+              td = vacation_request.term
+              td = vacation_request.category
+              td = vacation_request.reason
+              td = vacation_request.note
+              / td = vacation_request.year
+              / td = vacation_request.month
 
-        td = link_to '照会', vacation_request
-        td = link_to '編集 ', edit_vacation_request_path(vacation_request)
-        td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete
+              td = link_to '照会', vacation_request
+              td = link_to '編集 ', edit_vacation_request_path(vacation_request)
+              td = link_to '削除', vacation_request, data: {:confirm => '削除してよろしいですか？'}, :method => :delete

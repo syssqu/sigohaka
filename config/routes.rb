@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  
+
+  get 'calendars/index'
+
   get 'kintai_header/edit/:id', to: 'kintai_header#edit'
   patch 'kintai_header/update/:id', to: 'kintai_header#update'
 
   get 'attendance_information/index'
 
   resources :katagakis
-  
+
   resources :summary_attendances do
     collection do
       get 'print'
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
 
   get 'resumes/index'
   get 'resumes/print'
-  
+
 
   resources :commutes do
     collection do
@@ -52,7 +54,7 @@ Rails.application.routes.draw do
 
   resources :licenses
   resources :projects
-  
+
   resources :transportation_expresses do
     collection do
       post 'transportation_confirm'
@@ -72,11 +74,15 @@ Rails.application.routes.draw do
   # #  resource :transportation_expresses, only: [] do
   # #   get :print
   # # end
-
-  resource :vacation_requests, only:[] do
-    get :print
+  resources :vacation_requests do
+    collection do
+      get 'print'
+      get 'check'
+      get 'cancel_check'
+      get 'approve'
+      get 'cancel_approval'
+    end
   end
-  resources :vacation_requests
 
 
 
@@ -124,17 +130,17 @@ Rails.application.routes.draw do
 
 
   # match '/data_clear', to:'attendances#clear', via: :get
-  
+
   # resources :attendances, only:[:index, :new, :create, :edit, :update] do
   #   patch :confirm, on: :member
   # end
-  
+
   # match '/attendances/print', to: 'attendances#print', via: :get
 
   resource :attendances, only: [] do
     get :print
   end
-  
+
 
 
   # get 'static_pages/home'
@@ -149,7 +155,7 @@ Rails.application.routes.draw do
     :passwords     => "users/passwords"
   }
 
-  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

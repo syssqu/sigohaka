@@ -33,7 +33,6 @@ module Sigohaka
     config.assets.precompile += %w( .svg .eot .woff .ttf )
 
     config.to_prepare do
-      Devise::SessionsController.layout "devise"
       Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application" : "devise" }
       Devise::ConfirmationsController.layout "devise"
       Devise::UnlocksController.layout "devise"
