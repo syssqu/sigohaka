@@ -1,0 +1,30 @@
+doctype html
+/![if IE 9] <html class="lt-ie10" lang="en" 
+/![if IE 10] <html class="ie10" lang="en"
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+    title しごはか
+
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tag
+    = render 'layouts/shim'
+
+  body
+
+    article
+      - if notice
+        p.alert.alert-notice
+          = notice
+      - if alert
+        p.alert.alert-error
+          = alert
+    == yield
+          
+    = render 'layouts/footer'
+    = debug(params) if Rails.env.development?
+    = debug(current_user) if Rails.env.development?
+    = javascript_include_tag "application"
