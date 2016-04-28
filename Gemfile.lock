@@ -213,37 +213,37 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bcrypt
-  cancan
-  capybara
-  coffee-rails (~> 4.0.0)
-  devise
-  factory_girl_rails
-  faker
-  foundation-icons-sass-rails
+  bcrypt (~> 3.1.11)
+  cancan (~> 1.6.10)
+  capybara (~> 2.7.0)
+  coffee-rails (~> 4.0.1)
+  devise (~> 3.5.6)
+  factory_girl_rails (~> 4.6.0)
+  faker (~> 1.6.3)
+  foundation-icons-sass-rails (~> 3.0.0)
   foundation-rails (~> 5.3.0.1)
-  foundation-will_paginate
-  holiday_japan
-  i18n_generators
-  jbuilder (~> 2.0)
-  jquery-rails
-  minitest
-  pg (= 0.15.1)
-  rails (= 4.1.0)
-  rails_12factor (= 0.0.2)
-  rspec-rails (= 2.14.0.rc1)
-  sass-rails (~> 4.0.3)
-  sdoc (~> 0.4.0)
-  selenium-webdriver
-  slim
-  slim-rails
-  spring
-  sqlite3
-  turbolinks
-  tzinfo-data
-  uglifier (>= 1.3.0)
+  foundation-will_paginate (~> 0.0.1)
+  holiday_japan (~> 1.2.2)
+  i18n_generators (~> 2.1.1)
+  jbuilder (~> 2.4.1)
+  jquery-rails (~> 3.1.4)
+  minitest (~> 5.8.4)
+  pg (~> 0.15.1)
+  rails (~> 4.1.0)
+  rails_12factor (~> 0.0.2)
+  rspec-rails (~> 2.14.0.rc1)
+  sass-rails (~> 4.0.5)
+  sdoc (~> 0.4.1)
+  selenium-webdriver (~> 2.53.0)
+  slim (~> 3.0.6)
+  slim-rails (~> 3.0.1)
+  spring (~> 1.6.4)
+  sqlite3 (~> 1.3.11)
+  turbolinks (~> 2.5.3)
+  tzinfo-data (~> 1.2016.3)
+  uglifier (~> 3.0.0)
   wicked_pdf (~> 0.11.0)
-  will_paginate
+  will_paginate (~> 3.1.0)
   wkhtmltopdf-binary (~> 0.9.9.3)
 
 BUNDLED WITH

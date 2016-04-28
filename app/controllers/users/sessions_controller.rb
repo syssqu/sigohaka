@@ -4,7 +4,6 @@ class Users::SessionsController < Devise::SessionsController
 
   def new
     super
-    render :layout => nil
   end
 
   def create
