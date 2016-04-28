@@ -1,16 +1,16 @@
 class Users::SessionsController < Devise::SessionsController
 
   layout false
-  
+
   def new
     super
-    
+    render :layout => nil
   end
- 
+
   def create
     super
   end
- 
+
   def destroy
     super
     # session[:user_id] = nil
