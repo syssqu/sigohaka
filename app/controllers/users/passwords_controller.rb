@@ -7,7 +7,6 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def new
     super
-    render :layout => nil
   end
 
   def edit
