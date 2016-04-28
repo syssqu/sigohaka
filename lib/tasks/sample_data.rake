@@ -2,7 +2,7 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
-    
+
     Section.create!(code: "1", name: "システム事業部1課")
     Section.create!(code: "2", name: "システム事業部2課")
     Section.create!(code: "3", name: "システム事業部3課")
@@ -23,7 +23,7 @@ namespace :db do
                  kana_family_name: "ナカムラ",
                  kana_first_name: "ジュンイチロウ",
                  email: "njsekay@gmail.com",
-                 password: "hydeouT4342",
+                 password: "systemsquare",
                  gender: :man,
                  section_id: 2,
                  birth_date: "1979/6/28",
@@ -46,7 +46,7 @@ namespace :db do
 
     admin.licenses.create!(code: "1", name:"基本情報処理")
     admin.licenses.create!(code: "2", name:"応用情報処理")
-    
+
     admin.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     admin.kinmu_patterns.create!(code: "2")
     admin.kinmu_patterns.create!(code: "3")
@@ -73,7 +73,7 @@ namespace :db do
 
     hatayama.licenses.create!(code: "1", name:"基本情報処理")
     hatayama.licenses.create!(code: "2", name:"応用情報処理")
-    
+
     hatayama.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     hatayama.kinmu_patterns.create!(code: "2")
     hatayama.kinmu_patterns.create!(code: "3")
@@ -115,7 +115,7 @@ namespace :db do
 
     isumi.licenses.create!(code: "1", name:"基本情報処理")
     isumi.licenses.create!(code: "2", name:"応用情報処理")
-    
+
     isumi.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     isumi.kinmu_patterns.create!(code: "2")
     isumi.kinmu_patterns.create!(code: "3")
@@ -155,7 +155,7 @@ namespace :db do
 
     admin.licenses.create!(code: "1", name:"基本情報処理")
     admin.licenses.create!(code: "2", name:"応用情報処理")
-    
+
     admin.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
     admin.kinmu_patterns.create!(code: "2")
     admin.kinmu_patterns.create!(code: "3")
@@ -164,5 +164,60 @@ namespace :db do
     # admin.attendance_others.create!(summary: "課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "")
     # admin.attendance_others.create!(summary: "全体会")
     # admin.attendance_others.create!(summary: "")
+
+
+    ##############################
+    # 大谷
+    ##############################
+    isumi = User.create!(family_name: "大谷",
+                 first_name: "誘規",
+                 kana_family_name: "オオタニ",
+                 kana_first_name: "ユウキ",
+                 email: "y-ootani@sys-square.co.jp",
+                 password: "systemsquare",
+                 gender: :man,
+                 section_id: 2,
+                 katagaki_id:1
+      )
+
+    isumi.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
+    isumi.kinmu_patterns.create!(code: "2")
+    isumi.kinmu_patterns.create!(code: "3")
+
+    ##############################
+    # 東川
+    ##############################
+    isumi = User.create!(family_name: "東川",
+                 first_name: "育実",
+                 kana_family_name: "トガワ",
+                 kana_first_name: "イクミ",
+                 email: "i-togawa@sys-square.co.jp",
+                 password: "systemsquare",
+                 gender: :woman,
+                 section_id: 2,
+                 katagaki_id:1
+      )
+
+    isumi.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
+    isumi.kinmu_patterns.create!(code: "2")
+    isumi.kinmu_patterns.create!(code: "3")
+
+    ##############################
+    # 大谷
+    ##############################
+    isumi = User.create!(family_name: "幸地",
+                 first_name: "隆",
+                 kana_family_name: "コウチ",
+                 kana_first_name: "タカシ",
+                 email: "t-kouchi@sys-square.co.jp",
+                 password: "systemsquare",
+                 gender: :man,
+                 section_id: 2,
+                 katagaki_id:1
+      )
+
+    isumi.kinmu_patterns.create!(code: "1", start_time:"9:00", end_time:"18:00", break_time: 1.00, work_time: 8.00)
+    isumi.kinmu_patterns.create!(code: "2")
+    isumi.kinmu_patterns.create!(code: "3")
   end
 end
