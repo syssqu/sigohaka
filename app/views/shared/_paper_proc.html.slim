@@ -4,8 +4,8 @@
       .row
         .large-2.columns
             label.left.inline 対象年月
-            /.attendances_hearder = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
-            .attendances_hearder = select_tag 'paper[years]', options_for_select(years, session[:years])
+            .attendances_hearder = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
+            /.attendances_hearder = select_tag 'paper[years]', options_for_select(years, session[:years])
         - if can? :manage, current_user
           .large-2.columns
               label.left.inline 対象ユーザー
