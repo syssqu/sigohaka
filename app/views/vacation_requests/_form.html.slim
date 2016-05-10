@@ -8,6 +8,9 @@
             - @vacation_request.errors.full_messages.each do |message|
               li = message
 
+      = f.hidden_field :year,value:@nendo if @vacation_request.year.nil?
+      = f.hidden_field :month,value:@gatudo if @vacation_request.month.nil?
+              
       .row
         .large-2.small-4.columns
           label.left.inline いつから
