@@ -19,12 +19,10 @@ class VacationRequestsController < PapersController
 
     session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
+
     if !@vacation_requests.blank?
       @freezed = @vacation_requests.first.freezed
-    else
-      @freezed = @vacation_requests.first.freezed
     end
-
 
     # @date=Time.parse(session[:date])
     @date=@vacation_requests.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
@@ -54,6 +52,7 @@ class VacationRequestsController < PapersController
 
   # GET /vacation_requests/new
   def new
+    init
     @vacation_request = current_user.vacation_requests.build
   end
 
@@ -66,14 +65,10 @@ class VacationRequestsController < PapersController
   def create
     @vacation_request = current_user.vacation_requests.build(vacation_request_params)
 
-    respond_to do |format|
-      if @vacation_request.save
-        format.html { redirect_to @vacation_request, notice: '休暇届を作成しました' }
-        format.json { render :show, status: :created, location: @vacation_request }
-      else
-        format.html { render :new }
-        format.json { render json: @vacation_request.errors, status: :unprocessable_entity }
-      end
+    if @vacation_request.save
+      redirect_to @vacation_request, notice: '休暇届を作成しました'
+    else
+      render :new
     end
   end
 
@@ -213,13 +208,9 @@ class VacationRequestsController < PapersController
         @vacation_request = current_user.vacation_requests.build
         @vacation_request[:year] = @nendo
         @vacation_request[:month] = @gatudo
-        if @vacation_request.save
-          @vacation_requests << @vacation_request
-          target_date = target_date.tomorrow
-        end
-        @vacation_requests = current_user.vacation_requests.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+        return [{ id: "#{@nendo}#{@gatudo}", value: "#{@nendo}年#{@gatudo}月度"}]
       end
-      create_years_collection current_user.vacation_requests, freezed
     end
 
     # 画面の対象年月が変更されたどうかを判定する
