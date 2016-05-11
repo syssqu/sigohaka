@@ -19,3 +19,4 @@ doc/
 .secret
 *.sass-cache*
 
+/lib/tasks/sample_data.rake
