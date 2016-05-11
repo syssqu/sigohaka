@@ -203,7 +203,7 @@ namespace :db do
     isumi.kinmu_patterns.create!(code: "3")
 
     ##############################
-    # 大谷
+    # 幸地
     ##############################
     isumi = User.create!(family_name: "幸地",
                  first_name: "隆",
