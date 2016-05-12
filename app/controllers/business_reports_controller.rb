@@ -18,11 +18,11 @@ class BusinessReportsController < PapersController
     unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
       create_kintai_header
     end
-    
+
 
     @years = create_years_collection view_context.target_user.business_reports # 対象年月リスト 要修正
     @users = create_users_collection                                      # 対象ユーザーリスト
-    
+
     set_freeze_info @business_reports
 
     set_status @business_reports
@@ -36,7 +36,7 @@ class BusinessReportsController < PapersController
   def print_proc
 
     setBasicInfo
-    
+
     @business_reports = view_context.target_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @date = @business_reports.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
@@ -120,7 +120,7 @@ class BusinessReportsController < PapersController
 
     # タイムラインへメッセージを投稿
     posting_check_proc("業務報告書")
-    
+
     init true
     create_business_reports
   end
@@ -157,7 +157,7 @@ class BusinessReportsController < PapersController
     @business_reports.update_all(["boss_approved = ?",false])
 
     temp_user = @business_reports.first.user
-    
+
     # タイムラインへメッセージを投稿
     posting_cancel_approve_proc("業務報告書", temp_user)
   end
@@ -177,7 +177,7 @@ class BusinessReportsController < PapersController
     logger.info("business_reports_controller::init")
 
     super(view_context.target_user.business_reports, freezed)
-    
+
     @business_reports = view_context.target_user.business_reports.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
 
@@ -190,13 +190,13 @@ class BusinessReportsController < PapersController
   def create_business_reports(freezed=false)
 
     logger.info("create_business_reports")
-    
+
     target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
 
     @business_report = view_context.target_user.business_reports.build
     @business_report[:year] = @nendo
     @business_report[:month] = @gatudo
-    
+
     if @business_report.save
       @business_reports << @business_report
       target_date = target_date.tomorrow
