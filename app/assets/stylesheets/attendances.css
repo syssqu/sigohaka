@@ -82,8 +82,8 @@ article.attendance_print table tr td .button {padding:4px !important;margin:0px 
 #dashed_line_kouzyo_time{position: absolute;border-right:1px dashed #000;width:25px;height:700px;top:196px;left:532px;@include box_sizing;}
 #dashed_line_work_time{position: absolute;border-right:1px dashed #000;width:25px;height:700px;top:196px;left:580px;@include box_sizing;}
 
-#solid_line_start_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:660px;top:196px;left:97px;@include box_sizing;}
-#solid_line_end_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:660px;top:196px;left:145px;@include box_sizing;}
+#solid_line_start_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:659px;top:197px;left:97px;@include box_sizing;}
+#solid_line_end_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:659px;top:197px;left:145px;@include box_sizing;}
 
 #solid_line_pstart_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:58px;top:938px;left:103px;@include box_sizing;}
 #solid_line_pend_time{position: absolute;border-right:1px dashed #393B32;width:25px;height:58px;top:938px;left:153px;@include box_sizing;}
