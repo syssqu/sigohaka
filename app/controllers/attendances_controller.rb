@@ -76,7 +76,7 @@ class AttendancesController < PapersController
   def edit
     temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null")
     @pattern = temp.collect do |k|
-      [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.id]
+      [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
     end
 
     @pattern << [" * 定例外勤務(休出 or シフト)", 4]
@@ -191,7 +191,7 @@ class AttendancesController < PapersController
       return
     end
 
-    temp_pattern = view_context.target_user.kinmu_patterns.find(params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
 
     Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
     Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
