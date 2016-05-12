@@ -25,8 +25,8 @@ article.attendance_print
           td.text-center width="60px;" 担当者
           td.text-center width="60px;" 担当者
           td.text-center width="60px;" 本人
-        tr height="48px;"
-          td 
+        tr height="60px;"
+          td
           td
           td = image_tag "#{target_user.imprint_id}.png", size: '40x40', class:"imprint"
   / 勤怠表
@@ -48,15 +48,15 @@ article.attendance_print
         th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 有休
         th.text-center rowspan="2" width="15px" style="vertical-align: text-top;" 出張
         th.text-center colspan="3" width="144px" 所定時間外勤務
-        th.text-center rowspan="2" width="48px" 
+        th.text-center rowspan="2" width="48px"
           |休憩
           br
           |時間
-        th.text-center rowspan="2" width="48px" 
+        th.text-center rowspan="2" width="48px"
           |控除
           br
           |時間
-        th.text-center rowspan="2" width="48px" 
+        th.text-center rowspan="2" width="48px"
           |実働
           br
           |時間
@@ -82,7 +82,7 @@ article.attendance_print
         - record_number += 1
         - if attendance.attendance_date.day == 1 and record_number != 17
           tr
-            td 
+            td
             td
             td
             td
@@ -189,7 +189,7 @@ article.attendance_print
             |&nbsp;
             = other.remarks[0,10] unless other.remarks.blank?
       tr
-        td.text-left colspan="3" &nbsp;社員No. 
+        td.text-left colspan="3" &nbsp;社員No.
         td.text-center colspan="2" = target_user.employee_no
         td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
         td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
@@ -216,7 +216,7 @@ article.attendance_print
         td.text-right rowspan=2 style="vertical-align: bottom;"
           = sprintf( "%.2f", @attendances.sum(:break_time) + @others.sum(:break_time))
           |&nbsp;
-        td.text-right rowspan=2 style="vertical-align: bottom;" 
+        td.text-right rowspan=2 style="vertical-align: bottom;"
           = sprintf( "%.2f", @attendances.sum(:kouzyo_time) + @others.sum(:kouzyo_time))
           |&nbsp;
         td.text-right rowspan=2 style="vertical-align: bottom;"
@@ -227,7 +227,7 @@ article.attendance_print
         td.text-left colspan="3" &nbsp;勤務日数
         td.text-center = @attendances.where("trim(pattern) is not null ").count
         td.text-center 合計
-        
+
   / 勤務パターン
   table.kinmu_pattern.left border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
     thead
