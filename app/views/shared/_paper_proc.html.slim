@@ -5,10 +5,11 @@
         .large-3.columns
             .attendances_hearder
               = link_to '◀', pre_path, class:"button tiny radius"
-              = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
+              / = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
+              = select_tag 'paper[years]', options_for_select(years, selected: session[:years])
               |&nbsp;&nbsp;
               = link_to '▶', next_path, class:"button tiny radius"
-            /.attendances_hearder = select_tag 'paper[years]', options_for_select(years, session[:years])
+
         - if can? :manage, current_user
           .large-2.columns
               label.left.inline 対象ユーザー
