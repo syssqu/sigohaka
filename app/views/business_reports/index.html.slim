@@ -22,7 +22,7 @@ article.business_report_index
 
         tbody
           - unless @freezed 
-            = link_to "編集", edit_business_report_path(business_report), class:"button tiny radius"
+            = link_to "新規作成/編集", edit_business_report_path(business_report), class:"button tiny radius"
 
           - unless @freezed
             = link_to "削除", business_report, data: {:confirm => '業務報告書を削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert"
