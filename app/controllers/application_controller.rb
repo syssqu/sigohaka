@@ -27,17 +27,17 @@ class ApplicationController < ActionController::Base
     temp = session[:years]
     years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     # years = Date.today
-    result.store("#{years.year}年#{years.month}月度", "#{years.year}#{years.month}")
+    result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
 
     5.times do
       years = years.last_month
-      result.store("#{years.year}年#{years.month}月度", "#{years.year}#{years.month}")
+      result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
     end
 
-    years2 = Date.today
-    5.times  do
-      years2 = years2.next_month
-      result.store("#{years2.year}年#{years2.month}月度", "#{years2.year}#{years2.month}")
+    years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    5.times do
+      years = years.next_month
+      result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
     end
 
     Hash[ result.sort ]
