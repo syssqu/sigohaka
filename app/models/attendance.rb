@@ -15,7 +15,7 @@ class Attendance < ActiveRecord::Base
   validates :user_id, presence: true
 
   validate :check_pattern_and_time, on: :update
-  
+
   def check_pattern_and_time
 
     # Rails.logger.debug("start_time blank is " + self.is_blank_start_time.to_s)
@@ -35,7 +35,7 @@ class Attendance < ActiveRecord::Base
   before_save { self.start_time = self.is_blank_start_time ? nil : start_time }
   before_save { self.end_time = self.is_blank_end_time ? nil : end_time }
   # before_save { self.work_time = self.work_time.nil ? 0 : self.work_time}
-  
+
 
   # 自動計算処理
   def calculate(pattern, attendance_start_time, attendance_end_time)
@@ -51,10 +51,10 @@ class Attendance < ActiveRecord::Base
     Rails.logger.debug("出勤分: " + start_min.to_s)
     Rails.logger.debug("退勤時: " + end_hour.to_s)
     Rails.logger.debug("退勤分: " + end_min.to_s)
-    
+
     self.work_time = get_work_time(pattern, start_hour, start_min, end_hour, end_min)
     self.over_time = get_over_time(pattern)
-    
+
     self.midnight_time = get_midnight_time(start_hour, start_min, end_hour, end_min)
     self.kouzyo_time = get_kouzyo_time(pattern)
 
@@ -74,14 +74,14 @@ class Attendance < ActiveRecord::Base
     self.yuukyuu = false
     self.syuttyou = false
     self.hankyuu = false
-    
+
     self.over_time = 0
     self.holiday_time = 0
     self.midnight_time = 0
     self.break_time = 0
     self.kouzyo_time = 0
     self.work_time = 0
-    
+
   end
 
   private
@@ -100,7 +100,7 @@ class Attendance < ActiveRecord::Base
       Rails.logger.debug("実働時間: " + result.to_s)
       result
     end
-  
+
     # 超過時間算出
     def get_over_time(pattern)
       result = self.work_time - pattern.work_time
@@ -110,7 +110,7 @@ class Attendance < ActiveRecord::Base
     # 深夜時間算出
     # とりあえず深夜開始時刻を22:00として計算
     def get_midnight_time(start_hour, start_min, end_hour, end_min)
-    
+
       result = (end_hour - 22) + ((end_min - 0) / 60)
       result > 0 ? result : 0
     end
@@ -126,7 +126,7 @@ class Attendance < ActiveRecord::Base
 
       Rails.logger.debug("遅刻判定処理: ");
       start_time = format("%02d", start_hour) + format("%02d", start_min)
-      
+
       result = pattern.start_time.strftime("%0H%0M").to_i - start_time.to_i
 
       Rails.logger.debug("パターン開始時刻: " + pattern.start_time.strftime("%0H%0M"));
@@ -141,9 +141,9 @@ class Attendance < ActiveRecord::Base
 
       Rails.logger.debug("半欠勤判定処理: ");
       start_time = format("%02d", start_hour) + format("%02d", start_min)
-      
+
       result = pattern.start_time.strftime("%_H%_M").to_i - start_time.to_i
-      
+
       ( self.work_time < pattern.work_time and self.work_time >= pattern.work_time / 2 and result.abs > 1000) ? true : false
     end
 end

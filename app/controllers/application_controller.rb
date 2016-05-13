@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -15,8 +16,31 @@ class ApplicationController < ActionController::Base
   def create_years_collection(objects, freezed=false)
     logger.debug("create_years_collection")
 
-    result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
-    result
+    # result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+    #
+    # if result.blank?
+    #   result = VacationRequest.find_by_sql(["select to_char(now(), 'YYYY') || to_char(now(), 'FMMM') as id, to_char(now(), 'YYYY') || '年' ||  to_char(now(), 'FMMM') || '月度' as value"])
+    # end
+
+    result = {}
+
+    temp = session[:years]
+    years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    # years = Date.today
+    result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
+
+    5.times do
+      years = years.last_month
+      result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
+    end
+
+    years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    5.times do
+      years = years.next_month
+      result.store("#{years.year}年#{years.month.to_s.rjust(2, '0')}月度", "#{years.year}#{years.month}")
+    end
+
+    Hash[ result.sort ]
   end
 
   #

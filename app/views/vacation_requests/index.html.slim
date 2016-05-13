@@ -5,7 +5,7 @@ article.vacation_request_index
         i.fi-clipboard-pencil
         |休暇届
 
-      = render partial: 'shared/paper_proc', locals: { target: "vacation_requests", years: @years, users: @users, kintai_header: @kintai_header, project: @project, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "vacation_requests", years: @years, users: @users, kintai_header: @kintai_header, project: @project, status: @status, pre_path: create_pre_month_vacation_requests_path, next_path: create_next_month_vacation_requests_path }
 
       table
         thead

@@ -6,7 +6,7 @@ article.attendance_index
         |勤務状況報告書
 
       / ヘッダー
-      = render partial: 'shared/paper_proc', locals: { target: "attendances", years: @years, users: @users, kintai_header: @kintai_header, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "attendances", years: @years, users: @users, kintai_header: @kintai_header, status: @status, pre_path: create_pre_month_attendances_path, next_path: create_next_month_attendances_path}
       / 勤怠表
       table border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
