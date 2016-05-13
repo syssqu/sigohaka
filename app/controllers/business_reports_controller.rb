@@ -50,30 +50,14 @@ class BusinessReportsController < PapersController
   def show
   end
 
-  #
-  # 新規作成画面
-  #
+
   def new
-    init
-    @business_report = view_context.target_user.business_reports.build
   end
 
-  #
-  # 新規登録処理
-  #
+
   def create
-    @business_report = view_context.target_user.business_reports.build(business_report_params)
-
-    respond_to do |format|
-      if @business_report.save
-        format.html { redirect_to business_reports_url, notice: '業務報告書を作成しました' }
-        format.json { render :show, status: :created, location: @business_report }
-      else
-        format.html { render :new }
-        format.json { render json: @business_report.errors, status: :unprocessable_entity }
-      end
-    end
   end
+
 
   #
   # 編集画面
