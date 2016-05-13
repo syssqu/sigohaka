@@ -14,12 +14,12 @@ class VacationRequestsController < PapersController
       create_kintai_header
     end
 
+    session[:years] = "#{@nendo}#{@gatudo}"
+
     @years = create_years_collection view_context.target_user.vacation_requests # 対象年月リスト 要修正
     @users = create_users_collection                                      # 対象ユーザーリスト
 
-    session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
-
     if !@vacation_requests.blank?
       @freezed = @vacation_requests.first.freezed
     end
