@@ -9,7 +9,9 @@ class TransportationExpressesController < PapersController
 
     init
 
-    create_transportation_expresses
+    unless @transportation_expresses.exists?
+      create_transportation_expresses
+    end
     # @transportation_expresses = TransportationExpress.all
     # @transportation_express=current_user.transportation_expresses.all
     # @project = current_user.projects.find_by(active: true)
@@ -18,14 +20,13 @@ class TransportationExpressesController < PapersController
       create_kintai_header
     end
 
+    session[:years] = "#{@nendo}#{@gatudo}"
+
     @years = create_years_collection view_context.target_user.transportation_expresses # 対象年月リスト 要修正
     @users = create_users_collection                                      # 対象ユーザーリスト
 
-    session[:years] = "#{@nendo}#{@gatudo}"
     @sum=0
     if !@transportation_expresses.blank?
-      @freezed = @transportation_expresses.first.freezed
-    else
       @freezed = @transportation_expresses.first.freezed
     end
     # create_years_collection current_user.transportation_expresses, @freezed
@@ -236,13 +237,14 @@ class TransportationExpressesController < PapersController
       @transportation_express = current_user.transportation_expresses.build
       @transportation_express[:year] = @nendo
       @transportation_express[:month] = @gatudo
-      if @transportation_express.save
-        @transportation_expresses << @transportation_express
-        target_date = target_date.tomorrow
-      end
-      @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+      # if @transportation_express.save
+      #   @transportation_expresses << @transportation_express
+      #   target_date = target_date.tomorrow
+      # end
+      # @transportation_expresses = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     end
-    create_years_collection current_user.transportation_expresses, freezed
+    # create_years_collection current_user.transportation_expresses, freezed
+    return [{ id: "#{@nendo}#{@gatudo}", value: "#{@nendo}年#{@gatudo}月度"}]
   end
 
   #   def init(freezed=false)
