@@ -36,7 +36,7 @@ hr
 .row
   .large-12.columns
     / 新規作成
-    - if target!="attendances" and target!="housing_allowances" and target!="summary_attendances"
+    - if target!="attendances" and target!="housing_allowances" and target!="summary_attendances" and target!="business_reports"
       = link_to raw("<i class='fi-print'></i>新規追加"),{controller: target, action: "new"},{class: "button tiny radius"}
     / 編集ボタン 住宅手当申請書は新規追加の必要が無い為
     - if target=="housing_allowances"
