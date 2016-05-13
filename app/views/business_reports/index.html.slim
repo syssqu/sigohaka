@@ -6,7 +6,7 @@ article.business_report_index
         |業務報告書
 
       / ヘッダー
-      = render partial: 'shared/paper_proc', locals: { target: "business_reports", years: @years, users: @users, kintai_header: @kintai_header, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "business_reports", years: @years, users: @users, kintai_header: @kintai_header, status: @status, pre_path: create_pre_month_business_reports_path, next_path: create_next_month_business_reports_path }
       
       - @business_reports.each do |business_report|
 

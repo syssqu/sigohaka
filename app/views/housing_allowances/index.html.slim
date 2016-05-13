@@ -5,7 +5,7 @@ article.housing_index
         i.fi-clipboard-pencil
         |住宅手当申請書
 
-      = render partial: 'shared/paper_proc', locals: { target: "housing_allowances", years: @years, project: @project, status: @status ,contents: @housing_allowances}
+      = render partial: 'shared/paper_proc', locals: { target: "housing_allowances", years: @years, project: @project, status: @status ,contents: @housing_allowances, pre_path: create_pre_month_housing_allowances_path, next_path: create_next_month_housing_allowances_path}
 
       / #housing_header
       /   table#housing_project

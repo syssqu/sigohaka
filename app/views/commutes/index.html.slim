@@ -10,7 +10,7 @@ article.commute_index
         i.fi-clipboard-pencil
         |現住所変更及び通勤届
 
-      = render partial: 'shared/paper_proc', locals: { target: "commutes", years: @years, project: @project, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "commutes", years: @years, project: @project, status: @status, pre_path: create_pre_month_commutes_path, next_path: create_next_month_commutes_path }
 
       table style="border:none;"
         tr align="left" valign="top"

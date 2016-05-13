@@ -9,7 +9,7 @@ article.transport_index
         i.fi-clipboard-pencil
         |交通費精算書
 
-      = render partial: 'shared/paper_proc', locals: { target: "transportation_expresses", years: @years, users: @users, kintai_header: @kintai_header, project: @project, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "transportation_expresses", years: @years, users: @users, kintai_header: @kintai_header, project: @project, status: @status, pre_path: create_pre_month_transportation_expresses_path, next_path: create_next_month_transportation_expresses_path }
       
       table.main width="1000"
         thead style="text-align:center;"

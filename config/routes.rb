@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
 
@@ -27,6 +29,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
 
@@ -46,6 +50,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
   resources :reasons
@@ -63,6 +69,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
   # match '/freeze_up', to:'transportation_expresses#freeze_up', via: :get
@@ -81,6 +89,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
 
@@ -93,6 +103,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
   resources :business_reports
@@ -114,6 +126,8 @@ Rails.application.routes.draw do
       get 'cancel_check'
       get 'approve'
       get 'cancel_approval'
+      get 'create_pre_month'
+      get 'create_next_month'
     end
   end
   match '/init_attendances', to:'attendances#init_attendances', via: :get

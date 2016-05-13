@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -16,6 +17,11 @@ class ApplicationController < ActionController::Base
     logger.debug("create_years_collection")
 
     result = objects.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id DESC")
+
+    if result.blank?
+      result = VacationRequest.find_by_sql(["select to_char(now(), 'YYYY') || to_char(now(), 'FMMM') as id, to_char(now(), 'YYYY') || '年' ||  to_char(now(), 'FMMM') || '月度' as value"])
+    end
+
     result
   end
 

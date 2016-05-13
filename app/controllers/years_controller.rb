@@ -5,6 +5,8 @@ class YearsController < ApplicationController
   # @param [Date] target_date 対象日付
   # @return [Integer] 対象日付の月度
   def YearsController.get_gatudo(target_date)
+    logger.debug("YearsController.get_gatudo")
+    logger.debug("#{target_date.month}/#{target_date.day}");
     gatudo = target_date.month
 
     if target_date.day > 15
@@ -13,7 +15,7 @@ class YearsController < ApplicationController
 
     gatudo
   end
-  
+
   # 対象年度を返す
   # @param [Date] target_date 対象日付
   # @return [Integer] 対象日付の年度
@@ -80,15 +82,15 @@ class YearsController < ApplicationController
       true
     end
   end
-  
+
   def YearsController.next_years(temp_years, freezed=false)
 
     if freezed
       temp = temp_years
-      
+
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.next_month
-      
+
       return "#{next_years.year}#{next_years.month}"
     end
 
@@ -104,7 +106,7 @@ class YearsController < ApplicationController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def YearsController.get_years(objects, temp_years, freezed=false)
-    
+
     unless temp_years.blank?
       temp = temp_years
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
