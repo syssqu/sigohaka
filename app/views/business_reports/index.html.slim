@@ -7,12 +7,12 @@ article.business_report_index
 
       / ヘッダー
       = render partial: 'shared/paper_proc', locals: { target: "business_reports", years: @years, users: @users, kintai_header: @kintai_header, status: @status }
-      
+
       - @business_reports.each do |business_report|
 
         / table
         /   tbody
-        /     - unless @freezed 
+        /     - unless @freezed
         /       = link_to edit_business_report_path(business_report), class:"button tiny radius" do
         /         i.fi-plus
 
@@ -21,14 +21,14 @@ article.business_report_index
         /         i.fi-x
 
         tbody
-          - unless @freezed 
-            = link_to "編集", edit_business_report_path(business_report), class:"button tiny radius"
+          - unless @freezed
+            = link_to "新規作成/編集", edit_business_report_path(business_report), class:"button tiny radius"
 
           - unless @freezed
             = link_to "削除", business_report, data: {:confirm => '業務報告書を削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert"
         br
         tbody
-          h7#business_report_headline 
+          h7#business_report_headline
            | 1. 業務状況
         table#business_report_text2 border="1"
           tbody
@@ -53,7 +53,7 @@ article.business_report_index
               td.cate 作業内容に対する目標または目的
               td.cate2.text-center 自己評価
               td.cate 評価理由
-            tr 
+            tr
               td #{business_report.self_purpose}
               td.text-center #{business_report.self_value}
               td #{business_report.self_reason}
@@ -68,21 +68,21 @@ article.business_report_index
             tr
               td #{business_report.user_situation}
         tbody
-          h7#business_report_headline 
+          h7#business_report_headline
            | 4. 会社への提案・要望事項
         table#business_report_text
           tbody
             tr
               td #{business_report.request}
         tbody
-          h7#business_report_headline 
+          h7#business_report_headline
            | 5. 今月度の反省および所感等
         table#business_report_text
           tbody
-            tr 
+            tr
               td #{business_report.reflection}
         tbody
-          h7#business_report_headline 
+          h7#business_report_headline
            | 6. 自己啓発等
         table#business_report_text2 border="1"
           tbody
@@ -93,12 +93,12 @@ article.business_report_index
           tbody
             tr
               td.cate.text-left 今月の実績
-            tr 
+            tr
               td #{business_report.develop_jisseki}
           tbody
             tr
         tbody
-          h7#business_report_headline 
+          h7#business_report_headline
            | 通信欄
         table#business_report_text
           tbody
