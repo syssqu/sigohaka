@@ -47,43 +47,43 @@
           label.left.inline.kubun
             = f.check_box :kekkin
             |欠勤
-            
+
           label.left.inline.kubun
             = f.check_box :hankekkin
             |半欠勤
-            
+
           label.left.inline.kubun
             = f.check_box :tikoku
             |遅刻
-            
+
           label.left.inline.kubun
             = f.check_box :soutai
             |早退
-            
+
           label.left.inline.kubun
             = f.check_box :gaisyutu
             |私外出
-            
+
           label.left.inline.kubun
             = f.check_box :tokkyuu
             |特休
-            
+
           label.left.inline.kubun
             = f.check_box :furikyuu
             |振休
-            
+
           label.left.inline.kubun
             = f.check_box :yuukyuu
             |有休
-              
+
           label.left.inline.kubun
             = f.check_box :hankyuu
             |半休
-              
+
           label.left.inline.kubun
             = f.check_box :syuttyou
             |出張
-            
+
 
       .row
         .large-2.small-4.columns
@@ -100,12 +100,12 @@
                 td 実働時間
             tbody
               tr
-                td = f.number_field :over_time, :class => 'text_field', :step => 0.25
-                td = f.number_field :holiday_time, :class => 'text_field', :step => 0.25
-                td = f.number_field :midnight_time, :class => 'text_field', :step => 0.25
-                td = f.number_field :break_time, :class => 'text_field', :step => 0.25
-                td = f.number_field :kouzyo_time, :class => 'text_field', :step => 0.25
-                td = f.number_field :work_time, :class => 'text_field', :step => 0.25
+                td = f.number_field :over_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :holiday_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :midnight_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :break_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :kouzyo_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :work_time, :class => 'text_field', :step => 0.25, :min => 0
       .row
         .large-2.small-4.columns
           label.left.inline 備考
