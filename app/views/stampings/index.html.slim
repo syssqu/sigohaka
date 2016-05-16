@@ -1,0 +1,16 @@
+article.stamping_index
+  .row
+    .large-6.large-centered.text-center.columns
+      .panel
+        = @user_name
+        br
+        br
+        #day
+        #time
+        .row
+          .large-12.columns
+            = link_to raw("<i class='fi-torso'></i>&nbsp;出勤"),{controller: :attendances, action: "new"},{class: "button radius"}
+            |&nbsp;&nbsp;&nbsp;&nbsp;
+            = link_to raw("<i class='fi-torso'></i>&nbsp;退勤"),{controller: :attendances, action: "new"},{class: "button radius"}
+script[language="javascript"]
+  |  window.onload=function(){ setInterval(function(){ var d = new Date(); var m = "00"+d.getMinutes(); m = m.substr(m.length-2,2); var s = "00"+d.getSeconds(); s = s.substr(s.length-2,2); var str_time=d.getHours().toString()+":"+m+":"+s; var wNames = ['日', '月', '火', '水', '木', '金', '土']; d.setMonth(4); d.setDate(16); var str_day = (d.getMonth()+1).toString()+"月"+d.getDate().toString()+"日"+" ("+wNames[d.getDay()]+")"; $("#day").html(str_day); $("#time").html(str_time); },10); } 

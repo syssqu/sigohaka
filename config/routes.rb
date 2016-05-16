@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'stampings/index'
+
   get 'calendars/index'
 
   get 'kintai_header/edit/:id', to: 'kintai_header#edit'

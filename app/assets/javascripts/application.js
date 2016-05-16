@@ -18,8 +18,7 @@
 
 $(function(){ $(document).foundation(); });
 
-
-/** 
+/**
  * 指定されたIDのセレクトボックスにおいて、インデックスではなくて値によってオプションを選択する
  * @param formSelectId 対象のセレクトボックスのID
  *        itemValue 選択する値
@@ -28,11 +27,11 @@ $(function(){ $(document).foundation(); });
 function selectedChange(formSelectId, itemValue, is_blank){
 
     var target = is_blank ? "" : ("0"+itemValue).slice(-2);
-    
+
     var objSelect = document.getElementById(formSelectId);
     var m = objSelect.length;
     var i = 0;
-    
+
     for(i=0; m>i; i++){
         if(objSelect.options[i].value == target){
             objSelect.options[i].selected = true;

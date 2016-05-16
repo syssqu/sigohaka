@@ -1,0 +1,2 @@
+module StampingsHelper
+end

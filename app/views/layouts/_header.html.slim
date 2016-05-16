@@ -74,8 +74,11 @@
   .large-12.columns
     .icon-bar.ten-up
       = link_to root_path, class:"item" do
-        = image_tag "icons/3-5.png", size: '40x40'
+        = image_tag "icons/1-1.png", size: '40x40'
         label ホーム
+      = link_to stampings_index_path, class:"item" do
+        = image_tag "icons/3-5.png", size: '40x40'
+        label 打刻
       = link_to attendances_path, class:"item" do
         = image_tag "icons/2-4.png", size: '40x40'
         label 勤怠
@@ -97,9 +100,6 @@
       = link_to edit_user_registration_path(target: "profile"), class:"item" do
         = image_tag "icons/2-14.png", size: '40x40'
         label プロフィール
-      = link_to licenses_path, class:"item" do
-        = image_tag "icons/3-6.png", size: '40x40'
-        label 資格
       = link_to help_path, class:"item" do
         = image_tag "icons/1-7.png", size: '40x40'
         label ヘルプ
