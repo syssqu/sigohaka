@@ -26,15 +26,15 @@ article.attendance_index
             th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 有休
             th.text-center rowspan="2" width="20px" style="vertical-align: text-top;" 出張
             th.text-center colspan="3" width="140px" 所定時間外勤務
-            th.text-center rowspan="2" width="50px" 
+            th.text-center rowspan="2" width="50px"
               |休憩
               br
               |時間
-            th.text-center rowspan="2" width="50px" 
+            th.text-center rowspan="2" width="50px"
               |控除
               br
               |時間
-            th.text-center rowspan="2" width="50px" 
+            th.text-center rowspan="2" width="50px"
               |実働
               br
               |時間
@@ -61,7 +61,7 @@ article.attendance_index
             - record_number += 1
             - if (attendance.attendance_date.day == 1) and (record_number < 17)
               tr
-                td 
+                td
                 td
                 td
                 td
@@ -162,7 +162,7 @@ article.attendance_index
                   = link_to edit_attendance_other_path(other), class:"button tiny radius" do
                     i.fi-plus
           tr
-            td.text-center colspan="3" 社員No. 
+            td.text-center colspan="3" 社員No.
             td.text-center colspan="2" = target_user.employee_no
             td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(byouketu: true).count
             td.text-center rowspan=2 style="vertical-align: bottom;" = @attendances.where(kekkin: true).count
@@ -190,7 +190,7 @@ article.attendance_index
             td.text-center = @attendances.where("trim(pattern) is not null ").count
             td.text-center 合計
 
-      / 勤務パターン         
+      / 勤務パターン
       table.kinmu_pattern border="1" cellspacing="0" cellpadding="5" bordercolor="#000000" style="border-collapse: collapse;"
         thead
           tr

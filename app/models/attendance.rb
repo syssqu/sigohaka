@@ -6,6 +6,13 @@ class Attendance < ActiveRecord::Base
   attr_accessor :is_blank_start_time
   attr_accessor :is_blank_end_time
 
+  attr_accessor :is_negative_over_time
+  attr_accessor :is_negative_holiday_time
+  attr_accessor :is_negative_midnight_time
+  attr_accessor :is_negative_break_time
+  attr_accessor :is_negative_kouzyo_time
+  attr_accessor :is_negative_work_time
+
   # default_scope -> { order('attendance_date') }
 
   # チェック
@@ -29,7 +36,34 @@ class Attendance < ActiveRecord::Base
     elsif (pattern.blank? and (! self.is_blank_start_time or ! self.is_blank_end_time)) or (! pattern.blank? and (self.is_blank_start_time and self.is_blank_end_time))
       errors.add(:start_time, '勤務パターンと出退勤時刻はセットで入力して下さい。')
     end
+
+
+    if self.is_negative_over_time
+      errors[:base] << "各種時間にマイナスの値を入力することはできません."
+    end
+    if self.is_negative_holiday_time
+      errors[:base] << "休日時間にマイナスの値を入力することはできません。"
+    end
+    if self.is_negative_midnight_time
+      errors[:base] << "深夜時間にマイナスの値を入力することはできません。 "
+    end
+    if self.is_negative_break_time
+      errors[:base] << "休憩時間にマイナスの値を入力することはできません。"
+    end
+    if self.is_negative_kouzyo_time
+      errors[:base] << "控除時間にマイナスの値を入力することはできません。"
+    end
+    if self.is_negative_work_time
+      errors[:base] << "実働時間にマイナスの値を入力することはできません。"
+    end
+
+
+
+
   end
+
+
+
 
   # ""の場合に00:00に変換されてしまうのでnilに更新しておく
   before_save { self.start_time = self.is_blank_start_time ? nil : start_time }
