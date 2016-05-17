@@ -11,3 +11,72 @@
 
    article.vacation_request_edit input{margin-bottom:0px !important;}
    article.vacation_request_edit .button{margin-bottom:0px;}
+
+
+
+/* =============================================================================
+ 休暇届(印刷)
+  ========================================================================== */
+article.vacation_request_print {table-layout: fixed ;word-wrap: break-word;}
+
+article.vacation_request_print table{
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0px;border:none;
+	background-color: #FFF;
+	margin-left: 25px;
+	margin-top: 90px;
+}
+
+/*宛て*/
+article.vacation_request_print .ate td {border:none; padding-left: 5px; font-size: 19px;border-bottom: solid 1px;}
+
+/*タイトル*/
+article.vacation_request_print .title {height: 40px;margin-top: 0px;margin-left: 175px;border-bottom: dashed 3px #000; text-align: center; background: #00FFFF;}
+article.vacation_request_print .title td {vertical-align: bottom;padding-left: 40px;width: 230px;border:none;font-size: 29px;letter-spacing: 30px;}
+
+/*印鑑*/
+article.vacation_request_print .inkan {margin-top: -133px;margin-left: 455px;}
+article.vacation_request_print .inkan {width: 225px;border: 1px solid; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .inkan td {border: 1px solid;width: 75px; background-color:#fff;}
+article.vacation_request_print .inkan #empty {height: 75px;}
+
+/*申請、承認*/
+article.vacation_request_print .reqper {margin-top: -10px;}
+article.vacation_request_print .reqper {margin-left: 470px;background-color:#fff;}
+
+/*所属*/
+article.vacation_request_print .syozoku {margin-top: -70px;}
+article.vacation_request_print .syozoku #where {height: 70px; border: 1px solid; width: 120px; background-color: #fff; letter-spacing: 1.8em; text-align: right;}
+article.vacation_request_print .syozoku #syo {height: 70px; border: 1px solid; width: 300px; background-color: #fff;}
+
+/*名前、期間*/
+article.vacation_request_print .meiki {;margin-top: -21px;}
+article.vacation_request_print .meiki #na { letter-spacing: 1.8em; text-align: right; height: 80px; border: 1px solid; width: 120px; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .meiki #mei {height: 80px; border: 1px solid; width: 240px; border-collapse: collapse; background-color:#fff;}
+
+article.vacation_request_print .meiki #ki { letter-spacing: 0.3em; text-align: right; height: 80px; border: 1px solid; width: 60px; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .meiki #kikan {text-align: center;height: 80px; border: 1px solid; width: 235px; border-collapse: collapse; background-color:#fff;}
+
+/*区別*/
+article.vacation_request_print .cate {margin-top: 25px;}
+article.vacation_request_print .cate #ku { letter-spacing: 1.8em; text-align: right; height: 80px; border: 1px solid; width: 120px; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .cate #category {height: 80px; border: 1px solid; width: 535px; border-collapse: collapse; background-color:#fff;}
+
+/*事由*/
+article.vacation_request_print .why {margin-top: -21px;}
+article.vacation_request_print .why #riyu { letter-spacing: 1.8em; text-align: right; height: 80px; border: 1px solid; width: 120px; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .why #reason {height: 80px; border: 1px solid; width: 535px; border-collapse: collapse; background-color:#fff;}
+
+/*備考*/
+article.vacation_request_print .biko {margin-top: -21px;}
+article.vacation_request_print .biko #memo { letter-spacing: 1.8em; text-align: right; height: 80px; border: 1px solid; width: 120px; border-collapse: collapse; background-color:#fff;}
+article.vacation_request_print .biko #note {height: 80px; border: 1px solid; width: 535px; border-collapse: collapse; background-color:#fff;}
+
+/*フッター*/
+article.vacation_request_print .fotter {margin-top: 40px;}
+article.vacation_request_print .fotter td {border:none; padding-left: 430px;color: #00F;}
+
+/*区別チェック*/
+article.vacation_request_print .cate span {color: #000;font-size: 14px;}
+article.vacation_request_print .cate span#ok {font-size: 14px; border: solid 2px; padding: 2px; border-radius: 40px !important;}

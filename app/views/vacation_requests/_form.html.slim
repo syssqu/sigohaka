@@ -16,16 +16,19 @@
           label.left.inline いつから
         .large-7.small-7.columns.end
           = raw sprintf(f.date_select(:start_date, :use_month_numbers=>'ture', :date_separator=>'%s'),'年 ', '月 ') + '日'
+
       .row
         .large-1.small-1.columns
           label.left.inline いつまで
         .large-7.small-7.columns.end
           = raw sprintf(f.date_select(:end_date, :use_month_numbers=>'ture', :date_separator=>'%s'),'年 ', '月 ') + '日'
-      .row
-        .large-1.small-1.columns
-          label.left.inline 期間
-        .large-1.small-1.columns.end
-          = f.number_field(:term, in: 1..70)
+
+      /.row
+      /  .large-1.small-1.columns
+      /    label.left.inline 期間
+      /  .large-1.small-1.columns.end
+      /    = f.number_fild(:term, in: 1..70)
+
       .row
         .large-1.small-1.columns
           label.left.inline 区別

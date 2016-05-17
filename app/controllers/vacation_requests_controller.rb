@@ -65,6 +65,8 @@ class VacationRequestsController < PapersController
   def create
     @vacation_request = current_user.vacation_requests.build(vacation_request_params)
 
+    term_input
+
     respond_to do |format|
       if @vacation_request.save
         format.html { redirect_to vacation_requests_url, notice: '休暇届を作成しました' }
@@ -81,6 +83,9 @@ class VacationRequestsController < PapersController
   def update
     respond_to do |format|
       if @vacation_request.update(vacation_request_params)
+
+        term_input
+
         format.html { redirect_to vacation_requests_url, notice: '休暇届を更新しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
@@ -272,6 +277,13 @@ class VacationRequestsController < PapersController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vacation_request_params
       params.require(:vacation_request).permit(:user_id, :start_date, :end_date, :term, :category, :reason, :note, :year, :month)
+    end
+
+    ##休暇期間を入力##
+    def term_input
+      tmp = (@vacation_request.end_date - @vacation_request.start_date).to_i
+      @vacation_request.term = tmp + 1
+      @vacation_request.save
     end
 
 end

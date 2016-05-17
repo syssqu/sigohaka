@@ -26,7 +26,7 @@ article.vacation_request_index
               / td = vacation_request.user_id
               td = vacation_request.start_date
               td = vacation_request.end_date
-              td = vacation_request.term
+              td = vacation_request.term.to_s + ' 日間'
 
               - if !@vacation_requests.nil?
                 - if vacation_request.category == "yuukyu" && !@vacation_requests.nil?
