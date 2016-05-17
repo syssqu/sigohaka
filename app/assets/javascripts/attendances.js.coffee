@@ -76,6 +76,7 @@ $("#data_clear").click ->
   $( "#attendance_tokkyuu" ).prop( "checked", false );
   $( "#attendance_furikyuu" ).prop( "checked", false );
   $( "#attendance_yuukyuu" ).prop( "checked", false );
+  $( "#attendance_hankyuu" ).prop( "checked", false );
   $( "#attendance_syuttyou" ).prop( "checked", false );
 
   $( '#attendance_over_time' ).val("0.00");
@@ -84,3 +85,5 @@ $("#data_clear").click ->
   $( '#attendance_break_time' ).val("0.00");
   $( '#attendance_kouzyo_time' ).val("0.00");
   $( '#attendance_work_time' ).val("0.00");
+
+  $( '#attendance_remarks' ).val("");
