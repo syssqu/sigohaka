@@ -94,7 +94,7 @@ class AttendancesController < PapersController
     @attendance.is_negative_midnight_time = false
     @attendance.is_negative_break_time = false
     @attendance.is_negative_kouzyo_time = false
-    @attendance.is_negative_over_time = false
+    @attendance.is_negative_work_time = false
 
     if params[:attendance]['start_time'].blank?
       @attendance.is_blank_start_time = true

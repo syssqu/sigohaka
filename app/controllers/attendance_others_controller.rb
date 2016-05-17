@@ -37,6 +37,35 @@ class AttendanceOthersController < ApplicationController
   # PATCH/PUT /attendance_others/1
   # PATCH/PUT /attendance_others/1.json
   def update
+
+    # 入力チェック
+    @attendance_other.is_negative_other_over_time = false
+    @attendance_other.is_negative_other_holiday_time = false
+    @attendance_other.is_negative_other_midnight_time = false
+    @attendance_other.is_negative_other_break_time = false
+    @attendance_other.is_negative_other_kouzyo_time = false
+    @attendance_other.is_negative_other_work_time = false
+
+    if params[:attendance_other]['over_time'].to_d < 0
+      @attendance_other.is_negative_other_over_time = true
+    end
+    if params[:attendance_other]['holiday_time'].to_d < 0
+      @attendance_other.is_negative_other_holiday_time = true
+    end
+    if params[:attendance_other]['midnight_time'].to_d < 0
+      @attendance_other.is_negative_other_midnight_time = true
+    end
+    if params[:attendance_other]['break_time'].to_d < 0
+      @attendance_other.is_negative_other_break_time = true
+    end
+    if params[:attendance_other]['kouzyo_time'].to_d < 0
+      @attendance_other.is_negative_other_kouzyo_time = true
+    end
+    if params[:attendance_other]['work_time'].to_d < 0
+      @attendance_other.is_negative_other_work_time = true
+    end
+
+
     if @attendance_other.update(attendance_other_params)
       redirect_to attendances_path, notice: '更新しました。'
     else

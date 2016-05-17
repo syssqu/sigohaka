@@ -37,9 +37,8 @@ class Attendance < ActiveRecord::Base
       errors.add(:start_time, '勤務パターンと出退勤時刻はセットで入力して下さい。')
     end
 
-
     if self.is_negative_over_time
-      errors[:base] << "各種時間にマイナスの値を入力することはできません."
+      errors[:base] << "超過時間にマイナスの値を入力することはできません."
     end
     if self.is_negative_holiday_time
       errors[:base] << "休日時間にマイナスの値を入力することはできません。"
@@ -56,9 +55,6 @@ class Attendance < ActiveRecord::Base
     if self.is_negative_work_time
       errors[:base] << "実働時間にマイナスの値を入力することはできません。"
     end
-
-
-
 
   end
 
