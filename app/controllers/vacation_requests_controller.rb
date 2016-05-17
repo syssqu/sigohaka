@@ -47,7 +47,7 @@ class VacationRequestsController < PapersController
   # GET /vacation_requests/1
   # GET /vacation_requests/1.json
   def show
-    @vacation_requests = current_user.vacation_requests.find(params[:id])
+    ##照会ページには遷移しないようにしました##
   end
 
   # GET /vacation_requests/new
@@ -65,10 +65,14 @@ class VacationRequestsController < PapersController
   def create
     @vacation_request = current_user.vacation_requests.build(vacation_request_params)
 
-    if @vacation_request.save
-      redirect_to @vacation_request, notice: '休暇届を作成しました'
-    else
-      render :new
+    respond_to do |format|
+      if @vacation_request.save
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を作成しました' }
+        format.json { render :show, status: :ok, location: @vacation_request }
+      else
+        format.html { render :new }
+        format.json { render json: @vacation_request.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -77,7 +81,7 @@ class VacationRequestsController < PapersController
   def update
     respond_to do |format|
       if @vacation_request.update(vacation_request_params)
-        format.html { redirect_to @vacation_request, notice: '休暇届を更新しました' }
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を更新しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
         format.html { render :edit }

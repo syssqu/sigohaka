@@ -10,49 +10,50 @@
 
       = f.hidden_field :year,value:@nendo if @vacation_request.year.nil?
       = f.hidden_field :month,value:@gatudo if @vacation_request.month.nil?
-              
+
       .row
-        .large-2.small-4.columns
+        .large-1.small-1.columns
           label.left.inline いつから
-        .large-5.large-pull-5.small-8.columns
-          = f.date_select :start_date
+        .large-7.small-7.columns.end
+          = raw sprintf(f.date_select(:start_date, :use_month_numbers=>'ture', :date_separator=>'%s'),'年 ', '月 ') + '日'
       .row
-        .large-2.small-4.columns
+        .large-1.small-1.columns
           label.left.inline いつまで
-        .large-5.large-pull-5.small-8.columns
-          = f.date_select :end_date
+        .large-7.small-7.columns.end
+          = raw sprintf(f.date_select(:end_date, :use_month_numbers=>'ture', :date_separator=>'%s'),'年 ', '月 ') + '日'
       .row
-        .large-2.small-4.columns
+        .large-1.small-1.columns
           label.left.inline 期間
-        .large-5.large-pull-5.small-8.columns
-          = f.number_field :term
+        .large-1.small-1.columns.end
+          = f.number_field(:term, in: 1..70)
       .row
-        .large-2.small-4.columns
-          label.left.inline カテゴリー
-        .large-5.large-pull-5.small-8.columns
-          = f.text_field :category
-          
-        / input name="category" type="checkbox" value="yuu" 
-        /   | ①有給休暇
-        / input name="category" type="checkbox" value="hann" 
-        /   | ②半日有給休暇
-        / input name="category" type="checkbox" value="furi" 
-        /   | ③振替休暇
-        / input name="category" type="checkbox" value="kekkin"
-        /   | ④欠勤
+        .large-1.small-1.columns
+          label.left.inline 区別
+        .large-11.small-11.columns.end
+          - choices = options_for_select([['有給','yuukyu'], ['半日','hanniti'],
+                                          ['振替','hurikae'], ['欠勤','kekkin'],
+                                          ['特別（夏季）','kaki'], ['特別（赴任）','hunin'],
+                                          ['特別（異動）','idou'], ['特別（公務）','koumu'],
+                                          ['特別（結婚）','kekkon'], ['特別（生理）','seiri'],
+                                          ['特別（出産）','syussan'], ['特別（産休）','sankyuu'],
+                                          ['特別（忌引）','kibiki'], ['特別（災害）','saigai'],
+                                          ['その他','sonota']])
+
+          = f.select :category, choices
+          | &ensp;※その他を選択した場合は事由に詳細を記載してください
+
       .row
-        .large-2.small-4.columns
+        .large-1.small-1.columns
           label.left.inline 事由
-        .large-5.large-pull-5.small-8.columns
+        .large-5.small-5.columns.end
           = f.text_field :reason
       .row
-        .large-2.small-4.columns
+        .large-1.small-1.columns
           label.left.inline 備考
-        .large-5.large-pull-5.small-8.columns
+        .large-5.small-5.columns.end
           = f.text_field :note
-          
+
       .row
         .large-3.large-centered.columns
           = f.submit '登録', class: "button radius"
-          = link_to "戻る", vacation_requests_path,　class: "button radius gray"
-          
+          = link_to '戻る', vacation_requests_path, class: "button radius gray"
