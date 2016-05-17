@@ -79,7 +79,7 @@ class AttendancesController < PapersController
       [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
     end
 
-    @pattern << [" * 定例外勤務(休出 or シフト)", "※"]
+    @pattern << [" * 定例外勤務(休出 or シフト)", "※"] 
   end
 
   #
