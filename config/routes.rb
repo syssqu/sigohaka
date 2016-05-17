@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'stampings/index'
+  post 'stampings/go_to_work'
 
   get 'calendars/index'
 
