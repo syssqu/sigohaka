@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428055058) do
+ActiveRecord::Schema.define(version: 20160517062356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20160428055058) do
     t.boolean  "self_approved",                                     default: false
     t.boolean  "boss_approved",                                     default: false
     t.boolean  "freezed",                                           default: false
+    t.boolean  "go_to_work",                                        default: false, null: false
+    t.boolean  "leave_work",                                        default: false, null: false
   end
 
   add_index "attendances", ["user_id", "year", "month", "day"], name: "index_attendances_on_user_id_and_year_and_month_and_day", using: :btree
