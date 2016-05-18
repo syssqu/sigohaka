@@ -12,13 +12,16 @@
 
         - if can? :manage, current_user
           .large-2.columns
-              label.left.inline 対象ユーザー
-              .attendances_hearder = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
+              .attendances_hearder
+                tbody
+                  tr
+                    td 対象ユーザー
+                    td = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
           .large-7.columns
         - else
           .large-9.columns
-          
-          
+
+
 
 .row
   .large-12.columns
