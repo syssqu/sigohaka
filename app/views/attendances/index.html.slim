@@ -187,7 +187,7 @@ article.attendance_index
             td.text-center rowspan=2
           tr
             td.text-center colspan="3" 勤務日数
-            td.text-center = @attendances.where("trim(pattern) is not null ").count
+            td.text-center = @attendances.where("trim(pattern) != '' ").count
             td.text-center 合計
 
       / 勤務パターン
