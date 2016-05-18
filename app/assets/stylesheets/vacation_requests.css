@@ -1,16 +1,25 @@
+#paper_header{width:755px;}
+
+/*article.vacation_request_index #paper_header table#paper_project {border-style:none !important;width:300px;margin-right:60px;margin-top:10px;}
+article.vacation_request_index #paper_header table#paper_project table {border:none;}
+article.vacation_request_index #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
+article.vacation_request_index #paper_header table#paper_project td strong{color:#6E6E6E;}
+article.vacation_request_index #paper_header table#paper_project{margin-bottom:0px;}*/
+
+
 /* =============================================================================
    休暇(編集)
    ========================================================================== */
-   article.vacation_request_edit select {display: inline-block;width:10%;}
-   article.vacation_request_edit select#vacation_requestation_express_koutu_date_1i{display: inline-block;width: 20%;}
-   article.vacation_request_edit select#vacation_request_pattern {display: inline-block;width:35%;}
-   article.vacation_request_edit .kubun{padding-right:10px;}
-   article.vacation_request_edit table#hours{border:0px;}
-   article.vacation_request_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
-   article.vacation_request_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
+article.vacation_request_edit select {display: inline-block;width:10%;}
+article.vacation_request_edit select#vacation_requestation_express_koutu_date_1i{display: inline-block;width: 20%;}
+article.vacation_request_edit select#vacation_request_pattern {display: inline-block;width:35%;}
+article.vacation_request_edit .kubun{padding-right:10px;}
+article.vacation_request_edit table#hours{border:0px;}
+article.vacation_request_edit table#hours thead tr td {padding:0px !important;margin:0px !important;background-color:white;}
+article.vacation_request_edit table#hours tbody tr td {padding:0px !important;margin:0px !important;}
 
-   article.vacation_request_edit input{margin-bottom:0px !important;}
-   article.vacation_request_edit .button{margin-bottom:0px;}
+article.vacation_request_edit input{margin-bottom:0px !important;}
+article.vacation_request_edit .button{margin-bottom:0px;}
 
 
 
@@ -76,6 +85,7 @@ article.vacation_request_print .biko #note {height: 80px; border: 1px solid; wid
 /*フッター*/
 article.vacation_request_print .fotter {margin-top: 40px;}
 article.vacation_request_print .fotter td {border:none; padding-left: 430px;color: #00F;}
+article.vacation_request_print .fotter {page-break-after: always;}
 
 /*区別チェック*/
 article.vacation_request_print .cate span {color: #000;font-size: 14px;}

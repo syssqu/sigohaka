@@ -72,7 +72,9 @@ class VacationRequestsController < PapersController
         format.html { redirect_to vacation_requests_url, notice: '休暇届を作成しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
-        format.html { render :new }
+        ## 1度エラーが出た後、新規登録した時に、indexのリストに表示されないバグを暫定的に対応 ##
+        format.html { redirect_to new_vacation_request_path, notice: '正しい値を入力してください.' }
+        ## format.html { render :new }
         format.json { render json: @vacation_request.errors, status: :unprocessable_entity }
       end
     end

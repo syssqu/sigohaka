@@ -1,22 +1,23 @@
-article.vacation_request_print
-  #vacation_request_header.clearfix
-    table.ate
-      tr
-        td 総務人事部 殿
-    table.title
-      tr
-        td 休暇届
-    table.inkan
-      tr
-        td.text-center 人&nbsp;&nbsp;事
-        td.text-center 所属長
-        td.text-center 本&nbsp;&nbsp;人
-      tr#empty
-        td
-        td
-        td.info = image_tag "#{current_user.imprint_id}.png", size: '60x60', class:"imprint"
-
 - @vacation_requests.each do |vacation_request|
+
+  article.vacation_request_print
+    #vacation_request_header.clearfix
+      table.ate
+        tr
+          td 総務人事部 殿
+      table.title
+        tr
+          td 休暇届
+      table.inkan
+        tr
+          td.text-center 人&nbsp;&nbsp;事
+          td.text-center 所属長
+          td.text-center 本&nbsp;&nbsp;人
+        tr#empty
+          td
+          td
+          td.info = image_tag "#{current_user.imprint_id}.png", size: '60x60', class:"imprint"
+
   article.vacation_request_print
     table.reqper
       td 申 請 　平成#{@nendo-1988}#{ @date.strftime("%t年%t%_m月%t%_d日")}
