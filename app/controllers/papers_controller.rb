@@ -15,7 +15,7 @@ class PapersController < ApplicationController
     if YearsController.changed_years_list?(params[:paper])
       session[:years] = params[:paper][:years]
     end
-    
+
     # 対象ユーザー
     session[:target_user] ||= current_user.id
     if YearsController.changed_users_list?(params[:user])
@@ -23,11 +23,13 @@ class PapersController < ApplicationController
     end
 
     @target_years = get_years(target, freezed)
-    
+
     @nendo = YearsController.get_target_year(@target_years)
     @gatudo = YearsController.get_gatudo(@target_years)
     @project = get_project
-    
+
+    logger.debug("対象年月：　#{@nendo}#{@gatudo}");
+
     session[:years] ||= "#{@nendo}#{@gatudo}"
   end
 
@@ -37,7 +39,7 @@ class PapersController < ApplicationController
   def set_freeze_info(target)
 
     logger.debug("set_freeze_info")
-    
+
     if view_context.be_self target.first
       @freezed = target.first.self_approved or target.first.boss_approved
     else
@@ -62,7 +64,7 @@ class PapersController < ApplicationController
   #
   def print
     print_proc
-    
+
     respond_to do |format|
       format.html { redirect_to :action=> 'print',format: :pdf, debug: 1}
       format.pdf do
@@ -91,7 +93,7 @@ class PapersController < ApplicationController
   # 締め処理
   #
   def freeze_up
-    
+
     ActiveRecord::Base.transaction do
       freeze_up_proc
       # init
@@ -102,7 +104,7 @@ class PapersController < ApplicationController
     end
 
     redirect_to ({action: :index_freeze}), :notice => '締め処理を完了しました。'
-    
+
   rescue => e
     render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
   end
@@ -161,7 +163,7 @@ class PapersController < ApplicationController
     end
 
     redirect_to ({action: :index}), :notice => '本人確認を行いました。'
-    
+
   rescue => e
     render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
   end
@@ -178,14 +180,35 @@ class PapersController < ApplicationController
 
   rescue => e
     render text: "以下のエラーが発生したため処理を中断しました<br><strong>エラー内容：" + e.message + "</strong><br>"
-    
+
+  end
+
+  def create_pre_month
+
+    temp = session[:years]
+    years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    years = years.months_ago(1)
+
+    session[:years] = "#{years.year}#{years.month}"
+
+    redirect_to action: :index
+  end
+
+  def create_next_month
+    temp = session[:years]
+    years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
+    years = years.months_since(1)
+
+    session[:years] = "#{years.year}#{years.month}"
+
+    redirect_to action: :index
   end
 
   protected
 
   def print_proc
   end
-  
+
   def freeze_up_proc
   end
 
@@ -194,16 +217,16 @@ class PapersController < ApplicationController
 
   def approve_proc
   end
-  
+
   def cancel_approval_proc
   end
-  
+
   def check_proc
   end
 
   def cancel_check_proc
   end
-  
+
   #
   # 対象年月のセレクトボックス内に含めるデータを作成する
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
@@ -214,10 +237,10 @@ class PapersController < ApplicationController
 
   #   if freezed
   #     temp = session[:years]
-      
+
   #     years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
   #     next_years = years.next_month
-      
+
   #     session[:years] = "#{next_years.year}#{next_years.month}"
   #   end
   # end
@@ -231,16 +254,21 @@ class PapersController < ApplicationController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def get_years(objects, freezed=false)
-    
+
     unless session[:years].nil?
+      logger.debug("here1: #{session[:years]}")
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else
       temp = objects.select('year, month').where("freezed = ? and self_approved = ? and boss_approved = ?", false, false, false).group('year, month').order('year, month')
       if temp.exists?
+        logger.debug("here2")
         years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
       else
+        logger.debug("here3")
         years = Date.today
+
+        logger.debug(years.to_s)
       end
     end
 
@@ -263,7 +291,7 @@ class PapersController < ApplicationController
     # マネージャーのタイムラインへ上長承認依頼を表示させる
     temp_user = getManager
     @time_line = temp_user[0].time_lines.build
-    
+
     @time_line[:title] = "[勤怠管理] 上長承認依頼"
     @time_line[:contents] = current_user.family_name + " " + current_user.first_name + "さんが" + target + "の本人確認を完了しました。"
     @time_line[:create_user_id] = current_user.id
@@ -322,7 +350,7 @@ class PapersController < ApplicationController
     @time_line[:create_user_id] = current_user.id
     @time_line.save!
   end
-  
+
   #
   # 勤怠ヘッダーの作成
   #
@@ -333,7 +361,7 @@ class PapersController < ApplicationController
     if view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
       return
     end
-    
+
     # ヘッダー情報(ユーザー名、所属、プロジェクト名)の登録
     kintai_header = view_context.target_user.kintai_headers.build
     kintai_header[:year] = @nendo
@@ -343,7 +371,7 @@ class PapersController < ApplicationController
 
     @project = get_project
     kintai_header[:project_name] = @project.summary unless @project.blank?
-    
+
     unless kintai_header.save
       logger.debug("勤怠ヘッダ登録処理エラー")
     end

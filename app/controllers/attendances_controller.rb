@@ -79,7 +79,7 @@ class AttendancesController < PapersController
       [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
     end
 
-    @pattern << [" * 定例外勤務(休出 or シフト)", 4]
+    @pattern << [" * 定例外勤務(休出 or シフト)", "※"]
   end
 
   #
@@ -89,6 +89,13 @@ class AttendancesController < PapersController
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
+    @attendance.is_negative_over_time = false
+    @attendance.is_negative_holiday_time = false
+    @attendance.is_negative_midnight_time = false
+    @attendance.is_negative_break_time = false
+    @attendance.is_negative_kouzyo_time = false
+    @attendance.is_negative_work_time = false
+
     if params[:attendance]['start_time'].blank?
       @attendance.is_blank_start_time = true
     end
@@ -96,6 +103,28 @@ class AttendancesController < PapersController
     if params[:attendance]['end_time'].blank?
       @attendance.is_blank_end_time = true
     end
+
+
+    if params[:attendance]['over_time'].to_d < 0
+      @attendance.is_negative_over_time = true
+    end
+    if params[:attendance]['holiday_time'].to_d < 0
+      @attendance.is_negative_holiday_time = true
+    end
+    if params[:attendance]['midnight_time'].to_d < 0
+      @attendance.is_negative_midnight_time = true
+    end
+    if params[:attendance]['break_time'].to_d < 0
+      @attendance.is_negative_break_time = true
+    end
+    if params[:attendance]['kouzyo_time'].to_d < 0
+      @attendance.is_negative_kouzyo_time = true
+    end
+    if params[:attendance]['work_time'].to_d < 0
+      @attendance.is_negative_work_time = true
+    end
+
+
 
     if @attendance.update_attributes(attendance_params)
       redirect_to attendances_path, notice: '更新しました。'
@@ -106,7 +135,7 @@ class AttendancesController < PapersController
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
 
-      @pattern << [" * 定例外勤務(休出 or シフト)", 4]
+      @pattern << [" * 定例外勤務(休出 or シフト)", "※"] 
 
       render :edit
     end

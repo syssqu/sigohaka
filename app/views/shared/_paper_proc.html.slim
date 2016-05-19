@@ -2,17 +2,27 @@
   .larte-12.columns
     = form_tag target, method: "get" do
       .row
-        .large-2.columns
-            label.left.inline 対象年月
-            .attendances_hearder = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
-            /.attendances_hearder = select_tag 'paper[years]', options_for_select(years, session[:years])
+        .large-3.columns
+            .attendances_hearder
+              = link_to '◀', pre_path, class:"button tiny radius"
+              / = collection_select :paper, :years, years, :id, :value, {selected: session[:years]}
+              = select_tag 'paper[years]', options_for_select(years, selected: session[:years])
+              |&nbsp;&nbsp;
+              = link_to '▶', next_path, class:"button tiny radius"
+
         - if can? :manage, current_user
           .large-2.columns
-              label.left.inline 対象ユーザー
-              .attendances_hearder = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
-          .large-8.columns
+              .attendances_hearder
+                tbody
+                  tr
+                    td 対象ユーザー
+                    td = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
+          .large-7.columns
         - else
-          .large-10.columns
+          .large-9.columns
+
+
+
 .row
   .large-12.columns
     #paper_header

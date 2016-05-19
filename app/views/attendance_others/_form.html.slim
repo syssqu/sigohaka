@@ -2,15 +2,11 @@
   .large-12.columns
     = form_for @attendance_other do |f|
       - if @attendance_other.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@attendance_other.errors.count, "error")} prohibited this attendance_other from being saved:"
-          ul
-            - @attendance_other.errors.full_messages.each do |message|
-              li = message
+      = render 'shared/error_messages', object: f.object
 
       = f.hidden_field :year
       = f.hidden_field :month
-      
+
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 名称
@@ -30,32 +26,32 @@
         .large-1.small-4.columns
           label.left.inline 超過時間
         .large-1.large-pull-10.small-8.columns
-          = f.text_field :over_time, :value => number_with_precision(f.object.over_time,:precision => 2)
+          = f.number_field :over_time, :value => number_with_precision(f.object.over_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.small-4.columns
           label.left.inline 休日時間
         .large-1.large-pull-10.small-8.columns
-          = f.text_field :holiday_time, :value => number_with_precision(f.object.holiday_time,:precision => 2)
+          = f.number_field :holiday_time, :value => number_with_precision(f.object.holiday_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.small-4.columns
           label.left.inline 深夜時間
         .large-1.large-pull-10.small-8.columns
-          = f.text_field :midnight_time, :value => number_with_precision(f.object.midnight_time,:precision => 2)
+          = f.number_field :midnight_time, :value => number_with_precision(f.object.midnight_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.small-4.columns
           label.left.inline 休憩時間
         .large-1.large-pull-10.small-8.columns
-          = f.text_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2)
+          = f.number_field :break_time, :value => number_with_precision(f.object.break_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.small-4.columns
           label.left.inline 控除時間
         .large-1.large-pull-10.small-8.columns
-          = f.text_field :kouzyo_time, :value => number_with_precision(f.object.kouzyo_time,:precision => 2)
+          = f.number_field :kouzyo_time, :value => number_with_precision(f.object.kouzyo_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.columns.show-for-large-up
           label.left.inline 実働時間
         .large-1.large-pull-10.columns
-          = f.text_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2)
+          = f.number_field :work_time, :value => number_with_precision(f.object.work_time,:precision => 2), :step => 0.25, :min => 0
       .row
         .large-1.small-4.columns
           label.left.inline 備考

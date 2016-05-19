@@ -12,7 +12,7 @@ article.summary_attendance_index
           |勤務状況集計表　#{current_user.section.name}
 
     
-      = render partial: 'shared/paper_proc', locals: { target: "summary_attendances", years: @years, project: @project, status: @status }
+      = render partial: 'shared/paper_proc', locals: { target: "summary_attendances", years: @years, project: @project, status: @status, pre_path: create_pre_month_summary_path, next_path: create_next_month_summary_path }
       /   table#attendance_project
       /     tbody
       /       tr
