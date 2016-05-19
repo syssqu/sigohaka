@@ -149,7 +149,7 @@
               span 無
           td.nonborder style="text-align:center;"
             - if !@housing_allowances.spouse_name.nil?
-              #{'('+@housing_allowances.spouse_name+')'}
+              = "#{'('+@housing_allowances.spouse_name+')'}"
           td.nonborder style="text-align:center;"
             - if @housing_allowances.spouse_other=="mu"
               span#ok 無
