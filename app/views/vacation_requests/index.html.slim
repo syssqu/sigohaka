@@ -12,17 +12,14 @@ article.vacation_request_index
         thead
           tr
             / th User
-            th いつから
-            th いつまで
-            th 期間
-            th 区別
-            th 事由
-            th 備考
-            th
-            th
-            / th Year
-            / th Month
-
+            th width="100" いつから
+            th width="100" いつまで
+            th width="80" 期間
+            th width="150" 区別
+            th width="150" 事由
+            th width="150" 備考
+            th width="35" 修正
+            th width="35" 削除
         tbody
           - @vacation_requests.each do |vacation_request|
             tr
@@ -69,8 +66,11 @@ article.vacation_request_index
 
               td = vacation_request.reason
               td = vacation_request.note
-              / td = vacation_request.year
-              / td = vacation_request.month
-
-              td = link_to '編集 ', edit_vacation_request_path(vacation_request)
-              td = link_to '削除', vacation_request, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete
+              td
+                - unless @freezed 
+                  = link_to edit_vacation_request_path(vacation_request), class:"button tiny radius" do
+                    i.fi-plus
+              td
+                - unless @freezed
+                  = link_to vacation_request, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
+                    i.fi-x
