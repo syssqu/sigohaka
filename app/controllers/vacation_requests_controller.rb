@@ -47,7 +47,7 @@ class VacationRequestsController < PapersController
   # GET /vacation_requests/1
   # GET /vacation_requests/1.json
   def show
-    @vacation_requests = current_user.vacation_requests.find(params[:id])
+    ##照会ページには遷移しないようにしました##
   end
 
   # GET /vacation_requests/new
@@ -65,10 +65,18 @@ class VacationRequestsController < PapersController
   def create
     @vacation_request = current_user.vacation_requests.build(vacation_request_params)
 
-    if @vacation_request.save
-      redirect_to @vacation_request, notice: '休暇届を作成しました'
-    else
-      render :new
+    term_input
+
+    respond_to do |format|
+      if @vacation_request.save
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を作成しました' }
+        format.json { render :show, status: :ok, location: @vacation_request }
+      else
+        ## 1度エラーが出た後、新規登録した時に、indexのリストに表示されないバグを暫定的に対応 ##
+        format.html { redirect_to new_vacation_request_path, notice: '正しい値を入力してください.' }
+        ## format.html { render :new }
+        format.json { render json: @vacation_request.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -77,7 +85,10 @@ class VacationRequestsController < PapersController
   def update
     respond_to do |format|
       if @vacation_request.update(vacation_request_params)
-        format.html { redirect_to @vacation_request, notice: '休暇届を更新しました' }
+
+        term_input
+
+        format.html { redirect_to vacation_requests_url, notice: '休暇届を更新しました' }
         format.json { render :show, status: :ok, location: @vacation_request }
       else
         format.html { render :edit }
@@ -268,6 +279,13 @@ class VacationRequestsController < PapersController
     # Never trust parameters from the scary internet, only allow the white list through.
     def vacation_request_params
       params.require(:vacation_request).permit(:user_id, :start_date, :end_date, :term, :category, :reason, :note, :year, :month)
+    end
+
+    ##休暇期間を入力##
+    def term_input
+      tmp = (@vacation_request.end_date - @vacation_request.start_date).to_i
+      @vacation_request.term = tmp + 1
+      @vacation_request.save
     end
 
 end
