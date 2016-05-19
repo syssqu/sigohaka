@@ -87,3 +87,17 @@ $("#data_clear").click ->
   $( '#attendance_work_time' ).val("0.00");
 
   $( '#attendance_remarks' ).val("");
+
+# データ更新時の入力チェック
+$("#submit").click ->
+  if ( $.trim($("#attendance_start_time").val()) != "" and
+        ! $.trim($("#attendance_start_time").val()).match(/^\d{1,2}\:\d{2}$/) ) or
+     $.trim($("#attendance_start_time").val()) == ""
+    alert "出勤時刻が正しくありません。"
+    return false
+
+  if ( $.trim($("#attendance_end_time").val()) != "" and
+        ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/) ) or
+     $.tim($("#attendance_end_time").val()) == ""
+    alert "退勤時刻が正しくありません。"
+    return false
