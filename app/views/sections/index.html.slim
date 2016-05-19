@@ -8,7 +8,6 @@
           tr
             th.text-center コード
             th.text-center 名称
-            th.text-center 課長名
             th
             th
             th
@@ -18,7 +17,7 @@
             tr
               td = section.code
               td = section.name
-              td = section.user.family_name + " " + section.user.first_name
+
               td = link_to '照会', section, class: "button tiny secondary"
               td = link_to '編集', edit_section_path(section), class: "button tiny success"
               td = link_to '削除', section, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
