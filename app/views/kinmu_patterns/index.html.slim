@@ -5,23 +5,23 @@ article.kinmu_patterns_index
 
       p
         |5件まで登録可能です。
-        br    
+        br
         |複数登録されている場合は、勤怠情報登録時にコード1の情報がデフォルトで適用されます。
-  
+
       table
         thead
           tr
             th コード
             th 出勤
             th 退勤
-            th 休憩時間(日中) 
-            th 休憩時間(深夜)  
+            th 休憩時間(日中)
+            th 休憩時間(深夜)
             th 実働時間
             th シフト
             th
             th
         tbody
-          - @kinmu_patterns.each do |kinmu_pattern|
+          - @kinmu_patterns.order("code ASC").each do |kinmu_pattern|
             tr
               td.text-center = kinmu_pattern.code
               td.text-center = kinmu_pattern.start_time.strftime("%H:%M") if ! kinmu_pattern.start_time.nil?
