@@ -6,23 +6,31 @@ class HousingAllowancesController < PapersController
   def index
     init
 
+    unless @housing_allowances.exists?
+      create_housing_allowances
+    end
 
-    create_housing_allowances
+    unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      create_kintai_header
+    end
+
     # @transportation_expresses = TransportationExpress.all
     # @transportation_express=current_user.transportation_expresses.all
     # @project = current_user.projects.find_by(active: true)
     session[:years] = "#{@nendo}#{@gatudo}"
+
+    @years = create_years_collection view_context.target_user.vacation_requests # 対象年月リスト 要修正
+    @users = create_users_collection                                      # 対象ユーザーリスト
+
     @sum=0
     if !@housing_allowances.blank?
       @freezed = @housing_allowances.first.freezed
-    else
-      @freezed = @housing_allowances.first.freezed
-    end 
+    end
     # create_years_collection current_user.transportation_expresses, @freezed
     # year = Date.today.year
     # month = Date.today.month
     # day = Date.today.day
-    
+
     # @nendo = Date.today.year
     # @gatudo = Date.today.month
 
@@ -37,7 +45,7 @@ class HousingAllowancesController < PapersController
     # if Date.today.month == 12 and Date.today.day > 15
     #   @nendo = Date.today.years_since(1).year
     # end
-    
+
     # @date=Time.parse(session[:date])
     @date=@housing_allowances.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
@@ -58,8 +66,8 @@ class HousingAllowancesController < PapersController
 
     @housing_allowances=HousingAllowance.all
     @housing_allowances=current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).first
-    
-  
+
+
 
   end
 
@@ -86,7 +94,7 @@ class HousingAllowancesController < PapersController
     @nendo = get_nendo(housing_allowance_years)
     @gatudo = get_gatudo(housing_allowance_years)
     @project = get_project
-    
+
     @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).first
     @date=HousingAllowance.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
@@ -197,13 +205,14 @@ class HousingAllowancesController < PapersController
     end
 
     @housing_allowance_years = get_years(current_user.housing_allowances, freezed)
-    
+
     @nendo = get_nendo(@housing_allowance_years)
     @gatudo = get_gatudo(@housing_allowance_years)
     @project = get_project
 
     @housing_allowances = current_user.housing_allowances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
- 
+
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
 
 
@@ -218,7 +227,7 @@ class HousingAllowancesController < PapersController
 
     if !@housing_allowances.exists?
       target_date = Date.new(@housing_allowance_years.year, get_month(@housing_allowance_years), 16)
-      
+
 
       @housing_allowance = current_user.housing_allowances.build
       @housing_allowance[:year] = @nendo
@@ -241,10 +250,10 @@ class HousingAllowancesController < PapersController
 
     if freezed
       temp = session[:years]
-      
+
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
       next_years = years.months_since(1)
-      
+
       @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
       session[:years] = @selected_nen_gatudo
     end
@@ -305,7 +314,7 @@ class HousingAllowancesController < PapersController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def get_housing_allowance_years(transportation_express, freezed=false)
-    
+
     unless session[:years].blank?
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
