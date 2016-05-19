@@ -49,13 +49,33 @@ article.projects.form
     .row
       .large-2.small-4.columns
         label.left.inline 役割
-      .large-2.large-pull-8.small-8.columns
-        = f.text_field :role
+      .large-8.large-pull-2.small-8.columns
+        = f.select :role,
+        [["PM:プロジェクト", "PM:プロジェクト"],
+         ["PL:プロジェクトリーダー", "PL:プロジェクトリーダー"],
+         ["SE:システム・エンジニア", "SE:システム・エンジニア"],
+         ["ML:製造リーダー", "ML:製造リーダー"], ["PG:プログラマー", "PG:プログラマー"],
+         ["OP:オペレーター", "OP:オペレーター"], ["AN:その他", "AN:その他"]]
+
     .row
       .large-2.small-4.columns
         label.left.inline 工程
-      .large-2.large-pull-8.small-8.columns
-        = f.text_field :experience
+      .large-8.large-pull-2.small-8.columns
+        = f.select :experience,
+        [["1:企画･分析・コンサルタント","1:企画･分析・コンサルタント"],
+        ["2:基本設計概要設計","2:基本設計概要設計"],
+        ["3:詳細設計（機能設計･論理設計）","3詳細設計（機能設計･論理設計）"],
+        ["4:プログラム設計","4:プログラム設計"],
+        ["5:プログラミング","5:プログラミング"],
+        ["6:プログラムテスト","6:プログラムテスト"],
+        ["7:システムテスト","7:システムテスト"],
+        ["8:運用テスト","8:運用テスト"],
+        ["9:運用","9:運用"],
+        ["10:システム運用･保守･維持管理","10:システム運用･保守･維持管理"],
+        ["11:システムエンジニアサポート","11:システムエンジニアサポート"],
+        ["12:プロジェクト管理","12:プロジェクト管理"]]
+
+
     .row
       .large-2.small-4.columns
         label.left.inline 備考
@@ -66,19 +86,6 @@ article.projects.form
         label.left.inline アクティブ
       .large-2.large-pull-8.small-8.columns
         = f.check_box :active
-    .row
-      .large-12.columns
-        table
-          tbody
-            tr
-              td 役割
-              td PM:プロジェクト、PL:プロジェクトリーダー、SE:システム・エンジニア、ML:製造リーダー、PG:プログラマー、OP:オペレーター、AN:その他
-            tr
-              td 工程
-              td
-                |1：企画･分析・コンサルタント、2：基本設計概要設計、3：詳細設計（機能設計･論理設計）、4：プログラム設計、5：プログラミング、
-                br
-                |6：プログラムテスト、7：システムテスト、8：運用テスト、9：運用、10：システム運用･保守･維持管理、11：システムエンジニアサポート、12：プロジェクト管理
 
     .row
       .large-6.large-centered.columns

@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    
+
   end
 
   def new
@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      redirect_to @project, notice: 'プロジェクトを作成しました。'
+      redirect_to  projects_path, notice: 'プロジェクトを作成しました。'
     else
       render :new
     end
@@ -35,12 +35,12 @@ class ProjectsController < ApplicationController
       if params[:project][:active] == "1"
         current_user.projects.update_all(["active = ?", false])
       end
-      
+
       @project.update!(project_params)
     end
-    
-    redirect_to @project, notice: 'プロジェクトを更新しました。'
- 
+
+    redirect_to projects_path , notice: 'プロジェクトを更新しました。'
+
   rescue => e
     # raise e
     render :edit, notice: 'プロジェクトを更新に失敗しました。'
