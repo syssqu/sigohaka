@@ -8,12 +8,10 @@
             - @section.errors.full_messages.each do |message|
               li = message
       .field
-        = f.label :code
+        = f.label :コード
         = f.text_field :code
       .field
-        = f.label :name
+        = f.label :名称
         = f.text_field :name
-      .field
-        = f.label :user_id
-        = f.collection_select :user_id, User.where(section_id: f.object.id), :id, :view_name, include_blank: true
-      .actions = f.submit 'Save'
+
+      .actions = f.submit '登録'

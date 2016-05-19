@@ -22,7 +22,7 @@ class SectionsController < ApplicationController
     @section = Section.new(section_params)
 
     if @section.save
-      redirect_to @section, notice: '課を作成しました'
+      redirect_to sections_path, notice: '課を作成しました'
     else
       render :new
     end
@@ -30,7 +30,7 @@ class SectionsController < ApplicationController
 
   def update
     if @section.update(section_params)
-      redirect_to @section, notice: '課を更新しました'
+      redirect_to sections_path, notice: '課を更新しました'
     else
       render :edit
     end
