@@ -13,6 +13,8 @@ class AttendanceInformationController < ApplicationController
     session[:years] = "#{@nendo}#{@gatudo}"
     logger.debug("session_years"+session[:years])
 
+    @years = create_years_collection view_context.target_user.vacation_requests
+
     if current_user.katagaki.role == User::Roles::ADMIN or current_user.katagaki.role == User::Roles::MANAGER
       @users = User.where(section_id: current_user.section_id)
     else
