@@ -37,7 +37,7 @@ $("#calculate").click ->
     return
 
   if $.trim($("#attendance_pattern").val()) == '※'
-    alert "低例外勤務を選択しているときは自動計算できません。"
+    alert "定例外勤務を選択しているときは自動計算できません。"
     return
 
   $.ajax
