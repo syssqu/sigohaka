@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   patch 'kintai_header/update/:id', to: 'kintai_header#update'
 
   get 'attendance_information/index'
+  get 'attendance_information/create_pre_month'
+  get 'attendance_information/create_next_month'
 
   resources :katagakis
 
