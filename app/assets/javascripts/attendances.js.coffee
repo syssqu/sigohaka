@@ -1,6 +1,5 @@
 # 勤務パターンが変更された際に出退勤時刻を変更する
 $("#attendance_pattern").change ->
-
   $.ajax
     url: "/input_attendance_time"
     type: "GET"
@@ -35,6 +34,10 @@ $("#calculate").click ->
 
   if $.trim($("#attendance_end_time").val()) != "" and ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/)
     alert "退勤時刻が正しくありません。"
+    return
+
+  if $.trim($("#attendance_pattern").val()) == '※'
+    alert "低例外勤務を選択しているときは自動計算できません。"
     return
 
   $.ajax
