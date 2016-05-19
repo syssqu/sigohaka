@@ -20,7 +20,7 @@ article.resumes_index
             td.text-center colspan=2 #{GENDER[current_user.gender.to_sym]}
             td.text-center
             - unless current_user.birth_date.blank?
-              #{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月
+              = "#{seireki2wareki(current_user.birth_date.year, current_user.birth_date.month, 1)} #{current_user.birth_date.month}月"
             td.text-center #{current_user.age}歳
             td.text-center #{number_with_precision(current_user.experience, {precision:1, :strip_insignidicant_zeros => 1})}年
           tr
@@ -109,7 +109,7 @@ article.resumes_index
               td.solid_top1.text-center
                 - start_date_term = p.start_date.blank? ? "" : p.start_date
                 - end_date_term = p.end_date.blank? ? "" : p.end_date
-                #{get_month_term(start_date_term, end_date_term)}
+                = "#{get_month_term(start_date_term, end_date_term)}"
           - (16-i).times do |n|
             tr
               td rowspan=2
