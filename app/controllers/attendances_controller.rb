@@ -135,7 +135,7 @@ class AttendancesController < PapersController
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
 
-      @pattern << [" * 定例外勤務(休出 or シフト)", "※"] 
+      @pattern << [" * 定例外勤務(休出 or シフト)", "※"]
 
       render :edit
     end
@@ -246,9 +246,6 @@ class AttendancesController < PapersController
     # タイムラインへメッセージを投稿
     posting_check_proc("勤怠状況報告書")
 
-    # 翌月分の勤怠情報を作成し画面に出力する
-    init true
-    create_attendances
   end
 
   #
