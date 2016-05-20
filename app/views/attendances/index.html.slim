@@ -198,8 +198,10 @@ article.attendance_index
             td
             td.text-center width="55px;" 開始
             td.text-center width="55px;" 終了
-            td.text-center width="55px;" 休憩
+            td.text-center width="75px;" 休憩_日中
+            td.text-center width="75px;" 休憩_深夜
             td.text-center width="55px;" 実働
+            td.text-center width="50px;" シフト
         tbody
           - target_user.kinmu_patterns.where("code <> '*'").order("code ASC").each do |kinmu|
             tr
@@ -212,8 +214,10 @@ article.attendance_index
               td.text-center = kinmu.start_time.strftime("%_H:%M") unless kinmu.start_time.blank?
               td.text-center = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
               td.text-center = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+              td.text-center = sprintf( "%.2f", kinmu.midnight_break_time ) if kinmu.midnight_break_time > 0
               td.text-center = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
+              td.text-center = "○" if kinmu.shift
           tr
             td.text-center ※
-            td colspan=4
+            td colspan=6
               |&nbsp;定例外勤務(休出 or シフト)
