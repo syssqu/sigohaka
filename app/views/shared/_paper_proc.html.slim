@@ -34,7 +34,7 @@
             td = kintai_header.user_name
           tr
             td 所属:
-            td = kintai_header.section_name unless kintai_header.project_name.blank?
+            td = kintai_header.section_name unless kintai_header.section_name.blank?
           tr
             td プロジェクト名:
             td = truncate(kintai_header.project_name, length:20) unless kintai_header.project_name.blank?
