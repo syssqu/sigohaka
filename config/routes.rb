@@ -163,7 +163,7 @@ Rails.application.routes.draw do
 
 
   # get 'static_pages/home'
-
+  match '/home', to:'static_pages#home', via: :get
   match '/help', to:'static_pages#help', via: :get
   match '/about', to:'static_pages#about', via: :get
   # match '/vacation_requests/print', to:'vacation_requests#print', via: :get
@@ -181,6 +181,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # ログイン画面をホームにする
+  #root :to => "static_pages#home"
   devise_scope :user do
     root :to => "devise/sessions#new"
   end
