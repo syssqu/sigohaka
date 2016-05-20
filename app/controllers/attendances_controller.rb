@@ -74,7 +74,7 @@ class AttendancesController < PapersController
   # 編集画面
   #
   def edit
-    temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+    temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null").order("code ASC")
     @pattern = temp.collect do |k|
       [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
     end
@@ -130,7 +130,7 @@ class AttendancesController < PapersController
       redirect_to attendances_path, notice: '更新しました。'
     else
 
-      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null")
+      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null").order("code ASC")
       @pattern = temp.collect do |k|
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
