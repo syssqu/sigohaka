@@ -4,16 +4,14 @@ class AttendanceInformationController < ApplicationController
 
     init
 
+    session[:years] = "#{@nendo}#{@gatudo}"
+    logger.debug("session_years"+session[:years])
+
     @years = create_years_collection current_user.attendances
     # temp_years = YearsController.create_years_collection current_user.attendances, session[:years], false
     # if temp_years.blank?
     #   session[:years] = temp_years
     # end
-
-    session[:years] = "#{@nendo}#{@gatudo}"
-    logger.debug("session_years"+session[:years])
-
-    @years = create_years_collection view_context.target_user.vacation_requests
 
     if current_user.katagaki.role == User::Roles::ADMIN or current_user.katagaki.role == User::Roles::MANAGER
       @users = User.where(section_id: current_user.section_id)
@@ -143,11 +141,9 @@ class AttendanceInformationController < ApplicationController
 
   def init(freezed=false)
 
-    logger.debug("init session_years1" + session[:years])
     if changed_years?
       session[:years] = params[:years][:years]
     end
-    logger.debug("init session_years2" + session[:years])
 
     @attendance_years = YearsController.get_years(current_user.attendances, session[:years], freezed)
 
