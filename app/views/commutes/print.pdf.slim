@@ -7,8 +7,8 @@
         tr
         tr
           td#ate colspan="2" 総務人事部　　　　殿
-          td 
-          td 
+          td
+          td
           td width="70"style="border:solid 2px;border-right:solid 1px;border-bottom:solid 1px;"人事
           td width="70"style="border:solid 2px;border-right:solid 1px;border-bottom:solid 1px;border-left:solid 1px;"所属長
           td colspan="2" width="70" style="border:solid 2px;border-left:solid 1px;border-bottom:solid 1px;"本人
@@ -25,10 +25,10 @@
           td width="50px"
 
         tr
-          td 
-          td 
-          td 
-          td 
+          td
+          td
+          td
+          td
           td#day colspan="3" width="140"  提出日 平成#{@nendo-1988}#{ @date.strftime("年%_m月%_d日")}
 
 
@@ -44,7 +44,7 @@
           td #{current_user.family_name}#{current_user.first_name}
 
         tr
-          td rowspan="2"現　住　所 
+          td rowspan="2"現　住　所
           td#zyusyo colspan="3" #{current_user.postal_code}#{current_user.prefecture}#{current_user.city}#{current_user.house_number}#{current_user.building}
 
         tr
@@ -90,7 +90,7 @@
             | (
             - if @reasons.reason_text == nil
               span = "".ljust(20,"　")
-            - else 
+            - else
               span = @reasons.reason_text.ljust(20,"　")
             / | (#{@reasons.reason_text})
             / その他の欄確保
@@ -109,7 +109,7 @@
               td#money = truncate("#{commute.money.to_s+'円'}",:length=>14,:omission=>"…")
 
           tr
-            td 
+            td
             td#money colspan="3"計　　
             td#money = truncate("#{@sum.to_s+'円'}",:length=>10,:omission=>"…")
 
@@ -117,7 +117,3 @@
             td.nonborder colspan="5"　
           tr.nonborder
             td.nonborder colspan="5"株式会社　システム・スクゥェアー
-
-
-
-    

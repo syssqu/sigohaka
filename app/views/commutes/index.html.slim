@@ -10,7 +10,7 @@ article.commute_index
         i.fi-clipboard-pencil
         |現住所変更及び通勤届
 
-      = render partial: 'shared/paper_proc', locals: { target: "commutes", years: @years, project: @project, status: @status, pre_path: create_pre_month_commutes_path, next_path: create_next_month_commutes_path }
+      = render partial: 'shared/paper_proc', locals: { target: "commutes", users: @users, years: @years, kintai_header: @kintai_header, project: @project, status: @status, pre_path: create_pre_month_commutes_path, next_path: create_next_month_commutes_path }
 
       table style="border:none;"
         tr align="left" valign="top"
@@ -52,7 +52,7 @@ article.commute_index
                     i.fi-plus
                 - elsif @reasons.nil?
                   td rowspan="2" = link_to "新規", new_reason_path(@reasons) ,class: "button tiny success"
-                
+
               tr
                 td.in 届出理由<br>（その他）
                 td.in colspan="2" = @reasons.reason_text if ! @reasons.nil?
