@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
 
   $role_info = [["管理者", User::Roles::ADMIN], ["マネージャー", User::Roles::MANAGER], ["一般", User::Roles::REGULAR]]
 
-
+  def after_sign_in_path_for(resource)
+    home_path
+  end
   #
   # 勤怠登録されている年月を返す
   #
