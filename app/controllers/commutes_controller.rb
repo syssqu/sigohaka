@@ -7,16 +7,24 @@ class CommutesController < PapersController
 
     init
 
+    session[:years] = "#{@nendo}#{@gatudo}"
 
     create_commutes
     create_reasons
-    session[:years] = "#{@nendo}#{@gatudo}"
+
+    unless view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      create_kintai_header
+    end
+    
+    @years = create_years_collection view_context.target_user.commutes # 対象年月リスト 要修正
+    @users = create_users_collection
+
     @sum=0
     if !@commutes.blank?
       @freezed = @commutes.first.freezed
     else
       @freezed = @commutes.first.freezed
-    end 
+    end
      @date=@commutes.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
     if @date==nil                                                 #更新日時が空なら今日の日付を使用
       @date=Date.today
@@ -75,7 +83,7 @@ class CommutesController < PapersController
     @nendo = get_nendo(commute_years)
     @gatudo = get_gatudo(commute_years)
     @project = get_project
-    
+
     @commutes = current_user.commutes.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @reasons = current_user.reasons.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).first
     @date=@commutes.maximum(:updated_at ,:include)  #更新日時が一番新しいものを取得
@@ -188,7 +196,7 @@ class CommutesController < PapersController
     end
 
     @commute_years = get_years(current_user.commutes, freezed)
-    
+
     @nendo = get_nendo(@commute_years)
     @gatudo = get_gatudo(@commute_years)
     @project = get_project
@@ -201,14 +209,14 @@ class CommutesController < PapersController
     end
 
     @reason_years = get_years(current_user.reasons, freezed)
-    
+
     @nendo = get_nendo(@reason_years)
     @gatudo = get_gatudo(@reason_years)
     @project = get_project
 
     @reasons = current_user.reasons.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
- 
-    
+
+    @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
   end
 
 
@@ -223,7 +231,7 @@ class CommutesController < PapersController
 
     if !@commutes.exists?
       target_date = Date.new(@commute_years.year, get_month(@commute_years), 16)
-      
+
 
       @commute = current_user.commutes.build
       @commute[:year] = @nendo
@@ -238,7 +246,7 @@ class CommutesController < PapersController
     create_years_collection current_user.commutes, freezed
 
 
-    
+
   end
 
    def create_reasons(freezed=false)
@@ -251,7 +259,7 @@ class CommutesController < PapersController
 
     if !@reasons.exists?
       target_date = Date.new(@commute_years.year, get_month(@commute_years), 16)
-      
+
 
       @reason = current_user.reasons.build
       @reason[:year] = @nendo
@@ -271,14 +279,14 @@ class CommutesController < PapersController
   #   unless session[:years].blank?
   #     @selected_nen_gatudo = session[:years]
   #   end
-    
+
   #   if changed_transportation_express_years?
   #     @selected_nen_gatudo = params[:transportation_express][:nen_gatudo]
   #     session[:years] = params[:transportation_express][:nen_gatudo]
   #   end
 
   #   @transportation_express_years = get_transportation_express_years(params[:transportation_express], freezed)
-    
+
   #   @nendo = get_nendo(@transportation_express_years)
   #   @gatudo = get_gatudo(@transportation_express_years)
   #   @project = get_project
@@ -286,7 +294,7 @@ class CommutesController < PapersController
   #   @transportation_express = current_user.transportation_expresses.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
   # end
 
-  
+
   #
   # 対象年月のセレクトボックス内に含めるデータを作成する
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
@@ -296,10 +304,10 @@ class CommutesController < PapersController
 
     if freezed
       temp = session[:years]
-      
+
       years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)
       next_years = years.months_since(1)
-      
+
       @selected_nen_gatudo = "#{next_years.year}#{next_years.month}"
       session[:years] = @selected_nen_gatudo
     end
@@ -345,7 +353,7 @@ class CommutesController < PapersController
     month
   end
 
- 
+
 
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
@@ -362,7 +370,7 @@ class CommutesController < PapersController
   # @param [Boolean] freezed 呼び出し元が締め処理の場合にtrueを設定する。選択する対象年月を翌月に変更する。
   # @return [Date] 対象勤怠日付
   def get_commute_years(transportation_express, freezed=false)
-    
+
     unless session[:years].blank?
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..-1].to_i, 1)

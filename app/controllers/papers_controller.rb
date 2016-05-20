@@ -359,6 +359,7 @@ class PapersController < ApplicationController
     logger.info("create_kintai_header")
 
     if view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
+      logger.debug("いいいいいいいいいいいいいいいい")
       return
     end
 
@@ -377,5 +378,8 @@ class PapersController < ApplicationController
     end
 
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+
+    logger.debug("あああああああああああああああああああ")
+    logger.debug(@kintai_header)
   end
 end
