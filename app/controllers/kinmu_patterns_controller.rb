@@ -18,7 +18,7 @@ class KinmuPatternsController < ApplicationController
           @kinmu_pattern[:break_time] = 1.00
           @kinmu_pattern[:work_time] = 8.00
         end
-        
+
         if ! @kinmu_pattern.save
           logger.debug("勤務パターン登録エラー")
           break
@@ -51,7 +51,7 @@ class KinmuPatternsController < ApplicationController
 
   def update
     if @kinmu_pattern.update(kinmu_pattern_params)
-      redirect_to kinmu_patterns_path, notic: '勤務パターンを更新しました' 
+      redirect_to kinmu_patterns_path, notic: '勤務パターンを更新しました'
     else
       render :edit
     end
@@ -68,6 +68,6 @@ class KinmuPatternsController < ApplicationController
     end
 
     def kinmu_pattern_params
-      params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :work_time, :user_id)
+      params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :midnight_break_time, :work_time, :shift, :user_id)
     end
 end
