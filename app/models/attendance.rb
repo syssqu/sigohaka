@@ -16,7 +16,7 @@ class Attendance < ActiveRecord::Base
   # default_scope -> { order('attendance_date') }
 
   # チェック
-  validates :remarks, length: { maximum: 20 }
+  validates :remarks, length: { maximum: 10 }
   validates :year, presence: true
   validates :month, presence: true
   validates :user_id, presence: true
