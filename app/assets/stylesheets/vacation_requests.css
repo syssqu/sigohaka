@@ -2,11 +2,10 @@
 
 article.vacation_request_index span{margin:0px;color:red;}
 
-article.vacation_request_index table{border-collapse: collapse;border-spacing: 0;}
 article.vacation_request_index table tr th {font-size:12px;}
 article.vacation_request_index table tr th{padding:5px 5px !important;}
 article.vacation_request_index table tr td {font-size:12px;}
-article.vacation_request_index table tr td{padding:2px 0px !important;height:24px !important;background-color:#fff;}
+article.vacation_request_index table tr td{padding:2px 0px;height:24px !important;}
 article.vacation_request_index table tr td .button {padding:4px !important;margin:0px !important;}
 article.vacation_request_ table tr td.bg_gray{background-color:#9F9687 !important;}
 article.vacation_request_index select {display: inline-block;width:50%;}

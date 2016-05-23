@@ -6,13 +6,10 @@ class Project < ActiveRecord::Base
   validate :start_end_check
 
   def start_end_check
-    errors[:base] << "開始月もしくは終了月の日付が正しくありません。"  if
-    self.start_date > self.end_date
-  end
 
-  def end_check
-    errors[:base] << "終了月の年を入力してください。"
-    self.end_date == null
+    if !self.end_date.blank? && self.start_date > self.end_date
+      errors[:base] << "開始月もしくは終了月の日付が正しくありません。"
+    end
   end
 
 end
