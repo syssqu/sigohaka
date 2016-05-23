@@ -11,14 +11,14 @@ article.kinmu_patterns_index
       table
         thead
           tr
-            th コード
-            th 出勤
-            th 退勤
-            th 休憩時間(日中)
-            th 休憩時間(深夜)
-            th 実働時間
-            th シフト
-            th 修正
+            th.text-center コード
+            th.text-center width="80" 出勤
+            th.text-center width="80" 退勤
+            th.text-center 休憩時間(日中)
+            th.text-center 休憩時間(深夜)
+            th.text-center 実働時間
+            th.text-center シフト
+            th.text-center 修正
         tbody
           - @kinmu_patterns.order("code ASC").each do |kinmu_pattern|
             tr
@@ -29,4 +29,6 @@ article.kinmu_patterns_index
               td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) if ! kinmu_pattern.midnight_break_time.nil?
               td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) if ! kinmu_pattern.work_time.nil?
               td.text-center = "○" if kinmu_pattern.shift
-              td.text-center = link_to '編集', edit_kinmu_pattern_path(kinmu_pattern)
+              td.text-center
+                = link_to edit_kinmu_pattern_path(kinmu_pattern), class:"button tiny radius" do
+                  i.fi-pencil

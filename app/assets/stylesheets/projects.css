@@ -1,4 +1,22 @@
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+article.projects_index span{margin:0px;color:red;}
+
+/*article.projects_index table{border-collapse: collapse;border-spacing: 0;}*/
+article.projects_index table tr th {font-size:12px;}
+article.projects_index table tr th{padding:5px 5px !important;}
+article.projects_index table tr td {font-size:12px;}
+article.projects_index table tr td{padding:2px 0px;height:24px !important;}
+article.projects_index table tr td .button {padding:4px !important;margin:0px !important;}
+
+article.projects_index select {display: inline-block;width:50%;}
+
+article.projects_index label{padding-right: 20px;}
+
+article.projects_index .button.tiny.radius a{color:white;}
+article.projects_index .button.tiny.radius a:hover{background:none;}
+
 /* =============================================================================
    プロジェクト(フォーム)
    ========================================================================== */
-article.projects.form select {display: inline-block;width:20%;}
+article.projects.form select {display: inline-block;width:30%;}

@@ -1,45 +1,50 @@
-.row
-  .large-12.columns
-    h3 プロジェクト一覧画面
+article.projects_index
+  .row
+    .large-12.columns
+      h3 プロジェクト一覧
+      
+      = link_to raw("<i class='fi-plus'></i>新規追加"),new_project_path,{class: "button tiny radius"}
 
-    table
-      thead
-        tr
-          th 業務概要
-          th 開始月
-          th 終了月
-          / th 詳細内容
-          / th OS
-          th 言語
-          / th DB、その他
-          / th 開発体制人数
-          / th 役割
-          / th 工程
-          / th 備考
-          th アクティブ    
-          th
-          th
-          th
-
-      tbody
-        - @projects.each do |project|
+      table
+        thead
           tr
-            td = project.summary
-            td = project.start_date.strftime("%___Y/%_m")
-            td = project.end_date.strftime("%___Y/%_m") unless project.end_date.blank?
-            / td = project.description
-            / td = project.os
-            td = project.language
-            / td = project.database
-            / td = project.dep_size
-            / td = project.role
-            / td = project.experience
-            / td = project.remarks
-            td.text-center = "○" if project.active
-            td = link_to '照会', project
-            td = link_to '編集', edit_project_path(project)
-            td = link_to '削除', project, data: {:confirm => '削除しても宜しいでしょうか?'}, :method => :delete
+            th.text-center width="240" 業務概要
+            th.text-center width="100" 開始月
+            th.text-center width="100" 終了月
+            / th 詳細内容
+            / th OS
+            th.text-center width="100" 言語
+            / th DB、その他
+            / th 開発体制人数
+            / th 役割
+            / th 工程
+            / th 備考
+            th.text-center アクティブ    
+            th.text-center width="35" 照会
+            th.text-center width="35" 修正
+            th.text-center width="35" 削除
 
-    br
-
-    = link_to '新規作成', new_project_path
+        tbody
+          - @projects.each do |project|
+            tr
+              td.pleft = project.summary
+              td.pleft = project.start_date.strftime("%___Y/%_m")
+              td.pleft = project.end_date.strftime("%___Y/%_m") unless project.end_date.blank?
+              / td = project.description
+              / td = project.os
+              td.pleft = project.language
+              / td = project.database
+              / td = project.dep_size
+              / td = project.role
+              / td = project.experience
+              / td = project.remarks
+              td.text-center = "○" if project.active
+              td.text-center = link_to project, class:"button tiny success" do
+                i.fi-eye
+              td.text-center
+                = link_to edit_project_path(project), class:"button tiny radius" do
+                  i.fi-pencil
+              td.text-center
+                = link_to project, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
+                  i.fi-x
+      br
