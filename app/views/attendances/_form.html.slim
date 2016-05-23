@@ -100,17 +100,17 @@
                 td 実働時間
             tbody
               tr
-                td = f.number_field :over_time, :class => 'text_field', :step => 0.25, :min => 0
-                td = f.number_field :holiday_time, :class => 'text_field', :step => 0.25, :min => 0
-                td = f.number_field :midnight_time, :class => 'text_field', :step => 0.25, :min => 0
-                td = f.number_field :break_time, :class => 'text_field', :step => 0.25, :min => 0
-                td = f.number_field :kouzyo_time, :class => 'text_field', :step => 0.25, :min => 0
-                td = f.number_field :work_time, :class => 'text_field', :step => 0.25, :min => 0
+                td = f.number_field :over_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
+                td = f.number_field :holiday_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
+                td = f.number_field :midnight_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
+                td = f.number_field :break_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
+                td = f.number_field :kouzyo_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
+                td = f.number_field :work_time, :class => 'text_field', :step => 0.25, :min => 0, :max => 99.75
       .row
         .large-2.small-4.columns
           label.left.inline 備考
         .large-5.large-pull-5.small-8.columns
-          = f.text_area :remarks
+          = f.text_area :remarks, :maxlength => 20
       .row
         .large-3.large-centered.columns
           = f.submit "更新", class: "button radius", id: "submit"
