@@ -1,3 +1,21 @@
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+article.kinmu_patterns_index span{margin:0px;color:red;}
+
+/*article.kinmu_patterns_index table{border-collapse: collapse;border-spacing: 0;}*/
+article.kinmu_patterns_index table tr th {font-size:12px;}
+article.kinmu_patterns_index table tr th{padding:5px 5px !important;}
+article.kinmu_patterns_index table tr td {font-size:12px;}
+article.kinmu_patterns_index table tr td{padding:2px 0px;height:24px !important;}
+article.kinmu_patterns_index table tr td .button {padding:4px !important;margin:0px !important;}
+
+article.kinmu_patterns_index select {display: inline-block;width:50%;}
+
+article.kinmu_patterns_index label{padding-right: 20px;}
+
+article.kinmu_patterns_index .button.tiny.radius a{color:white;}
+article.kinmu_patterns_index .button.tiny.radius a:hover{background:none;}
+
 /* =============================================================================
    勤務パターン
    ========================================================================== */

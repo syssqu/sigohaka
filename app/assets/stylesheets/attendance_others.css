@@ -2,3 +2,7 @@
    勤務状況報告書(その他)
    ========================================================================== */
 article.attendance_others.edit select {display: inline-block;width:30%;}
+
+#attendance_other_summary{
+  width: 9em;
+}

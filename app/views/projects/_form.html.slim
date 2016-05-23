@@ -19,8 +19,8 @@ article.projects.form
     .row
       .large-2.small-4.columns
         label.left.inline 終了月
-      .large-3.large-pull-7.small-8.columns
-        = raw sprintf( f.date_select(:end_date, use_month_numbers: true, discard_day: true, start_year: 1965, date_separator:'%s'), '年 ') +  '月'
+      .large-3.large-pull-7.small-8.columns     
+        = raw sprintf( f.date_select(:end_date, use_month_numbers: true, discard_day: true, start_year: 1965, date_separator:'%s', include_blank: true), '年 ') +  '月'
     .row
       .large-2.small-4.columns
         label.left.inline 詳細内容

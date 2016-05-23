@@ -12,65 +12,65 @@ article.vacation_request_index
         thead
           tr
             / th User
-            th width="100" いつから
-            th width="100" いつまで
-            th width="80" 期間
-            th width="150" 区別
-            th width="150" 事由
-            th width="150" 備考
-            th width="35" 修正
-            th width="35" 削除
+            th.text-center width="100" いつから
+            th.text-center width="100" いつまで
+            th.text-center width="80" 期間
+            th.text-center width="150" 区別
+            th.text-center width="150" 事由
+            th.text-center width="150" 備考
+            th.text-center width="35" 修正
+            th.text-center width="35" 削除
         tbody
           - @vacation_requests.each do |vacation_request|
             tr
               / td = vacation_request.user_id
-              td = vacation_request.start_date
-              td = vacation_request.end_date
+              td.pleft = vacation_request.start_date
+              td.pleft = vacation_request.end_date
               td = vacation_request.term.to_s + ' 日間'
 
               - if !@vacation_requests.nil?
                 - if vacation_request.category == "yuukyu" && !@vacation_requests.nil?
-                  td 有給
+                  td.pleft 有給
                 - elsif vacation_request.category == "hanniti" && !@vacation_requests.nil?
-                  td 半日
+                  td.pleft 半日
                 - elsif vacation_request.category == "hurikae" && !@vacation_requests.nil?
-                  td 振替
+                  td.pleft 振替
                 - elsif vacation_request.category == "kekkin" && !@vacation_requests.nil?
-                  td 欠勤
+                  td.pleft 欠勤
                 - elsif vacation_request.category == "kaki" && !@vacation_requests.nil?
-                  td 特別（夏季）
+                  td.pleft 特別（夏季）
                 - elsif vacation_request.category == "hunin" && !@vacation_requests.nil?
-                  td 特別（赴任）
+                  td.pleft 特別（赴任）
                 - elsif vacation_request.category == "idou" && !@vacation_requests.nil?
-                  td 特別（異動）
+                  td.pleft 特別（異動）
                 - elsif vacation_request.category == "koumu" && !@vacation_requests.nil?
-                  td 特別（公務）
+                  td.pleft 特別（公務）
                 - elsif vacation_request.category == "kekkon" && !@vacation_requests.nil?
-                  td 特別（結婚）
+                  td.pleft 特別（結婚）
                 - elsif vacation_request.category == "seiri" && !@vacation_requests.nil?
-                  td 特別（生理）
+                  td.pleft 特別（生理）
                 - elsif vacation_request.category == "syussan" && !@vacation_requests.nil?
-                  td 特別（出産）
+                  td.pleft 特別（出産）
                 - elsif vacation_request.category == "sankyuu" && !@vacation_requests.nil?
-                  td 特別（産休）
+                  td.pleft 特別（産休）
                 - elsif vacation_request.category == "kibiki" && !@vacation_requests.nil?
-                  td 特別（忌引）
+                  td.pleft 特別（忌引）
                 - elsif vacation_request.category == "saigai" && !@vacation_requests.nil?
-                  td 特別（災害）
+                  td.pleft 特別（災害）
                 - elsif vacation_request.category == "sonota" && !@vacation_requests.nil?
-                  td その他
+                  td.pleft その他
                 - else
                   td
               - else
                 td
 
-              td = vacation_request.reason
-              td = vacation_request.note
-              td
+              td.pleft = vacation_request.reason
+              td.pleft = vacation_request.note
+              td.text-center
                 - unless @freezed 
                   = link_to edit_vacation_request_path(vacation_request), class:"button tiny radius" do
-                    i.fi-plus
-              td
+                    i.fi-pencil
+              td.text-center
                 - unless @freezed
                   = link_to vacation_request, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
                     i.fi-x
