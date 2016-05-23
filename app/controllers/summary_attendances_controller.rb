@@ -5,12 +5,12 @@ class SummaryAttendancesController < PapersController
   before_action :authenticate_user!
   # GET /summary_attendances
   # GET /summary_attendances.json
-  
+
 
   def index
 
     init
-    
+
 
     session[:years] = "#{@nendo}#{@gatudo}"
     logger.debug("session_years"+session[:years])
@@ -28,11 +28,11 @@ class SummaryAttendancesController < PapersController
     # @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
 
+    @years = create_years_collection view_context.target_user.vacation_requests # 対象年月リスト 要修正
 
-    
 
     set_freeze_info
-    
+
     # TODO 課会などの実働時間は未使用
     # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
     # @others = get_attendance_others_info
@@ -44,13 +44,13 @@ class SummaryAttendancesController < PapersController
   def set_freeze_info
 
     # logger.debug("凍結状態の取得")
-    
+
     # if view_context.be_self @attendances.first
     #   @freezed = @attendances.first.self_approved or @attendances.first.boss_approved
     # else
     #   @freezed = @attendances.first.boss_approved
     # end
-    
+
     # logger.debug("勤怠情報: " + @attendances.first.id.to_s + ", " + @attendances.first.year + ", " + @attendances.first.month + ", " + @attendances.first.self_approved.to_s + ", " + @attendances.first.boss_approved.to_s)
     # logger.debug("凍結状態: " + @freezed.to_s)
   end
@@ -105,7 +105,7 @@ class SummaryAttendancesController < PapersController
     # @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     @others = current_user.attendance_others
     # @user = User.all
-    
+
     # @summary_attendances = user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
     # @others = user.attendance_others
 
@@ -242,8 +242,8 @@ class SummaryAttendancesController < PapersController
     end
     # @summary_attendances = @user.summary_attendances
     # @summary_attendance = user.attendances.order
-    
-    
+
+
   end
 
 
@@ -289,7 +289,7 @@ class SummaryAttendancesController < PapersController
       end
 
       not_summary_attendance=1
-    
+
     end
     create_years_collection current_user.attendances, freezed
   end
@@ -343,7 +343,7 @@ class SummaryAttendancesController < PapersController
   end
 
   # def get_attendance_years(nen_gatudo)
-  
+
   #   if ! changed_attendance_years?
   #     return Date.today
   #   else
@@ -353,10 +353,10 @@ class SummaryAttendancesController < PapersController
   # end
   def get_attendance_others_info
     others = current_user.attendance_others
-    
+
     if ! others.exists?
       @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
-      
+
       if @other.save
         others << @other
       end
