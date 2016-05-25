@@ -1,18 +1,17 @@
 p#notice = notice
 
 p
-  strong Code:
+  strong コード:
   = @license.code
 p
-  strong Name:
+  strong 名称:
   = @license.name
 p
-  strong Years:
+  strong 取得年月:
   = @license.years
 p
-  strong User:
+  strong ユーザーID:
   = @license.user_id
 
-= link_to 'Edit', edit_license_path(@license)
-'|
-= link_to 'Back', licenses_path
+= link_to '編集', edit_license_path(@license) ,class: "button radius"
+= link_to '戻る', licenses_path ,class: "button radius"
