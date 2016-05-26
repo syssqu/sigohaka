@@ -1,12 +1,14 @@
+h3 課マスタ 詳細
+
 p#notice = notice
 
 p
-  strong Code:
+  strong コード:
   = @section.code
 p
-  strong Name:
+  strong 名称:
   = @section.name
 
-= link_to 'Edit', edit_section_path(@section)
-'|
-= link_to 'Back', sections_path
+= link_to '編集', edit_section_path(@section), class: "button tiny radius"
+
+= link_to '戻る', sections_path, class: "button tiny radius"
