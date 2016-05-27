@@ -1,7 +1,9 @@
 .row
   .large-12.columns
     article.katagaki
-      h1 役職一覧画面
+      h3
+        i.fi-clipboard-pencil
+        | 役職一覧画面
 
       table
         thead
@@ -17,7 +19,7 @@
             tr
               td = katagaki.name
               td = role_info(katagaki.role)
-              td = link_to '照会', katagaki, class: "button tiny secondary"
+              td = link_to '照会', katagaki, class: "button tiny info"
               td = link_to '編集', edit_katagaki_path(katagaki), class: "button tiny success"
               td = link_to '削除', katagaki, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
 
