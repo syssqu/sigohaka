@@ -14,4 +14,6 @@
         = f.label :名称
         = f.text_field :name
 
-      .actions = f.submit '登録'
+      .actions
+       = f.submit '登録' ,class: "button tiny radius"
+       = link_to '戻る', sections_path, class: "button tiny radius"

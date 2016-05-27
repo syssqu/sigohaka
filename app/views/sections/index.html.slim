@@ -1,7 +1,7 @@
 .row
   .large-12.columns
     article.section_list
-      h1 課マスタ一覧画面
+      h3 課マスタ 一覧画面
 
       table
         thead
@@ -18,7 +18,7 @@
               td = section.code
               td = section.name
 
-              td = link_to '照会', section, class: "button tiny secondary"
+              td = link_to '照会', section, class: "button tiny info"
               td = link_to '編集', edit_section_path(section), class: "button tiny success"
               td = link_to '削除', section, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
 
