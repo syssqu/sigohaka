@@ -2,6 +2,8 @@ article.kinmu_patterns_index
   .row
     .large-12.columns
       h3 勤務パターン一覧
+      / ヘッダー
+      = render partial: 'kinmu_patterns/kinmu_header', locals: { target: "kinmu_patterns", years: @years, users: @users, pre_path: create_pre_month_kinmu_patterns_path, next_path: create_next_month_kinmu_patterns_path }
 
       p
         |5件まで登録可能です。

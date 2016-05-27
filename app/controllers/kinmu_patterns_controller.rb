@@ -1,46 +1,32 @@
 # -*- coding: utf-8 -*-
-class KinmuPatternsController < ApplicationController
+class KinmuPatternsController < PapersController
   before_action :set_kinmu_pattern, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index
-    @kinmu_patterns = current_user.kinmu_patterns.where("code <> '*'")
+    logger.info("kinmu_patterns_controller::index")
 
-    if ! @kinmu_patterns.exists?
-      (1..5).each do |num|
-        @kinmu_pattern = current_user.kinmu_patterns.build
+    init
 
-        # デフォルトの勤務パターン
-        @kinmu_pattern[:code] = num.to_s
-        if num == 1
-          @kinmu_pattern[:start_time] = "9:00"
-          @kinmu_pattern[:end_time] = "18:00"
-          @kinmu_pattern[:break_time] = 1.00
-          @kinmu_pattern[:work_time] = 8.00
-        end
+    # ヘッダー情報
+    @years = create_years_collection view_context.target_user.kinmu_patterns # 対象年月リスト
+    @users = create_users_collection                                         # 対象ユーザーリスト
 
-        if ! @kinmu_pattern.save
-          logger.debug("勤務パターン登録エラー")
-          break
-        end
-      end
 
-      @kinmu_patterns = current_user.kinmu_patterns
-    end
   end
 
   def show
   end
 
   def new
-    @kinmu_pattern = current_user.kinmu_patterns.build
+    @kinmu_pattern = target_user.kinmu_patterns.build
   end
 
   def edit
   end
 
   def create
-    @kinmu_pattern = current_user.kinmu_patterns.build(kinmu_pattern_params)
+    @kinmu_pattern = target_user.kinmu_patterns.build(kinmu_pattern_params)
 
     if @kinmu_pattern.save
       redirect_to @kinmu_pattern, notice: '勤務パターンを作成しました'
@@ -62,12 +48,47 @@ class KinmuPatternsController < ApplicationController
     redirect_to kinmu_patterns_url, notice: '勤務パターンを削除しました'
   end
 
+
+  def init(freezed=false)
+    logger.info("kinmu_patterns_controller::init")
+
+    super(view_context.target_user.attendances, freezed)
+
+    Rails.logger.debug("a- : #{@nendo.to_s} ")
+    # 勤務パターン取得
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+  end
+
+  #
+  # 勤務パターン作成
+  # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
+  #
+#  def create_kinmu_patterns(freezed=false)
+
+#    logger.info("create_kinmu_patterns")
+
+  #  target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
+
+    # 定例外勤務以外を取得
+  #  @kinmu_patterns = view_context.target_user.kinmu_patterns.where("code <> '*'")
+
+    # 対象年月を取得
+  #  @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+  #  @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+#  end
+
+
+
   private
     def set_kinmu_pattern
       @kinmu_pattern = KinmuPattern.find(params[:id])
     end
 
     def kinmu_pattern_params
-      params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :midnight_break_time, :work_time, :shift, :user_id)
+      params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :midnight_break_time, :work_time, :shift, :user_id, :year, :month)
     end
+
+
 end

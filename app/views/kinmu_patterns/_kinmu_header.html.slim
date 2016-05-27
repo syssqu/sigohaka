@@ -1,0 +1,21 @@
+.row
+  .larte-12.columns
+    = form_tag target, method: "get" do
+      .row
+        .large-3.columns
+            .attendances_hearder
+              = link_to '◀', pre_path, class:"button tiny radius"
+              = select_tag 'paper[years]', options_for_select(years, selected: session[:years])
+              |&nbsp;&nbsp;
+              = link_to '▶', next_path, class:"button tiny radius"
+
+        - if can? :manage, current_user
+          .large-2.columns
+              .attendances_hearder
+                tbody
+                  tr
+                    td 対象ユーザー
+                    td = collection_select :user, :id, users, :id, :value, {selected: session[:target_user]}
+          .large-7.columns
+        - else
+          .large-9.columns
