@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520070004) do
+ActiveRecord::Schema.define(version: 20160527015727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,8 @@ ActiveRecord::Schema.define(version: 20160520070004) do
     t.string   "code",                limit: 2
     t.decimal  "midnight_break_time",           precision: 4, scale: 2, default: 0.0
     t.boolean  "shift",                                                 default: false, null: false
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "kintai_headers", force: true do |t|
