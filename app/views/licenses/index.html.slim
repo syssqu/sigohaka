@@ -1,6 +1,9 @@
-.row
-  .large-12.columns
-    h1 資格
+article.license_index
+  .row
+    .large-12.columns
+      h3
+        i.fi-clipboard-pencil
+        |資格
 
     table
       thead
@@ -8,6 +11,7 @@
           th コード
           th 名称
           th 取得年月
+          th ＩＤ
           th
           th
           th
@@ -18,10 +22,11 @@
             td = license.code
             td = license.name
             td = license.years
+            td = license.user_id
             td = link_to '参照', license
             td = link_to '編集', edit_license_path(license)
-            td = link_to '削除', license, data: {:confirm => 'Are you sure?'}, :method => :delete
+            td = link_to '削除', license, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete
 
     br
 
-    = link_to '新規', new_license_path
+    = link_to '新規作成', new_license_path ,class: "button  radius"
