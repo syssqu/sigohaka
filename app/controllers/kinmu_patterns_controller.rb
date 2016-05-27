@@ -27,7 +27,6 @@ class KinmuPatternsController < PapersController
 
   def create
     @kinmu_pattern = target_user.kinmu_patterns.build(kinmu_pattern_params)
-
     if @kinmu_pattern.save
       redirect_to @kinmu_pattern, notice: '勤務パターンを作成しました'
     else
@@ -36,8 +35,13 @@ class KinmuPatternsController < PapersController
   end
 
   def update
-    if @kinmu_pattern.update(kinmu_pattern_params)
-      redirect_to kinmu_patterns_path, notic: '勤務パターンを更新しました'
+    init
+    @kinmu_pattern = current_user.kinmu_patterns.build(kinmu_pattern_params)
+
+    @kinmu_pattern[:year] = @nendo
+    @kinmu_pattern[:month] = @gatudo
+    if @kinmu_pattern.save
+      redirect_to kinmu_patterns_path, notice: '勤務パターンを更新しました'
     else
       render :edit
     end
@@ -54,10 +58,34 @@ class KinmuPatternsController < PapersController
 
     super(view_context.target_user.attendances, freezed)
 
-    Rails.logger.debug("a- : #{@nendo.to_s} ")
+
     # 勤務パターン取得
     @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
+
+
+
+
+
+
+    # 最初に生成された勤務パターンの日付を取得
+    #@min_created = view_context.target_user.kinmu_patterns.group("user_id").pluck("MIN(created_at)")
+
+    # 本人確認で書き換え?
+    #checkout_month = "#{@nendo}/#{@gatudo+1}/15 23:59"
+
+    # 表示する１～５の勤務パターンを取得
+   # patterns_query = view_context.target_user.kinmu_patterns
+    #                    .select("code, MAX(updated_at)")
+    #                    .where("(updated_at < '#{checkout_month}') OR (updated_at > '#{checkout_month}' AND created_at < '#{checkout_month}')")
+    #                    .group("code")
+    # 勤務パターンのデータ取得
+#    @ptnn = view_context.target_user.kinmu_patterns
+  #                  .where("(code, updated_at) IN (#{patterns_query.to_sql})")
+  #                  .order("code ASC")
+
+
+    Rails.logger.debug("a- : #{@kinmu_patterns.to_a} ")
   end
 
   #
