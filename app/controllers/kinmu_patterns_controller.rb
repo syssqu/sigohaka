@@ -8,6 +8,11 @@ class KinmuPatternsController < PapersController
 
     init
 
+    # 勤務パターンが対象年月に存在しない場合、新たに作成する
+    unless @kinmu_patterns.exists?
+      create_kinmu_patterns
+    end
+
     # ヘッダー情報
     @years = create_years_collection view_context.target_user.kinmu_patterns # 対象年月リスト
     @users = create_users_collection                                         # 対象ユーザーリスト
@@ -35,12 +40,12 @@ class KinmuPatternsController < PapersController
   end
 
   def update
-    init
-    @kinmu_pattern = current_user.kinmu_patterns.build(kinmu_pattern_params)
+    # init
+    # @kinmu_pattern = current_user.kinmu_patterns.build(kinmu_pattern_params)
 
-    @kinmu_pattern[:year] = @nendo
-    @kinmu_pattern[:month] = @gatudo
-    if @kinmu_pattern.save
+    # @kinmu_pattern[:year] = @nendo
+    # @kinmu_pattern[:month] = @gatudo
+    if @kinmu_pattern.update(kinmu_pattern_params)
       redirect_to kinmu_patterns_path, notice: '勤務パターンを更新しました'
     else
       render :edit
@@ -92,19 +97,41 @@ class KinmuPatternsController < PapersController
   # 勤務パターン作成
   # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
   #
-#  def create_kinmu_patterns(freezed=false)
+  def create_kinmu_patterns(freezed=false)
 
-#    logger.info("create_kinmu_patterns")
+    logger.info("create_kinmu_patterns")
+
+
+    if ! @kinmu_patterns.exists?
+      (1..5).each do |num|
+        @kinmu_pattern = current_user.kinmu_patterns.build
+
+        # デフォルトの勤務パターン
+        @kinmu_pattern[:code] = num.to_s
+        if num == 1
+          @kinmu_pattern[:start_time] = "9:00"
+          @kinmu_pattern[:end_time] = "18:00"
+          @kinmu_pattern[:break_time] = 1.00
+          @kinmu_pattern[:work_time] = 8.00
+        end
+        @kinmu_pattern[:year] = @nendo
+        @kinmu_pattern[:month] = @gatudo
+
+        if ! @kinmu_pattern.save
+          logger.debug("勤務パターン登録エラー")
+          break
+        end
+
+      end
+    end
+
+  end
 
   #  target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
 
     # 定例外勤務以外を取得
   #  @kinmu_patterns = view_context.target_user.kinmu_patterns.where("code <> '*'")
 
-    # 対象年月を取得
-  #  @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-
-  #  @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
 #  end
 
 
