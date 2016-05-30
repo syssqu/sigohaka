@@ -236,10 +236,12 @@ article.attendance_print
         td
         td.text-center width="50px;" 開始
         td.text-center width="50px;" 終了
-        td.text-center width="50px;" 休憩
+        td.text-center width="50px;" 休憩_日中
+        td.text-center width="50px;" 休憩_深夜
         td.text-center width="50px;" 実働
+        td.text-center width="40px;" シフト
     tbody
-      - target_user.kinmu_patterns.where("code <> '*'").each do |kinmu|
+      - @kinmu_patterns.each do |kinmu|
         tr
           - if kinmu.code == "1"
             td.text-center width="60px;" rowspan=6
@@ -257,11 +259,15 @@ article.attendance_print
             = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
             |&nbsp;
           td.text-right
+            = sprintf( "%.2f", kinmu.midnight_break_time ) if kinmu.midnight_break_time > 0
+            |&nbsp;
+          td.text-right
             = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
             |&nbsp;
+          td.text-center = "○" if kinmu.shift
       tr
         td.text-center ※
-        td colspan=4
+        td colspan=6
           |&nbsp;定例外勤務(休出 or シフト)
   #company_name
     p 株式会社　システム・スクゥェアー
@@ -278,5 +284,6 @@ article.attendance_print
   #solid_line_pstart_time
   #solid_line_pend_time
   #dashed_line_pbreak_time
+  #dashed_line_mbreak_time
   #dashed_line_pwork_time
 / = params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo')

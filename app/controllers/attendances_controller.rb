@@ -46,6 +46,7 @@ class AttendancesController < PapersController
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = get_attendance_others_info
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s, month: @gatudo.to_s)
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
 
     @title = '勤務状況報告書'
   end
@@ -300,6 +301,8 @@ class AttendancesController < PapersController
 
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
+
   end
 
   #

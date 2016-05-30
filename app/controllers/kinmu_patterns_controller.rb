@@ -17,7 +17,6 @@ class KinmuPatternsController < PapersController
     @years = create_years_collection view_context.target_user.kinmu_patterns # 対象年月リスト
     @users = create_users_collection                                         # 対象ユーザーリスト
 
-
   end
 
   def show
@@ -63,34 +62,9 @@ class KinmuPatternsController < PapersController
 
     super(view_context.target_user.attendances, freezed)
 
-
     # 勤務パターン取得
-    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
 
-
-
-
-
-
-
-    # 最初に生成された勤務パターンの日付を取得
-    #@min_created = view_context.target_user.kinmu_patterns.group("user_id").pluck("MIN(created_at)")
-
-    # 本人確認で書き換え?
-    #checkout_month = "#{@nendo}/#{@gatudo+1}/15 23:59"
-
-    # 表示する１～５の勤務パターンを取得
-   # patterns_query = view_context.target_user.kinmu_patterns
-    #                    .select("code, MAX(updated_at)")
-    #                    .where("(updated_at < '#{checkout_month}') OR (updated_at > '#{checkout_month}' AND created_at < '#{checkout_month}')")
-    #                    .group("code")
-    # 勤務パターンのデータ取得
-#    @ptnn = view_context.target_user.kinmu_patterns
-  #                  .where("(code, updated_at) IN (#{patterns_query.to_sql})")
-  #                  .order("code ASC")
-
-
-    Rails.logger.debug("a- : #{@kinmu_patterns.to_a} ")
   end
 
   #
@@ -99,8 +73,7 @@ class KinmuPatternsController < PapersController
   #
   def create_kinmu_patterns(freezed=false)
 
-    logger.info("create_kinmu_patterns")
-
+    logger.info("kinmu_patterns_controller::create_kinmu_patterns")
 
     if ! @kinmu_patterns.exists?
       (1..5).each do |num|
@@ -124,17 +97,13 @@ class KinmuPatternsController < PapersController
 
       end
     end
+    # 勤務パターン取得
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
 
   end
 
-  #  target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
-
-    # 定例外勤務以外を取得
+  # 定例外勤務以外を取得
   #  @kinmu_patterns = view_context.target_user.kinmu_patterns.where("code <> '*'")
-
-#  end
-
-
 
   private
     def set_kinmu_pattern
@@ -144,6 +113,5 @@ class KinmuPatternsController < PapersController
     def kinmu_pattern_params
       params.require(:kinmu_pattern).permit(:code, :start_time, :end_time, :break_time, :midnight_break_time, :work_time, :shift, :user_id, :year, :month)
     end
-
 
 end

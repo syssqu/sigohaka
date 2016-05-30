@@ -203,7 +203,7 @@ article.attendance_index
             td.text-center width="55px;" 実働
             td.text-center width="50px;" シフト
         tbody
-          - target_user.kinmu_patterns.where("code <> '*'").order("code ASC").each do |kinmu|
+          - @kinmu_patterns.each do |kinmu|
             tr
               - if kinmu.code == "1"
                 td.text-center width="60px;" rowspan=6
