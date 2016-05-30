@@ -382,4 +382,40 @@ class PapersController < ApplicationController
     logger.debug("あああああああああああああああああああ")
     logger.debug(@kintai_header)
   end
+
+  #
+  # 勤務パターン作成
+  #
+  def create_kinmu_patterns(freezed=false)
+
+    logger.info("kinmu_patterns_controller::create_kinmu_patterns")
+
+    if ! @kinmu_patterns.exists?
+      (1..5).each do |num|
+        @kinmu_pattern = current_user.kinmu_patterns.build
+
+        # デフォルトの勤務パターン
+        @kinmu_pattern[:code] = num.to_s
+        if num == 1
+          @kinmu_pattern[:start_time] = "9:00"
+          @kinmu_pattern[:end_time] = "18:00"
+          @kinmu_pattern[:break_time] = 1.00
+          @kinmu_pattern[:work_time] = 8.00
+        end
+        @kinmu_pattern[:year] = @nendo
+        @kinmu_pattern[:month] = @gatudo
+
+        if ! @kinmu_pattern.save
+          logger.debug("勤務パターン登録エラー")
+          break
+        end
+
+      end
+    end
+    # 勤務パターン取得
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
+
+  end
+
+
 end

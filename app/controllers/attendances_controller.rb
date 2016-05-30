@@ -15,6 +15,10 @@ class AttendancesController < PapersController
 
     init
 
+    unless @kinmu_patterns.exists?
+      create_kinmu_patterns
+    end
+
     unless @attendances.exists?
       create_attendances
     end
@@ -159,9 +163,9 @@ class AttendancesController < PapersController
 
       # 休日でない場合は勤務パターンをベースに値を設定
       @attendances.where("holiday = '0'").update_all([sql,
-          view_context.target_user.kinmu_patterns.first.code,
-          view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M"),
-          view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M"),
+          @kinmu_patterns.first.code,
+          @kinmu_patterns.first.start_time.strftime("%_H:%M"),
+          @kinmu_patterns.first.end_time.strftime("%_H:%M"),
           false,false,false,false,false,false,false,
           false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
           view_context.target_user.kinmu_patterns.first.work_time,nil])
@@ -330,10 +334,10 @@ class AttendancesController < PapersController
         @attendance[:holiday] = "1"
       elsif ! view_context.target_user.kinmu_patterns.first.nil?
 
-        @attendance[:pattern] = view_context.target_user.kinmu_patterns.first.code
-        @attendance[:start_time] = view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
-        @attendance[:end_time] = view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
-        @attendance[:work_time] = view_context.target_user.kinmu_patterns.first.work_time
+        @attendance[:pattern] = @kinmu_patterns.first.code
+        @attendance[:start_time] = @kinmu_patterns.first.start_time.strftime("%_H:%M")
+        @attendance[:end_time] = @kinmu_patterns.first.end_time.strftime("%_H:%M")
+        @attendance[:work_time] = @kinmu_patterns.first.work_time
         @attendance[:holiday] = "0"
 
       end
