@@ -133,7 +133,7 @@ class AttendancesController < PapersController
       redirect_to attendances_path, notice: '更新しました。'
     else
 
-      temp = view_context.target_user.kinmu_patterns..where("start_time is not null and end_time is not null and (year = ? and month = ?)", @nendo.to_s, @gatudo.to_s).order("code ASC")
+      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null and (year = ? and month = ?)", @nendo.to_s, @gatudo.to_s).order("code ASC")
       @pattern = temp.collect do |k|
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
@@ -183,10 +183,10 @@ class AttendancesController < PapersController
   # 編集画面にて呼び出される
   #
   def input_attendance_time
-
+    init
     logger.debug("attendances_controller::input_attendance_time")
 
-    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.where("year = ? and month = ? and code = ?", @nendo.to_s, @gatudo.to_s, params[:pattern]).first
 
     if temp_pattern.nil?
       @attendance.start_time = "";
@@ -213,6 +213,7 @@ class AttendancesController < PapersController
   # 編集画面にて呼び出される
   #
   def calculate
+    init
 
     Rails.logger.info("自動計算処理")
     Rails.logger.info("PARAMS: #{params.inspect}")
@@ -223,18 +224,12 @@ class AttendancesController < PapersController
       return
     end
 
-    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.where("year = ? and month = ? and code = ?", @nendo.to_s, @gatudo.to_s, params[:pattern]).first
 
-    Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
-    Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
+    logger.debug("画面入力値(出勤時刻) #{params[:start_time]}")
+    logger.debug("画面入力値(退勤時刻) #{params[:end_time]}")
 
-    logger.debug("画面入力値(出勤時刻)" + params[:start_time])
-    logger.debug("画面入力値(退勤時刻)" + params[:end_time])
-
-    # attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
-    # attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
-
-    @attendance.calculate(temp_pattern, params[:start_time], params[:end_time])
+    @attendance.calculate(temp_pattern , params[:start_time],params[:end_time])
   end
 
   #
