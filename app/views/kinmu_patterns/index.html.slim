@@ -25,11 +25,11 @@ article.kinmu_patterns_index
           - @kinmu_patterns.each do |kinmu_pattern|
             tr
               td.text-center = kinmu_pattern.code
-              td.text-center = kinmu_pattern.start_time.strftime("%H:%M") if ! kinmu_pattern.start_time.nil?
-              td.text-center = kinmu_pattern.end_time.strftime("%H:%M") if ! kinmu_pattern.end_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.break_time) if ! kinmu_pattern.break_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) if ! kinmu_pattern.midnight_break_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) if ! kinmu_pattern.work_time.nil?
+              td.text-center = kinmu_pattern.start_time.strftime("%H:%M") unless kinmu_pattern.start_time.nil?
+              td.text-center = kinmu_pattern.end_time.strftime("%H:%M") unless kinmu_pattern.end_time.nil?
+              td.text-center = sprintf( "%.2f", kinmu_pattern.break_time) unless kinmu_pattern.break_time == 0.00
+              td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) unless kinmu_pattern.midnight_break_time == 0.00
+              td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) unless kinmu_pattern.work_time == 0.00
               td.text-center = "○" if kinmu_pattern.shift
               td.text-center
                 = link_to edit_kinmu_pattern_path(kinmu_pattern), class:"button tiny radius" do

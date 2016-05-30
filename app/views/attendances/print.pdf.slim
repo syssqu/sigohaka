@@ -256,13 +256,13 @@ article.attendance_print
             = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+            = sprintf( "%.2f", kinmu.break_time ) unless kinmu.break_time == 0.00
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.midnight_break_time ) if kinmu.midnight_break_time > 0
+            = sprintf( "%.2f", kinmu.midnight_break_time ) unless kinmu.midnight_break_time == 0.00
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
+            = sprintf( "%.2f", kinmu.work_time ) unless kinmu.work_time == 0.00
             |&nbsp;
           td.text-center = "○" if kinmu.shift
       tr
