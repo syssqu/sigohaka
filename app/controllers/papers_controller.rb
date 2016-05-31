@@ -387,10 +387,55 @@ class PapersController < ApplicationController
   # 勤務パターン作成
   #
   def create_kinmu_patterns(freezed=false)
+    init
+    logger.info("papers_controller::create_kinmu_patterns")
 
-    logger.info("kinmu_patterns_controller::create_kinmu_patterns")
+    pre_nendo = @nendo.to_i
+    pre_gatudo = @gatudo.to_i
 
-    if ! @kinmu_patterns.exists?
+    # 以前の勤務パターン検索
+    24.times do |cnt|
+      pre_gatudo = pre_gatudo - 1
+      if pre_gatudo < 1
+        pre_gatudo = 12
+        pre_nendo = pre_nendo - 1
+      end
+
+      @pre_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", pre_nendo.to_s, pre_gatudo.to_s).order("code ASC")
+
+      Rails.logger.debug("検索#{cnt+1}回目")
+
+      if @pre_patterns.exists?
+        break
+      end
+
+    end
+
+    # 以前の勤務パターンを引き継ぎ
+    @pre_patterns.each do |patterns|
+      @kinmu_pattern = current_user.kinmu_patterns.build
+
+      # デフォルトの勤務パターン
+      @kinmu_pattern[:code] = patterns.code
+      @kinmu_pattern[:start_time] = patterns.start_time.to_s[11..15]
+      @kinmu_pattern[:end_time] = patterns.end_time.to_s[11..15]
+      @kinmu_pattern[:break_time] = patterns.break_time.to_s
+      @kinmu_pattern[:midnight_break_time] = patterns.midnight_break_time.to_s
+      @kinmu_pattern[:work_time] = patterns.work_time.to_s
+      @kinmu_pattern[:shift] = patterns.shift
+
+      @kinmu_pattern[:year] = @nendo
+      @kinmu_pattern[:month] = @gatudo
+
+      if ! @kinmu_pattern.save
+        logger.debug("勤務パターン登録エラー")
+        break
+      end
+
+    end
+
+    # 以前の勤務パターンが存在しなかった場合
+    unless @pre_patterns.exists?
       (1..5).each do |num|
         @kinmu_pattern = current_user.kinmu_patterns.build
 
@@ -402,6 +447,7 @@ class PapersController < ApplicationController
           @kinmu_pattern[:break_time] = 1.00
           @kinmu_pattern[:work_time] = 8.00
         end
+
         @kinmu_pattern[:year] = @nendo
         @kinmu_pattern[:month] = @gatudo
 
@@ -412,8 +458,6 @@ class PapersController < ApplicationController
 
       end
     end
-    # 勤務パターン取得
-    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
 
   end
 
