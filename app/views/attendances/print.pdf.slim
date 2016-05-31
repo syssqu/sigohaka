@@ -167,8 +167,12 @@ article.attendance_print
           td.text-left colspan=3
             |&nbsp;
             = other.summary
-          td.text-center = other.start_time.strftime("%_H:%M") if ! other.start_time.nil?
-          td.text-center = other.end_time.strftime("%_H:%M") if ! other.end_time.nil?
+          td.text-right
+            = other.start_time.strftime("%_H:%M") if ! other.start_time.nil?
+            |&nbsp;
+          td.text-right
+            = other.end_time.strftime("%_H:%M") if ! other.end_time.nil?
+            |&nbsp;
           td.text-center.bg_gray
           td.text-center.bg_gray
           td.text-center.bg_gray
@@ -179,12 +183,24 @@ article.attendance_print
           td.text-center.bg_gray
           td.text-center.bg_gray
           td.text-center.bg_gray
-          td.text-center = sprintf( "%.2f", other.over_time) if other.over_time > 0
-          td.text-center = sprintf( "%.2f", other.holiday_time) if other.holiday_time > 0
-          td.text-center = sprintf( "%.2f", other.midnight_time) if other.midnight_time > 0
-          td.text-center = sprintf( "%.2f", other.break_time) if other.break_time > 0
-          td.text-center = sprintf( "%.2f", other.kouzyo_time) if other.kouzyo_time > 0
-          td.text-center = sprintf( "%.2f", other.work_time) if other.work_time > 0
+          td.text-right
+            = sprintf( "%.2f", other.over_time) if other.over_time > 0
+            |&nbsp;
+          td.text-right
+            = sprintf( "%.2f", other.holiday_time) if other.holiday_time > 0
+            |&nbsp;
+          td.text-right
+            = sprintf( "%.2f", other.midnight_time) if other.midnight_time > 0
+            |&nbsp;
+          td.text-right
+            = sprintf( "%.2f", other.break_time) if other.break_time > 0
+            |&nbsp;
+          td.text-right
+           = sprintf( "%.2f", other.kouzyo_time) if other.kouzyo_time > 0
+           |&nbsp;
+          td.text-right
+           = sprintf( "%.2f", other.work_time) if other.work_time > 0
+           |&nbsp;
           td
             |&nbsp;
             = other.remarks[0,10] unless other.remarks.blank?
@@ -225,7 +241,7 @@ article.attendance_print
         td.text-right rowspan=2
       tr
         td.text-left colspan="3" &nbsp;勤務日数
-        td.text-center = @attendances.where("trim(pattern) is not null ").count
+        td.text-center = @attendances.where("trim(pattern) != '' ").count
         td.text-center 合計
 
   / 勤務パターン
