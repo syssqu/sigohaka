@@ -255,9 +255,9 @@ article.attendance_print
         td.text-center width="50px;" 休憩_日中
         td.text-center width="50px;" 休憩_深夜
         td.text-center width="50px;" 実働
-        td.text-center width="35px;" シフト
+        td.text-center width="40px;" シフト
     tbody
-      - target_user.kinmu_patterns.where("code <> '*'").order("code ASC").each do |kinmu|
+      - @kinmu_patterns.each do |kinmu|
         tr
           - if kinmu.code == "1"
             td.text-center width="60px;" rowspan=6
@@ -272,16 +272,15 @@ article.attendance_print
             = kinmu.end_time.strftime("%_H:%M") unless kinmu.end_time.blank?
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.break_time ) if kinmu.break_time > 0
+            = sprintf( "%.2f", kinmu.break_time ) unless kinmu.break_time == 0.00
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.midnight_break_time ) if kinmu.midnight_break_time > 0
+            = sprintf( "%.2f", kinmu.midnight_break_time ) unless kinmu.midnight_break_time == 0.00
             |&nbsp;
           td.text-right
-            = sprintf( "%.2f", kinmu.work_time ) if kinmu.work_time > 0
+            = sprintf( "%.2f", kinmu.work_time ) unless kinmu.work_time == 0.00
             |&nbsp;
           td.text-center = "○" if kinmu.shift
-            |&nbsp;
       tr
         td.text-center ※
         td colspan=6
@@ -301,6 +300,6 @@ article.attendance_print
   #solid_line_pstart_time
   #solid_line_pend_time
   #dashed_line_pbreak_time
-  #dashed_line_pmbreak_time
+  #dashed_line_mbreak_time
   #dashed_line_pwork_time
 / = params[:debug].present? ? image_tag('foo') : wicked_pdf_image_tag('foo')

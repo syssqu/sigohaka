@@ -2,6 +2,8 @@ article.kinmu_patterns_index
   .row
     .large-12.columns
       h3 勤務パターン一覧
+      / ヘッダー
+      = render partial: 'kinmu_patterns/kinmu_header', locals: { target: "kinmu_patterns", years: @years, users: @users, pre_path: create_pre_month_kinmu_patterns_path, next_path: create_next_month_kinmu_patterns_path }
 
       p
         |5件まで登録可能です。
@@ -20,14 +22,14 @@ article.kinmu_patterns_index
             th.text-center シフト
             th.text-center 修正
         tbody
-          - @kinmu_patterns.order("code ASC").each do |kinmu_pattern|
+          - @kinmu_patterns.each do |kinmu_pattern|
             tr
               td.text-center = kinmu_pattern.code
-              td.text-center = kinmu_pattern.start_time.strftime("%H:%M") if ! kinmu_pattern.start_time.nil?
-              td.text-center = kinmu_pattern.end_time.strftime("%H:%M") if ! kinmu_pattern.end_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.break_time) if ! kinmu_pattern.break_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) if ! kinmu_pattern.midnight_break_time.nil?
-              td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) if ! kinmu_pattern.work_time.nil?
+              td.text-center = kinmu_pattern.start_time.strftime("%H:%M") unless kinmu_pattern.start_time.nil?
+              td.text-center = kinmu_pattern.end_time.strftime("%H:%M") unless kinmu_pattern.end_time.nil?
+              td.text-center = sprintf( "%.2f", kinmu_pattern.break_time) unless kinmu_pattern.break_time == 0.00
+              td.text-center = sprintf( "%.2f", kinmu_pattern.midnight_break_time) unless kinmu_pattern.midnight_break_time == 0.00
+              td.text-center = sprintf( "%.2f", kinmu_pattern.work_time) unless kinmu_pattern.work_time == 0.00
               td.text-center = "○" if kinmu_pattern.shift
               td.text-center
                 = link_to edit_kinmu_pattern_path(kinmu_pattern), class:"button tiny radius" do
