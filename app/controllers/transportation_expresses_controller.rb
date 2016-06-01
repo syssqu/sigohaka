@@ -117,7 +117,7 @@ class TransportationExpressesController < PapersController
 
     respond_to do |format|
       if @transportation_express.save
-        format.html { redirect_to @transportation_express, notice: 'Transportation express was successfully created.' }
+        format.html { redirect_to transportation_expresses_path, notice: '登録しました' }
         format.json { render :show, status: :created, location: @transportation_express }
       else
         format.html { render :new }
