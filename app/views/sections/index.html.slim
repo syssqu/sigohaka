@@ -1,27 +1,27 @@
-.row
-  .large-12.columns
-    article.section_list
-      h3 課マスタ 一覧画面
+article.sections_index
+  .row
+    .large-12.columns
+      h3 課マスタ 一覧
+      
+      = link_to raw("<i class='fi-plus'></i>新規追加"),new_section_path,{class: "button tiny radius"}
 
       table
         thead
           tr
             th.text-center コード
-            th.text-center 名称
-            th
-            th
-            th
+            th.text-center width="300" 名称
+            th.text-center width="35" 修正
+            th.text-center width="35" 削除
 
         tbody
           - @sections.each do |section|
             tr
-              td = section.code
+              td.pleft = section.code
               td = section.name
 
-              td = link_to '照会', section, class: "button tiny info"
-              td = link_to '編集', edit_section_path(section), class: "button tiny success"
-              td = link_to '削除', section, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
-
-      br
-
-      = link_to '新規作成', new_section_path, class: "button radius"
+              td.text-center
+                = link_to edit_section_path(section), class:"button tiny radius" do
+                  i.fi-pencil
+              td.text-center
+                = link_to section, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
+                  i.fi-x

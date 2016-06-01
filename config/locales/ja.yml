@@ -210,3 +210,6 @@ ja:
       summary_attendance:
         previous_m: 前月繰越
         present_m: 当月繰越
+        
+  attributes:
+    code: コード

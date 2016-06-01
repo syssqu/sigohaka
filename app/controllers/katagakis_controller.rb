@@ -5,7 +5,7 @@ class KatagakisController < ApplicationController
   # before_filter :authenticate_admin_user!
 
   def index
-    @katagakis = Katagaki.all
+    @katagakis = Katagaki.all.order(:id)
   end
 
   def show

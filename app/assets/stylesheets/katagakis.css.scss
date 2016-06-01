@@ -1,0 +1,24 @@
+/* =============================================================================
+   課マスタ
+   ========================================================================== */
+
+
+
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+article.katagakis_index span{margin:0px;color:red;}
+
+article.katagakis_index table tr th {font-size:12px;}
+article.katagakis_index table tr th{padding:5px 5px !important;}
+article.katagakis_index table tr td {font-size:12px;}
+article.katagakis_index table tr td{padding:2px 0px;height:24px !important;}
+article.katagakis_index table tr td .button {padding:4px !important;margin:0px !important;}
+
+article.katagakis_index select {display: inline-block;width:50%;}
+
+article.katagakis_index label{padding-right: 20px;}
+
+article.katagakis_index .button.tiny.radius a{color:white;}
+article.katagakis_index .button.tiny.radius a:hover{background:none;}
+
+article.katagakis_index .button{margin-right:0px;}

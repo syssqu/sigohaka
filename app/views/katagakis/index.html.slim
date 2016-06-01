@@ -1,28 +1,28 @@
-.row
-  .large-12.columns
-    article.katagaki
+article.katagakis_index
+  .row
+    .large-12.columns
       h3
-        i.fi-clipboard-pencil
-        | 役職一覧画面
+        i.fi-clipboard-pencil 役職一覧
+        
+      = link_to raw("<i class='fi-plus'></i>新規追加"),new_katagaki_path,{class: "button tiny radius"}
 
       table
         thead
           tr
-            th.text-center 名称
-            th.text-center タイプ
-            th
-            th
-            th
+            th.text-center width="180" 名称
+            th.text-center width="160" タイプ
+            th.text-center width="35" 修正
+            th.text-center width="35" 削除
 
         tbody
           - @katagakis.each do |katagaki|
             tr
               td = katagaki.name
               td = role_info(katagaki.role)
-              td = link_to '照会', katagaki, class: "button tiny info"
-              td = link_to '編集', edit_katagaki_path(katagaki), class: "button tiny success"
-              td = link_to '削除', katagaki, data: {:confirm => '削除して宜しいですか?'}, :method => :delete, class: "button tiny alert"
-
-      br
-
-      = link_to '新規作成', new_katagaki_path, class: "button radius"
+              
+              td.text-center
+                = link_to edit_katagaki_path(katagaki), class:"button tiny radius" do
+                  i.fi-pencil
+              td.text-center
+                = link_to katagaki, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
+                  i.fi-x
