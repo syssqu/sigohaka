@@ -93,12 +93,29 @@ $("#data_clear").click ->
 
 # データ更新時の入力チェック
 $("#submit").click ->
-  if ( $.trim($("#attendance_start_time").val()) != "" and
-        ! $.trim($("#attendance_start_time").val()).match(/^\d{1,2}\:\d{2}$/) )
+  if $.trim($("#attendance_start_time").val()) != "" and ! $.trim($("#attendance_start_time").val()).match(/^\d{1,2}\:\d{2}$/)
     alert "出勤時刻が正しくありません。"
     return false
 
-  if ( $.trim($("#attendance_end_time").val()) != "" and
-        ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/) )
+  if $.trim($("#attendance_end_time").val()) != "" and ! $.trim($("#attendance_end_time").val()).match(/^\d{1,2}\:\d{2}$/)
     alert "退勤時刻が正しくありません。"
+    return false
+
+  if $("#attendance_over_time").val() == ""
+    alert "超過時間を入力してください"
+    return false
+  if $("#attendance_holiday_time").val() == ""
+    alert "休日時間を入力してください"
+    return false
+  if $("#attendance_midnight_time").val() == ""
+    alert "深夜時間を入力してください"
+    return false
+  if $("#attendance_break_time").val() == ""
+    alert "休憩時間を入力してください"
+    return false
+  if $("#attendance_kouzyo_time").val() == ""
+    alert "控除時間を入力してください"
+    return false
+  if $("#attendance_work_time").val() == ""
+    alert "実働時間を入力してください"
     return false

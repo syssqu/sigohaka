@@ -1,23 +1,23 @@
-h1 Listing attendance_others
+article.attendance_other_index
+  .row
+    table
+      thead
+        tr
+          th Summary
+          th Over time
+          th
+          th
+          th
 
-table
-  thead
-    tr
-      th Summary
-      th Over time
-      th
-      th
-      th
+      tbody
+        - @attendance_others.each do |attendance_other|
+          tr
+            td = attendance_other.summary
+            td = attendance_other.over_time
+            td = link_to 'Show', attendance_other
+            td = link_to 'Edit', edit_attendance_other_path(attendance_other)
+            td = link_to 'Destroy', attendance_other, data: {:confirm => 'Are you sure?'}, :method => :delete
 
-  tbody
-    - @attendance_others.each do |attendance_other|
-      tr
-        td = attendance_other.summary
-        td = attendance_other.over_time
-        td = link_to 'Show', attendance_other
-        td = link_to 'Edit', edit_attendance_other_path(attendance_other)
-        td = link_to 'Destroy', attendance_other, data: {:confirm => 'Are you sure?'}, :method => :delete
+    br
 
-br
-
-= link_to 'New Attendance other', new_attendance_other_path
+    = link_to 'New Attendance other', new_attendance_other_path
