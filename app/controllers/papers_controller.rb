@@ -256,16 +256,14 @@ class PapersController < ApplicationController
   def get_years(objects, freezed=false)
 
     unless session[:years].nil?
-      logger.debug("here1: #{session[:years]}")
       temp = session[:years]
       years = Date.new(temp[0..3].to_i, temp[4..5].to_i, 1)
     else
       temp = objects.select('year, month').where("freezed = ? and self_approved = ? and boss_approved = ?", false, false, false).group('year, month').order('year, month')
+
       if temp.exists?
-        logger.debug("here2")
         years = Date.new(temp.first.year.to_i, temp.first.month.to_i, 1)
       else
-        logger.debug("here3")
         years = Date.today
 
         logger.debug(years.to_s)
@@ -359,7 +357,6 @@ class PapersController < ApplicationController
     logger.info("create_kintai_header")
 
     if view_context.target_user.kintai_headers.exists?(year: @nendo.to_s,month: @gatudo.to_s)
-      logger.debug("いいいいいいいいいいいいいいいい")
       return
     end
 
@@ -379,7 +376,6 @@ class PapersController < ApplicationController
 
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
 
-    logger.debug("あああああああああああああああああああ")
     logger.debug(@kintai_header)
   end
 end

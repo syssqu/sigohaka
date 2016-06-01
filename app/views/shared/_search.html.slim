@@ -1,0 +1,18 @@
+.row
+  .larte-12.columns
+    .information_hearder
+      = form_tag search_summary_attendances_path, :method => :post do
+        .row
+          .large-1.small-4.columns
+            label.left.inline 年月
+          .large-3.large-pull-8.small-8.columns
+            = select_tag 'search[years]', options_for_select(years, selected: session[:years])
+        .row
+          .large-1.small-4.columns
+            label.left.inline 課
+          .large-3.large-pull-8.small-8.columns
+            = collection_select :search, :sections, sections, :id, :value, {selected: session[:sections], include_blank: true}
+        
+        .row
+          .large-6.large-centered.text-center.columns
+            = submit_tag "検  索", class: "button small radius", id: "go_to_work"
