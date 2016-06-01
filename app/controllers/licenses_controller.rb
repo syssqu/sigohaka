@@ -5,7 +5,7 @@ class LicensesController < ApplicationController
   # GET /licenses
   # GET /licenses.json
   def index
-    @licenses = current_user.licenses.all
+    @licenses = current_user.licenses.all.order(:code)
   end
 
   # GET /licenses/1

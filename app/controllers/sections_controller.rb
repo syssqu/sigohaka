@@ -5,7 +5,7 @@ class SectionsController < ApplicationController
   # before_filter :authenticate_admin_user!
 
   def index
-    @sections = Section.all
+    @sections = Section.all.order(:code)
   end
 
   def show

@@ -1,19 +1,18 @@
-.row
-  .large-12.columns.clearfix
-    = form_for @section do |f|
-      - if @section.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@section.errors.count, "error")} prohibited this section from being saved:"
-          ul
-            - @section.errors.full_messages.each do |message|
-              li = message
-      .field
-        = f.label :コード
-        = f.text_field :code
-      .field
-        = f.label :名称
-        = f.text_field :name
+= form_for @section do |f|
+  = render 'shared/error_messages', object: f.object
+          
+  .row
+    .large-2.small-4.columns
+      label.left.inline コード
+    .large-2.large-pull-8.small-8.columns
+      = f.text_field :code
+  .row
+    .large-2.small-4.columns
+      label.left.inline 名称
+    .large-2.large-pull-8.small-8.columns
+      = f.text_field :name
 
-      .actions
-       = f.submit '登録' ,class: "button tiny radius"
-       = link_to '戻る', sections_path, class: "button tiny radius"
+  .row
+    .large-6.large-centered.columns
+     = f.submit "登録" , class: "button radius"
+     = link_to "戻る" , sections_path, class: "button radius"

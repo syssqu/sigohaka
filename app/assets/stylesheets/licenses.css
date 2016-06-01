@@ -1,4 +1,29 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+/* =============================================================================
+   資格マスタ
+   ========================================================================== */
+@mixin box_sizing {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+article.licenses_index span{margin:0px;color:red;}
+
+/*article.licenses_index table{border-collapse: collapse;border-spacing: 0;}*/
+article.licenses_index table tr th {font-size:12px;}
+article.licenses_index table tr th{padding:5px 5px !important;}
+article.licenses_index table tr td {font-size:12px;}
+article.licenses_index table tr td{padding:2px 0px;height:24px !important;}
+article.licenses_index table tr td .button {padding:4px !important;margin:0px !important;}
+
+article.licenses_index select {display: inline-block;width:50%;}
+
+article.licenses_index label{padding-right: 20px;}
+
+article.licenses_index .button.tiny.radius a{color:white;}
+article.licenses_index .button.tiny.radius a:hover{background:none;}
+
+
+article.licenses_index .button{margin-right:0px;}
+
+/* =============================================================================
+   資格(編集)
+   ========================================================================== */
+article.licenses_edit input{margin-bottom:0px !important;}
+article.licenses_edit .button{margin-bottom:0px;}

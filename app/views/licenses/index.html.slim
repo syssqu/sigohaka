@@ -1,32 +1,29 @@
-article.license_index
+article.licenses_index
   .row
     .large-12.columns
       h3
-        i.fi-clipboard-pencil
-        |資格
+        i.fi-clipboard-pencil 資格
 
-    table
-      thead
-        tr
-          th コード
-          th 名称
-          th 取得年月
-          th ＩＤ
-          th
-          th
-          th
+      = link_to raw("<i class='fi-plus'></i>新規追加"),new_license_path,{class: "button tiny radius"}
 
-      tbody
-        - @licenses.each do |license|
+      table
+        thead
           tr
-            td = license.code
-            td = license.name
-            td = license.years
-            td = license.user_id
-            td = link_to '参照', license
-            td = link_to '編集', edit_license_path(license)
-            td = link_to '削除', license, data: {:confirm => '削除してもよろしいですか?'}, :method => :delete
+            th.text-center width="100" コード
+            th.text-center width="220" 名称
+            th.text-center width="120" 取得年月
+            th.text-center width="35" 修正
+            th.text-center width="35" 削除
 
-    br
-
-    = link_to '新規作成', new_license_path ,class: "button  radius"
+        tbody
+          - @licenses.each do |license|
+            tr
+              td.pleft = license.code
+              td = license.name
+              td = license.years
+              td.text-center
+                = link_to edit_license_path(license), class:"button tiny radius" do
+                  i.fi-pencil
+              td.text-center
+                = link_to license, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
+                  i.fi-x

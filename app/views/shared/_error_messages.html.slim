@@ -1,10 +1,12 @@
 - if object.errors.any?
-  #error_explanation
-    .alert-box.error.radius data-alert=""
-      | #{object.errors.count}件のエラーがあります。
-    .row
-      .large-12.columns
-        ul.pricing-table
-          - object.errors.full_messages.each do |msg|
-            li.bullet-item.left
-              | * #{msg}
+  .row
+    .large-12.columns
+      #error_explanation
+        .alert-box.error.radius data-alert=""
+          | #{object.errors.count}件のエラーがあります。
+        .row
+          .large-12.columns
+            ul.pricing-table
+              - object.errors.full_messages.each do |msg|
+                li.bullet-item.left
+                  | * #{msg}

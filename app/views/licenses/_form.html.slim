@@ -1,25 +1,22 @@
 = form_for @license do |f|
-  - if @license.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@license.errors.count, "error")} prohibited this license from being saved:"
-      ul
-        - @license.errors.full_messages.each do |message|
-          li = message
-
-  .field
-    = f.label :コード
-    = f.text_field :code
-  .field
-    = f.label :名称
-    = f.text_field :name
-  .field
-    = f.label :取得年月
-    = f.text_field :years
-  .field
-    = f.label :ユーザーＩＤ
-    = f.number_field :user_id
+  = render 'shared/error_messages', object: f.object
 
   .row
-      .large-6.laege-centered.columns
-       = f.submit "登録" , class: "button radius"
-       = link_to "戻る" , licenses_path, class: "button radius"
+    .large-2.small-4.columns
+      label.left.inline コード
+    .large-2.large-pull-8.small-8.columns
+      = f.text_field :code
+  .row
+    .large-2.small-4.columns
+      label.left.inline 名称
+    .large-2.large-pull-8.small-8.columns
+      = f.text_field :name
+  .row
+    .large-2.small-4.columns
+      label.left.inline 取得年月
+    .large-2.large-pull-8.small-8.columns
+      = f.text_field :years
+  .row
+    .large-6.large-centered.columns
+     = f.submit "登録" , class: "button radius"
+     = link_to "戻る" , licenses_path, class: "button radius"
