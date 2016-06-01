@@ -130,7 +130,7 @@ article.attendance_index
               td.text-center
                 - unless @freezed
                   = link_to edit_attendance_path(attendance), class:"button tiny radius" do
-                    i.fi-plus
+                    i.fi-pencil
               / td = link_to 'Destroy', attendance, data: {:confirm => 'Are you sure?'}, :method => :delete
 
           - @others.each do |other|
