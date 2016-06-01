@@ -61,6 +61,7 @@ class StampingsController < PapersController
   # :show, :edit, :update, :destroy, :input_attendance_time, :calculateにて呼び出す
   #
   def set_attendance
+    logger.debug("stampings_controller::set_attendance")
     init
 
     year = params["stamping"]["year"]
@@ -70,16 +71,15 @@ class StampingsController < PapersController
     mm = params["stamping"]["mm"]
     ss = params["stamping"]["ss"]
 
-    logger.debug("time : #{mm.to_s}")
-
     logger.debug(year + ":" + month + ":" + day + ":" + hh + ":" + mm + ":" + ss)
 
-    dateTime = Date.new(year.to_i, month.to_i, day.to_i)
-    @attendance = Attendance.find_by(user_id: view_context.target_user.id, attendance_date: dateTime)
+    @dateTime = Date.new(year.to_i, month.to_i, day.to_i)
+    @attendance = Attendance.find_by(user_id: view_context.target_user.id, attendance_date: @dateTime)
 
     if @attendance.nil?
       create_attendances
     end
+
   end
 
   #
@@ -90,7 +90,7 @@ class StampingsController < PapersController
 
     logger.debug("stampings_controller::create_attendances")
 
-    target_date = Date.new( YearsController.get_nendo(@target_years), YearsController.get_month(@target_years), 16)
+    target_date = Date.new( YearsController.get_nendo(@dateTime), YearsController.get_month(@dateTime), 16)
 
     end_attendance_date = target_date.months_since(1)
 
@@ -99,11 +99,14 @@ class StampingsController < PapersController
       logger.debug("勤怠日: " + target_date.to_s)
       logger.debug("勤怠最終日: " + end_attendance_date.to_s)
 
+      gatudo = YearsController.get_gatudo(target_date)
+      nendo = YearsController.get_target_year(target_date)
+      logger.debug("gatudo : " + gatudo.to_s)
       @attendance = view_context.target_user.attendances.build
 
-      @attendance[:attendance_date] = target_date
-      @attendance[:year] = @nendo
-      @attendance[:month] = @gatudo
+      @attendance[:attendance_date] = target_date.to_s
+      @attendance[:year] = nendo
+      @attendance[:month] = gatudo
 
       @attendance[:wday] = target_date.wday
 
@@ -127,7 +130,8 @@ class StampingsController < PapersController
       end
     end
 
-    @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
+    # 勤怠情報作成後、再度現在の勤怠情報を取得
+    @attendance = Attendance.find_by(user_id: view_context.target_user.id, attendance_date: @dateTime)
   end
 
   private
@@ -137,6 +141,6 @@ class StampingsController < PapersController
     def attendance_params
       params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
         :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
-        :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday)
+        :break_time, :kouzyo_time, :work_time, :remarks, :user_id, :hankyuu, :holiday, :go_to_work, :leave_work)
     end
 end
