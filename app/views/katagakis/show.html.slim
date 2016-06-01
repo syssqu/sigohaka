@@ -1,12 +1,11 @@
 p#notice = notice
 
 p
-  strong Name:
+  strong 名称:
   = @katagaki.name
 p
-  strong role:
+  strong タイプ:
   = role_info(@katagaki.role)
 
-= link_to 'Edit', edit_katagaki_path(@katagaki)
-'|
-= link_to 'Back', katagakis_path
+= link_to '編集', edit_katagaki_path(@katagaki), class: "button radius"
+= link_to '戻る', katagakis_path, class: "button radius"

@@ -15,6 +15,10 @@ class AttendancesController < PapersController
 
     init
 
+    unless @kinmu_patterns.exists?
+      create_kinmu_patterns
+    end
+
     unless @attendances.exists?
       create_attendances
     end
@@ -46,6 +50,7 @@ class AttendancesController < PapersController
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @others = get_attendance_others_info
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s, month: @gatudo.to_s)
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
 
     @title = '勤務状況報告書'
   end
@@ -74,7 +79,8 @@ class AttendancesController < PapersController
   # 編集画面
   #
   def edit
-    temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null").order("code ASC")
+    init
+    temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null and (year = ? and month = ?)", @nendo.to_s, @gatudo.to_s).order("code ASC")
     @pattern = temp.collect do |k|
       [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
     end
@@ -86,6 +92,7 @@ class AttendancesController < PapersController
   # 更新処理
   #
   def update
+    init
     @attendance.is_blank_start_time = false
     @attendance.is_blank_end_time = false
 
@@ -130,7 +137,7 @@ class AttendancesController < PapersController
       redirect_to attendances_path, notice: '更新しました。'
     else
 
-      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null").order("code ASC")
+      temp = view_context.target_user.kinmu_patterns.where("start_time is not null and end_time is not null and (year = ? and month = ?)", @nendo.to_s, @gatudo.to_s).order("code ASC")
       @pattern = temp.collect do |k|
         [ "#{k.code} 出勤: #{k.start_time.strftime('%_H:%M')} 退勤: #{k.end_time.strftime('%_H:%M')} 休憩: #{k.break_time}h 実働: #{k.work_time}h ", k.code]
       end
@@ -156,9 +163,9 @@ class AttendancesController < PapersController
 
       # 休日でない場合は勤務パターンをベースに値を設定
       @attendances.where("holiday = '0'").update_all([sql,
-          view_context.target_user.kinmu_patterns.first.code,
-          view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M"),
-          view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M"),
+          @kinmu_patterns.first.code,
+          @kinmu_patterns.first.start_time.strftime("%_H:%M"),
+          @kinmu_patterns.first.end_time.strftime("%_H:%M"),
           false,false,false,false,false,false,false,
           false,false,false,0.00, 0.00, 0.00, 0.00, 0.00,
           view_context.target_user.kinmu_patterns.first.work_time,nil])
@@ -180,10 +187,10 @@ class AttendancesController < PapersController
   # 編集画面にて呼び出される
   #
   def input_attendance_time
-
+    init
     logger.debug("attendances_controller::input_attendance_time")
 
-    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.where("year = ? and month = ? and code = ?", @nendo.to_s, @gatudo.to_s, params[:pattern]).first
 
     if temp_pattern.nil?
       @attendance.start_time = "";
@@ -210,6 +217,7 @@ class AttendancesController < PapersController
   # 編集画面にて呼び出される
   #
   def calculate
+    init
 
     Rails.logger.info("自動計算処理")
     Rails.logger.info("PARAMS: #{params.inspect}")
@@ -220,18 +228,12 @@ class AttendancesController < PapersController
       return
     end
 
-    temp_pattern = view_context.target_user.kinmu_patterns.find_by(code: params[:pattern])
+    temp_pattern = view_context.target_user.kinmu_patterns.where("year = ? and month = ? and code = ?", @nendo.to_s, @gatudo.to_s, params[:pattern]).first
 
-    Rails.logger.info("pattern_start_date: " + temp_pattern.start_time.to_s)
-    Rails.logger.info("pattern_end_date: " + temp_pattern.end_time.to_s)
+    logger.debug("画面入力値(出勤時刻) #{params[:start_time]}")
+    logger.debug("画面入力値(退勤時刻) #{params[:end_time]}")
 
-    logger.debug("画面入力値(出勤時刻)" + params[:start_time])
-    logger.debug("画面入力値(退勤時刻)" + params[:end_time])
-
-    # attendance_start_time = Time.local(temp_pattern.start_time.year, temp_pattern.start_time.month, temp_pattern.start_time.day, params[:start_time][0..1], params[:start_time][3..4], 0)
-    # attendance_end_time = Time.local(temp_pattern.end_time.year, temp_pattern.end_time.month, temp_pattern.end_time.day, params[:end_time][0..1], params[:end_time][3..4], 0)
-
-    @attendance.calculate(temp_pattern, params[:start_time], params[:end_time])
+    @attendance.calculate(temp_pattern , params[:start_time],params[:end_time])
   end
 
   #
@@ -300,6 +302,8 @@ class AttendancesController < PapersController
 
     @attendances = view_context.target_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("attendance_date")
     @kintai_header = view_context.target_user.kintai_headers.find_by(year: @nendo.to_s,month: @gatudo.to_s)
+    @kinmu_patterns = view_context.target_user.kinmu_patterns.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s).order("code ASC")
+
   end
 
   #
@@ -330,10 +334,10 @@ class AttendancesController < PapersController
         @attendance[:holiday] = "1"
       elsif ! view_context.target_user.kinmu_patterns.first.nil?
 
-        @attendance[:pattern] = view_context.target_user.kinmu_patterns.first.code
-        @attendance[:start_time] = view_context.target_user.kinmu_patterns.first.start_time.strftime("%_H:%M")
-        @attendance[:end_time] = view_context.target_user.kinmu_patterns.first.end_time.strftime("%_H:%M")
-        @attendance[:work_time] = view_context.target_user.kinmu_patterns.first.work_time
+        @attendance[:pattern] = @kinmu_patterns.first.code
+        @attendance[:start_time] = @kinmu_patterns.first.start_time.strftime("%_H:%M")
+        @attendance[:end_time] = @kinmu_patterns.first.end_time.strftime("%_H:%M")
+        @attendance[:work_time] = @kinmu_patterns.first.work_time
         @attendance[:holiday] = "0"
 
       end

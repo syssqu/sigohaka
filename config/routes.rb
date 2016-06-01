@@ -125,6 +125,14 @@ Rails.application.routes.draw do
 
   match '/index_freeze', to:'papers#index_freeze', via: :get
 
+
+  resources :kinmu_patterns, only:[:index, :new, :create, :edit, :update] do
+    collection do
+      get 'create_pre_month'
+      get 'create_next_month'
+    end
+  end
+
   resources :kinmu_patterns
   resources :sections
   resources :attendances, only:[:index, :new, :create, :edit, :update] do

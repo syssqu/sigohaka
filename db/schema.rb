@@ -156,6 +156,8 @@ ActiveRecord::Schema.define(version: 20160527051942) do
     t.string   "code",                limit: 2
     t.decimal  "midnight_break_time",           precision: 4, scale: 2, default: 0.0
     t.boolean  "shift",                                                 default: false, null: false
+    t.string   "year"
+    t.string   "month"
   end
 
   create_table "kintai_headers", force: true do |t|

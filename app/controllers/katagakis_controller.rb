@@ -22,7 +22,7 @@ class KatagakisController < ApplicationController
     @katagaki = Katagaki.new(katagaki_params)
 
     if @katagaki.save
-      redirect_to @katagaki, notice: '役職作成しました'
+      redirect_to katagakis_path, notice: '役職作成しました'
     else
       render :new
     end
@@ -30,7 +30,7 @@ class KatagakisController < ApplicationController
 
   def update
     if @katagaki.update(katagaki_params)
-      redirect_to @katagaki, notice: '役職を更新しました'
+      redirect_to katagakis_path, notice: '役職を更新しました'
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class KatagakisController < ApplicationController
   def destroy
     @katagaki.destroy
     respond_to do |format|
-      format.html { redirect_to katagakis_url, notice: 'Katagaki was successfully destroyed.' }
+      format.html { redirect_to katagakis_url, notice: '役職を削除しました' }
       format.json { head :no_content }
     end
   end

@@ -39,7 +39,7 @@ class SectionsController < ApplicationController
   def destroy
     @section.destroy
     respond_to do |format|
-      format.html { redirect_to sections_url, notice: 'Section was successfully destroyed.' }
+      format.html { redirect_to sections_url, notice: '課を削除しました' }
       format.json { head :no_content }
     end
   end

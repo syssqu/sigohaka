@@ -24,10 +24,10 @@
           td width="50px"
 
         tr
-          td 
-          td 
-          td 
-          td 
+          td
+          td
+          td
+          td
           td#day colspan="3" width="140"  提出日 平成#{@nendo-1988}#{ @date.strftime("年%_m月%_d日")}
 
       table.user
@@ -37,7 +37,7 @@
 
           td width="110" colspan="2" style="border-right:none;"プロジェクト名:
           td style="border-left:none;"#{@project.summary}
-          
+
           / td width="110"#{current_user.employee_no}
 
         tr
@@ -47,7 +47,7 @@
           td colspan="2" style="border-right:none;"社員　NO:
           td style="border-left:none;"#{current_user.employee_no}
 
-        
+
         tr
           td 届　出　理　由
           td#reason colspan="6"
@@ -98,7 +98,7 @@
               span#ok 公団
             -elsif @housing_allowances.housing_style!="kou"
               span 公団
-            |　・  
+            |　・
             - if @housing_allowances.housing_style=="si"
               span#ok 市営
             -elsif @housing_allowances.housing_style!="si"
@@ -119,7 +119,7 @@
           td 契　約　期　間
           td colspan="6"
             - if !@housing_allowances.agree_date_s.nil?
-              |#{ @housing_allowances.agree_date_s.strftime("%Y年%_m月%_d日")} 
+              |#{ @housing_allowances.agree_date_s.strftime("%Y年%_m月%_d日")}
             |～　
             - if !@housing_allowances.agree_date_e.nil?
               |#{ @housing_allowances.agree_date_e.strftime("%Y年%_m月%_d日")}
@@ -161,22 +161,22 @@
             - if !@housing_allowances.support_name1.nil?
               |#{@housing_allowances.support_name1}
             |)(
-            - if !@housing_allowances.support_name2.nil?  
+            - if !@housing_allowances.support_name2.nil?
               |#{@housing_allowances.support_name2}
             |)
 
 
         tr
-          td.zyouken colspan="6" 
+          td.zyouken colspan="6"
             |　　　　　　　　　支給条件
           td 支給金額
         tr
-          td.zyouken colspan="6" 
+          td.zyouken colspan="6"
             |　　独身借家及び自家保有者<br>
             |　　　　(独身者で当然の必然性により自宅又は借家居住)
           td <br>１３，０００　円
         tr
-          td.zyouken colspan="6" 
+          td.zyouken colspan="6"
             |　　妻帯者及び有扶養者<br>
             |　　　　(妻以外の扶養者を有している者)
           td <br>２２，０００　円

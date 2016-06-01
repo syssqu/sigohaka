@@ -25,10 +25,10 @@ class LicensesController < ApplicationController
   # POST /licenses
   # POST /licenses.json
   def create
-    @license = License.new(license_params)
+    @license = current_user.licenses.build(license_params)
 
     if @license.save
-      redirect_to @license, notice: 'License was successfully created.'
+      redirect_to licenses_path, notice: '作成しました。'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class LicensesController < ApplicationController
   # PATCH/PUT /licenses/1.json
   def update
     if @license.update(license_params)
-      redirect_to @license, notice: 'License was successfully updated.'
+      redirect_to licenses_path, notice: '更新しました。'
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class LicensesController < ApplicationController
   # DELETE /licenses/1.json
   def destroy
     @license.destroy
-    redirect_to licenses_url, notice: 'License was successfully destroyed.'
+    redirect_to licenses_url, notice: '削除しました。'
   end
 
   private

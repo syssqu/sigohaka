@@ -9,7 +9,7 @@ class AttendanceOther < ActiveRecord::Base
   attr_accessor :is_negative_other_work_time
 
   validates :summary, length: { maximum: 7 }
-  validates :remarks, length: { maximum: 20 }
+  validates :remarks, length: { maximum: 10 }
 
   validate :check_negative, on: :update
 

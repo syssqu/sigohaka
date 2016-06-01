@@ -9,9 +9,11 @@
               li = message
 
       .field
-        = f.label :name
+        = f.label :名称
         = f.text_field :name
       .field
-        = f.label :role
+        = f.label :タイプ
         = f.select :role, $role_info
-      .actions = f.submit 'Save'
+      .actions
+        = f.submit '登録', class: "button radius"
+        = link_to '戻る', katagakis_path, class: "button radius"
