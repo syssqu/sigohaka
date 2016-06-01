@@ -1,17 +1,16 @@
 
 article.summary_attendance_print
+
   / ヘッダー
   .row
-    .large-3.columns
-      div style="margin-top: 90px" #{seireki2wareki(@nendo.to_i, @gatudo.to_i, 1)} #{@gatudo}月度
-        
-    
-    .large-3.columns
-      div style="margin-top: 80px"
+    .large-12.columns
+      div.left style="margin:74px 120px 0px 2px;" #{seireki2wareki(@nendo.to_i, @gatudo.to_i, 1)} #{@gatudo}月度
+
+
+      div.left style="margin:58px 120px 0px 2px;"
         h4 勤務状況集計表
         
-    .large-3.columns 
-      table#attendance_inkan.right border="1" cellspacing="0" cellpadding="5" bordercolor="#000" style="border-collapse: collapse;margin-right:10px;margin-top: 20px;"
+      table#summary_inkan.right border="1" cellspacing="0" cellpadding="5" bordercolor="#000" style="border-collapse: collapse;margin-right:10px;margin-top: 10px;margin-bottom:0px;"
         tbody
           tr
             td.text-center width="60px;" 
@@ -23,7 +22,7 @@ article.summary_attendance_print
             td
             td
             td
-    .large-3.columns 
+          
   .row
     .large-12.columns
       br
@@ -31,10 +30,10 @@ article.summary_attendance_print
         thead
           tr
             td.text-center width="60px" 社員番号
-            td.text-center width="120px" 氏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名
-            td.text-center width="50px" 勤務日数
+            td.text-center width="110px" 氏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名
+            td.text-center width="54px" 勤務日数
 
-            td.text-center width="36px" 傷病欠
+            td.text-center width="48px" 傷病欠
             td.text-center width="36px" 欠勤
             td.text-center width="36px" 半欠勤
             td.text-center width="36px" 遅刻
@@ -47,19 +46,19 @@ article.summary_attendance_print
             td.text-center width="36px" 半休
             td.text-center width="36px" 出張
 
-            td.text-center width="60px" 通常超過
-            td.text-center width="60px" 休日超過
-            td.text-center width="60px" 深夜時間
-            td.text-center width="60px" 控除時間
-            td.text-center width="60px" 実働時間
-            td.text-center width="60px" 前月繰越
-            td.text-center width="60px" 当月繰越
-            td.text-center width="60px" 有休残
-            td.text-center width="60"
+            td.text-center width="55px" 通常超過
+            td.text-center width="55px" 休日超過
+            td.text-center width="55px" 深夜時間
+            td.text-center width="55px" 控除時間
+            td.text-center width="55px" 実働時間
+            td.text-center width="55px" 前月繰越
+            td.text-center width="55px" 当月繰越
+            td.text-center width="55px" 有休残
+            td.text-center width="55px" style="line-height:10px;"
               |半休使用
               br
               |回数
-            td.text-center width="140px" 備考
+            td.text-center width="160px" 備考
 
         tbody
           - record_number = 0

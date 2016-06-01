@@ -45,26 +45,8 @@ article.summary_attendance_edit .button{margin-bottom:0px;}
 //
 // 勤務状況集計表　印刷画面
 // ==================================================================
-article.summary_attendance_print span{margin:0px;color:red;}
-
-article.summary_attendance_print table{border-spacing: 0;}
-article.summary_attendance_print table tr th{margin:0px;padding:0px 2px !important;font-size:8px !important;word-wrap: normal !important;}
-article.summary_attendance_print table tr td {font-size:8px;}
-article.summary_attendance_print table tr td{padding:2px 0px;height:24px !important;background-color:#fff;}
-article.summary_attendance_print table tr td .button {padding:4px !important;margin:0px !important;}
+article.summary_attendance_print {margin:0px;padding:0px;}
+article.summary_attendance_print h4{padding:0px;margin:0px;}
+article.summary_attendance_print table{border-spacing: 0;margin:0px;padding:0px;}
+article.summary_attendance_print table tr td{font-size: x-small;padding:0px;background-color:#fff;font-weight: normal;white-space: nowrap;}
 article.summary_attendance_print table tr td.bg_gray{background-color:#9F9687 !important;}
-article.summary_attendance_print select {display: inline-block;width:50%;}
-
-article.summary_attendance_print #paper_header table#paper_project {border-style:none !important;width:230px;margin-right:60px;margin-top:10px;}
-article.summary_attendance_print #paper_header table#paper_project table {border:none;}
-article.summary_attendance_print #paper_header table#paper_project td {border:0px;background-color:#fff;border-bottom: 1px solid #ECECEC;height:60px;}
-article.summary_attendance_print #paper_header table#paper_project td strong{color:#6E6E6E;}
-// article.summary_attendance_print #attendance_title{width:200px;border-bottom:1px solid #000;text-align:center;margin-bottom:20px;}
-// article.summary_attendance_print #attendance_nengetu{width:240px;text-align:center;}
-article.summary_attendance_print #paper_header table#paper_project{margin-bottom:0px;}
-
-
-article.summary_attendance_print label{padding-right: 20px;}
-
-article.summary_attendance_print .button.tiny.radius a{color:white;}
-article.summary_attendance_print .button.tiny.radius a:hover{background:none;}
