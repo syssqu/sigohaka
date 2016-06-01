@@ -36,7 +36,7 @@ article.transport_index
               td
                 - unless @freezed 
                   = link_to edit_transportation_express_path(transportation_express), class:"button tiny radius" do
-                    i.fi-plus
+                    i.fi-pencil
               td
                 - unless @freezed
                   = link_to transportation_express, data: {:confirm => '削除してもよろしいですか？'}, :method => :delete , class:"button tiny alert" do
