@@ -142,7 +142,7 @@ class AttendanceInformationController < ApplicationController
   def init(freezed=false)
 
     if changed_years?
-      session[:years] = params[:years][:years]
+      session[:years] = params[:paper][:years]
     end
 
     @attendance_years = YearsController.get_years(current_user.attendances, session[:years], freezed)
@@ -154,6 +154,6 @@ class AttendanceInformationController < ApplicationController
   # 画面の対象年月が変更されたどうかを判定する
   # @return [Boolean] 対象年月が変更されている場合はtrueを返す。そうでない場合はfalseを返す
   def changed_years?
-    return ! params[:years].nil?
+    return ! params[:paper].nil?
   end
 end

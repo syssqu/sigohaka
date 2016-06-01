@@ -5,14 +5,14 @@ class SummaryAttendancesController < PapersController
   before_action :authenticate_user!
   # GET /summary_attendances
   # GET /summary_attendances.json
-  
 
   def index
 
+    logger.debug("SummaryAttendancesController:index")
     init
-    
 
     session[:years] = "#{@nendo}#{@gatudo}"
+    session[:sections] = current_user.section.id
     logger.debug("session_years"+session[:years])
 
     # 未実装
@@ -23,34 +23,112 @@ class SummaryAttendancesController < PapersController
     #   @status = "本人確認済み"
     # end
 
-    create_summary_attendances
+
     # 合計出力用
     # @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
 
-
-    
-
-    set_freeze_info
-    
-    # TODO 課会などの実働時間は未使用
-    # 課会や全体会の情報等々、通常勤怠から外れる分はattendance_othersとして管理する
-    # @others = get_attendance_others_info
-
+    @years = create_years_collection view_context.target_user.summary_attendances # 対象年月リスト 要修正
+    @sections = create_sections_collection
   end
 
+  def search
+    logger.debug("SummaryAttendancesController:search")
+
+    init
+
+    if params[:search]
+      session[:years] = params[:search][:years]
+    end
+    if params[:search]
+      session[:sections] = params[:search][:sections]
+    end
+
+    @nendo = session[:years][0..3]
+    @gatudo = session[:years][4..5]
+
+    user = User.new
+    @users = user.get_summary_attendances(@nendo, @gatudo, params[:search][:sections])
+
+    # if current_user.katagaki.role == "admin"
+    #   @users = User.all
+    # elsif current_user.katagaki.role == "manager"
+    #   @users = User.where( section_id:current_user.section_id)
+    # end
+
+
+
+    create_summary_attendances
+
+    set_freeze_info
+
+    @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    @years = create_years_collection view_context.target_user.vacation_requests # 対象年月リスト 要修正
+    @sections = create_sections_collection
+    # redirect_to action: :index
+
+    @users = user.get_summary_attendances(@nendo, @gatudo, params[:search][:sections])
+
+    render :index
+  end
+
+  def calculate
+    logger.debug("SummaryAttendancesController:calculate")
+
+    init
+
+    @nendo = session[:years][0..3]
+    @gatudo = session[:years][4..5]
+
+    user = User.new
+    @users = user.get_summary_attendances(@nendo, @gatudo, session[:sections])
+
+    unless @users.nil?
+
+      if @summary_attendances.nil? || !@summary_attendances.exists?
+
+        @users.each do |user|
+          @summary_attendance = user.summary_attendances.find_by(year: @nendo.to_s, month: @gatudo.to_s)
+
+          pre_date = Date.new(@nendo.to_i, @gatudo.to_i, 1).prev_month
+          pre_summary = current_user.summary_attendances.find_by(year: pre_date.year.to_s, month: pre_date.month.to_s)
+
+          if pre_summary.exists?
+            if summary_attendance.update_attributes(previous_m: pre_summary.present_m, vacation:pre_summary.vacation - user.yuukyuu, half_holiday: pre_summary.half_holiday + user.hankyuu)
+              # @summary_attendances << @summary_attendance
+            end
+          end
+        end
+      end
+    end
+
+    set_freeze_info
+
+    @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+
+    @years = create_years_collection view_context.target_user.vacation_requests # 対象年月リスト 要修正
+    @sections = create_sections_collection
+    # redirect_to action: :index
+
+    @users = user.get_summary_attendances(@nendo, @gatudo, session[:sections])
+
+    render :index
+
+
+  end
 
 
   def set_freeze_info
 
     # logger.debug("凍結状態の取得")
-    
+
     # if view_context.be_self @attendances.first
     #   @freezed = @attendances.first.self_approved or @attendances.first.boss_approved
     # else
     #   @freezed = @attendances.first.boss_approved
     # end
-    
+
     # logger.debug("勤怠情報: " + @attendances.first.id.to_s + ", " + @attendances.first.year + ", " + @attendances.first.month + ", " + @attendances.first.self_approved.to_s + ", " + @attendances.first.boss_approved.to_s)
     # logger.debug("凍結状態: " + @freezed.to_s)
   end
@@ -87,27 +165,23 @@ class SummaryAttendancesController < PapersController
 
   def print_proc
 
-    years = session[:years]
-
-    if years.nil?
-      attendance_years = Date.today
-    else
-      attendance_years = Date.new(years[0..3].to_i, years[4..5].to_i, 1)
-    end
-
-    @nendo = get_nendo(attendance_years)
-    @gatudo = get_gatudo(attendance_years)
-    @project = get_project
+    logger.debug("SummaryAttendancesController:search")
 
     init
 
-    # @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    # @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    @others = current_user.attendance_others
-    # @user = User.all
-    
-    # @summary_attendances = user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    # @others = user.attendance_others
+    if params[:search]
+      session[:years] = params[:search][:years]
+    end
+    if params[:search]
+      session[:sections] = params[:search][:sections]
+    end
+
+    @nendo = session[:years][0..3]
+    @gatudo = session[:years][4..5]
+
+    user = User.new
+    @users = user.get_summary_attendances(@nendo, @gatudo, session[:sections])
+    @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
 
     @title = '勤務状況報告書'
   end
@@ -160,7 +234,7 @@ class SummaryAttendancesController < PapersController
   #   @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
   #   @attendances = Attendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
   #   @others = current_user.attendance_others
-  #   @user = User.all
+  #   @users = User.all
   #   respond_to do |format|
   #     # format.html { redirect_to print_attendances_path(format: :pdf)}
   #     # format.pdf do
@@ -193,23 +267,17 @@ class SummaryAttendancesController < PapersController
 
   # 初期化
   def init(freezed=false)
-    if changed_attendance_years?
-      session[:years] = params[:paper][:years]
+
+    logger.debug("SummaryAttendancesController:init")
+
+    if params[:search]
+      session[:years] = params[:search][:years]
+    end
+    if params[:search]
+      session[:sections] = params[:search][:sections]
     end
 
-    @attendance_years = get_years(current_user.attendances, freezed)
-    # @attendance_years = Date.new(2014, 2, 20)
-    @nendo = get_nendo(@attendance_years)
-    @gatudo = get_gatudo(@attendance_years)
-    @project = get_project
-
-    @attendances = current_user.attendances.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    # @nen_gatudo = current_user.attendances.select("year ||  month as id, year || '年' || month || '月度' as value").group('year, month').order("id desc")
-
-    # if current_user.kinmu_patterns.first.nil?
-    #   flash.now[:alert] = '勤務パターンを登録して下さい。'
-    #   return
-    # end
+    super(view_context.target_user.summary_attendances, freezed)
 
     # 総合計
     @byouketu_sum=0
@@ -233,17 +301,12 @@ class SummaryAttendancesController < PapersController
     @kinmu_sum=0
     @work_time_sum=0
 
+    @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @pre_summary = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
+    @users = User.where("1=2")
 
-     @summary_attendances = SummaryAttendance.where("year = ? and month = ?", @nendo.to_s, @gatudo.to_s)
-    if current_user.katagaki.role == "admin"
-      @user = User.all
-    elsif current_user.katagaki.role == "manager"
-      @user = User.where( section_id:current_user.section_id)
-    end
-    # @summary_attendances = @user.summary_attendances
+    # @summary_attendances = @users.summary_attendances
     # @summary_attendance = user.attendances.order
-    
-    
   end
 
 
@@ -252,59 +315,45 @@ class SummaryAttendancesController < PapersController
   # ※事前にinitメソッドを実行して、対象年月を確定しておく必要あり
   #
   def create_summary_attendances(freezed=false)
-    if @user.exists?
+
+    logger.debug("SummaryAttendancesController:create_summary_attendances")
+
+    unless @users.nil?
       # summary_attendancesが存在しなければユーザー数分作成
-      create_years_collection current_user.attendances, freezed
-      if !@summary_attendances.exists?
-        @user.each do |user|
+      # create_years_collection current_user.attendances, freezed
+
+      if @summary_attendances.nil? || !@summary_attendances.exists?
+        @summary_attendances = []
+
+        @users.each do |user|
           @summary_attendance = user.summary_attendances.build
           @summary_attendance[:year] = @nendo
           @summary_attendance[:month] = @gatudo
+
+          pre_date = Date.new(@nendo.to_i, @gatudo.to_i, 1).prev_month
+
+          pre_summary = user.summary_attendances.find_by(year: pre_date.year.to_s, month: pre_date.month.to_s)
+          unless pre_summary.blank?
+            @summary_attendance[:previous_m] = pre_summary.previous_m
+            @summary_attendance[:vacation] = pre_summary.vacation.to_f - user.yuukyuu.to_f
+            @summary_attendance[:half_holiday] = pre_summary.half_holiday.to_f + user.hankyuu.to_f
+
+            logger.debug("previous_m: " + pre_summary.previous_m.to_s)
+            logger.debug("vacation: " + pre_summary.vacation.to_s)
+            logger.debug("yuukyuu: " + user.yuukyuu.to_s)
+            logger.debug("half_holiday: " + pre_summary.half_holiday.to_s)
+            logger.debug("hankyuu: " + user.hankyuu.to_s)
+          end
+
+          logger.debug("年度:#{@nendo} 月度:#{@gatudo}")
+
           if @summary_attendance.save
-            @summary_attendances << @summary_attendance
+            # @summary_attendances << @summary_attendance
           end
         end
-        return
       end
     end
-
-
-    # summary_attendanceにuser_idが存在しなければ作成する
-    not_summary_attendance=1
-    @user.each do |user|
-
-      @summary_attendances.each do |summary_attendance|
-        if user.id == summary_attendance.user_id
-          not_summary_attendance = 0
-        end
-      end
-
-      if not_summary_attendance==1
-        @summary_attendance = user.summary_attendances.build
-        @summary_attendance[:year] = @nendo
-        @summary_attendance[:month] = @gatudo
-        if @summary_attendance.save
-          @summary_attendances << @summary_attendance
-        end
-      end
-
-      not_summary_attendance=1
-    
-    end
-    create_years_collection current_user.attendances, freezed
   end
-
-
-
-  # def set_attendance
-  #   @attendance = Attendance.find(params[:id])
-  # end
-
-  # def attendance_params
-  #   params.require(:attendance).permit(:attendance_date, :year, :month, :day, :wday, :pattern, :start_time, :end_time, :byouketu,
-  #     :kekkin, :hankekkin, :tikoku, :soutai, :gaisyutu, :tokkyuu, :furikyuu, :yuukyuu, :syuttyou, :over_time, :holiday_time, :midnight_time,
-  #     :break_time, :kouzyo_time, :work_time, :remarks, :user_id)
-  # end
 
   def get_gatudo(target_date)
     gatudo = target_date.month
@@ -343,7 +392,7 @@ class SummaryAttendancesController < PapersController
   end
 
   # def get_attendance_years(nen_gatudo)
-  
+
   #   if ! changed_attendance_years?
   #     return Date.today
   #   else
@@ -353,10 +402,10 @@ class SummaryAttendancesController < PapersController
   # end
   def get_attendance_others_info
     others = current_user.attendance_others
-    
+
     if ! others.exists?
       @other = current_user.attendance_others.build(summary:"課会", start_time: "19:30", end_time: "20:30", work_time: 1.00, remarks: "XXX実施")
-      
+
       if @other.save
         others << @other
       end

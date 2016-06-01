@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       get 'cancel_approval'
       get 'create_pre_month'
       get 'create_next_month'
+      get 'calculate'
+      get 'print'
+      post 'search'
     end
   end
 

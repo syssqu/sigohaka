@@ -1,4 +1,4 @@
-article.attendance_index
+article.information_index
   .row
     .large-12.columns
       h3
@@ -6,7 +6,7 @@ article.attendance_index
         |勤怠登録状況照会
 
       / 対象年月
-      = render partial: 'shared/years', locals: { years: @years, pre_path: attendance_information_create_pre_month_path, next_path: attendance_information_create_next_month_path }
+      = render partial: 'shared/years', locals: { target: "attendance_information", years: @years, pre_path: attendance_information_create_pre_month_path, next_path: attendance_information_create_next_month_path }
 
       hr
       / 勤怠表

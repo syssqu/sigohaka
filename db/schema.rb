@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527015727) do
+ActiveRecord::Schema.define(version: 20160527051942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -238,15 +238,18 @@ ActiveRecord::Schema.define(version: 20160527015727) do
 
   create_table "summary_attendances", force: true do |t|
     t.integer  "user_id"
-    t.string   "year",         limit: 4
-    t.string   "month",        limit: 2
+    t.string   "year",          limit: 4
+    t.string   "month",         limit: 2
     t.decimal  "previous_m"
     t.decimal  "present_m"
-    t.integer  "vacation"
+    t.decimal  "vacation",                precision: 4, scale: 2
     t.integer  "half_holiday"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "note"
+    t.boolean  "self_approved",                                   default: false
+    t.boolean  "boss_approved",                                   default: false
+    t.boolean  "freezed",                                         default: false
   end
 
   create_table "time_lines", force: true do |t|

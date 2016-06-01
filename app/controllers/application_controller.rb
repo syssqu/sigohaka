@@ -52,6 +52,13 @@ class ApplicationController < ActionController::Base
     return User.select("id, family_name || ' ' || first_name as value").where(section_id: current_user.section_id).order("family_name, first_name")
   end
 
+  #
+  # 課の情報を返す
+  #
+  def create_sections_collection
+    return Section.select("id, name as value").order("code")
+  end
+
   # 自分が属する課のマネージャーを取得する。
   def getManager()
     manager = User::Roles::MANAGER
