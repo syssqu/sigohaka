@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     ActiveRecord::Base.transaction do
 
       if params[:project][:active] == "1"
-        current_user.projects.update_all(["active = ?", false])
+        current_user.projects.where.not(id:@project).update_all(["active = ?", false])
       end
 
       @project.update!(project_params)
@@ -58,6 +58,9 @@ class ProjectsController < ApplicationController
 
     def project_params
       params.require(:project).permit(:code, :name, :start_date, :end_date, :summary, :description,
-                                      :os, :language, :database, :dep_size, :role, :experience, :remarks, :active)
+                                      :os, :language, :database, :dep_size, :experience, :remarks, :active, :role,
+                                      :prom, :prol, :systeme, :seizou, :program, :operate, :sonota, :kikaku, :kihon,
+                                      :shousai, :prosekkei, :programing, :protest, :systest, :unyoutest, :unyou,
+                                      :sysunyou, :syssupport, :prokanri)
     end
 end

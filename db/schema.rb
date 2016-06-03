@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520070004) do
+ActiveRecord::Schema.define(version: 20160601010841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,25 @@ ActiveRecord::Schema.define(version: 20160520070004) do
     t.datetime "updated_at"
     t.boolean  "active"
     t.integer  "term"
+    t.boolean  "prom"
+    t.boolean  "prol"
+    t.boolean  "systeme"
+    t.boolean  "seizou"
+    t.boolean  "program"
+    t.boolean  "operate"
+    t.boolean  "sonota"
+    t.boolean  "kikaku"
+    t.boolean  "kihon"
+    t.boolean  "shousai"
+    t.boolean  "prosekkei"
+    t.boolean  "programing"
+    t.boolean  "protest"
+    t.boolean  "systest"
+    t.boolean  "unyoutest"
+    t.boolean  "unyou"
+    t.boolean  "sysunyou"
+    t.boolean  "syssupport"
+    t.boolean  "prokanri"
   end
 
   create_table "qualification_allowances", force: true do |t|

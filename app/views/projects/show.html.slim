@@ -47,17 +47,62 @@ article.projects.show
         .large-2.small-4.columns
           label.left.inline 役割
         .large-3.large-pull-7.small-8.columns
-          strong = @project.role
+          strong
+            = check_box_tag 'project[prom]', true, checked=@project.prom, {disabled: true}
+            |PM:プロジェクト
+            = check_box_tag 'project[prol]', true, checked=@project.prol, {disabled: true}
+            |PL:プロジェクトリーダー
+            = check_box_tag 'project[systeme]', true, checked=@project.systeme, {disabled: true}
+            |SE:システムエンジニア
+            = check_box_tag 'project[seizou]', true, checked=@project.seizou, {disabled: true}
+            |ML:製造リーダー
+            = check_box_tag 'project[program]', true, checked=@project.program, {disabled: true}
+            |PG:プログラマー
+            = check_box_tag 'project[operate]', true, checked=@project.operate, {disabled: true}
+            |OP:オペレーター
+            = check_box_tag 'project[sonota]', true, checked=@project.sonota, {disabled: true}
+            |AN:その他
+
       .row
         .large-2.small-4.columns
           label.left.inline 工程
         .large-3.large-pull-7.small-8.columns
-          strong = @project.experience
+          strong
+            = check_box_tag 'project[kikaku]', true, checked=@project.kikaku, {desabled: true}
+            |1:企画・分析・コンサルタント
+            = check_box_tag 'project[kihon]', true, checked=@project.kihon, {disabled: true}
+            |2:基本設計概要設計
+            = check_box_tag 'project[shousai]', true, checked=@project.shousai, {disabled: true}
+            |3:詳細設計（機能設計・論理設計）
+            = check_box_tag 'project[prosekkei]', true, checked=@project.prosekkei, {disabled: true}
+            |4:プログラム設計
+            = check_box_tag 'project[programing]', true, checked=@project.programing, {disabled: true}
+            |5:プログラミング
+            = check_box_tag 'project[protest]', true, checked=@project.protest, {disabled: true}
+            |6:プログラムテスト
+            = check_box_tag 'project[systest]', true, checked=@project.systest, {disabled: true}
+            |7:システムテスト
+            = check_box_tag 'project[unyoutest]', true, checked=@project.unyoutest, {disabled: true}
+            |8:運用テスト
+            = check_box_tag 'project[unyou]', true, checked=@project.unyou, {disabled: true}
+            |9:運用
+            = check_box_tag 'project[sysunyou]', true, checked=@project.sysunyou, {disabled: true}
+            |10:システム運用・保守・維持管理
+            = check_box_tag 'project[syssupport]', true, checked=@project.syssupport, {disabled: true}
+            |11:システムエンジニアサポート
+            = check_box_tag 'project[prokanri]', true, checked=@project.prokanri, {disabled: true}
+            |12:プロジェクト管理
+
       .row
         .large-2.small-4.columns
           label.left.inline 備考
         .large-3.large-pull-7.small-8.columns
           strong = @project.remarks
+      .row
+        .large-2.small-4.columns
+          label.left.inline アクティブ
+        .large-2.large-pull-8.small-8.columns
+          strong = @project.active ? '○' : '×'
       .row
         .large-6.large-centered.columns
           = link_to '編集', edit_project_path(@project), class: "button radius"

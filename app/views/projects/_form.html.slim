@@ -19,7 +19,7 @@ article.projects.form
     .row
       .large-2.small-4.columns
         label.left.inline 終了月
-      .large-3.large-pull-7.small-8.columns     
+      .large-3.large-pull-7.small-8.columns
         = raw sprintf( f.date_select(:end_date, use_month_numbers: true, discard_day: true, start_year: 1965, date_separator:'%s', include_blank: true), '年 ') +  '月'
     .row
       .large-2.small-4.columns
@@ -49,31 +49,69 @@ article.projects.form
     .row
       .large-2.small-4.columns
         label.left.inline 役割
-      .large-8.large-pull-2.small-8.columns
-        = f.select :role,
-        [["PM:プロジェクト", "PM:プロジェクト"],
-         ["PL:プロジェクトリーダー", "PL:プロジェクトリーダー"],
-         ["SE:システム・エンジニア", "SE:システム・エンジニア"],
-         ["ML:製造リーダー", "ML:製造リーダー"], ["PG:プログラマー", "PG:プログラマー"],
-         ["OP:オペレーター", "OP:オペレーター"], ["AN:その他", "AN:その他"]]
+      .large-6.large-pull-4.small-8.columns
+        label.left.inline
+          = f.check_box :prom
+          |PM:プロジェクト
+        label.left.inline
+          = f.check_box :prol
+          |PL:プロジェクトリーダー
+        label.left.inline
+          = f.check_box :systeme
+          |SE:システムエンジニア
+        label.left.inline
+          = f.check_box :seizou
+          |ML:製造リーダー
+        label.left.inline
+          = f.check_box :program
+          |PG:プログラマー
+        label.left.inline
+          = f.check_box :operate
+          |OP:オペレーター
+        label.left.inline
+          = f.check_box :sonota
+          |AN:その他
 
     .row
       .large-2.small-4.columns
         label.left.inline 工程
-      .large-8.large-pull-2.small-8.columns
-        = f.select :experience,
-        [["1:企画･分析・コンサルタント","1:企画･分析・コンサルタント"],
-        ["2:基本設計概要設計","2:基本設計概要設計"],
-        ["3:詳細設計（機能設計･論理設計）","3詳細設計（機能設計･論理設計）"],
-        ["4:プログラム設計","4:プログラム設計"],
-        ["5:プログラミング","5:プログラミング"],
-        ["6:プログラムテスト","6:プログラムテスト"],
-        ["7:システムテスト","7:システムテスト"],
-        ["8:運用テスト","8:運用テスト"],
-        ["9:運用","9:運用"],
-        ["10:システム運用･保守･維持管理","10:システム運用･保守･維持管理"],
-        ["11:システムエンジニアサポート","11:システムエンジニアサポート"],
-        ["12:プロジェクト管理","12:プロジェクト管理"]]
+      .large-6.large-pull-4.small-8.columns
+        label.left.inline
+          = f.check_box :kikaku
+          |1:企画・分析・コンサルタント
+        label.left.inline
+          = f.check_box :kihon
+          |2:基本設計概要設計
+        label.left.inline
+          = f.check_box :shousai
+          |3:詳細設計
+        label.left.inline
+          = f.check_box :prosekkei
+          |4:プログラム設計
+        label.left.inline
+          = f.check_box :programing
+          |5:プログラミング
+        label.left.inline
+          = f.check_box :protest
+          |6:プログラミングテスト
+        label.left.inline
+          = f.check_box :systest
+          |7:システムテスト
+        label.left.inline
+          = f.check_box :unyoutest
+          |8:運用テスト
+        label.left.inline
+          = f.check_box :unyou
+          |9:運用
+        label.left.inline
+          = f.check_box :sysunyou
+          |10:システム運用・保守・維持管理
+        label.left.inline
+          = f.check_box :syssupport
+          |11:システムエンジニアサポート
+        label.left.inline
+          = f.check_box :prokanri
+          |12:プロジェクト管理
 
 
     .row

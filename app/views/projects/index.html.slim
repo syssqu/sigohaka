@@ -1,8 +1,10 @@
 article.projects_index
   .row
     .large-12.columns
-      h3 プロジェクト一覧
-      
+      h3
+        i.fi-clipboard-pencil
+        |プロジェクト一覧
+
       = link_to raw("<i class='fi-plus'></i>新規追加"),new_project_path,{class: "button tiny radius"}
 
       table
@@ -19,7 +21,7 @@ article.projects_index
             / th 役割
             / th 工程
             / th 備考
-            th.text-center アクティブ    
+            th.text-center width="85" アクティブ
             th.text-center width="35" 照会
             th.text-center width="35" 修正
             th.text-center width="35" 削除
@@ -28,11 +30,11 @@ article.projects_index
           - @projects.each do |project|
             tr
               td.pleft = project.summary
-              td.pleft = project.start_date.strftime("%___Y/%_m")
-              td.pleft = project.end_date.strftime("%___Y/%_m") unless project.end_date.blank?
+              td.text-center = project.start_date.strftime("%___Y/%_m")
+              td.text-center = project.end_date.strftime("%___Y/%_m") unless project.end_date.blank?
               / td = project.description
               / td = project.os
-              td.pleft = project.language
+              td.text-center = project.language
               / td = project.database
               / td = project.dep_size
               / td = project.role
