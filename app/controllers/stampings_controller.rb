@@ -27,7 +27,7 @@ class StampingsController < PapersController
     month = params["stamping"]["month"]
     day = params["stamping"]["day"]
     hh = params["stamping"]["hh"]
-    mm = params["stamping"]["mm"]
+    mm = sprintf("%02d", params["stamping"]["mm"])
     ss = params["stamping"]["ss"]
 
     time = "#{hh}:#{mm}"
@@ -69,6 +69,8 @@ class StampingsController < PapersController
     hh = params["stamping"]["hh"]
     mm = params["stamping"]["mm"]
     ss = params["stamping"]["ss"]
+
+    logger.debug("time : #{mm.to_s}")
 
     logger.debug(year + ":" + month + ":" + day + ":" + hh + ":" + mm + ":" + ss)
 
